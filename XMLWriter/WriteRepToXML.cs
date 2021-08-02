@@ -1,12 +1,19 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 
 namespace XMLWriter
 {
-    class WriteRepToXML
+    class WriteRepToXML: WriteToXML
     {
-        public string[] FillListRep(int stepCountMax, List<string> steps, List<string> stepTexts, List<string> stepAnims, List<string> stepSpecial)
+        public void OutputToXML(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> special, string fileName, string dataType) //Output to file
+        {
+            SetFileName(fileName, dataType);
+            string[] output = FillList(stepCountMax, step, text, anim, special);
+            File.WriteAllLines(path + dataType + "_" + fileName + fileExtension, output);
+        }
+        public string[] FillList(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> special)
         {
 
             List<String> list = new List<string> { };
@@ -16,37 +23,13 @@ namespace XMLWriter
 
             for (int i = 0; i <= stepCountMax; i++)
             {
-                //Console.WriteLine(i);
-                try
-                {
 
-                    list.Add("\t\t" + "<Repair step=\"" + steps[i] + "\">");
-                    list.Add("\t\t\t" + "<content>" + stepTexts[i] + "</content>");
-                    if (stepAnims[i] == "")
-                    {
-                        list.Add("\t\t\t" + "<anim>" + "default" + "</anim>");
-                    }
-                    else
-                    {
-                        list.Add("\t\t\t" + "<anim>" + stepAnims[i] + "</anim>");
-                    }
+                list.Add(WriteStep(step[i]));
+                list.Add(WriteText(text[i]));
+                list.Add(WriteAnim(anim[i]));
+                list.Add(WriteSpecialStep(special[i]));
 
-                    if (stepSpecial[i] == "")
-                    {
-                        list.Add("\t\t\t" + "<specialStep>" + "false" + "</specialStep>");
-                    }
-                    else
-                    {
-                        list.Add("\t\t\t" + "<specialStep>" + stepSpecial[i] + "</specialStep>");
-                    }
-
-                    list.Add("\t\t" + "</Repair>");
-                }
-                catch (Exception)
-                {
-
-                    Console.WriteLine("Fehler beim FillListRep()");
-                }
+                list.Add("\t\t" + "</Repair>");
             }
 
 
@@ -56,6 +39,27 @@ namespace XMLWriter
             string[] output = list.ToArray();
 
             return output;
+        }
+
+        private string WriteStep(string step)
+        {
+            return "\t\t" + "<Gfs step=\"" + step + "\">";
+        }
+        private string WriteText(string text)
+        {
+            return "\t\t\t" + "<content>" + text + "</content>";
+        }
+        private string WriteAnim(string anim)
+        {
+            return anim == ""
+                ? "\t\t\t" + "<anim>" + "default" + "</anim>"
+                : "\t\t\t" + "<anim>" + anim + "</anim>";
+        }
+        private string WriteSpecialStep(string special)
+        {
+            return special == ""
+                ? "\t\t\t" + "<specialStep>" + "false" + "</specialStep>"
+                : "\t\t\t" + "<specialStep>" + special + "</specialStep>";
         }
     }
 }

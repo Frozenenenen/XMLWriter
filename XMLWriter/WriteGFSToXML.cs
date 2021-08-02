@@ -1,13 +1,19 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 
 namespace XMLWriter
 {
-    class WriteGFSToXML
+    class WriteGFSToXML:WriteToXML
     {
-
-        public string[] FillListGfs(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<string> RDBI, List<string> smartTool, List<string> nextStep, List<string> lastStep)
+        public void OutputToXML(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<string> RDBI, List<string> smartTool, List<string> nextStep, List<string> lastStep, string fileName, string dataType) //Output to file
+        {
+            SetFileName(fileName, dataType);
+            string[] output = FillList(stepCountMax, step, text, anim, instruction, posID, negID, posResult, repXML, actuatorTest, RDBI, smartTool, nextStep, lastStep);
+            File.WriteAllLines(path + dataType + "_" + fileName + fileExtension, output);
+        }
+        public string[] FillList(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<string> RDBI, List<string> smartTool, List<string> nextStep, List<string> lastStep)
         {
             List<String> list = new List<string> { };
             list.Add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -80,7 +86,7 @@ namespace XMLWriter
         {
             return posResult == ""
                 ? "\t\t\t" + "<positiveResult>" + "false" + "</negativeResult"
-                : "\t\t\t" + "<positiveResult>" + posResult + "</negativeResult"
+                : "\t\t\t" + "<positiveResult>" + posResult + "</negativeResult";
         }
         private string WriteRepXML(string repXML)
         {
@@ -117,5 +123,4 @@ namespace XMLWriter
                 : "\t\t\t" + "<lastStep>" + "false" + "</lastStep>";
         }
     }
-
 }

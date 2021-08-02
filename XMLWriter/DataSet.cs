@@ -11,8 +11,6 @@ namespace XMLWriter
         private static string dataType = "Fehler";
         private static string fileName = "Dateiname";
 
-        private static readonly string path = @"Testgelände/"; //Hier muss ich wohl drigend nochmal nachgucken, wie man eine Pfadsuche öffnet, wie man das normalerweise so macht
-        private static readonly string fileExtension = ".txt"; //später .xml
         private static readonly string[] dataTypeChoice = { "gfs", "rep" }; //Gehört eigentlich nicht in diese Klasse, aber bis mir ein besserer Ort einfällt bleibts wohl hier
 
         private static readonly string step = "Schritt";
@@ -72,8 +70,8 @@ namespace XMLWriter
             }
             catch (SystemException)
             {
-                return "Fehler";
                 Console.WriteLine("stepAnims: ArgumentOutOfRangeException");
+                return "Fehler";
             }
 
         }
@@ -86,8 +84,8 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                return "Fehler";
                 Console.WriteLine("stepTexts: ArgumentOutOfRangeException");
+                return "Fehler";
             }
         }
 
@@ -99,8 +97,8 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                return "Fehler";
                 Console.WriteLine("stepSpecialTexts: ArgumentOutOfRangeException");
+                return "Fehler";
             }
 
         }
@@ -331,71 +329,27 @@ namespace XMLWriter
 
         public void SetFileName(string inputFileName) //Damit keine vorherigen Daten überschrieben werden, wird der Dateiname iteriert, bis ein neuer Dateiname gefunden wurde.
         {
-            string tempFileName;
-            int i = 2;
-            while (true)
-            {
-
-                if (!File.Exists(path + dataType + "_" + inputFileName + fileExtension) && i == 2)
-                {
-                    fileName = inputFileName;
-                    break;
-                }
-                else
-                {
-                    tempFileName = inputFileName + Convert.ToString(i);
-                    if (!File.Exists(path + dataType + "_" + tempFileName + fileExtension))
-                    {
-                        fileName = tempFileName;
-                        break;
-                    }
-                    else
-                    {
-                        i++;
-                    }
-                }
-            }
-
+            WriteToXML writer = new WriteToXML();
+            writer.SetFileName(inputFileName, dataType);
 
         }
 
-        public void InputToXML() //Output to file
+        public void OutputToXML() //Output to file
         {
-
-            List<String> list = new List<string> { };
-            string[] output = { };
-
             switch (dataType)
             {
                 case "rep":
-                    output = FillListRep();
+                    WriteRepToXML rep = new WriteRepToXML();
+                    rep.OutputToXML(stepCountMax, steps, stepTexts, stepAnims, stepSpecial, fileName, dataType);
                     break;
                 case "gfs":
-                    output = FillListGfs();
+                    WriteGFSToXML gfs = new WriteGFSToXML();
+                    gfs.OutputToXML(stepCountMax, steps, stepTexts, stepAnims, stepInstruction, stepPositiveID, stepNegativeID, stepPositiveResult, stepRepXML, stepActuatorTest, stepRDBI, stepSmartTool, stepNextStep, stepLastStep, fileName, dataType);
                     break;
                 default:
-                    output[0] = "Fehler bei der Befüllung oder beim Inhaltstyp (rep, gfs etc)";
+                    Console.WriteLine("Error in OutputToXML from DataSet");                  
                     break;
             }
-
-
-
-            //string[] output = list.ToArray();
-
-            File.WriteAllLines(path + dataType + "_" + fileName + fileExtension, output);
-
-        }
-
-        private string[] FillListRep()
-        {
-            WriteRepToXML rep = new WriteRepToXML();
-            return rep.FillListRep(stepCountMax, steps, stepTexts, stepAnims, stepSpecial);
-        }
-
-        private string[] FillListGfs()
-        {
-            WriteGFSToXML gfs = new WriteGFSToXML();
-            return gfs.FillListGfs(stepCountMax, steps, stepTexts, stepAnims, stepInstruction, stepPositiveID, stepNegativeID, stepPositiveResult, stepRepXML, stepActuatorTest, stepRDBI, stepSmartTool, stepNextStep, stepLastStep);
         }
     }
 }
