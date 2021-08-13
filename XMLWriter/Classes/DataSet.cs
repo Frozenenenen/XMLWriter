@@ -14,8 +14,7 @@ namespace XMLWriter
         private static readonly string[] dataTypeChoice = { "gfs", "rep" }; //Gehört eigentlich nicht in diese Klasse, aber bis mir ein besserer Ort einfällt bleibts wohl hier
 
         private static readonly string step = "Schritt";
-        private static readonly string stepGfs = "Arbeitsschritt";
-
+        
         //Fahrzeugspezifische Variablen
         /*private static string vin = "";
         private static string model = "";*/
@@ -270,7 +269,22 @@ namespace XMLWriter
             stepSpecial.Insert(stepCount, "");
 
         }
-
+        public void IncrementStepCount()
+        {
+            stepCount++;
+        }
+        public void DecrementStepCount()
+        {
+            stepCount--;
+        }
+        public void IncrementMaxSteps()
+        {
+            stepCountMax++;
+        }
+        public void DecrementMaxSteps()
+        {
+            stepCountMax--;
+        }
         public void SaveRepSet(string stepName, string text, string anim, string specialText)
         {
             SetStep(stepName);
@@ -288,7 +302,7 @@ namespace XMLWriter
             SetAnim(anim);
             SetInstruction(instructionText);
             SetPositiveID(posID);
-            SetNegativeID(posID);
+            SetNegativeID(negID);
             SetPositiveResult(posResult);
             SetRepXML(repXML);
             SetActuatorTest(actuatorTest);
@@ -296,35 +310,6 @@ namespace XMLWriter
             SetSmartTool(smartTool);
             SetNextStep(nextStep);
             SetLastStep(lastStep);
-        }
-        public void IncrementSteps()
-        {
-            //Wenn man beim höchsten Datanschritt ist, soll bei incrementieren auch das Maximum incrementiert werden. Reihenfolge wichtig!
-            if (stepCount == stepCountMax)
-            {
-                stepCountMax++;
-            }
-            stepCount++;
-            //Console.Write("Increment: " + "Schritt: " + stepCount + " -  Max: " + stepCountMax);
-        }
-        public void DecrementStepsForSaving()
-        {
-            if (stepCount == stepCountMax)
-            {
-                stepCountMax--;
-            }
-            stepCount--;
-            Console.Write("Decrement'save': " + "Schritt: " + stepCount + " -  Max: " + stepCountMax);
-        }
-        public void DecrementSteps()
-        {
-            stepCount--;
-            //Console.Write("Decrement: " +  "Schritt: " + stepCount + " -  Max: " + stepCountMax);
-        }
-        public void DecrementStepsMax() //In a way it removes the last Inputwindow. It not acutally does, but it wont be put out into file
-        {
-            stepCount--;
-            stepCountMax--;
         }
 
         public void SetFileName(string inputFileName) //Damit keine vorherigen Daten überschrieben werden, wird der Dateiname iteriert, bis ein neuer Dateiname gefunden wurde.
@@ -338,7 +323,8 @@ namespace XMLWriter
         {
             switch (dataType)
             {
-                case "rep":
+               //WriteToXML writer = new WriteToXML(); //Es sollte irgendwie möglich sein den Aufruf nur über die Menge der Übergebenen Parameter zu machen statt einem Switch, der das vorher controlliert. Dann würde das hier zum 2-Zeiler
+               case "rep":
                     WriteRepToXML rep = new WriteRepToXML();
                     rep.OutputToXML(stepCountMax, steps, stepTexts, stepAnims, stepSpecial, fileName, dataType);
                     break;
