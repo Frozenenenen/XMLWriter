@@ -48,7 +48,7 @@ namespace XMLWriter
 
 
 
-        public string GetStringLingo() => language;
+        public string GetStringLanguage() => language;
         public string GetInstructionNotice() => defaultNotice;
         public string GetStringSave() => save;
         public string GetStringNext() => next;
@@ -81,20 +81,20 @@ namespace XMLWriter
 
 
 
-        //public void SetLingo(string inputLanguage) => language = inputLanguage;
+        //public void SetLanguage(string inputLanguage) => language = inputLanguage;
 
-        //public string[] GetLingoChoises() => File.ReadAllLines(@"Testgelände\languages.txt"); //Falls mal die SPrache aus einer Textdatei gezogen werden soll
-        public string[] GetLingoChoises()
+        //public string[] GetLanguageChoises() => File.ReadAllLines(@"Testgelände\languages.txt"); //Falls mal die SPrache aus einer Textdatei gezogen werden soll
+        public string[] GetLanguageChoises()
         {//Attention! if the strings get altered they have to get altered down below in the switch aswell
 
-            string[] lingoChoises = { "Deutsch", "English", "Espanol" }; //Kurze Version
-            return lingoChoises;
+            string[] languageChoises = { "Deutsch", "English", "Espanol" }; //Kurze Version
+            return languageChoises;
         }
 
 
-        public void InitLingo(string lingoChoice) //Method to fill the variables with the language specific words
+        public void InitLanguage(string languageChoice) //Method to fill the variables with the language specific words
         {
-            switch (lingoChoice)
+            switch (languageChoice)
             {
                 case "Deutsch":
                     InitGerman();
