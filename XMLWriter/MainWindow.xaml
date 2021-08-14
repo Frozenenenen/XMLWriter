@@ -5,53 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:XMLWriter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="750" Width="1000">
+
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height ="35"/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height ="35"/>
 
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70"/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="70"/>
-        </Grid.ColumnDefinitions>
-
-        <Label x:Name="textTitel" Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="3" Content="Datensatz anlegen" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-
-        <Button x:Name="btnWeiter"  Grid.Row="3" Grid.Column="4" Grid.RowSpan="2" Height="50" Width="100" Margin="5,0,15,10" Click="Button_Next">
-            <Label>
-                <!--<Image Source="arrow.jpg"/>-->
-            </Label>
-
-        </Button>
-        <ComboBox x:Name="inputType" Grid.Row="3" Grid.Column="3" Text="gfs"/>
-        <!--Reparatur, geführte Fehlersuche etc-->
-
-
-        <Label Content="Choose Language" Grid.Row="7" Grid.Column="3"/>
-        <ComboBox x:Name="inputLanguage" Grid.Row="8" Grid.Column="3" Margin="2"/>
-        <!--Sprachwahl-->
-        <Button x:Name="btnSelectLanguage" Content="Select" Grid.Row="9" Grid.Column="3" Margin="2" Click="btnSelectLanguage_Click"/>
-
-
-
-
+        <Frame x:Name="Main"/>
 
     </Grid>
 </Window>
