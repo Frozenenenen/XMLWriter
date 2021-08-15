@@ -19,6 +19,8 @@ namespace XMLWriter
         private static string summary;
         private static string reset;
         private static string fileNameTitel;
+        private static string generalInstruction;
+        private static string generalInstructionText;
         /*private static string model; //Vermutlich nicht mehr drin
         private static string vin;*/
         //Rep- and GFS-specific
@@ -57,6 +59,8 @@ namespace XMLWriter
         public string GetStringVin() => vin;*/
         public string GetStringPleaseFill() => pleaseFill;
         public string GetStringCreateDataSet() => createDataSet;
+        public string GetStringGeneralInstruction() => generalInstruction;
+        public string GetStringGeneralInstructionText() => generalInstructionText;
         public string GetStringStep() => step;
         public string GetStringSteps() => steps;
         public string GetStringContent() => description;
@@ -126,6 +130,8 @@ namespace XMLWriter
             vin = "FIN";*/
             pleaseFill = "Bitte ausfüllen";
             createDataSet = "Datensatz anlegen";
+            generalInstruction = "Anleitung";
+            generalInstructionText = "Leere Felder werden automatisch mit 'default' oder 'false' befüllt, falls erforderlich";
             step = "Schrittbezeichnung";
             steps = "Schritte";
             description = "Beschreibung";
@@ -157,6 +163,8 @@ namespace XMLWriter
             vin = "VIN";*/
             pleaseFill = "Please Fill";
             createDataSet = "Create Data Set";
+            generalInstruction = "general instructions";
+            generalInstructionText = "Empty boxes will be automatically filled with e.g. 'default' or 'false'";
             step = "Step";
             steps = "Steps";
             description = "Description";
@@ -188,6 +196,8 @@ namespace XMLWriter
             vin = "VIN";*/
             pleaseFill = "Llenar algo, por favor";
             createDataSet = "Crear expediente";
+            generalInstruction = "general instructions";
+            generalInstructionText = "Empty boxes will be automatically filled with e.g. 'default' or 'false'.";
             step = "Paso";
             steps = "Pasos";
             description = "Descripción";

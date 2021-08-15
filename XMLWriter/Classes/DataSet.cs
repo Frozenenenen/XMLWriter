@@ -35,10 +35,13 @@ namespace XMLWriter
         private static List<string> stepPositiveResult = new List<string>();
         private static List<string> stepRepXML = new List<string>();
         private static List<string> stepActuatorTest = new List<string>();
+        private static List<bool> checkStepActuatorTest = new List<bool>();
         private static List<string> stepRDBI = new List<string>();
+        private static List<bool> checkStepRDBI = new List<bool>();
         private static List<string> stepSmartTool = new List<string>();
-        private static List<string> stepNextStep = new List<string>();
-        private static List<string> stepLastStep = new List<string>();
+        private static List<bool> checkStepSmartTool = new List<bool>();
+        private static List<bool> stepNextStep = new List<bool>();
+        private static List<bool> stepLastStep = new List<bool>();
 
 
 
@@ -66,7 +69,7 @@ namespace XMLWriter
             }
             catch (SystemException)
             {
-                Console.WriteLine("steps: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("steps: ArgumentOutOfRangeException");
                 return "Fehler";
             }
         }
@@ -78,12 +81,11 @@ namespace XMLWriter
             }
             catch (SystemException)
             {
-                Console.WriteLine("stepAnims: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepAnims: ArgumentOutOfRangeException");
                 return "Fehler";
             }
 
         }
-
         public string GetStepTextPos(int count)
         {
             try
@@ -92,11 +94,10 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                Console.WriteLine("stepTexts: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepTexts: ArgumentOutOfRangeException");
                 return "Fehler";
             }
         }
-
         public string GetStepSpecialTextPos(int count)
         {
             try
@@ -105,10 +106,166 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                Console.WriteLine("stepSpecialTexts: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepSpecialTexts: ArgumentOutOfRangeException");
                 return "Fehler";
             }
 
+        }
+        public string GetStepInstructionPos(int count)
+        {
+            try
+            {
+                return stepInstruction[count];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("stepInstruction: ArgumentOutOfRangeException");
+                return "Fehler";
+            }
+        }
+        public string GetStepPositiveIDPos(int count)
+        {
+            try
+            {
+                return stepPositiveID[count];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("stepPositiveID: ArgumentOutOfRangeException");
+                return "Fehler";
+            }
+        }
+        public string GetNegativeIDPos(int count)
+        {
+            try
+            {
+                return stepNegativeID[count];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("stepNegativeID: ArgumentOutOfRangeException");
+                return "Fehler";
+            }
+        }
+        public string GetPositiveResultPos(int count)
+        {
+            try
+            {
+                return stepPositiveResult[count];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("stepPositiveResult: ArgumentOutOfRangeException");
+                return "Fehler";
+            }
+        }
+        public string GetRepXMLPos(int count)
+        {
+            try
+            {
+                return stepRepXML[count];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("stepRepXML: ArgumentOutOfRangeException");
+                return "Fehler";
+            }
+        }
+        public string GetActuatorTestPos(int count)
+        {
+            try
+            {
+                return stepActuatorTest[count];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("stepActuatorTest: ArgumentOutOfRangeException");
+                return "Fehler";
+            }
+        }
+        public bool GetCheckActuatorTestPos(int count)
+        {
+            try
+            {
+                return checkStepActuatorTest[count];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("CheckStepActuatorTest: ArgumentOutOfRangeException");
+                return true;
+            }
+        }
+        public string GetRDBIPpos(int count)
+        {
+            try
+            {
+                return stepRDBI[count];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("stepRDBI: ArgumentOutOfRangeException");
+                return "Fehler";
+            }
+        }
+        public bool GetCheckRDBIPos(int count)
+        {
+            try
+            {
+                return checkStepRDBI[count];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("CheckStepRDBIPos: ArgumentOutOfRangeException");
+                return true; 
+            }
+        }
+        public string GetSmartToolPos(int count)
+        {
+            try
+            {
+                return stepSmartTool[count];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("stepSmartTool: ArgumentOutOfRangeException");
+                return "Fehler";
+            }
+        }
+        public bool GetCheckSmartTool(int count)
+        {
+            try
+            {
+                return checkStepSmartTool[count];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("CheckStepSmartTool: ArgumentOutOfRangeException");
+                return true; 
+            }
+        }    
+        public bool GetNextStepPos(int count)
+        {
+            try
+            {
+                return stepNextStep[count];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("stepNextStep: ArgumentOutOfRangeException");
+                return true; //kA wie man hier dann nen Fehler erkennen soll
+            }
+        }
+        public bool GetLastStepPos(int count)
+        {
+            try
+            {
+                return stepLastStep[count];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("stepLastStep: ArgumentOutOfRangeException");
+                return true;
+            }
         }
 
         //Setter - private, weil diese nur für die Verständlichkeit des codes hier gesammelt werden
@@ -222,6 +379,17 @@ namespace XMLWriter
                 stepActuatorTest[stepCount] = inputActuatorTest;
             }
         }
+        private void SetCheckActuatorTest(bool inputCheckActuatorTest)
+        {
+            if (stepCountMax == stepCount)
+            {
+                checkStepActuatorTest.Insert(stepCount, inputCheckActuatorTest);
+            }
+            else
+            {
+                checkStepActuatorTest[stepCount] = inputCheckActuatorTest;
+            }
+        }
         private void SetRDBI(string inputRDBI)
         {
             if (stepCountMax == stepCount)
@@ -231,6 +399,17 @@ namespace XMLWriter
             else
             {
                 stepRDBI[stepCount] = inputRDBI;
+            }
+        }
+        private void SetCheckRDBI(bool inputCheckRDBI)
+        {
+            if (stepCountMax == stepCount)
+            {
+                checkStepRDBI.Insert(stepCount, inputCheckRDBI);
+            }
+            else
+            {
+                checkStepRDBI[stepCount] = inputCheckRDBI;
             }
         }
         private void SetSmartTool(string inputSmartTool)
@@ -244,7 +423,18 @@ namespace XMLWriter
                 stepSmartTool[stepCount] = inputSmartTool;
             }
         }
-        private void SetNextStep(string inputNextStep)
+        private void SetCheckSmartTool(bool inputCheckSmartTool)
+        {
+            if (stepCountMax == stepCount)
+            {
+                checkStepSmartTool.Insert(stepCount, inputCheckSmartTool);
+            }
+            else
+            {
+                checkStepSmartTool[stepCount] = inputCheckSmartTool;
+            }
+        }
+        private void SetNextStep(bool inputNextStep)
         {
             if (stepCountMax == stepCount)
             {
@@ -255,7 +445,7 @@ namespace XMLWriter
                 stepNextStep[stepCount] = inputNextStep;
             }
         }
-        private void SetLastStep(string inputLastStep)
+        private void SetLastStep(bool inputLastStep)
         {
             if (stepCountMax == stepCount)
             {
@@ -271,14 +461,26 @@ namespace XMLWriter
 
 
         public void InitDataSet()       //Muss mit allen default-Daten befüllt werden, wenn eine "Weiteren Datensatz anlegen"-Funktion eingebaut wird
-        {
-            steps.Insert(stepCount, "Schritt 1");
+        {                               //Theoretisch könnte man hier zwischen Rep und GFS unterscheiden um sich mal was zu sparen, aber sein wir ehrlich... auf den Speicher kommts nicht an
+            steps.Insert(stepCount, "");
             stepAnims.Insert(stepCount, "default");
             stepTexts.Insert(stepCount, "");
             stepSpecial.Insert(stepCount, "");
+            stepPositiveID.Insert(stepCount, "");
+            stepNegativeID.Insert(stepCount, "");
+            stepPositiveResult.Insert(stepCount, "");
+            stepRepXML.Insert(stepCount, "");
+            stepActuatorTest.Insert(stepCount, "");
+            checkStepActuatorTest.Insert(stepCount, false);
+            stepRDBI.Insert(stepCount, "");
+            checkStepRDBI.Insert(stepCount, false);
+            stepSmartTool.Insert(stepCount, "");
+            checkStepSmartTool.Insert(stepCount, false);
+            stepNextStep.Insert(stepCount, false);
+            stepLastStep.Insert(stepCount, false);
 
         }
-        public void IncrementStepCount() 
+        public void IncrementStepCount()    //Increment und Decrement sollten wohl noch durch setter und getter ersetzt und nur in GUIMovement bearbeitet werden
         {
             stepCount++;
         }
@@ -305,7 +507,7 @@ namespace XMLWriter
             Console.WriteLine(stepName + " Anim: " + anim + " Text: " + text + " SpText: " + specialText);
         }
 
-        public void SaveGfsSet(string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, string RDBI, string smartTool, string nextStep, string lastStep)
+        public void SaveGfsSet(string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, bool checkActuatorTest, string RDBI, bool checkRDBI, string smartTool, bool checkSmartTool, bool nextStep, bool lastStep)
         {
             SetStep(stepName);
             SetText(text);
@@ -316,8 +518,11 @@ namespace XMLWriter
             SetPositiveResult(posResult);
             SetRepXML(repXML);
             SetActuatorTest(actuatorTest);
+            SetCheckActuatorTest(checkActuatorTest);
             SetRDBI(RDBI);
+            SetCheckRDBI(checkRDBI);
             SetSmartTool(smartTool);
+            SetCheckSmartTool(checkSmartTool);
             SetNextStep(nextStep);
             SetLastStep(lastStep);
         }

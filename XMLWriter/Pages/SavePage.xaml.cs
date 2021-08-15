@@ -21,15 +21,8 @@ namespace XMLWriter.Pages
         public SavePage()
         {
             InitializeComponent();
-            DataSet data = new DataSet();
-            Language language = new Language();
-            textTitel.Content = language.GetStringSummary();
-            textFileNameTitel.Content = language.GetStringFileNameTitel();
-            textStepCount.Content = (data.GetStepCountMax() + 1) + " " + language.GetStringSteps();
-            inputFileName.Text = data.GetFileName();
-            btnBack.Content = language.GetStringBack();
-            btnSave.Content = language.GetStringSave();
-
+            InitTextItems();
+            InitValueItems();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -70,6 +63,25 @@ namespace XMLWriter.Pages
             
             
         }
+
+        private void InitTextItems()
+        {
+            Language language = new Language();
+            DataSet data = new DataSet();
+            textTitel.Content = language.GetStringSummary();
+            textFileNameTitel.Content = language.GetStringFileNameTitel();
+            textStepCount.Content = (data.GetStepCountMax() + 1) + " " + language.GetStringSteps();
+            btnBack.Content = language.GetStringBack();
+            btnSave.Content = language.GetStringSave();
+                
+            
+        }
+        private void InitValueItems()
+        {
+            DataSet data = new DataSet();
+            inputFileName.Text = data.GetFileName();
+        }
+
     
     }
 }

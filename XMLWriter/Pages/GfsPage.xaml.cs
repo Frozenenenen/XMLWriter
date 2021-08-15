@@ -90,11 +90,12 @@ namespace XMLWriter.Pages
             textPositiveID.Content = language.GetStringPosID();
             textNegativeID.Content = language.GetStringNegID();
             textPositiveResult.Content = language.GetStringPosResult();
-            inputLastStep.Content = language.GetStringLastStep();
             textRepXML.Content = language.GetStringRepXML();
             textActuatorTest.Content = language.GetStringActuatorTest();
             textReadData.Content = language.GetStringReadData();
             inputNextStep.Content = language.GetStringNextStep();
+            inputLastStep.Content = language.GetStringLastStep();
+
 
 
         }
@@ -102,9 +103,19 @@ namespace XMLWriter.Pages
         private void InitValueItems()
         {
             DataSet data = new DataSet();
-            inputAnim.Text = data.GetStepAnimsPos(data.GetStepCount());
+            inputAnim.Text = data.GetStepAnimsPos(data.GetStepCount()) == ""
+                ? "default"
+                : data.GetStepAnimsPos(data.GetStepCount());
             inputText.Text = data.GetStepSpecialTextPos(data.GetStepCount());
             inputInstruction.Text = data.GetStepTextPos(data.GetStepCount());
+            inputStepName.Text = data.GetStepNamePos(data.GetStepCount()) == ""
+               ? "Schritt " + (data.GetStepCount() + 1)
+               : data.GetStepNamePos(data.GetStepCount());
+            inputLastStep.IsChecked = data.GetLastStepPos(data.GetStepCount());
+            inputNextStep.IsChecked = data.GetNextStepPos(data.GetStepCount());
+
+
+
         }
     
     }

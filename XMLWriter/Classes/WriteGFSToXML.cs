@@ -7,13 +7,13 @@ namespace XMLWriter
 {
     class WriteGFSToXML:WriteToXML
     {
-        public void OutputToXML(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<string> RDBI, List<string> smartTool, List<string> nextStep, List<string> lastStep, string fileName, string dataType) //Output to file
+        public void OutputToXML(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<string> RDBI, List<string> smartTool, List<bool> nextStep, List<bool> lastStep, string fileName, string dataType) //Output to file
         {
             SetFileName(fileName, dataType);
             string[] output = FillList(stepCountMax, step, text, anim, instruction, posID, negID, posResult, repXML, actuatorTest, RDBI, smartTool, nextStep, lastStep);
             File.WriteAllLines(path + dataType + "_" + fileName + fileExtension, output);
         }
-        public string[] FillList(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<string> RDBI, List<string> smartTool, List<string> nextStep, List<string> lastStep)
+        public string[] FillList(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<string> RDBI, List<string> smartTool, List<bool> nextStep, List<bool> lastStep)
         {
             List<String> list = new List<string> { };
             list.Add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -27,7 +27,7 @@ namespace XMLWriter
                 list.Add(WriteStep(step[i]));
                 list.Add(WriteText(text[i]));
                 list.Add(WriteAnim(anim[i]));
-                list.Add(WriteInstruction(instruction[i]));
+                //list.Add(WriteInstruction(instruction[i]));
                 list.Add(WritePosID(posID[i]));                
                 list.Add(WriteNegID(negID[i]));
                 list.Add(WritePosResult(posResult[i]));
@@ -91,8 +91,8 @@ namespace XMLWriter
         private string WriteRepXML(string repXML)
         {
             return repXML == ""
-                ? "<RepXml>" + "false" + "</RepXML>"
-                : "<RepXml>" + repXML + "</RepXML>";
+                ? "\t\t\t" + "<RepXml>" + "false" + "</RepXML>"
+                : "\t\t\t" + "<RepXml>" + repXML + "</RepXML>";
         }
         private string WriteActuatorTest(string actuatorTest)
         {
