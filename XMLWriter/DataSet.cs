@@ -14,7 +14,6 @@ namespace XMLWriter
         private static readonly string[] dataTypeChoice = { "gfs", "rep" }; //Gehört eigentlich nicht in diese Klasse, aber bis mir ein besserer Ort einfällt bleibts wohl hier
 
         private static readonly string step = "Schritt";
-        private static readonly string stepGfs = "Arbeitsschritt";
 
         //Fahrzeugspezifische Variablen
         /*private static string vin = "";
