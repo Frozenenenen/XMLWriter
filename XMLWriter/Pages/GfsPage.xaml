@@ -9,6 +9,76 @@
       Title="GfsPage">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height ="35"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height ="35"/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="70"/>
+        </Grid.ColumnDefinitions>
+
+
+        <!--linke Spalte-->
+        <Label x:Name="textAnimTitel"  Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="inputAnim" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+        <Label x:Name="textContentTitel" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="inputText" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+
+        <Label x:Name="textInstructionTitel" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="inputInstruction" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+
+        <!--mittlere Spalte-->
+        <!--positive ID-->
+        <!--<CheckBox x:Name="inputPositiveID" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>-->
+        <TextBox x:Name="inputPositiveID" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>
+        <!--negativeID-->
+        <!--<CheckBox x:Name="inputNegativeID" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>-->
+        <TextBox x:Name="inputNegativeID" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>
+        <!--positive Result-->
+        <!--<CheckBox x:Name="inputPositiveResult" Grid.Row="4" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>-->
+        <TextBox x:Name="inputPositiveResult" Grid.Row="4" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>
+        <!--Rep XML-->
+        <CheckBox x:Name="inputCheckRepXML" Grid.Row="6" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>
+        <TextBox x:Name="inputRepXML" Grid.Row="6" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>
+        <!--Actuator Test-->
+        <CheckBox x:Name="inputCheckActuatorTest" Grid.Row="7" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>
+        <TextBox x:Name="inputActuatorTest" Grid.Row="7" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>
+        <!--RDBI-->
+        <CheckBox x:Name="inputCheckReadData" Grid.Row="8" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>
+        <TextBox x:Name="inputReadData" Grid.Row="8" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>
+        <!--next step-->
+        <CheckBox x:Name="inputNextStep" Grid.Row="9" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>
+        <!--last step-->
+        <CheckBox x:Name="inputLastStep" Grid.Row="5" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>
+
+
+
+
+        <!--Bedienelemente und Randinfos-->
+        <Button x:Name="btnNext" Grid.Row="11" Grid.Column="6" Margin="0,0,10,10" Click="btnNext_Click"/>
+        <Button x:Name="btnSave" Grid.Row="10" Grid.Column="6" Margin="0,0,10,10" Click="btnSave_Click"/>
+        <Button x:Name="btnBack" Grid.Row="11" Grid.Column="0" Margin="10,0,0,10" Click="btnBack_Click"/>
+
+        <Label x:Name="textTitel" Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="3" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+        <Label x:Name="textDefaultNotice"  Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom"/>
+        <Label x:Name="textStep" Grid.Row="0" Grid.Column="1" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
     </Grid>
 </Page>

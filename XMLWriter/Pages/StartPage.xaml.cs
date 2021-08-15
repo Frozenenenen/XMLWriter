@@ -49,22 +49,18 @@ namespace XMLWriter.Pages
             DataSet data = new DataSet();
             data.SetDataType(inputType.Text);
             Console.WriteLine("bla");
-            main.Main.Content = new RepPage();
             if (inputType.Text == "rep")
             {
-                main.Main.Content = new RepPage();
+                _ = NavigationService.Navigate(new RepPage());
             }
             else if (inputType.Text == "gfs")
             {
-                main.Main.Content = new GfsPage();
+                _ = NavigationService.Navigate(new GfsPage());
             }
             else
             {
                 Console.WriteLine("Fehler in der gfs/rep-Wahl");
             }
-
-
-            //Close();
 
         }
 

@@ -9,6 +9,43 @@
       Title="SavePage">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height ="35"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height ="35"/>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="70"/>
+        </Grid.ColumnDefinitions>
+
+        <Label x:Name="textTitel" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+
+
+        <Label x:Name="textStepCount" Grid.Row="2" Grid.Column="1"/>
+
+
+
+        <Label x:Name="textFileNameTitel" Grid.Column="4" Grid.Row="10" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
+        <TextBox x:Name="inputFileName" Text="Dateiname" Grid.Column="4" Grid.Row="11" Grid.ColumnSpan="2" Margin="2"/>
+
+        <Button x:Name="btnSave" Grid.Column="6" Grid.Row="11" Margin="0,0,10,10" Click="btnSave_Click"/>
+        <Button x:Name="btnBack" Grid.Column="0" Grid.Row="11" Margin="10,0,0,10" Height="25" Click="btnBack_Click" />
+
     </Grid>
 </Page>

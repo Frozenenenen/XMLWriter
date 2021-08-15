@@ -49,10 +49,8 @@ namespace XMLWriter
         public string[] GetDataTypeChoice() => dataTypeChoice;
 
         public void SetDataType(string inputDataType) => dataType = inputDataType;
-
-        /* 
-         public string GetDataType() => dataType;
-         public string[] GetModelChoices() => File.ReadAllLines(@"Testgelände\models.txt");
+        public string GetDataType() => dataType;
+         /*public string[] GetModelChoices() => File.ReadAllLines(@"Testgelände\models.txt");
          public string GetVIN() => vin;
          public void SetVIN(string inputVin) => vin = inputVin;
 
@@ -269,7 +267,7 @@ namespace XMLWriter
             stepSpecial.Insert(stepCount, "");
 
         }
-        public void IncrementStepCount()
+        public void IncrementStepCount() 
         {
             stepCount++;
         }
@@ -292,6 +290,7 @@ namespace XMLWriter
             SetAnim(anim);
             SetSpecialText(specialText);
 
+            System.Diagnostics.Debug.WriteLine(stepName + " Anim: " + anim + " Text: " + text + " SpText: " + specialText);
             Console.WriteLine(stepName + " Anim: " + anim + " Text: " + text + " SpText: " + specialText);
         }
 
