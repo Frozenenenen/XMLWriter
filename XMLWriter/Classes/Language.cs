@@ -126,7 +126,7 @@ namespace XMLWriter
             vin = "FIN";*/
             pleaseFill = "Bitte ausfüllen";
             createDataSet = "Datensatz anlegen";
-            step = "Schritt";
+            step = "Schrittbezeichnung";
             steps = "Schritte";
             description = "Beschreibung";
             specialStep = "Sonderschritt";

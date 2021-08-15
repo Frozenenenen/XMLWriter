@@ -58,12 +58,23 @@ namespace XMLWriter
          public void SetModel(string inputName) => model = inputName;*/
 
         public string GetFileName() => fileName;
-
-        public string GetStepAnimsPos(int Count)
+        public string GetStepNamePos(int count)
         {
             try
             {
-                return stepAnims[Count];
+                return steps[count];
+            }
+            catch (SystemException)
+            {
+                Console.WriteLine("steps: ArgumentOutOfRangeException");
+                return "Fehler";
+            }
+        }
+        public string GetStepAnimsPos(int count)
+        {
+            try
+            {
+                return stepAnims[count];
             }
             catch (SystemException)
             {
@@ -73,11 +84,11 @@ namespace XMLWriter
 
         }
 
-        public string GetStepTextPos(int Count)
+        public string GetStepTextPos(int count)
         {
             try
             {
-                return stepTexts[Count];
+                return stepTexts[count];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -86,11 +97,11 @@ namespace XMLWriter
             }
         }
 
-        public string GetStepSpecialTextPos(int Count)
+        public string GetStepSpecialTextPos(int count)
         {
             try
             {
-                return stepSpecial[Count];
+                return stepSpecial[count];
             }
             catch (ArgumentOutOfRangeException)
             {

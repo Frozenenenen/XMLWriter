@@ -87,13 +87,13 @@ namespace XMLWriter.Pages
             inputAnim.Text = data.GetStepAnimsPos(data.GetStepCount());
 
             //Inhalte rechte Spalte
-            inputPositiveID.Text = language.GetStringPosID();
-            inputNegativeID.Text = language.GetStringNegID();
-            inputPositiveResult.Text = language.GetStringPosResult();
+            textPositiveID.Content = language.GetStringPosID();
+            textNegativeID.Content = language.GetStringNegID();
+            textPositiveResult.Content = language.GetStringPosResult();
             inputLastStep.Content = language.GetStringLastStep();
-            inputRepXML.Text = language.GetStringRepXML();
-            inputActuatorTest.Text = language.GetStringActuatorTest();
-            inputReadData.Text = language.GetStringReadData();
+            textRepXML.Content = language.GetStringRepXML();
+            textActuatorTest.Content = language.GetStringActuatorTest();
+            textReadData.Content = language.GetStringReadData();
             inputNextStep.Content = language.GetStringNextStep();
 
 

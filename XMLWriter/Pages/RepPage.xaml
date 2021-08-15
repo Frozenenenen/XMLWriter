@@ -34,17 +34,17 @@
             <ColumnDefinition Width="70"/>
         </Grid.ColumnDefinitions>
 
-        <Label x:Name="textStep" Grid.Row="1" Grid.Column="1" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+        <Label x:Name="textStep" Grid.Row="1" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
         <TextBox x:Name="inputStepName" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"/>
 
-        <Label x:Name="textContentTitel" Grid.Row="4" Grid.Column="1" FontWeight="Bold"/>
+        <Label x:Name="textContentTitel" Grid.Row="4" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Bottom"/>
         <TextBox x:Name="inputText" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="4" TextWrapping="Wrap"/>
         <!-- AcceptsReturn="True"/> //Würde Enter für Zeilenumbrüche erlauben. Wird aber im Speichern noch nicht unterstützt, weil nicht sicher, wie sinnvoll-->
 
-        <Label x:Name="textSpecialContentTitel" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" FontWeight="Bold"/>
+        <Label x:Name="textSpecialContentTitel" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" FontWeight="Bold" VerticalAlignment="Bottom"/>
         <TextBox x:Name="inputSpecialText" Grid.Row="5" Grid.Column="4" Grid.ColumnSpan="2" Grid.RowSpan="4" TextWrapping="Wrap"/>
 
-        <Label x:Name="textAnimTitel" Grid.Row="2" Grid.Column="2" FontWeight="Bold"/>
+        <Label x:Name="textAnimTitel" Grid.Row="1" Grid.Column="4" FontWeight="Bold" VerticalAlignment="Bottom"/>
         <TextBox x:Name="inputAnim" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2"/>
 
         <Button x:Name="btnNext" Grid.Row="11" Grid.Column="6" Margin="0,0,10,10" Click="btnNext_Click"/>
@@ -54,7 +54,7 @@
         <Button x:Name="btnBackDelete" Grid.Row="10" Grid.Column="0" Margin="10,0,0,10" Click="btnBackDelete_Click"/>
         <!-- IsEnabled="False"/>-->
 
-        <Label x:Name="textTitel" Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="3" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+        <Label x:Name="textTitel" Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="3" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
 
     </Grid>
 </Page>

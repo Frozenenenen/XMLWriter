@@ -93,14 +93,9 @@ namespace XMLWriter.Pages
             textAnimTitel.Content = language.GetStringAnim();
             textSpecialContentTitel.Content = language.GetStringSpecialStep();
             textTitel.Content = language.GetStringPleaseFill();
-            if (data.GetStepCount() != 0)
-            {
-                btnBack.Content = language.GetStringBack();
-            }
-            else
-            {
-                btnBack.Content = language.GetStringReset();
-            }
+            btnBack.Content = data.GetStepCount() != 0
+                ? language.GetStringBack()
+                : language.GetStringReset();
             btnBackDelete.Content = language.GetStringReset();
             btnNext.Content = language.GetStringNext();
             btnSave.Content = language.GetStringSave();
@@ -110,15 +105,12 @@ namespace XMLWriter.Pages
         private void InitValueItems()
         {
             DataSet data = new DataSet();
-            if (data.GetStepAnimsPos(data.GetStepCount()) == "")
-            {
-                inputAnim.Text = "default";
-            }
-            else
-            {
-                inputAnim.Text = data.GetStepAnimsPos(data.GetStepCount());
-            }
-
+            inputAnim.Text = data.GetStepAnimsPos(data.GetStepCount()) == ""
+                ? "default"
+                : data.GetStepAnimsPos(data.GetStepCount());
+            inputStepName.Text = data.GetStepNamePos(data.GetStepCount()) == ""
+                ? "Schritt " + (data.GetStepCount() + 1)
+                : data.GetStepNamePos(data.GetStepCount());
             inputText.Text = data.GetStepTextPos(data.GetStepCount());
             inputSpecialText.Text = data.GetStepSpecialTextPos(data.GetStepCount());
 
