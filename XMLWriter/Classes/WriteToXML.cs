@@ -7,7 +7,8 @@ namespace XMLWriter
 {
     class WriteToXML
     {
-        protected static readonly string path = @"Testgelände/"; //Hier muss ich wohl drigend nochmal nachgucken, wie man eine Pfadsuche öffnet, wie man das normalerweise so macht
+        //protected static readonly string path = @"Testgelände/"; //Hier muss ich wohl drigend nochmal nachgucken, wie man eine Pfadsuche öffnet, wie man das normalerweise so macht
+        protected static readonly string path = @"";
         protected static readonly string fileExtension = ".txt"; //später .xml
 
         public virtual void FillList()

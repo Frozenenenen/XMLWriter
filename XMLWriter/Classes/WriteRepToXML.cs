@@ -9,14 +9,15 @@ namespace XMLWriter
     {
         public void OutputToXML(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> special, string fileName, string dataType) //Output to file
         {
+            System.Diagnostics.Debug.WriteLine("OutputToXML List Start");
             SetFileName(fileName, dataType);
             string[] output = FillList(stepCountMax, step, text, anim, special);
             File.WriteAllLines(path + dataType + "_" + fileName + fileExtension, output);
         }
         public string[] FillList(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> special)
         {
-
-            List<String> list = new List<string> { };
+            System.Diagnostics.Debug.WriteLine("Fill List Start");
+            List <String> list = new List<string> { };
             list.Add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             list.Add("<RepairCollection>");
             list.Add("\t" + "<Repairs>");

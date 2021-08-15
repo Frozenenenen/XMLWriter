@@ -32,9 +32,7 @@ namespace XMLWriter.Pages
             MainWindow main = new MainWindow();
             data.SaveRepSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputSpecialText.Text);
             GUI.IncrementSteps();
-
-            main.Main.Content = new RepPage();
-
+            _ = NavigationService.Navigate(new RepPage());
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
@@ -45,13 +43,13 @@ namespace XMLWriter.Pages
 
             if (data.GetStepCount() == 0)
             {
-                main.Main.Content = new StartPage();
+                _ = NavigationService.Navigate(new StartPage());
             }
             else
             {
                 data.SaveRepSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputSpecialText.Text);
                 GUI.DecrementSteps();
-                main.Main.Content = new RepPage();
+                _ = NavigationService.Navigate(new RepPage());
             }
 
         }
@@ -64,12 +62,12 @@ namespace XMLWriter.Pages
             if (data.GetStepCount() == 0)
             {
 
-                main.Main.Content = new StartPage();
+                _ = NavigationService.Navigate(new StartPage());
             }
             else
             {
                 GUI.DecrementStepsMax();
-                main.Main.Content = new RepPage();
+                _ = NavigationService.Navigate(new RepPage());
             }
 
         }
@@ -82,9 +80,7 @@ namespace XMLWriter.Pages
             GUI.IncrementSteps();
             GUI.DecrementStepsForSaving();
 
-            
-            MainWindow main = new MainWindow();
-            main.Main.Content = new SavePage();
+            _ = NavigationService.Navigate(new SavePage());
         }
 
         private void InitTextItems()
