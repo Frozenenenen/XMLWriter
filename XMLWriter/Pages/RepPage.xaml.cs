@@ -34,12 +34,10 @@ namespace XMLWriter.Pages
             GUI.IncrementSteps();
             _ = NavigationService.Navigate(new RepPage());
         }
-
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
-            MainWindow main = new MainWindow();
 
             if (data.GetStepCount() == 0)
             {
@@ -51,13 +49,11 @@ namespace XMLWriter.Pages
                 GUI.DecrementSteps();
                 _ = NavigationService.Navigate(new RepPage());
             }
-
         }
         private void btnBackDelete_Click(object sender, RoutedEventArgs e)
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
-            MainWindow main = new MainWindow();
 
             if (data.GetStepCount() == 0)
             {
@@ -69,9 +65,7 @@ namespace XMLWriter.Pages
                 GUI.DecrementStepsMax();
                 _ = NavigationService.Navigate(new RepPage());
             }
-
         }
-
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             DataSet data = new DataSet();
@@ -99,9 +93,7 @@ namespace XMLWriter.Pages
             btnBackDelete.Content = language.GetStringReset();
             btnNext.Content = language.GetStringNext();
             btnSave.Content = language.GetStringSave();
-
         }
-
         private void InitValueItems()
         {
             DataSet data = new DataSet();
@@ -116,7 +108,5 @@ namespace XMLWriter.Pages
 
             Console.WriteLine("Ausgabe: Schritt: " + (data.GetStepCount() + 1) + " Anim: " + data.GetStepAnimsPos(data.GetStepCount()) + " Text: " + data.GetStepTextPos(data.GetStepCount()) + " SpText: " + data.GetStepSpecialTextPos(data.GetStepCount()));
         }
-
-
     }
 }

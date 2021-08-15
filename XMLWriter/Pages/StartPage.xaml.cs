@@ -26,29 +26,14 @@ namespace XMLWriter.Pages
             DataSet data = new DataSet();
             data.InitDataSet();
             lingo.InitLanguage("Deutsch");
-
-            inputType.ItemsSource = data.GetDataTypeChoice();
-            inputType.Text = "rep";     //Aus irgendeinem Grund wird es nicht angezeigt, wenn gfs statt rep genutzt wird... Ich sag mal es reicht so
-            //btnWeiter.Content = lingo.GetStringNext();
-            btnWeiter.Content = "--->";
-
-
-            inputLanguage.ItemsSource = lingo.GetLanguageChoises();
-            inputLanguage.Text = lingo.GetStringLanguage();
-
-
+            InitTextItems();
         }
 
-        private void Button_Next(object sender, RoutedEventArgs e)
+        private void BtnNext(object sender, RoutedEventArgs e)
         {
-            //Ausgewähltes nächstes Fenster öffnen und dieses schließen
-            MainWindow main = new MainWindow();
-            RepPage rep = new RepPage();
-            GfsPage gfs1 = new GfsPage();
-            SavePage sW = new SavePage();
             DataSet data = new DataSet();
             data.SetDataType(inputType.Text);
-            Console.WriteLine("bla");
+
             if (inputType.Text == "rep")
             {
                 _ = NavigationService.Navigate(new RepPage());
@@ -61,15 +46,32 @@ namespace XMLWriter.Pages
             {
                 Console.WriteLine("Fehler in der gfs/rep-Wahl");
             }
-
         }
 
 
-        private void btnSelectLanguage_Click(object sender, RoutedEventArgs e)
+        private void BtnSelectLanguage_Click(object sender, RoutedEventArgs e)
         {
             Language language = new Language();
             language.InitLanguage(inputLanguage.Text); //Befüllt die Variablen mit den Wörtern  der jeweiligen Sprache
             textTitel.Content = language.GetStringCreateDataSet(); //Ausgabe der Überschrift "Create Data Set"
+        }
+        private void InitTextItems()
+        {
+            Language language = new Language();
+            DataSet data = new DataSet();
+
+            btnWeiter.Content = "--->";
+            inputLanguage.ItemsSource = language.GetLanguageChoises();
+            inputLanguage.Text = language.GetStringLanguage();
+            inputType.ItemsSource = data.GetDataTypeChoice();
+            textInstructions.Content = language.GetStringGeneralInstruction();
+            textInstructions.ToolTip = language.GetStringGeneralInstructionText();
+            inputType.Text = "rep";     //Aus irgendeinem Grund wird es nicht angezeigt, wenn gfs statt rep genutzt wird... Ich sag mal es reicht so
+        }
+
+        private void BtnClose(object sender, RoutedEventArgs e)
+        {
+            App.Current.Shutdown(0);
         }
     }
 }
