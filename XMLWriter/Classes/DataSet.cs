@@ -547,9 +547,10 @@ namespace XMLWriter
             checkStepSmartTool.Clear();
             stepNextStep.Clear();
             stepLastStep.Clear();
+            InitNewDataSet();
         }
-        {
-            public void SaveRepSet(string stepName, string text, string anim, string specialText)
+        
+        public void SaveRepSet(string stepName, string text, string anim, string specialText)
         {
             SetStep(stepName);
             SetText(text);
@@ -558,7 +559,6 @@ namespace XMLWriter
 
             System.Diagnostics.Debug.WriteLine(stepName + " Anim: " + anim + " Text: " + text + " SpText: " + specialText);
         }
-
         public void SaveGfsSet(string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, bool? checkActuatorTest, string RDBI, bool? checkRDBI, string smartTool, bool? checkSmartTool, bool? nextStep, bool? lastStep)
         {
             SetStep(stepName);
