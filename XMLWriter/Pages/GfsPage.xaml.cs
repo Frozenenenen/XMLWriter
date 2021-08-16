@@ -122,7 +122,7 @@ namespace XMLWriter.Pages
             inputAnim.Text = data.GetStepAnimsPos(data.GetStepCount()) == ""
                 ? "default"
                 : data.GetStepAnimsPos(data.GetStepCount());
-            inputInstruction.Text = data.GetStepTextPos(data.GetStepCount());
+            inputInstruction.Text = data.GetStepInstructionPos(data.GetStepCount());
             inputPositiveID.Text = data.GetStepPositiveIDPos(data.GetStepCount());
             inputNegativeID.Text = data.GetNegativeIDPos(data.GetStepCount());
             inputPositiveResult.Text = data.GetPositiveResultPos(data.GetStepCount());

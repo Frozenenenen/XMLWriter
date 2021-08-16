@@ -8,7 +8,7 @@ namespace XMLWriter
     {
         public void OutputToXML(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<bool> checkActuatorTest, List<string> RDBI, List<bool> checkRDBI, List<string> smartTool, List<bool> checkSmartTool, List<bool> nextStep, List<bool> lastStep, string fileName, string dataType)
         {
-            fileName = SetFileName(fileName, dataType);
+            fileName = SetFileName(fileName);//, dataType);
             string[] output = FillList(stepCountMax, step, text, anim, instruction, posID, negID, posResult, repXML, actuatorTest, checkActuatorTest, RDBI, checkRDBI, smartTool, checkSmartTool, nextStep, lastStep);
             File.WriteAllLines(pathVehicleID + "/" + pathLanguage + "/" + fileName + "_" + pathLanguage + fileExtension, output);
         }

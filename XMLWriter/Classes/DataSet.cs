@@ -3,6 +3,18 @@ using System.Collections.Generic;
 
 namespace XMLWriter
 {
+    /***********************
+     * Mögliche Fehlerquelle:
+     * Ich habe aufrgund mangelnder Ideen zur Umsetzung oftmals den Listenbefehl"Insert" auf eine Art und Weise benutzt, 
+     * wo weitere Elemente hinzugefügt werden, obwohl diese damit dann über die maxcount zahl hinaus gehen.
+     * Dies wurde gemacht, damit keine Zugriffe auf nicht schon erstellte Elemente stattfindet, was exceptions wirft.
+     * Allerdings kann dies dazu führen, dass der letzte Speicherstand vielleicht Fehler verursacht. Also alle wo StepCount==StepCountMax.
+     * Ich weiß aktuell noch keine bessere Lösung als bei neuen Datensätzen beim Insert auch ein direkt einspeichern dazu zu fügen.
+     * Dies dürfte auch der Grund dafür sein, dass wenn man zurück und wieder vor springt und dann neue Datensätze eröffnet diese schon falsch befüllt sind.
+     ***********************/
+    //Todo: Getter Setter mit Variable verkürzen
+    //Todo: Dataset Klasse aufteilen in GFSSet und REPSet Subklassen
+    //Todo: Umschreiben der Increment und Decrement
     class DataSet
     {
         private static int stepCount = 0;
@@ -272,11 +284,12 @@ namespace XMLWriter
         {
             if (stepCountMax == stepCount)
             {
-                steps.Insert(stepCount, step + " " + (inputStepCount));
+                steps.Insert(stepCount, inputStepCount);
+                steps[stepCount] = inputStepCount;
             }
             else
             {
-                steps[stepCount] = step + " " + (inputStepCount);
+                steps[stepCount] = inputStepCount;
             }
         }
         private void SetAnim(string inputStepAnim)
@@ -284,6 +297,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 stepAnims.Insert(stepCount, inputStepAnim);
+                stepAnims[stepCount] = inputStepAnim;
             }
             else
             {
@@ -295,6 +309,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 stepTexts.Insert(stepCount, inputStepText);
+                stepTexts[stepCount] = inputStepText;
             }
             else
             {
@@ -306,6 +321,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 stepSpecial.Insert(stepCount, inputStepSpecial);
+                stepSpecial[stepCount] = inputStepSpecial;
             }
             else
             {
@@ -317,6 +333,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 stepInstruction.Insert(stepCount, inputInstruction);
+                stepInstruction[stepCount] = inputInstruction;
             }
             else
             {
@@ -328,6 +345,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 stepPositiveID.Insert(stepCount, inputStepPositiveID);
+                stepPositiveID[stepCount] = inputStepPositiveID;
             }
             else
             {
@@ -339,6 +357,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 stepNegativeID.Insert(stepCount, inputStepNegativeID);
+                stepNegativeID[stepCount] = inputStepNegativeID;
             }
             else
             {
@@ -350,6 +369,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 stepPositiveResult.Insert(stepCount, inputPositiveResult);
+                stepPositiveResult[stepCount] = inputPositiveResult;
             }
             else
             {
@@ -361,6 +381,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 stepRepXML.Insert(stepCount, inputRepXML);
+                stepRepXML[stepCount] = inputRepXML;
             }
             else
             {
@@ -372,6 +393,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 stepActuatorTest.Insert(stepCount, inputActuatorTest);
+                stepActuatorTest[stepCount] = inputActuatorTest;
             }
             else
             {
@@ -383,6 +405,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 checkStepActuatorTest.Insert(stepCount, inputCheckActuatorTest);
+                checkStepActuatorTest[stepCount] = inputCheckActuatorTest;
             }
             else
             {
@@ -394,6 +417,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 stepRDBI.Insert(stepCount, inputRDBI);
+                stepRDBI[stepCount] = inputRDBI;
             }
             else
             {
@@ -405,6 +429,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 checkStepRDBI.Insert(stepCount, inputCheckRDBI);
+                checkStepRDBI[stepCount] = inputCheckRDBI;
             }
             else
             {
@@ -416,6 +441,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 stepSmartTool.Insert(stepCount, inputSmartTool);
+                stepSmartTool[stepCount] = inputSmartTool;
             }
             else
             {
@@ -427,6 +453,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 checkStepSmartTool.Insert(stepCount, inputCheckSmartTool);
+                checkStepSmartTool[stepCount] = inputCheckSmartTool;
             }
             else
             {
@@ -438,6 +465,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 stepNextStep.Insert(stepCount, inputNextStep);
+                stepNextStep[stepCount] = inputNextStep;
             }
             else
             {
@@ -449,6 +477,7 @@ namespace XMLWriter
             if (stepCountMax == stepCount)
             {
                 stepLastStep.Insert(stepCount, inputLastStep);
+                stepLastStep[stepCount] = inputLastStep;
             }
             else
             {
@@ -533,7 +562,7 @@ namespace XMLWriter
         public void SetFileName(string inputFileName) //Damit keine vorherigen Daten überschrieben werden, wird der Dateiname iteriert, bis ein neuer Dateiname gefunden wurde.
         {
             WriteToXML writer = new WriteToXML();
-            writer.SetFileName(inputFileName, dataType);
+            writer.SetFileName(inputFileName);//, dataType);
 
         }
 

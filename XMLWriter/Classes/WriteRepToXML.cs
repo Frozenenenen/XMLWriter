@@ -9,8 +9,8 @@ namespace XMLWriter
     {
         public void OutputToXML(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> special, string fileName, string dataType) //Output to file
         {
-            
-            fileName = SetFileName(fileName, dataType);
+
+            fileName = SetFileName(fileName);//, dataType);
             string[] output = FillList(stepCountMax, step, text, anim, special);
             File.WriteAllLines(pathVehicleID + "/" + pathLanguage + "/" + fileName + "_" + pathLanguage + fileExtension, output);
         }

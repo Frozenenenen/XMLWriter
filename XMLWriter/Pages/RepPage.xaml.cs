@@ -92,13 +92,14 @@ namespace XMLWriter.Pages
         private void InitValueItems()
         {
             DataSet data = new DataSet();
-            inputAnim.Text = data.GetStepAnimsPos(data.GetStepCount()) == ""
-                ? "default"
-                : data.GetStepAnimsPos(data.GetStepCount());
+
             inputStepName.Text = data.GetStepNamePos(data.GetStepCount()) == ""
                 ? "Schritt " + (data.GetStepCount() + 1)
                 : data.GetStepNamePos(data.GetStepCount());
             inputText.Text = data.GetStepTextPos(data.GetStepCount());
+            inputAnim.Text = data.GetStepAnimsPos(data.GetStepCount()) == ""
+                ? "default"
+                : data.GetStepAnimsPos(data.GetStepCount());
             inputSpecialText.Text = data.GetStepSpecialTextPos(data.GetStepCount());
 
             Console.WriteLine("Ausgabe: Schritt: " + (data.GetStepCount() + 1) + " Anim: " + data.GetStepAnimsPos(data.GetStepCount()) + " Text: " + data.GetStepTextPos(data.GetStepCount()) + " SpText: " + data.GetStepSpecialTextPos(data.GetStepCount()));

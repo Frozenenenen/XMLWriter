@@ -7,22 +7,22 @@ namespace XMLWriter
 {
     class WriteToXML
     {
-        //Hier muss ich wohl drigend nochmal nachgucken, wie man eine Pfadsuche öffnet, wie man das normalerweise so macht
-        //Der Ordner muss bestehe, damit das funktioniert!
+        //Todo: Pfadsuche für's Speichern
+        //Der Ordner muss bestehen, damit das Speichern funktioniert!
         protected static readonly string pathVehicleID = @"eGolf";
         protected static readonly string pathLanguage = @"de";
         protected static readonly string fileExtension = ".txt"; //später .xml
 
         public string[] GetPathVehicleIDChoises()
-        {//Attention! if the strings get altered they have to get altered down below in the switch aswell
+        {
 
-            string[] languageChoises = { "eGolf", "anderesFahrzeug", "DrittesFahrzeug" }; //Kurze Version
+            string[] languageChoises = { "eGolf", "anderesFahrzeug", "DrittesFahrzeug" };
             return languageChoises;
         }
         public string[] GetPathLanguageChoises()
-        {//Attention! if the strings get altered they have to get altered down below in the switch aswell
+        {
 
-            string[] languageChoises = { "de", "en", "es" }; //Kurze Version
+            string[] languageChoises = { "de", "en", "es" };
             return languageChoises;
         }
 
@@ -33,21 +33,21 @@ namespace XMLWriter
         {
         }
 
-        public string SetFileName(string inputFileName, string dataType) //Damit keine vorherigen Daten überschrieben werden, wird der Dateiname iteriert, bis ein neuer Dateiname gefunden wurde.
+        public string SetFileName(string inputFileName)//, string dataType) //Damit keine vorherigen Daten überschrieben werden, wird der Dateiname iteriert, bis ein neuer Dateiname gefunden wurde.
         {
-            string tempFileName;
+            /*string tempFileName;
             int i = 2;
             while (true)
             {
 
-                if (!File.Exists(pathVehicleID + "/" + pathLanguage + "/" + inputFileName + "_" + pathLanguage + fileExtension) && i == 2)
+                if (!File.Exists(pathVehicleID + "/" + pathLanguage + "/" + inputFileName + "_" + pathLanguage + "" + fileExtension) && i == 2)
                 {
                     return inputFileName;
                 }
                 else
                 {
-                    tempFileName = inputFileName + Convert.ToString(i);
-                    if (!File.Exists(pathVehicleID + "/" + pathLanguage + "/" + inputFileName + "_" + pathLanguage + fileExtension))
+                    tempFileName = inputFileName + Convert.ToString(i); //adds a number to the fileName - incrementing with each go through
+                    if (!File.Exists(pathVehicleID + "/" + pathLanguage + "/" + inputFileName + "_" + pathLanguage + "" + fileExtension))
                     {
                         return tempFileName;
                     }
@@ -56,7 +56,8 @@ namespace XMLWriter
                         i++;
                     }
                 }
-            }
+            }*/
+            return inputFileName;
         }
     }
 }
