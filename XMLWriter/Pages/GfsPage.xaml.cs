@@ -22,7 +22,7 @@ namespace XMLWriter.Pages
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
-            data.SaveGfsSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, inputPositiveResult.Text, inputRepXML.Text, inputActuatorTest.Text, inputCheckActuatorTest.IsEnabled, inputReadData.Text, inputCheckReadData.IsEnabled, inputSmartTool.Text, inputCheckSmartTool.IsEnabled, inputNextStep.IsEnabled, inputLastStep.IsEnabled);
+            data.SaveGfsSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, inputPositiveResult.Text, inputRepXML.Text, inputActuatorTest.Text, inputCheckActuatorTest.IsChecked, inputReadData.Text, inputCheckReadData.IsChecked, inputSmartTool.Text, inputCheckSmartTool.IsChecked, inputNextStep.IsChecked, inputLastStep.IsChecked);
             GUI.IncrementSteps();
 
             _ = NavigationService.Navigate(new GfsPage());

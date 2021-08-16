@@ -45,13 +45,13 @@ namespace XMLWriter
         private static List<string> stepPositiveResult = new List<string>();
         private static List<string> stepRepXML = new List<string>();
         private static List<string> stepActuatorTest = new List<string>();
-        private static List<bool> checkStepActuatorTest = new List<bool>();
+        private static List<bool?> checkStepActuatorTest = new List<bool?>();
         private static List<string> stepRDBI = new List<string>();
-        private static List<bool> checkStepRDBI = new List<bool>();
+        private static List<bool?> checkStepRDBI = new List<bool?>();
         private static List<string> stepSmartTool = new List<string>();
-        private static List<bool> checkStepSmartTool = new List<bool>();
-        private static List<bool> stepNextStep = new List<bool>();
-        private static List<bool> stepLastStep = new List<bool>();
+        private static List<bool?> checkStepSmartTool = new List<bool?>();
+        private static List<bool?> stepNextStep = new List<bool?>();
+        private static List<bool?> stepLastStep = new List<bool?>();
 
 
 
@@ -187,7 +187,7 @@ namespace XMLWriter
                 return "Fehler";
             }
         }
-        public bool GetCheckActuatorTestPos(int count)
+        public bool? GetCheckActuatorTestPos(int count)
         {
             try
             {
@@ -211,7 +211,7 @@ namespace XMLWriter
                 return "Fehler";
             }
         }
-        public bool GetCheckRDBIPos(int count)
+        public bool? GetCheckRDBIPos(int count)
         {
             try
             {
@@ -235,7 +235,7 @@ namespace XMLWriter
                 return "Fehler";
             }
         }
-        public bool GetCheckSmartTool(int count)
+        public bool? GetCheckSmartTool(int count)
         {
             try
             {
@@ -247,7 +247,7 @@ namespace XMLWriter
                 return true; 
             }
         }    
-        public bool GetNextStepPos(int count)
+        public bool? GetNextStepPos(int count)
         {
             try
             {
@@ -259,7 +259,7 @@ namespace XMLWriter
                 return true; //kA wie man hier dann nen Fehler erkennen soll
             }
         }
-        public bool GetLastStepPos(int count)
+        public bool? GetLastStepPos(int count)
         {
             try
             {
@@ -395,7 +395,7 @@ namespace XMLWriter
                 stepActuatorTest[stepCount] = inputActuatorTest;
             }
         }
-        private void SetCheckActuatorTest(bool inputCheckActuatorTest)
+        private void SetCheckActuatorTest(bool? inputCheckActuatorTest)
         {
             if (stepCountMax == stepCount)
             {
@@ -419,7 +419,7 @@ namespace XMLWriter
                 stepRDBI[stepCount] = inputRDBI;
             }
         }
-        private void SetCheckRDBI(bool inputCheckRDBI)
+        private void SetCheckRDBI(bool? inputCheckRDBI)
         {
             if (stepCountMax == stepCount)
             {
@@ -443,7 +443,7 @@ namespace XMLWriter
                 stepSmartTool[stepCount] = inputSmartTool;
             }
         }
-        private void SetCheckSmartTool(bool inputCheckSmartTool)
+        private void SetCheckSmartTool(bool? inputCheckSmartTool)
         {
             if (stepCountMax == stepCount)
             {
@@ -455,7 +455,7 @@ namespace XMLWriter
                 checkStepSmartTool[stepCount] = inputCheckSmartTool;
             }
         }
-        private void SetNextStep(bool inputNextStep)
+        private void SetNextStep(bool? inputNextStep)
         {
             if (stepCountMax == stepCount)
             {
@@ -467,7 +467,7 @@ namespace XMLWriter
                 stepNextStep[stepCount] = inputNextStep;
             }
         }
-        private void SetLastStep(bool inputLastStep)
+        private void SetLastStep(bool? inputLastStep)
         {
             if (stepCountMax == stepCount)
             {
@@ -536,7 +536,7 @@ namespace XMLWriter
             System.Diagnostics.Debug.WriteLine(stepName + " Anim: " + anim + " Text: " + text + " SpText: " + specialText);
         }
 
-        public void SaveGfsSet(string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, bool checkActuatorTest, string RDBI, bool checkRDBI, string smartTool, bool checkSmartTool, bool nextStep, bool lastStep)
+        public void SaveGfsSet(string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, bool? checkActuatorTest, string RDBI, bool? checkRDBI, string smartTool, bool? checkSmartTool, bool? nextStep, bool? lastStep)
         {
             SetStep(stepName);
             SetText(text);

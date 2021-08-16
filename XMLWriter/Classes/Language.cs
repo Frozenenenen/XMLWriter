@@ -143,7 +143,7 @@ namespace XMLWriter
             posResult = "Positives Ergebnis";
             repXML = "RepXML";
             actuatorTest = "Aktortest";
-            readData = "Daten Lesen (RDBI)";
+            readData = "Identifier (RDBI)";
             smartTool = "SmartTool";
             nextStep = "Nächster Schritt";
             lastStep = "Letzter Schritt";
@@ -171,15 +171,15 @@ namespace XMLWriter
             reset = "Reset";
             rep = "Repair";
             instructions = "Instructions";
-            posID = "Positive ID?";
-            negID = "Negative ID?";
-            posResult = "Positives result?";
-            lastStep = "Last Step?";
+            posID = "Positive ID";
+            negID = "Negative ID";
+            posResult = "Positives result";
+            lastStep = "Last Step";
             repXML = "RepXML";
-            actuatorTest = "Actuator test?";
-            readData = "Read data?";
+            actuatorTest = "Actuator test";
+            readData = "Identifier (RDBI)";
             smartTool = "SmartTool";
-            nextStep = "Next Step?";
+            nextStep = "Next Step";
             fileNameTitel = "File Name with or without path";
         }
         void InitEspanol()
