@@ -55,26 +55,26 @@
         <!--positive ID-->
         <!--<CheckBox x:Name="inputPositiveID" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>-->
         <StackPanel Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="3">
-            <Label x:Name="textPositiveID"/>
+            <Label x:Name="textPositiveID" Margin="45,0"/>
             <TextBox x:Name="inputPositiveID" Margin="45,0"/>
         </StackPanel>
         <!--negativeID-->
         <!--<CheckBox x:Name="inputNegativeID" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>-->
         <StackPanel Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="3">
-            <Label x:Name="textNegativeID"/>
+            <Label x:Name="textNegativeID" Margin="45,0"/>
             <TextBox x:Name="inputNegativeID" Margin="45,0"/>
         </StackPanel>
         <!--positive Result-->
         <!--<CheckBox x:Name="inputPositiveResult" Grid.Row="4" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>-->
         <StackPanel Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3">
-            <Label x:Name="textPositiveResult"/>
+            <Label x:Name="textPositiveResult" Margin="45,0"/>
             <TextBox x:Name="inputPositiveResult" Margin="45,0"/>
         </StackPanel>
         
         <!--Rep XML-->
         <DockPanel Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="3">
             <StackPanel HorizontalAlignment="Stretch" >
-                <Label x:Name="textRepXML"/>
+                <Label x:Name="textRepXML" Margin="45,0"/>
                 <TextBox x:Name="inputRepXML" Margin="45,0"/>    
             </StackPanel>
         </DockPanel>
@@ -106,9 +106,9 @@
         </DockPanel>
 
         <!--next step-->
-        <CheckBox x:Name="inputNextStep" Grid.Row="10" Grid.Column="3" HorizontalAlignment="Left" Margin="45,0"/>
+        <CheckBox x:Name="inputNextStep" Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="45,0"/>
         <!--last step - wird aktuell automatisch befüllt-->
-        <CheckBox IsEnabled="False" x:Name="inputLastStep" Grid.Row="11" Grid.Column="3" HorizontalAlignment="Left" Margin="45,0"/>
+        <CheckBox IsEnabled="False" x:Name="inputLastStep" Grid.Row="11" Grid.ColumnSpan="2" Grid.Column="3" HorizontalAlignment="Left" Margin="45,0"/>
 
         <!--Bedienelemente und Randinfos-->
         <Button x:Name="btnNext" Grid.Row="11" Grid.Column="6" Margin="0,0,10,10" Click="BtnNext_Click"/>

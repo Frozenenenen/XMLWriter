@@ -62,7 +62,7 @@ namespace XMLWriter
         public string GetStringSteps() => steps;
         public string GetStringContent() => description;
         public string GetStringSpecialStep() => specialStep;
-        public string GetStringInstructions() => instructions;
+        public string GetStringInstruction() => instructions;
         public string GetStringAnim() => anim;
         public string GetStringSummary() => summary;
         public string GetStringReset() => reset;

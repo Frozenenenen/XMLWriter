@@ -81,7 +81,7 @@ namespace XMLWriter.Pages
             textStep.Content = language.GetStringStep() + " " + (data.GetStepCount() + 1);
             textContentTitel.Content = language.GetStringContent();
             textAnimTitel.Content = language.GetStringAnim();
-            textInstructionTitel.Content = language.GetStringSpecialStep();
+            textInstructionTitel.Content = language.GetStringInstruction();
             textTitel.Content = language.GetStringPleaseFill();
             if (data.GetStepCount() != 0)
             {
@@ -121,11 +121,12 @@ namespace XMLWriter.Pages
             inputStepName.Text = data.GetStepNamePos(data.GetStepCount()) == ""
                ? "Schritt " + (data.GetStepCount() + 1)
                : data.GetStepNamePos(data.GetStepCount());
-            inputText.Text = data.GetStepSpecialTextPos(data.GetStepCount());
+            inputText.Text = data.GetStepTextPos(data.GetStepCount());
             inputAnim.Text = data.GetStepAnimsPos(data.GetStepCount()) == ""
                 ? "default"
                 : data.GetStepAnimsPos(data.GetStepCount());
             inputInstruction.Text = data.GetStepInstructionPos(data.GetStepCount());
+            //System.Diagnostics.Debug.WriteLine("Blub: " + data.GetStepInstructionPos(data.GetStepCount()));
             //Right Side
             inputPositiveID.Text = data.GetStepPositiveIDPos(data.GetStepCount());
             inputNegativeID.Text = data.GetNegativeIDPos(data.GetStepCount());
