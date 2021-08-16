@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 
+/***********************
+ * Mögliche Fehlerquelle:
+ * Ich habe aufrgund mangelnder Ideen zur Umsetzung oftmals den Listenbefehl"Insert" auf eine Art und Weise benutzt, 
+ * wo weitere Elemente hinzugefügt werden, obwohl diese damit dann über die maxcount zahl hinaus gehen.
+ * Dies wurde gemacht, damit keine Zugriffe auf nicht schon erstellte Elemente stattfindet, was exceptions wirft.
+ * Allerdings kann dies dazu führen, dass der letzte Speicherstand vielleicht Fehler verursacht. Also alle wo StepCount==StepCountMax.
+ * Ich weiß aktuell noch keine bessere Lösung als bei neuen Datensätzen beim Insert auch ein direkt einspeichern dazu zu fügen.
+ * Dies dürfte auch der Grund dafür sein, dass wenn man zurück und wieder vor springt und dann neue Datensätze eröffnet diese schon falsch befüllt sind.
+ ***********************/
+//Todo:prio4 Getter Setter mit Variable verkürzen
+//Todo:prio3 Dataset Klasse aufteilen in GFSSet und REPSet Subklassen
+//Todo:prio4 Umschreiben der Increment und Decrement
+//Todo:prio2 Last step im letzten Schritt true
 namespace XMLWriter
 {
-    /***********************
-     * Mögliche Fehlerquelle:
-     * Ich habe aufrgund mangelnder Ideen zur Umsetzung oftmals den Listenbefehl"Insert" auf eine Art und Weise benutzt, 
-     * wo weitere Elemente hinzugefügt werden, obwohl diese damit dann über die maxcount zahl hinaus gehen.
-     * Dies wurde gemacht, damit keine Zugriffe auf nicht schon erstellte Elemente stattfindet, was exceptions wirft.
-     * Allerdings kann dies dazu führen, dass der letzte Speicherstand vielleicht Fehler verursacht. Also alle wo StepCount==StepCountMax.
-     * Ich weiß aktuell noch keine bessere Lösung als bei neuen Datensätzen beim Insert auch ein direkt einspeichern dazu zu fügen.
-     * Dies dürfte auch der Grund dafür sein, dass wenn man zurück und wieder vor springt und dann neue Datensätze eröffnet diese schon falsch befüllt sind.
-     ***********************/
-    //Todo: Getter Setter mit Variable verkürzen
-    //Todo: Dataset Klasse aufteilen in GFSSet und REPSet Subklassen
-    //Todo: Umschreiben der Increment und Decrement
     class DataSet
     {
         private static int stepCount = 0;
@@ -24,8 +25,6 @@ namespace XMLWriter
 
         private static readonly string[] dataTypeChoice = { "gfs", "rep" }; //Gehört eigentlich nicht in diese Klasse, aber bis mir ein besserer Ort einfällt bleibts wohl hier
 
-        private static readonly string step = "Schritt";
-        
         //Fahrzeugspezifische Variablen
         /*private static string vin = "";
         private static string model = "";*/
@@ -62,16 +61,10 @@ namespace XMLWriter
 
         public string[] GetDataTypeChoice() => dataTypeChoice;
 
-        public void SetDataType(string inputDataType) => dataType = inputDataType;
+        
         public string GetDataType() => dataType;
-         /*public string[] GetModelChoices() => File.ReadAllLines(@"Testgelände\models.txt");
-         public string GetVIN() => vin;
-         public void SetVIN(string inputVin) => vin = inputVin;
-
-         public string GetModel() => model;
-         public void SetModel(string inputName) => model = inputName;*/
-
         public string GetFileName() => fileName;
+
         public string GetStepNamePos(int count)
         {
             try
@@ -279,7 +272,9 @@ namespace XMLWriter
             }
         }
 
-        //Setter - private, weil diese nur für die Verständlichkeit des codes hier gesammelt werden
+        //Setter 
+        public void SetDataType(string inputDataType) => dataType = inputDataType;
+        //- private, weil diese nur für die Verständlichkeit des codes hier gesammelt werden
         private void SetStep(string inputStepCount)
         {
             if (stepCountMax == stepCount)
@@ -490,21 +485,25 @@ namespace XMLWriter
 
         public void InitNewDataSet()       //Muss mit allen default-Daten befüllt werden, wenn eine "Weiteren Datensatz anlegen"-Funktion eingebaut wird
         {                               //Theoretisch könnte man hier zwischen Rep und GFS unterscheiden um sich mal was zu sparen, aber sein wir ehrlich... auf den Speicher kommts nicht an
-            if(stepCount == stepCountMax)  //Das ist ne ZIEMLICH unsaubere Lösung :< 
+            if (stepCount == stepCountMax)  //Das ist ne ZIEMLICH unsaubere Lösung :< 
             {
+                //left side +rep
                 steps.Insert(stepCount, "");
                 stepAnims.Insert(stepCount, "default");
                 stepTexts.Insert(stepCount, "");
                 stepSpecial.Insert(stepCount, "");
+                stepInstruction.Insert(stepCount, "");
+                //right side
                 stepPositiveID.Insert(stepCount, "");
                 stepNegativeID.Insert(stepCount, "");
                 stepPositiveResult.Insert(stepCount, "");
                 stepRepXML.Insert(stepCount, "");
                 stepActuatorTest.Insert(stepCount, "");
-                checkStepActuatorTest.Insert(stepCount, true);
                 stepRDBI.Insert(stepCount, "");
-                checkStepRDBI.Insert(stepCount, true);
                 stepSmartTool.Insert(stepCount, "");
+                //checks
+                checkStepActuatorTest.Insert(stepCount, true);
+                checkStepRDBI.Insert(stepCount, true);
                 checkStepSmartTool.Insert(stepCount, true);
                 stepNextStep.Insert(stepCount, false);
                 stepLastStep.Insert(stepCount, false);
@@ -556,7 +555,7 @@ namespace XMLWriter
             SetNextStep(nextStep);
             SetLastStep(lastStep);
 
-            System.Diagnostics.Debug.WriteLine("step: " + stepName + " text: " + text + " Anim: " + anim + " Instr.: " + instructionText + " posID: " + posID + " negID: " + negID +" posRes: " + posResult + " repXML: " + repXML + "\nA-Test: " + actuatorTest + " A-chek: " + checkActuatorTest + " RDBI: " + RDBI + " checkRDBI: " + checkRDBI + " SmartTool: " + smartTool + " checkSmartTool: " + checkSmartTool + " NextST: " + nextStep + " LastSt: " + lastStep);
+            System.Diagnostics.Debug.WriteLine("step: " + stepName + " text: " + text + " Anim: " + anim + " Instr.: " + instructionText + " posID: " + posID + " negID: " + negID +" posRes: " + posResult + " repXML: " + repXML + "\nA-Test: " + actuatorTest + " A-chek: " + checkActuatorTest + " RDBI: " + RDBI + " checkRDBI: " + checkRDBI + " SmartTool: " + smartTool + " checkSmartTool: " + checkSmartTool + " NextST: " + nextStep + " LastSt: " + lastStep +"\n");
         }
 
         public void SetFileName(string inputFileName) //Damit keine vorherigen Daten überschrieben werden, wird der Dateiname iteriert, bis ein neuer Dateiname gefunden wurde.
