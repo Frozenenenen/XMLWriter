@@ -274,6 +274,8 @@ namespace XMLWriter
         }
 
         //Setter 
+        public void SetStepCountMax(int inputStepCountMax) => stepCountMax = inputStepCountMax;
+        public void SetStepCount(int inputStepCount) => stepCount = inputStepCount;
         public void SetDataType(string inputDataType) => dataType = inputDataType;
         //- private, weil diese nur für die Verständlichkeit des codes hier gesammelt werden
         private void SetStep(string inputStepCount)
@@ -527,6 +529,7 @@ namespace XMLWriter
         {
             stepCountMax--;
         }
+
         public void ResetDataSet()
         {
             stepCountMax = 0;
@@ -549,6 +552,7 @@ namespace XMLWriter
             stepLastStep.Clear();
             InitNewDataSet();
         }
+        
         
         public void SaveRepSet(string stepName, string text, string anim, string specialText)
         {

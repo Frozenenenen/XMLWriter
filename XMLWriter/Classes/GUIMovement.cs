@@ -9,29 +9,28 @@ namespace XMLWriter
         DataSet data = new DataSet();
         public void IncrementSteps()
         {
-            
             if (data.GetStepCount() == data.GetStepCountMax())
             {
-                data.IncrementMaxSteps();
+                data.SetStepCountMax(data.GetStepCountMax() + 1);
             }
-            data.IncrementStepCount();
+            data.SetStepCount(data.GetStepCount() + 1);
         }
         public void DecrementStepsForSaving()
         {
             if (data.GetStepCount() == data.GetStepCountMax())
             {
-                data.DecrementMaxSteps();
+                data.SetStepCountMax(data.GetStepCountMax() - 1);
             }
-            data.DecrementStepCount();
+            data.SetStepCount(data.GetStepCount() - 1);
         }
         public void DecrementSteps()
         {
-            data.DecrementStepCount();
+            data.SetStepCount(data.GetStepCount() - 1);
         }
-        public void DecrementStepsMax() 
+        public void DecrementStepsMax()
         {
-            data.DecrementStepCount();
-            data.DecrementMaxSteps();
+            data.SetStepCount(data.GetStepCount() - 1);
+            data.SetStepCountMax(data.GetStepCountMax() - 1);
 
         }
     }
