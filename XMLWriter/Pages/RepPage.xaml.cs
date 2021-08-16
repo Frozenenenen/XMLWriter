@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace XMLWriter.Pages
 {
@@ -25,16 +17,16 @@ namespace XMLWriter.Pages
             InitValueItems();
         }
 
-        private void btnNext_Click(object sender, RoutedEventArgs e)
+        private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
-            MainWindow main = new MainWindow();
             data.SaveRepSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputSpecialText.Text);
             GUI.IncrementSteps();
+
             _ = NavigationService.Navigate(new RepPage());
         }
-        private void btnBack_Click(object sender, RoutedEventArgs e)
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
@@ -50,7 +42,7 @@ namespace XMLWriter.Pages
                 _ = NavigationService.Navigate(new RepPage());
             }
         }
-        private void btnBackDelete_Click(object sender, RoutedEventArgs e)
+        private void BtnBackDelete_Click(object sender, RoutedEventArgs e)
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
@@ -66,7 +58,7 @@ namespace XMLWriter.Pages
                 _ = NavigationService.Navigate(new RepPage());
             }
         }
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
@@ -82,11 +74,14 @@ namespace XMLWriter.Pages
             DataSet data = new DataSet();
             Language language = new Language();
 
+            //Schritzüge
             textStep.Content = language.GetStringStep() + " " + (data.GetStepCount() + 1);
             textContentTitel.Content = language.GetStringContent();
             textAnimTitel.Content = language.GetStringAnim();
             textSpecialContentTitel.Content = language.GetStringSpecialStep();
             textTitel.Content = language.GetStringPleaseFill();
+            
+            //Buttons
             btnBack.Content = data.GetStepCount() != 0
                 ? language.GetStringBack()
                 : language.GetStringReset();

@@ -39,6 +39,8 @@
 
         <Label x:Name="textStepCount" Grid.Row="2" Grid.Column="1"/>
 
+        <ComboBox x:Name="inputLanguage" Grid.Row="9" Grid.Column="4" Margin="5,5"/>
+        <ComboBox x:Name="inputVehicleID" Grid.Row="9" Grid.Column="3" Margin="5,5"/>
 
 
         <Label x:Name="textFileNameTitel" Grid.Column="4" Grid.Row="10" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
