@@ -14,6 +14,7 @@ using System.Collections.Generic;
 //Todo:prio3 Dataset Klasse aufteilen in GFSSet und REPSet Subklassen
 //Todo:prio4 Umschreiben der Increment und Decrement
 //Todo:prio2 Last step im letzten Schritt true
+//Todo:prio4 Listenvariablen zu einer Objektliste
 namespace XMLWriter
 {
     class DataSet
@@ -526,7 +527,29 @@ namespace XMLWriter
         {
             stepCountMax--;
         }
-        public void SaveRepSet(string stepName, string text, string anim, string specialText)
+        public void ResetDataSet()
+        {
+            stepCountMax = 0;
+            steps.Clear();
+            stepTexts.Clear();
+            stepAnims.Clear();
+            stepSpecial.Clear();
+            stepInstruction.Clear();
+            stepPositiveID.Clear();
+            stepNegativeID.Clear();
+            stepPositiveResult.Clear();
+            stepRepXML.Clear();
+            stepActuatorTest.Clear();
+            checkStepActuatorTest.Clear();
+            stepRDBI.Clear();
+            checkStepRDBI.Clear();
+            stepSmartTool.Clear();
+            checkStepSmartTool.Clear();
+            stepNextStep.Clear();
+            stepLastStep.Clear();
+        }
+        {
+            public void SaveRepSet(string stepName, string text, string anim, string specialText)
         {
             SetStep(stepName);
             SetText(text);

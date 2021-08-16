@@ -35,6 +35,7 @@ namespace XMLWriter.Pages
             if (data.GetStepCount() == 0)
             {
                 _ = NavigationService.Navigate(new StartPage());
+                data.ResetDataSet();
             }
             else
             {
@@ -52,6 +53,7 @@ namespace XMLWriter.Pages
             {
 
                 _ = NavigationService.Navigate(new StartPage());
+                data.ResetDataSet();
             }
             else
             {
