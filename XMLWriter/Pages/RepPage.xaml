@@ -47,11 +47,11 @@
         <Label x:Name="textAnimTitel" Grid.Row="1" Grid.Column="4" FontWeight="Bold" VerticalAlignment="Bottom"/>
         <TextBox x:Name="inputAnim" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2"/>
 
-        <Button x:Name="btnNext" Grid.Row="11" Grid.Column="6" Margin="0,0,10,10" Click="btnNext_Click"/>
-        <Button x:Name="btnSave" Grid.Row="10" Grid.Column="6" Margin="0,0,10,10" Click="btnSave_Click"/>
-        <Button x:Name="btnBack" Grid.Row="11" Grid.Column="0" Margin="10,0,0,10" Click="btnBack_Click"/>
+        <Button x:Name="btnNext" Grid.Row="11" Grid.Column="6" Margin="0,0,10,10" Click="BtnNext_Click"/>
+        <Button x:Name="btnSave" Grid.Row="10" Grid.Column="6" Margin="0,0,10,10" Click="BtnSave_Click"/>
+        <Button x:Name="btnBack" Grid.Row="11" Grid.Column="0" Margin="10,0,0,10" Click="BtnBack_Click"/>
         <!-- IsEnabled="False"/>-->
-        <Button x:Name="btnBackDelete" Grid.Row="10" Grid.Column="0" Margin="10,0,0,10" Click="btnBackDelete_Click"/>
+        <Button x:Name="btnBackDelete" Grid.Row="10" Grid.Column="0" Margin="10,0,0,10" Click="BtnBackDelete_Click"/>
         <!-- IsEnabled="False"/>-->
 
         <Label x:Name="textTitel" Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="3" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>

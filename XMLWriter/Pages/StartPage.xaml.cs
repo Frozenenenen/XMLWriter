@@ -24,7 +24,7 @@ namespace XMLWriter.Pages
             InitializeComponent();
             Language lingo = new Language();
             DataSet data = new DataSet();
-            data.InitDataSet();
+            data.InitNewDataSet();
             lingo.InitLanguage("Deutsch");
             InitTextItems();
         }
@@ -47,13 +47,15 @@ namespace XMLWriter.Pages
                 Console.WriteLine("Fehler in der gfs/rep-Wahl");
             }
         }
-
-
         private void BtnSelectLanguage_Click(object sender, RoutedEventArgs e)
         {
             Language language = new Language();
             language.InitLanguage(inputLanguage.Text); //Befüllt die Variablen mit den Wörtern  der jeweiligen Sprache
             textTitel.Content = language.GetStringCreateDataSet(); //Ausgabe der Überschrift "Create Data Set"
+        }
+        private void BtnClose(object sender, RoutedEventArgs e)
+        {
+            App.Current.Shutdown(0);
         }
         private void InitTextItems()
         {
@@ -67,11 +69,6 @@ namespace XMLWriter.Pages
             textInstructions.Content = language.GetStringGeneralInstruction();
             textInstructions.ToolTip = language.GetStringGeneralInstructionText();
             inputType.Text = "rep";     //Aus irgendeinem Grund wird es nicht angezeigt, wenn gfs statt rep genutzt wird... Ich sag mal es reicht so
-        }
-
-        private void BtnClose(object sender, RoutedEventArgs e)
-        {
-            App.Current.Shutdown(0);
         }
     }
 }

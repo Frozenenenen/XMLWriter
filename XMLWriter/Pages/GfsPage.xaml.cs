@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace XMLWriter.Pages
 {
@@ -21,44 +12,60 @@ namespace XMLWriter.Pages
         public GfsPage()
         {
             InitializeComponent();
+            DataSet data = new DataSet();
+            data.InitNewDataSet();
             InitTextItems();
             InitValueItems();
         }
 
-        private void btnNext_Click(object sender, RoutedEventArgs e)
+        private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
-            //data.SaveGfsSet(inputText.Text, inputAnim.Text, inputInstruction.Text);
+            data.SaveGfsSet(inputText.Text, inputAnim.Text, inputInstruction.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, inputPositiveResult.Text, inputRepXML.Text, inputActuatorTest.Text, inputCheckActuatorTest.IsEnabled, inputReadData.Text, inputCheckReadData.IsEnabled, inputSmartTool.Text, inputCheckSmartTool.IsEnabled, inputNextStep.IsEnabled, inputLastStep.IsEnabled);
             GUI.IncrementSteps();
 
             _ = NavigationService.Navigate(new GfsPage());
         }
-
-        private void btnBack_Click(object sender, RoutedEventArgs e)
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
 
             if (data.GetStepCount() == 0)
             {
-                MainWindow mW = new MainWindow();
-                mW.Show();
+                _ = NavigationService.Navigate(new StartPage());
             }
             else
             {
+                data.SaveGfsSet(inputText.Text, inputAnim.Text, inputInstruction.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, inputPositiveResult.Text, inputRepXML.Text, inputActuatorTest.Text, inputCheckActuatorTest.IsEnabled, inputReadData.Text, inputCheckReadData.IsEnabled, inputSmartTool.Text, inputCheckSmartTool.IsEnabled, inputNextStep.IsEnabled, inputLastStep.IsEnabled);
                 GUI.DecrementSteps();
                 _ = NavigationService.Navigate(new GfsPage());
             }
         }
-
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private void BtnBackDelete_Click(object sender, RoutedEventArgs e)
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
-            //data.SaveGfsSet(, inputText.Text, inputAnim.Text, inputInstruction.Text);
+
+            if (data.GetStepCount() == 0)
+            {
+
+                _ = NavigationService.Navigate(new StartPage());
+            }
+            else
+            {
+                GUI.DecrementStepsMax();
+                _ = NavigationService.Navigate(new GfsPage());
+            }
+        }
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            DataSet data = new DataSet();
+            GUIMovement GUI = new GUIMovement();
+            data.SaveGfsSet(inputText.Text, inputAnim.Text, inputInstruction.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, inputPositiveResult.Text, inputRepXML.Text, inputActuatorTest.Text, inputCheckActuatorTest.IsEnabled, inputReadData.Text, inputCheckReadData.IsEnabled, inputSmartTool.Text, inputCheckSmartTool.IsEnabled, inputNextStep.IsEnabled, inputLastStep.IsEnabled);
             GUI.IncrementSteps();
-            GUI.DecrementSteps(); //Entweder ich mach ne extra Funktion für die letzte Dateneingabe oder ich in- und decrementiere direkt nacheinander. i++ i--. Anonsten hab ich beim zurückgehen Probleme^^
+            GUI.DecrementStepsForSaving(); //Entweder ich mach ne extra Funktion für die letzte Dateneingabe oder ich in- und decrementiere direkt nacheinander. i++ i--. Anonsten hab ich beim zurückgehen Probleme^^
 
             _ = NavigationService.Navigate(new SavePage());
         }
@@ -82,8 +89,7 @@ namespace XMLWriter.Pages
             {
                 btnBack.Content = language.GetStringReset();
             }
-            btnNext.Content = language.GetStringNext();
-            btnSave.Content = language.GetStringSave();
+
             inputAnim.Text = data.GetStepAnimsPos(data.GetStepCount());
 
             //Inhalte rechte Spalte
@@ -93,30 +99,42 @@ namespace XMLWriter.Pages
             textRepXML.Content = language.GetStringRepXML();
             textActuatorTest.Content = language.GetStringActuatorTest();
             textReadData.Content = language.GetStringReadData();
+            textSmartTool.Content = language.GetStringSmartTool();
             inputNextStep.Content = language.GetStringNextStep();
             inputLastStep.Content = language.GetStringLastStep();
 
-
-
+            //Buttons
+            btnNext.Content = language.GetStringNext();
+            btnSave.Content = language.GetStringSave();
+            btnBackDelete.Content = language.GetStringReset();
+            btnBack.Content = data.GetStepCount() != 0
+                ? language.GetStringBack() 
+                : language.GetStringReset();
         }
 
         private void InitValueItems()
         {
             DataSet data = new DataSet();
-            inputAnim.Text = data.GetStepAnimsPos(data.GetStepCount()) == ""
-                ? "default"
-                : data.GetStepAnimsPos(data.GetStepCount());
-            inputText.Text = data.GetStepSpecialTextPos(data.GetStepCount());
-            inputInstruction.Text = data.GetStepTextPos(data.GetStepCount());
             inputStepName.Text = data.GetStepNamePos(data.GetStepCount()) == ""
                ? "Schritt " + (data.GetStepCount() + 1)
                : data.GetStepNamePos(data.GetStepCount());
-            inputLastStep.IsChecked = data.GetLastStepPos(data.GetStepCount());
+            inputText.Text = data.GetStepSpecialTextPos(data.GetStepCount());
+            inputAnim.Text = data.GetStepAnimsPos(data.GetStepCount()) == ""
+                ? "default"
+                : data.GetStepAnimsPos(data.GetStepCount());
+            inputInstruction.Text = data.GetStepTextPos(data.GetStepCount());
+            inputPositiveID.Text = data.GetStepPositiveIDPos(data.GetStepCount());
+            inputNegativeID.Text = data.GetNegativeIDPos(data.GetStepCount());
+            inputPositiveResult.Text = data.GetPositiveResultPos(data.GetStepCount());
+            inputRepXML.Text = data.GetRepXMLPos(data.GetStepCount());
+            inputActuatorTest.Text = data.GetActuatorTestPos(data.GetStepCount());
+            inputCheckActuatorTest.IsChecked = data.GetCheckActuatorTestPos(data.GetStepCount());
+            inputReadData.Text = data.GetRDBIPpos(data.GetStepCount());
+            inputCheckReadData.IsChecked = data.GetCheckRDBIPos(data.GetStepCount());
+            inputSmartTool.Text = data.GetSmartToolPos(data.GetStepCount());
+            inputCheckSmartTool.IsChecked = data.GetCheckSmartTool(data.GetStepCount());
             inputNextStep.IsChecked = data.GetNextStepPos(data.GetStepCount());
-
-
-
+            inputLastStep.IsChecked = data.GetLastStepPos(data.GetStepCount());
         }
-    
     }
 }

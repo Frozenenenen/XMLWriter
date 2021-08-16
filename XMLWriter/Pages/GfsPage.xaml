@@ -36,19 +36,22 @@
 
 
         <!--linke Spalte-->
-        <Label x:Name="textStep" Grid.Row="1" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="inputStepName" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"/>
         
-        <Label x:Name="textAnimTitel"  Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="inputAnim" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Label x:Name="textStep" Grid.Row="0" Grid.Column="1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        <TextBox x:Name="inputStepName" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,5"/>
+
+        <Label x:Name="textAnimTitel"  Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Margin="10,10"/>
+        <TextBox x:Name="inputAnim" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,5"/>
 
         <Label x:Name="textContentTitel" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="inputText" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <TextBox x:Name="inputText" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="10,0"/>
 
         <Label x:Name="textInstructionTitel" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="inputInstruction" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <TextBox x:Name="inputInstruction" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="10,0"/>
 
-        <!--mittlere Spalte-->
+        
+        <!--rechtee Spalte-->
+        
         <!--positive ID-->
         <!--<CheckBox x:Name="inputPositiveID" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Margin="25,0"/>-->
         <StackPanel Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="3">
@@ -70,12 +73,10 @@
         
         <!--Rep XML-->
         <DockPanel Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="3">
-            <CheckBox x:Name="inputCheckRepXML" Margin="45,0"/>
             <StackPanel HorizontalAlignment="Stretch" >
                 <Label x:Name="textRepXML"/>
-                <TextBox x:Name="inputRepXML" Margin="0,0,40,0"/>    
+                <TextBox x:Name="inputRepXML" Margin="45,0"/>    
             </StackPanel>
-            
         </DockPanel>
         <!--Actuator Test-->
         <DockPanel Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="3" >
@@ -94,16 +95,26 @@
                 <TextBox x:Name="inputReadData" Margin="0,0,40,0"/>
             </StackPanel>
         </DockPanel>
-        
+
+        <!--Smart Tool-->
+        <DockPanel Grid.Row="9" Grid.Column="3" Grid.ColumnSpan="3">
+            <CheckBox x:Name="inputCheckSmartTool" Margin="45,0"/>
+            <StackPanel HorizontalAlignment="Stretch" >
+                <Label x:Name="textSmartTool"/>
+                <TextBox x:Name="inputSmartTool" Margin="0,0,40,0"/>
+            </StackPanel>
+        </DockPanel>
+
         <!--next step-->
-        <CheckBox x:Name="inputNextStep" Grid.Row="9" Grid.Column="3" HorizontalAlignment="Left" Margin="45,0"/>
+        <CheckBox x:Name="inputNextStep" Grid.Row="10" Grid.Column="3" HorizontalAlignment="Left" Margin="45,0"/>
         <!--last step-->
-        <CheckBox x:Name="inputLastStep" Grid.Row="10" Grid.Column="3" HorizontalAlignment="Left" Margin="45,0"/>
+        <CheckBox x:Name="inputLastStep" Grid.Row="11" Grid.Column="3" HorizontalAlignment="Left" Margin="45,0"/>
 
         <!--Bedienelemente und Randinfos-->
-        <Button x:Name="btnNext" Grid.Row="11" Grid.Column="6" Margin="0,0,10,10" Click="btnNext_Click"/>
-        <Button x:Name="btnSave" Grid.Row="10" Grid.Column="6" Margin="0,0,10,10" Click="btnSave_Click"/>
-        <Button x:Name="btnBack" Grid.Row="11" Grid.Column="0" Margin="10,0,0,10" Click="btnBack_Click"/>
+        <Button x:Name="btnNext" Grid.Row="11" Grid.Column="6" Margin="0,0,10,10" Click="BtnNext_Click"/>
+        <Button x:Name="btnSave" Grid.Row="10" Grid.Column="6" Margin="0,0,10,10" Click="BtnSave_Click"/>
+        <Button x:Name="btnBack" Grid.Row="11" Grid.Column="0" Margin="10,0,0,10" Click="BtnBack_Click"/>
+        <Button x:Name="btnBackDelete" Grid.Row="10" Grid.Column="0" Margin="10,0,0,10" Click="BtnBackDelete_Click"/>
 
         <Label x:Name="textTitel" Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="3" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
         <Label x:Name="textDefaultNotice"  Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom"/>

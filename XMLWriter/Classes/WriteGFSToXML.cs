@@ -1,19 +1,18 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Text;
 
 namespace XMLWriter
 {
     class WriteGFSToXML:WriteToXML
     {
-        public void OutputToXML(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<string> RDBI, List<string> smartTool, List<bool> nextStep, List<bool> lastStep, string fileName, string dataType) //Output to file
+        public void OutputToXML(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<bool> checkActuatorTest, List<string> RDBI, List<bool> checkRDBI, List<string> smartTool, List<bool> checkSmartTool, List<bool> nextStep, List<bool> lastStep, string fileName, string dataType)
         {
-            SetFileName(fileName, dataType);
-            string[] output = FillList(stepCountMax, step, text, anim, instruction, posID, negID, posResult, repXML, actuatorTest, RDBI, smartTool, nextStep, lastStep);
-            File.WriteAllLines(path + dataType + "_" + fileName + fileExtension, output);
+            fileName = SetFileName(fileName, dataType);
+            string[] output = FillList(stepCountMax, step, text, anim, instruction, posID, negID, posResult, repXML, actuatorTest, checkActuatorTest, RDBI, checkRDBI, smartTool, checkSmartTool, nextStep, lastStep);
+            File.WriteAllLines(pathVehicleID + "/" + pathLanguage + "/" + fileName + "_" + pathLanguage + fileExtension, output);
         }
-        public string[] FillList(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<string> RDBI, List<string> smartTool, List<bool> nextStep, List<bool> lastStep)
+        public string[] FillList(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<bool> checkActuatorTest, List<string> RDBI, List<bool> checkRDBI, List<string> smartTool, List<bool> checkSmartTool, List<bool> nextStep, List<bool> lastStep)
         {
             List<String> list = new List<string> { };
             list.Add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -27,14 +26,17 @@ namespace XMLWriter
                 list.Add(WriteStep(step[i]));
                 list.Add(WriteText(text[i]));
                 list.Add(WriteAnim(anim[i]));
-                //list.Add(WriteInstruction(instruction[i]));
+                list.Add(WriteInstruction(instruction[i]));
                 list.Add(WritePosID(posID[i]));                
                 list.Add(WriteNegID(negID[i]));
                 list.Add(WritePosResult(posResult[i]));
                 list.Add(WriteRepXML(repXML[i]));
-                list.Add(WriteActuatorTest(actuatorTest[i]));
-                list.Add(WriteRDBI(RDBI[i]));
-                list.Add(WriteSmartTool(smartTool[i]));
+                if (checkActuatorTest[i]) 
+                    list.Add(WriteActuatorTest(actuatorTest[i]));
+                if (checkRDBI[i])
+                    list.Add(WriteRDBI(RDBI[i]));
+                if (checkSmartTool[i])
+                    list.Add(WriteSmartTool(smartTool[i]));
                 list.Add(WriteNextStep());
                 list.Add(WriteLastStep(i,stepCountMax));
 

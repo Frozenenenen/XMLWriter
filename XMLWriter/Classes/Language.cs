@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace XMLWriter
 {
     class Language
@@ -76,7 +73,7 @@ namespace XMLWriter
         public string GetStringRepXML() => repXML;
         public string GetStringActuatorTest() => actuatorTest;
         public string GetStringReadData() => readData;
-        public string GetSmartTool() => smartTool;
+        public string GetStringSmartTool() => smartTool;
         public string GetStringNextStep() => nextStep;
         public string GetStringLastStep() => lastStep;
         public string GetStringFileNameTitel() => fileNameTitel;

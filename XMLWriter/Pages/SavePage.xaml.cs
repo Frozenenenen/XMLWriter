@@ -68,13 +68,17 @@ namespace XMLWriter.Pages
         {
             Language language = new Language();
             DataSet data = new DataSet();
+            WriteToXML writer = new WriteToXML();
+            inputVehicleID.ItemsSource = writer.GetPathVehicleIDChoises();
+            inputLanguage.ItemsSource = writer.GetPathLanguageChoises();
             textTitel.Content = language.GetStringSummary();
             textFileNameTitel.Content = language.GetStringFileNameTitel();
             textStepCount.Content = (data.GetStepCountMax() + 1) + " " + language.GetStringSteps();
             btnBack.Content = language.GetStringBack();
             btnSave.Content = language.GetStringSave();
-                
-            
+            inputVehicleID.Text = "eGolf";
+            inputLanguage.Text = "de";
+
         }
         private void InitValueItems()
         {

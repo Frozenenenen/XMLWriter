@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace XMLWriter
 {
@@ -460,26 +459,29 @@ namespace XMLWriter
 
 
 
-        public void InitDataSet()       //Muss mit allen default-Daten befüllt werden, wenn eine "Weiteren Datensatz anlegen"-Funktion eingebaut wird
+        public void InitNewDataSet()       //Muss mit allen default-Daten befüllt werden, wenn eine "Weiteren Datensatz anlegen"-Funktion eingebaut wird
         {                               //Theoretisch könnte man hier zwischen Rep und GFS unterscheiden um sich mal was zu sparen, aber sein wir ehrlich... auf den Speicher kommts nicht an
-            steps.Insert(stepCount, "");
-            stepAnims.Insert(stepCount, "default");
-            stepTexts.Insert(stepCount, "");
-            stepSpecial.Insert(stepCount, "");
-            stepPositiveID.Insert(stepCount, "");
-            stepNegativeID.Insert(stepCount, "");
-            stepPositiveResult.Insert(stepCount, "");
-            stepRepXML.Insert(stepCount, "");
-            stepActuatorTest.Insert(stepCount, "");
-            checkStepActuatorTest.Insert(stepCount, false);
-            stepRDBI.Insert(stepCount, "");
-            checkStepRDBI.Insert(stepCount, false);
-            stepSmartTool.Insert(stepCount, "");
-            checkStepSmartTool.Insert(stepCount, false);
-            stepNextStep.Insert(stepCount, false);
-            stepLastStep.Insert(stepCount, false);
-
+            if(stepCount == stepCountMax)  //Das ist ne ZIEMLICH unsaubere Lösung :< 
+            {
+                steps.Insert(stepCount, "");
+                stepAnims.Insert(stepCount, "default");
+                stepTexts.Insert(stepCount, "");
+                stepSpecial.Insert(stepCount, "");
+                stepPositiveID.Insert(stepCount, "");
+                stepNegativeID.Insert(stepCount, "");
+                stepPositiveResult.Insert(stepCount, "");
+                stepRepXML.Insert(stepCount, "");
+                stepActuatorTest.Insert(stepCount, "");
+                checkStepActuatorTest.Insert(stepCount, false);
+                stepRDBI.Insert(stepCount, "");
+                checkStepRDBI.Insert(stepCount, false);
+                stepSmartTool.Insert(stepCount, "");
+                checkStepSmartTool.Insert(stepCount, false);
+                stepNextStep.Insert(stepCount, false);
+                stepLastStep.Insert(stepCount, false);
+            }
         }
+
         public void IncrementStepCount()    //Increment und Decrement sollten wohl noch durch setter und getter ersetzt und nur in GUIMovement bearbeitet werden
         {
             stepCount++;
@@ -504,7 +506,6 @@ namespace XMLWriter
             SetSpecialText(specialText);
 
             System.Diagnostics.Debug.WriteLine(stepName + " Anim: " + anim + " Text: " + text + " SpText: " + specialText);
-            Console.WriteLine(stepName + " Anim: " + anim + " Text: " + text + " SpText: " + specialText);
         }
 
         public void SaveGfsSet(string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, bool checkActuatorTest, string RDBI, bool checkRDBI, string smartTool, bool checkSmartTool, bool nextStep, bool lastStep)
@@ -525,6 +526,8 @@ namespace XMLWriter
             SetCheckSmartTool(checkSmartTool);
             SetNextStep(nextStep);
             SetLastStep(lastStep);
+
+            System.Diagnostics.Debug.WriteLine("step: " + stepName + " text: " + text + " Anim: " + anim + " Instr.: " + instructionText + " posID: " + posID + " negID: " + negID +" posRes: " + posResult + " repXML: " + repXML + "\nA-Test: " + actuatorTest + " A-chek: " + checkActuatorTest + " RDBI: " + RDBI + " checkRDBI: " + checkRDBI + " SmartTool: " + smartTool + " checkSmartTool: " + checkSmartTool + " NextST: " + nextStep + " LastSt: " + lastStep);
         }
 
         public void SetFileName(string inputFileName) //Damit keine vorherigen Daten überschrieben werden, wird der Dateiname iteriert, bis ein neuer Dateiname gefunden wurde.
@@ -545,10 +548,10 @@ namespace XMLWriter
                     break;
                 case "gfs":
                     WriteGFSToXML gfs = new WriteGFSToXML();
-                    gfs.OutputToXML(stepCountMax, steps, stepTexts, stepAnims, stepInstruction, stepPositiveID, stepNegativeID, stepPositiveResult, stepRepXML, stepActuatorTest, stepRDBI, stepSmartTool, stepNextStep, stepLastStep, fileName, dataType);
+                    gfs.OutputToXML(stepCountMax, steps, stepTexts, stepAnims, stepInstruction, stepPositiveID, stepNegativeID, stepPositiveResult, stepRepXML, stepActuatorTest, checkStepActuatorTest, stepRDBI, checkStepRDBI, stepSmartTool, checkStepSmartTool, stepNextStep, stepLastStep, fileName, dataType);
                     break;
                 default:
-                    Console.WriteLine("Error in OutputToXML from DataSet");                  
+                    Console.WriteLine("Error in OutputToXML from DataSet");
                     break;
             }
         }
