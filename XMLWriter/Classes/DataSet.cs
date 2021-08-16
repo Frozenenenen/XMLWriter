@@ -472,11 +472,11 @@ namespace XMLWriter
                 stepPositiveResult.Insert(stepCount, "");
                 stepRepXML.Insert(stepCount, "");
                 stepActuatorTest.Insert(stepCount, "");
-                checkStepActuatorTest.Insert(stepCount, false);
+                checkStepActuatorTest.Insert(stepCount, true);
                 stepRDBI.Insert(stepCount, "");
-                checkStepRDBI.Insert(stepCount, false);
+                checkStepRDBI.Insert(stepCount, true);
                 stepSmartTool.Insert(stepCount, "");
-                checkStepSmartTool.Insert(stepCount, false);
+                checkStepSmartTool.Insert(stepCount, true);
                 stepNextStep.Insert(stepCount, false);
                 stepLastStep.Insert(stepCount, false);
             }
