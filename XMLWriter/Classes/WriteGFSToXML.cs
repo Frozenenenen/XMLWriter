@@ -35,7 +35,7 @@ namespace XMLWriter
                 list.Add(WriteRDBI(RDBI[i]));
                 list.Add(WriteSmartTool(smartTool[i]));
                 list.Add(WriteNextStep(nextStep[i]));
-                list.Add(WriteLastStep(i, stepCountMax));
+                list.Add(WriteLastStep(lastStep[i]));
 
                 list.Add("\t\t" + "</Gfs>");
             }
@@ -123,9 +123,9 @@ namespace XMLWriter
             }
             
         }
-        private string WriteLastStep(int i, int stepCountMax)
+        private string WriteLastStep(bool? check)
         {
-            return i == stepCountMax
+            return check == true
                 ? "\t\t\t" + "<lastStep>" + "true" + "</lastStep>"
                 : "\t\t\t" + "<lastStep>" + "false" + "</lastStep>";
         }

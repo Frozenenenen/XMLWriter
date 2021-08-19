@@ -24,7 +24,7 @@ namespace XMLWriter.Classes
         private string positiveID;
         private string negativeID;
         private string positiveResult;
-        private string repXML;
+        private string repXml;
         private string actuatorTest;
         private string readData;
         private string smartTool;
@@ -91,8 +91,8 @@ namespace XMLWriter.Classes
                         case "positiveResult":
                             positiveResult = xtr.ReadElementString();
                             break;
-                        case "RepXML":
-                            repXML = xtr.ReadElementString();
+                        case "RepXml":
+                            repXml = xtr.ReadElementString();
                             break;
                         case "actuatorTest":
                             actuatorTest = xtr.ReadElementString();
@@ -109,7 +109,8 @@ namespace XMLWriter.Classes
                         case "lastStep":
                             lastStep = xtr.ReadElementString() == "true" ? true : false;
                             data.SaveGfsSet(stepName, text, anim, instruction, positiveID, negativeID,
-                                            positiveResult, repXML, actuatorTest, readData, smartTool, nextStep, lastStep);
+                                            positiveResult, repXml, actuatorTest, readData, smartTool, nextStep, lastStep);
+                            System.Diagnostics.Debug.WriteLine(repXml);
                             GUI.IncrementSteps();
                             dataType = "gfs";
                             break;

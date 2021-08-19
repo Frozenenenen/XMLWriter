@@ -54,7 +54,7 @@ namespace XMLWriter.Pages
                 _ = NavigationService.Navigate(new RepPage());
             }else if(data.GetDataType() == "gfs")
             {
-                _ = NavigationService.Navigate(new RepPage());
+                _ = NavigationService.Navigate(new GfsPage());
             }
             else
             {
