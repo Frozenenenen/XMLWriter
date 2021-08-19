@@ -44,7 +44,7 @@ namespace XMLWriter
 
         private string WriteStep(string step)
         {
-            return "\t\t" + "<Gfs step=\"" + step + "\">";
+            return "\t\t" + "<Repair step=\"" + step + "\">";
         }
         private string WriteText(string text)
         {

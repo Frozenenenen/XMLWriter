@@ -21,21 +21,22 @@ namespace XMLWriter.Pages
     /// </summary>
     public partial class StartPage : Page
     {
+        DataSet data = new DataSet();
+        Language language = new Language();
+        LoadDataSet loadData = new LoadDataSet();
         public StartPage()
         {
             InitializeComponent();
-            Language lingo = new Language();
-            DataSet data = new DataSet();
             data.InitNewDataSet();
-            lingo.InitLanguage("Deutsch");
+            language.InitLanguage("Deutsch");
             InitTextItems();
             InitValueItems();
         }
 
         private void BtnNext(object sender, RoutedEventArgs e)
         {
-            DataSet data = new DataSet();
             data.SetDataType(inputType.Text);
+            data.SetStepCount(0);   //has to be reset to 0 coz of loading
 
             if (inputType.Text == "rep")
             {
@@ -52,7 +53,6 @@ namespace XMLWriter.Pages
         }
         private void BtnSelectLanguage_Click(object sender, RoutedEventArgs e)
         {
-            Language language = new Language();
             language.InitLanguage(inputLanguage.Text); //Befüllt die Variablen mit den Wörtern  der jeweiligen Sprache
             textTitel.Content = language.GetStringCreateDataSet(); //Ausgabe der Überschrift "Create Data Set"
         }
@@ -62,16 +62,21 @@ namespace XMLWriter.Pages
         }
         private void BtnLoadFile(object sender, RoutedEventArgs e)
         {
-            LoadDataSet loadData = new LoadDataSet();
+            
             loadData.LoadDataFromFile();
+            inputType.Text = loadData.GetDataType();
             inputLoadFile.Text = loadData.GetFileNameAndPath();
-
+            textStepCount.Content = language.GetStringSteps() + " " + data.GetStepCountMax();
         }
+
+        private void BtnReset(object sender, RoutedEventArgs e)
+        {
+            data.ResetDataSet();
+            inputLoadFile.Text = "";
+        }
+
         private void InitTextItems()
         {
-            Language language = new Language();
-            DataSet data = new DataSet();
-
             btnWeiter.Content = "--->";
             inputLanguage.ItemsSource = language.GetLanguageChoises();
             inputLanguage.Text = language.GetStringLanguage();
@@ -81,17 +86,12 @@ namespace XMLWriter.Pages
             inputType.Text = "rep";     //Aus irgendeinem Grund wird es nicht angezeigt, wenn gfs statt rep genutzt wird... Ich sag mal es reicht so
             textLoadFile.Content = language.GetStringFileNameTitel();
             btnLoadFile.Content = language.GetStringLoadFile();
+            btnReset.Content = language.GetStringReset();
+            textStepCount.Content = language.GetStringSteps() + " " + data.GetStepCountMax();
         }
         private void InitValueItems()
         {
             //Ähm... ja
-        }
-
-        private void BtnReset(object sender, RoutedEventArgs e)
-        {
-            DataSet data = new DataSet();
-            data.ResetDataSet();
-            inputLoadFile.Text = "";
         }
     }
 }

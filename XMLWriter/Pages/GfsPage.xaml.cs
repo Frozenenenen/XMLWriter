@@ -22,7 +22,8 @@ namespace XMLWriter.Pages
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
-            data.SaveGfsSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, inputPositiveResult.Text, inputRepXML.Text, inputActuatorTest.Text, inputCheckActuatorTest.IsChecked, inputReadData.Text, inputCheckReadData.IsChecked, inputSmartTool.Text, inputCheckSmartTool.IsChecked, inputNextStep.IsChecked, inputLastStep.IsChecked);
+            data.SaveGfsSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, inputPositiveResult.Text,
+                            inputRepXML.Text, inputActuatorTest.Text, inputReadData.Text, inputSmartTool.Text, inputNextStep.IsChecked, inputLastStep.IsChecked);
             GUI.IncrementSteps();
 
             _ = NavigationService.Navigate(new GfsPage());
@@ -39,7 +40,8 @@ namespace XMLWriter.Pages
             }
             else
             {
-                data.SaveGfsSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, inputPositiveResult.Text, inputRepXML.Text, inputActuatorTest.Text, inputCheckActuatorTest.IsEnabled, inputReadData.Text, inputCheckReadData.IsEnabled, inputSmartTool.Text, inputCheckSmartTool.IsEnabled, inputNextStep.IsEnabled, inputLastStep.IsEnabled);
+                data.SaveGfsSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, inputPositiveResult.Text,
+                                inputRepXML.Text, inputActuatorTest.Text, inputReadData.Text, inputSmartTool.Text, inputNextStep.IsChecked, inputLastStep.IsChecked);
                 GUI.DecrementSteps();
                 _ = NavigationService.Navigate(new GfsPage());
             }
@@ -65,7 +67,8 @@ namespace XMLWriter.Pages
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
-            data.SaveGfsSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, inputPositiveResult.Text, inputRepXML.Text, inputActuatorTest.Text, inputCheckActuatorTest.IsEnabled, inputReadData.Text, inputCheckReadData.IsEnabled, inputSmartTool.Text, inputCheckSmartTool.IsEnabled, inputNextStep.IsEnabled, inputLastStep.IsEnabled);
+            data.SaveGfsSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, inputPositiveResult.Text,
+                            inputRepXML.Text, inputActuatorTest.Text, inputReadData.Text, inputSmartTool.Text, inputNextStep.IsChecked, inputLastStep.IsChecked);
             GUI.IncrementSteps();
             GUI.DecrementStepsForSaving(); //Entweder ich mach ne extra Funktion für die letzte Dateneingabe oder ich in- und decrementiere direkt nacheinander. i++ i--. Anonsten hab ich beim zurückgehen Probleme^^
 
@@ -113,7 +116,6 @@ namespace XMLWriter.Pages
                 ? language.GetStringBack() 
                 : language.GetStringReset();
         }
-
         private void InitValueItems()
         {
             DataSet data = new DataSet();

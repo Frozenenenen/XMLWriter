@@ -11,7 +11,7 @@ namespace XMLWriter
         //Der Ordner muss bestehen, damit das Speichern funktioniert!
         protected static readonly string pathVehicleID = @"eGolf";
         protected static readonly string pathLanguage = @"de";
-        protected static readonly string fileExtension = ".txt"; //später .xml
+        protected static readonly string fileExtension = ".xml"; //später .xml
 
         public string[] GetPathVehicleIDChoises()
         {

@@ -31,12 +31,9 @@ namespace XMLWriter
                 list.Add(WriteNegID(negID[i]));
                 list.Add(WritePosResult(posResult[i]));
                 list.Add(WriteRepXML(repXML[i]));
-                if (checkActuatorTest[i]==true) 
-                    list.Add(WriteActuatorTest(actuatorTest[i]));
-                if (checkRDBI[i] == true)
-                    list.Add(WriteRDBI(RDBI[i]));
-                if (checkSmartTool[i] == true)
-                    list.Add(WriteSmartTool(smartTool[i]));
+                list.Add(WriteActuatorTest(actuatorTest[i]));
+                list.Add(WriteRDBI(RDBI[i]));
+                list.Add(WriteSmartTool(smartTool[i]));
                 list.Add(WriteNextStep(nextStep[i]));
                 list.Add(WriteLastStep(i, stepCountMax));
 
@@ -68,8 +65,8 @@ namespace XMLWriter
         private string WriteInstruction(string instruction)
         {
             return instruction == ""
-                ? "\t\t\t" + "<instructions>" + "false" + "</instructions"
-                : "\t\t\t" + "<instructions>" + instruction + "</instructions";
+                ? "\t\t\t" + "<instructions>" + "false" + "</instructions>"
+                : "\t\t\t" + "<instructions>" + instruction + "</instructions>";
         }
         private string WritePosID(string posID)
         {
@@ -87,14 +84,14 @@ namespace XMLWriter
         private string WritePosResult(string posResult)
         {
             return posResult == ""
-                ? "\t\t\t" + "<positiveResult>" + "false" + "</negativeResult"
-                : "\t\t\t" + "<positiveResult>" + posResult + "</negativeResult";
+                ? "\t\t\t" + "<positiveResult>" + "false" + "</positiveResult>"
+                : "\t\t\t" + "<positiveResult>" + posResult + "</positiveResult>";
         }
         private string WriteRepXML(string repXML)
         {
             return repXML == ""
-                ? "\t\t\t" + "<RepXml>" + "false" + "</RepXML>"
-                : "\t\t\t" + "<RepXml>" + repXML + "</RepXML>";
+                ? "\t\t\t" + "<RepXml>" + "false" + "</RepXml>"
+                : "\t\t\t" + "<RepXml>" + repXML + "</RepXml>";
         }
         private string WriteActuatorTest(string actuatorTest)
         {

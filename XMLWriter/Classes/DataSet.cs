@@ -400,7 +400,7 @@ namespace XMLWriter
                 stepActuatorTest[stepCount] = inputActuatorTest;
             }
         }
-        private void SetCheckActuatorTest(bool? inputCheckActuatorTest)
+        /*private void SetCheckActuatorTest(bool? inputCheckActuatorTest)
         {
             if (stepCountMax == stepCount)
             {
@@ -411,7 +411,7 @@ namespace XMLWriter
             {
                 checkStepActuatorTest[stepCount] = inputCheckActuatorTest;
             }
-        }
+        }*/
         private void SetRDBI(string inputRDBI)
         {
             if (stepCountMax == stepCount)
@@ -424,7 +424,7 @@ namespace XMLWriter
                 stepRDBI[stepCount] = inputRDBI;
             }
         }
-        private void SetCheckRDBI(bool? inputCheckRDBI)
+        /*private void SetCheckRDBI(bool? inputCheckRDBI)
         {
             if (stepCountMax == stepCount)
             {
@@ -435,7 +435,7 @@ namespace XMLWriter
             {
                 checkStepRDBI[stepCount] = inputCheckRDBI;
             }
-        }
+        }*/
         private void SetSmartTool(string inputSmartTool)
         {
             if (stepCountMax == stepCount)
@@ -448,7 +448,7 @@ namespace XMLWriter
                 stepSmartTool[stepCount] = inputSmartTool;
             }
         }
-        private void SetCheckSmartTool(bool? inputCheckSmartTool)
+        /*private void SetCheckSmartTool(bool? inputCheckSmartTool)
         {
             if (stepCountMax == stepCount)
             {
@@ -459,7 +459,7 @@ namespace XMLWriter
             {
                 checkStepSmartTool[stepCount] = inputCheckSmartTool;
             }
-        }
+        }*/
         private void SetNextStep(bool? inputNextStep)
         {
             if (stepCountMax == stepCount)
@@ -496,22 +496,29 @@ namespace XMLWriter
                 steps.Insert(stepCount, "");
                 stepAnims.Insert(stepCount, "default");
                 stepTexts.Insert(stepCount, "");
-                stepSpecial.Insert(stepCount, "");
-                stepInstruction.Insert(stepCount, "");
-                //right side
-                stepPositiveID.Insert(stepCount, "");
-                stepNegativeID.Insert(stepCount, "");
-                stepPositiveResult.Insert(stepCount, "");
-                stepRepXML.Insert(stepCount, "");
-                stepActuatorTest.Insert(stepCount, "");
-                stepRDBI.Insert(stepCount, "");
-                stepSmartTool.Insert(stepCount, "");
-                //checks
-                checkStepActuatorTest.Insert(stepCount, true);
-                checkStepRDBI.Insert(stepCount, true);
-                checkStepSmartTool.Insert(stepCount, true);
-                stepNextStep.Insert(stepCount, false);
-                stepLastStep.Insert(stepCount, false);
+                if (dataType == "rep")
+                {
+                    stepSpecial.Insert(stepCount, "");
+                }
+                else if(dataType=="gfs")
+                {
+                    stepInstruction.Insert(stepCount, "");
+                    //right side
+                    stepPositiveID.Insert(stepCount, "");
+                    stepNegativeID.Insert(stepCount, "");
+                    stepPositiveResult.Insert(stepCount, "");
+                    stepRepXML.Insert(stepCount, "");
+                    stepActuatorTest.Insert(stepCount, "");
+                    stepRDBI.Insert(stepCount, "");
+                    stepSmartTool.Insert(stepCount, "");
+                    //checks
+                    /*checkStepActuatorTest.Insert(stepCount, true);
+                    checkStepRDBI.Insert(stepCount, true);
+                    checkStepSmartTool.Insert(stepCount, true);*/
+                    stepNextStep.Insert(stepCount, false);
+                    stepLastStep.Insert(stepCount, false);
+                }
+
             }
         }
 
@@ -565,7 +572,7 @@ namespace XMLWriter
 
             System.Diagnostics.Debug.WriteLine(stepName + " Anim: " + anim + " Text: " + text + " SpText: " + specialText);
         }
-        public void SaveGfsSet(string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, bool? checkActuatorTest, string RDBI, bool? checkRDBI, string smartTool, bool? checkSmartTool, bool? nextStep, bool? lastStep)
+        public void SaveGfsSet(string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, string RDBI, string smartTool, bool? nextStep, bool? lastStep)
         {
             SetStep(stepName);
             SetText(text);
@@ -576,15 +583,12 @@ namespace XMLWriter
             SetPositiveResult(posResult);
             SetRepXML(repXML);
             SetActuatorTest(actuatorTest);
-            SetCheckActuatorTest(checkActuatorTest);
             SetRDBI(RDBI);
-            SetCheckRDBI(checkRDBI);
             SetSmartTool(smartTool);
-            SetCheckSmartTool(checkSmartTool);
             SetNextStep(nextStep);
             SetLastStep(lastStep);
 
-            System.Diagnostics.Debug.WriteLine("step: " + stepName + " text: " + text + " Anim: " + anim + " Instr.: " + instructionText + " posID: " + posID + " negID: " + negID +" posRes: " + posResult + " repXML: " + repXML + "\nA-Test: " + actuatorTest + " A-chek: " + checkActuatorTest + " RDBI: " + RDBI + " checkRDBI: " + checkRDBI + " SmartTool: " + smartTool + " checkSmartTool: " + checkSmartTool + " NextST: " + nextStep + " LastSt: " + lastStep +"\n");
+            System.Diagnostics.Debug.WriteLine("step: " + stepName + " text: " + text + " Anim: " + anim + " Instr.: " + instructionText + " posID: " + posID + " negID: " + negID +" posRes: " + posResult + " repXML: " + repXML + "\nA-Test: " + actuatorTest +  " RDBI: " + RDBI +  " SmartTool: " + smartTool +  " NextST: " + nextStep + " LastSt: " + lastStep +"\n");
         }
 
         public void SetFileName(string inputFileName) //Damit keine vorherigen Daten überschrieben werden, wird der Dateiname iteriert, bis ein neuer Dateiname gefunden wurde.
