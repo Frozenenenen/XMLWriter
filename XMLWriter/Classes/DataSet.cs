@@ -15,6 +15,8 @@ using System.Collections.Generic;
 //Todo:prio4 Umschreiben der Increment und Decrement
 //Todo:prio2 Last step im letzten Schritt true
 //Todo:prio4 Listenvariablen zu einer Objektliste
+
+//System.Diagnostics.Debug.WriteLine("");
 namespace XMLWriter
 {
     class DataSet

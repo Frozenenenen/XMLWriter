@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using XMLWriter.Classes;
 
 namespace XMLWriter.Pages
 {
@@ -27,6 +29,7 @@ namespace XMLWriter.Pages
             data.InitNewDataSet();
             lingo.InitLanguage("Deutsch");
             InitTextItems();
+            InitValueItems();
         }
 
         private void BtnNext(object sender, RoutedEventArgs e)
@@ -57,6 +60,13 @@ namespace XMLWriter.Pages
         {
             App.Current.Shutdown(0);
         }
+        private void BtnLoadFile(object sender, RoutedEventArgs e)
+        {
+            LoadDataSet loadData = new LoadDataSet();
+            loadData.LoadDataFromFile();
+            inputLoadFile.Text = loadData.GetFileNameAndPath();
+
+        }
         private void InitTextItems()
         {
             Language language = new Language();
@@ -69,6 +79,19 @@ namespace XMLWriter.Pages
             textInstructions.Content = language.GetStringGeneralInstruction();
             textInstructions.ToolTip = language.GetStringGeneralInstructionText();
             inputType.Text = "rep";     //Aus irgendeinem Grund wird es nicht angezeigt, wenn gfs statt rep genutzt wird... Ich sag mal es reicht so
+            textLoadFile.Content = language.GetStringFileNameTitel();
+            btnLoadFile.Content = language.GetStringLoadFile();
+        }
+        private void InitValueItems()
+        {
+            //Ähm... ja
+        }
+
+        private void BtnReset(object sender, RoutedEventArgs e)
+        {
+            DataSet data = new DataSet();
+            data.ResetDataSet();
+            inputLoadFile.Text = "";
         }
     }
 }

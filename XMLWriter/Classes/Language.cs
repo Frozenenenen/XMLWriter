@@ -6,7 +6,8 @@ namespace XMLWriter
         //General UI
         private static string language; 
         private static string defaultNotice;
-        private static string save;
+        private static string loadFile;
+        private static string saveFile;
         private static string next;
         private static string back;
         private static string pleaseFill;
@@ -49,7 +50,8 @@ namespace XMLWriter
 
         public string GetStringLanguage() => language;
         public string GetInstructionNotice() => defaultNotice;
-        public string GetStringSave() => save;
+        public string GetStringLoadFile() => loadFile;
+        public string GetStringSave() => saveFile;
         public string GetStringNext() => next;
         public string GetStringBack() => back;
         /*public string GetStringModel() => model;
@@ -120,13 +122,14 @@ namespace XMLWriter
         {
             language = "Deutsch";
             defaultNotice = "Leere Felder werden automatisch mit defaultwert befüllt.";
-            save = "Sichern";
+            loadFile = "Datei Laden?";
+            saveFile = "Sichern";
             next = "Weiter";
             back = "Zurück";
             /*model = "Modell";
             vin = "FIN";*/
             pleaseFill = "Bitte ausfüllen";
-            createDataSet = "Datensatz anlegen";
+            createDataSet = "Datensatz anlegen oder laden";
             generalInstruction = "Anleitung";
             generalInstructionText = "Leere Felder werden automatisch mit 'default' oder 'false' befüllt, falls erforderlich";
             step = "Schrittbezeichnung";
@@ -153,7 +156,8 @@ namespace XMLWriter
         {
             language = "English";
             defaultNotice = "Empty boxes will be automatically filled with default values.";
-            save = "Save";
+            loadFile = "Load file?";
+            saveFile = "Save";
             next = "Next";
             back = "Back";
             /*model = "Model";
@@ -186,7 +190,8 @@ namespace XMLWriter
         {
             language = "Espanol"; //Meinem Spanisch sollte man nicht trauen! Das ist hauptsächlich zu Test- und Vorführzwecken hier
             defaultNotice = "Empty boxes will be automatically filled with default values.";
-            save = "Grabar algo";
+            loadFile = "Load file?";
+            saveFile = "Grabar algo";
             next = "Próximo";
             back = "Atrás";
             /*model = "Modelo";
