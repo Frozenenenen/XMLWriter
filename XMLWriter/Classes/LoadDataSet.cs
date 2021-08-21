@@ -35,9 +35,10 @@ namespace XMLWriter.Classes
         public void LoadDataFromFile()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Text files (*.txt;*.xml)|*.txt;*.xml|All files (*.*)|*.*";
-            //Falls der Standardordner gewechselt werden soll
-            //openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments); 
+
+            openFileDialog.Filter = "Text files (*.txt;*.xml)|*.txt;*.xml|All files (*.*)|*.*")
+                //Falls der Standardordner gewechselt werden soll
+                //openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             if (openFileDialog.ShowDialog() == true)
             {
                 fileNameAndPath = openFileDialog.FileName;
@@ -53,12 +54,14 @@ namespace XMLWriter.Classes
             }
 
 
+
+
+
+
             while (xtr.Read())
             {
                 if (xtr.NodeType == XmlNodeType.Element)
                 {
-          
-                
                     switch (xtr.Name)
                     {
                         case "Repair":
