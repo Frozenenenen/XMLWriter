@@ -24,6 +24,7 @@ namespace XMLWriter.Pages
         DataSet data = new DataSet();
         Language language = new Language();
         LoadDataSet loadData = new LoadDataSet();
+        LoadInputOptions loadInput = new LoadInputOptions();
         public StartPage()
         {
             InitializeComponent();
@@ -31,6 +32,7 @@ namespace XMLWriter.Pages
             language.InitLanguage("Deutsch");
             InitTextItems();
             InitValueItems();
+            loadInput.LoadAllOptions();
         }
 
         private void BtnNext(object sender, RoutedEventArgs e)

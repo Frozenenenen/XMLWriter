@@ -27,12 +27,7 @@ namespace XMLWriter
         private static string fileName = "Dateiname";
 
         private static readonly string[] dataTypeChoice = { "gfs", "rep" }; //Gehört eigentlich nicht in diese Klasse, aber bis mir ein besserer Ort einfällt bleibts wohl hier
-
-        //Fahrzeugspezifische Variablen
-        /*private static string vin = "";
-        private static string model = "";*/
-
-
+        private static readonly string[] toolChoice = { "actuatorTest", "ReadData", "SmartTool" };
 
 
         //Variablen von Rep und Gfs
@@ -63,6 +58,7 @@ namespace XMLWriter
         public int GetStepCountMax() => stepCountMax;
 
         public string[] GetDataTypeChoice() => dataTypeChoice;
+        public string[] GetToolChoice() => toolChoice;
         public string[] GetStepNames()
         {
             string[] stepNames = new string[stepCountMax];

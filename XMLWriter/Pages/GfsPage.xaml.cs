@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using XMLWriter.Classes;
 
 namespace XMLWriter.Pages
 {
@@ -9,10 +10,13 @@ namespace XMLWriter.Pages
     /// </summary>
     public partial class GfsPage : Page
     {
+        DataSet data = new DataSet();
+        Language language = new Language();
+        GUIMovement GUI = new GUIMovement();
+        LoadInputOptions input = new LoadInputOptions();
         public GfsPage()
         {
             InitializeComponent();
-            DataSet data = new DataSet();
             data.InitNewDataSet();
             InitTextItems();
             InitValueItems();
@@ -20,8 +24,6 @@ namespace XMLWriter.Pages
 
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
-            DataSet data = new DataSet();
-            GUIMovement GUI = new GUIMovement();
             data.SaveGfsSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, inputPositiveResult.Text,
                             inputRepXML.Text, inputActuatorTest.Text, inputReadData.Text, inputSmartTool.Text, inputNextStep.IsChecked, inputLastStep.IsChecked);
             GUI.IncrementSteps();
@@ -74,6 +76,31 @@ namespace XMLWriter.Pages
 
             _ = NavigationService.Navigate(new SavePage());
         }
+        private void btnToolChoice_Click(object sender, RoutedEventArgs e)
+        {
+            switch (inputToolChoice.Text)
+            {
+                case "ActuatorTest":
+                    HideAllItemsWithToggleVisibility();
+                    actuatorTest.Visibility = Visibility.Visible;
+
+                    break;
+
+                case "SmartTool":
+                    HideAllItemsWithToggleVisibility();
+                    smartTool.Visibility = Visibility.Visible;
+                    break;
+
+                case "ReadDataByIdentifier":
+                    HideAllItemsWithToggleVisibility();
+                    RDBI.Visibility = Visibility.Visible;
+                    positiveResult.Visibility = Visibility.Visible;
+                    break;
+
+                default:
+                    break;
+            }
+        }
 
         private void InitTextItems()
         {
@@ -107,6 +134,10 @@ namespace XMLWriter.Pages
             textSmartTool.Content = language.GetStringSmartTool();
             inputNextStep.Content = language.GetStringNextStep();
             inputLastStep.Content = language.GetStringLastStep();
+            inputToolChoice.Text = language.GetStringToolChoise();
+            textActuatorOptional.Content = language.GetStringOptional();
+            textRDBIOptional.Content = language.GetStringOptional();
+            textSmartToolOptional.Content = language.GetStringOptional();
 
             //Buttons
             btnNext.Content = language.GetStringNext();
@@ -116,10 +147,16 @@ namespace XMLWriter.Pages
                 ? language.GetStringBack() 
                 : language.GetStringReset();
         }
+
         private void InitValueItems()
         {
-            DataSet data = new DataSet();
-            //Left Side
+            InitLeftSideItems();
+            InitFixedRightSideItems();
+            InitFlexRightSideItems();
+
+        }
+        private void InitLeftSideItems()
+        {
             inputStepName.Text = data.GetStepNamePos(data.GetStepCount()) == ""
                ? "Schritt " + (data.GetStepCount() + 1)
                : data.GetStepNamePos(data.GetStepCount());
@@ -128,23 +165,48 @@ namespace XMLWriter.Pages
                 ? "default"
                 : data.GetStepAnimsPos(data.GetStepCount());
             inputInstruction.Text = data.GetStepInstructionPos(data.GetStepCount());
-            //System.Diagnostics.Debug.WriteLine("Blub: " + data.GetStepInstructionPos(data.GetStepCount()));
-            //Right Side
+        }
+        private void InitFixedRightSideItems()
+        {
             inputPositiveID.ItemsSource = data.GetStepNames();
             inputPositiveID.Text = data.GetStepPositiveIDPos(data.GetStepCount());
             inputNegativeID.Text = data.GetNegativeIDPos(data.GetStepCount());
             inputNegativeID.ItemsSource = data.GetStepNames();
-            inputPositiveResult.Text = data.GetPositiveResultPos(data.GetStepCount());
+            
             inputRepXML.Text = data.GetRepXMLPos(data.GetStepCount());
-            inputActuatorTest.Text = data.GetActuatorTestPos(data.GetStepCount());
-            inputReadData.Text = data.GetRDBIPpos(data.GetStepCount());
-            inputSmartTool.Text = data.GetSmartToolPos(data.GetStepCount());
+
             //Check boxes
-            inputCheckActuatorTest.IsChecked = data.GetCheckActuatorTestPos(data.GetStepCount());
-            inputCheckReadData.IsChecked = data.GetCheckRDBIPos(data.GetStepCount());
-            inputCheckSmartTool.IsChecked = data.GetCheckSmartTool(data.GetStepCount());
             inputNextStep.IsChecked = data.GetNextStepPos(data.GetStepCount());
             inputLastStep.IsChecked = data.GetLastStepPos(data.GetStepCount());
+        }
+        private void InitFlexRightSideItems()
+        {
+            inputPositiveResult.Text = data.GetPositiveResultPos(data.GetStepCount());
+            //Abhängig von Auswahl
+            // Aktortest
+            inputECUChoice.ItemsSource = input.GetECUOptions();
+            inputECUChoice.Text = input.GetECUOptions()[0];
+            inputComponentChoice.ItemsSource = input.GetIOOptions();
+            inputComponentChoice.Text = input.GetIOOptions()[0];
+            inputActuatorTest.Text = data.GetActuatorTestPos(data.GetStepCount());
+
+            inputReadData.Text = data.GetRDBIPpos(data.GetStepCount());
+            inputSmartTool.Text = data.GetSmartToolPos(data.GetStepCount());
+            inputToolChoice.ItemsSource = input.GetToolChoice();
+        }
+
+        
+        private void HideAllItemsWithToggleVisibility()
+        {
+            RDBI.Visibility = Visibility.Hidden;
+            smartTool.Visibility = Visibility.Hidden;
+            actuatorTest.Visibility = Visibility.Hidden;
+            positiveResult.Visibility = Visibility.Hidden;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            inputActuatorTest.Text = inputComponentChoice.Text + "|" + inputECUChoice.Text;
         }
     }
 }

@@ -4,6 +4,7 @@ namespace XMLWriter
     class Language
     {
         //General UI
+        private static string[] languageChoices = { "Deutsch", "English", "Espanol" };
         private static string language; 
         private static string defaultNotice;
         private static string loadFile;
@@ -19,6 +20,8 @@ namespace XMLWriter
         private static string fileNameTitel;
         private static string generalInstruction;
         private static string generalInstructionText;
+        private static string toolChoice;
+        private static string optional;
         /*private static string model; //Vermutlich nicht mehr drin
         private static string vin;*/
         //Rep- and GFS-specific
@@ -60,6 +63,8 @@ namespace XMLWriter
         public string GetStringCreateDataSet() => createDataSet;
         public string GetStringGeneralInstruction() => generalInstruction;
         public string GetStringGeneralInstructionText() => generalInstructionText;
+        public string GetStringToolChoise() => toolChoice;
+        public string GetStringOptional() => optional;
         public string GetStringStep() => step;
         public string GetStringSteps() => steps;
         public string GetStringContent() => description;
@@ -90,7 +95,7 @@ namespace XMLWriter
         public string[] GetLanguageChoises()
         {//Attention! if the strings get altered they have to get altered down below in the switch aswell
 
-            string[] languageChoises = { "Deutsch", "English", "Espanol" }; //Kurze Version
+            string[] languageChoises = languageChoices; //Kurze Version
             return languageChoises;
         }
 
@@ -132,6 +137,8 @@ namespace XMLWriter
             createDataSet = "Datensatz anlegen oder laden";
             generalInstruction = "Anleitung";
             generalInstructionText = "Leere Felder werden automatisch mit 'default' oder 'false' befüllt, falls erforderlich";
+            toolChoice = "Bitte wählen";
+            optional = "Optional: direkter input. Priorisiert, falls befüllt!";
             step = "Schrittbezeichnung";
             steps = "Schritte";
             description = "Beschreibung";
@@ -166,6 +173,8 @@ namespace XMLWriter
             createDataSet = "Create Data Set";
             generalInstruction = "general instructions";
             generalInstructionText = "Empty boxes will be automatically filled with e.g. 'default' or 'false'";
+            toolChoice = "Please choose";
+            optional = "Optional: direct input. Prioritized if filled";
             step = "Step";
             steps = "Steps";
             description = "Description";
@@ -200,6 +209,8 @@ namespace XMLWriter
             createDataSet = "Crear expediente";
             generalInstruction = "general instructions";
             generalInstructionText = "Empty boxes will be automatically filled with e.g. 'default' or 'false'.";
+            toolChoice = "Please choose";
+            optional = "Optional: direct input. Prioritized if filled";
             step = "Paso";
             steps = "Pasos";
             description = "Descripción";
