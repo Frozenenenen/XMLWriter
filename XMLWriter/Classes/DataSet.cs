@@ -63,8 +63,17 @@ namespace XMLWriter
         public int GetStepCountMax() => stepCountMax;
 
         public string[] GetDataTypeChoice() => dataTypeChoice;
+        public string[] GetStepNames()
+        {
+            string[] stepNames = new string[stepCountMax];
+            for (int i = 0; i < stepCountMax; i++)
+            {
+                stepNames[i] = steps[i];
+            }
+            return stepNames;
+        }
 
-        
+
         public string GetDataType() => dataType;
         public string GetFileName() => fileName;
 

@@ -13,8 +13,8 @@ namespace XMLWriter.Classes
         GUIMovement GUI = new GUIMovement();
         private static string fileNameAndPath = "";
         private static string dataType = "";
-        public static string GetFileNameAndPath() => fileNameAndPath;
-        public static string GetDataType() => dataType;
+        public string GetFileNameAndPath() => fileNameAndPath;
+        public string GetDataType() => dataType;
 
         private static string stepName;
         private static string text;
@@ -36,7 +36,7 @@ namespace XMLWriter.Classes
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
-            openFileDialog.Filter = "Text files (*.txt;*.xml)|*.txt;*.xml|All files (*.*)|*.*")
+            openFileDialog.Filter = "Text files (*.txt;*.xml)|*.txt;*.xml|All files (*.*)|*.*";
                 //Falls der Standardordner gewechselt werden soll
                 //openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             if (openFileDialog.ShowDialog() == true)

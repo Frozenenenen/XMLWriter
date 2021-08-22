@@ -64,7 +64,7 @@ namespace XMLWriter.Pages
         {
             
             loadData.LoadDataFromFile();
-            inputType.Text = loadData.GetDataType();
+            inputType.Text = loadData.GetDataType(); 
             inputLoadFile.Text = loadData.GetFileNameAndPath();
             textStepCount.Content = language.GetStringSteps() + " " + data.GetStepCountMax();
         }

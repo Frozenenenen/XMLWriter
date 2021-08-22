@@ -130,8 +130,10 @@ namespace XMLWriter.Pages
             inputInstruction.Text = data.GetStepInstructionPos(data.GetStepCount());
             //System.Diagnostics.Debug.WriteLine("Blub: " + data.GetStepInstructionPos(data.GetStepCount()));
             //Right Side
+            inputPositiveID.ItemsSource = data.GetStepNames();
             inputPositiveID.Text = data.GetStepPositiveIDPos(data.GetStepCount());
             inputNegativeID.Text = data.GetNegativeIDPos(data.GetStepCount());
+            inputNegativeID.ItemsSource = data.GetStepNames();
             inputPositiveResult.Text = data.GetPositiveResultPos(data.GetStepCount());
             inputRepXML.Text = data.GetRepXMLPos(data.GetStepCount());
             inputActuatorTest.Text = data.GetActuatorTestPos(data.GetStepCount());
