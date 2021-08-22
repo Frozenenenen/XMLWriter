@@ -11,25 +11,25 @@ namespace XMLWriter.Classes
     {
         DataSet data = new DataSet();
         GUIMovement GUI = new GUIMovement();
-        private string fileNameAndPath = "";
-        private string dataType = "";
-        public string GetFileNameAndPath() => fileNameAndPath;
-        public string GetDataType() => dataType;
+        private static string fileNameAndPath = "";
+        private static string dataType = "";
+        public static string GetFileNameAndPath() => fileNameAndPath;
+        public static string GetDataType() => dataType;
 
-        private string stepName;
-        private string text;
-        private string anim;
-        private string specialStep;
-        private string instruction;
-        private string positiveID;
-        private string negativeID;
-        private string positiveResult;
-        private string repXml;
-        private string actuatorTest;
-        private string readData;
-        private string smartTool;
-        private bool? nextStep;
-        private bool? lastStep;
+        private static string stepName;
+        private static string text;
+        private static string anim;
+        private static string specialStep;
+        private static string instruction;
+        private static string positiveID;
+        private static string negativeID;
+        private static string positiveResult;
+        private static string repXml;
+        private static string actuatorTest;
+        private static string readData;
+        private static string smartTool;
+        private static bool? nextStep;
+        private static bool? lastStep;
 
 
         public void LoadDataFromFile()
