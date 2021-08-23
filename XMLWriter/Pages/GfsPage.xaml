@@ -82,12 +82,12 @@
         </DockPanel>
 
         <!--Auswahl RDBI/SmartTool/Aktortest-->
-        <StackPanel Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2">
+        <StackPanel Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2">
             <ComboBox x:Name="inputToolChoice" Margin="45,0" DropDownClosed="inputToolChoice_DropDownClosed"/>
         </StackPanel>
 
         <!--Actuator Test-->
-        <DockPanel x:Name="actuatorTest" Grid.Row="6" Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="3" Visibility="Hidden" HorizontalAlignment="Stretch">
+        <DockPanel x:Name="actuatorTest" Grid.Row="7" Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="3" Visibility="Hidden" HorizontalAlignment="Stretch">
             <StackPanel HorizontalAlignment="Stretch" Margin="10,0" Width="400">
                 <Label x:Name="textActuatorTest"/>
                 <ComboBox x:Name="inputECUChoice_AT" Margin="10,3" DropDownClosed="inputECUChoice_AT_DropDownClosed"/>
@@ -97,7 +97,7 @@
         </DockPanel>
         
         <!--RDBI-->
-        <DockPanel x:Name="RDBI" Grid.Row="6" Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="3" Visibility="Hidden" Margin="10,0">
+        <DockPanel x:Name="RDBI" Grid.Row="7" Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="3" Visibility="Hidden" Margin="10,0">
             <StackPanel VerticalAlignment="Stretch" Grid.ColumnSpan="3">
                 <Label x:Name="textReadData"/>
                 <ComboBox x:Name="inputECUChoice_RDBI" Margin="10,3" DropDownClosed="inputECUChoice_RDBI_DropDownClosed"/>
@@ -109,15 +109,21 @@
         </DockPanel>
 
         <!--Smart Tool-->
-        <DockPanel x:Name="smartTool" Grid.Row="6" Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="3" Visibility="Hidden" Margin="10,0">
+        <DockPanel x:Name="smartTool" Grid.Row="7" Grid.Column="3" Grid.RowSpan="4" Grid.ColumnSpan="3" Visibility="Hidden" Margin="10,0">
             <StackPanel HorizontalAlignment="Stretch" Grid.ColumnSpan="3">
                 <Label x:Name="textSmartTool"/>
-                <ComboBox x:Name="inputSmartTool_SM" Margin="0,0,40,0" DropDownClosed="inputSmartTool_SM_DropDownClosed"/>
-                <ComboBox x:Name="inputMeasure_SM" Margin="0,0,40,0" DropDownClosed="inputMeasure_SM_DropDownClosed"/>
-                <TextBox x:Name="inputSmartTool" IsEnabled="False"/>
+                <ComboBox x:Name="inputSmartTool_SM" Margin="0,3,40,0" DropDownClosed="inputSmartTool_SM_DropDownClosed"/>
+                <ComboBox x:Name="inputMeasure_SM" Margin="0,3,40,0" DropDownClosed="inputMeasure_SM_DropDownClosed"/>
+                <TextBox x:Name="inputSmartTool" Margin="0,3" IsEnabled="False"/>
                 <DockPanel>
-                    <TextBox x:Name="inputPositiveResult_UpperLimit" Margin="40,0"/>
-                    <TextBox x:Name="inputPositiveResult_LowerLimit" Margin="40,0"/>
+                    <StackPanel>
+                        <Label Content="Lower Limit"/>
+                        <TextBox x:Name="inputPositiveResult_LowerLimit" Margin="40,0" Width="140" TextChanged="inputPositiveResult_LowerLimit_TextChanged" />
+                    </StackPanel>
+                    <StackPanel>
+                        <Label Content="Upper Limit"/>
+                        <TextBox x:Name="inputPositiveResult_UpperLimit" Margin="40,0" Width="140" TextChanged="inputPositiveResult_UpperLimit_TextChanged"/>
+                    </StackPanel>
                 </DockPanel>
                 <Label x:Name="textSmartToolOptional"/>
                 <Label x:Name="textPositiveResult_SM" Margin="40,0"/>
@@ -127,7 +133,7 @@
 
 
         <!--next und last step-->
-        <DockPanel Grid.Row="11" Grid.Column="3" Grid.ColumnSpan="3">
+        <DockPanel Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="3">
             <CheckBox x:Name="inputNextStep" Margin="45,0"/>
             <CheckBox x:Name="inputLastStep" Margin="45,0"/>
         </DockPanel>

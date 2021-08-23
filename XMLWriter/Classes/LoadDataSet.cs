@@ -30,6 +30,7 @@ namespace XMLWriter.Classes
         private static string smartTool;
         private static bool? nextStep;
         private static bool? lastStep;
+        private static string toolChoice="";
 
 
         public void LoadDataFromFile()
@@ -78,7 +79,7 @@ namespace XMLWriter.Classes
                             break;
                         case "specialStep":
                             specialStep = xtr.ReadElementString();
-                            data.SaveRepSet(stepName, text, anim, specialStep);
+                            data.SaveSet(stepName, text, anim, specialStep);
                             GUI.IncrementSteps();
                             dataType = "rep";
                             break;
@@ -111,7 +112,19 @@ namespace XMLWriter.Classes
                             break;
                         case "lastStep":
                             lastStep = xtr.ReadElementString() == "true" ? true : false;
-                            data.SaveGfsSet(stepName, text, anim, instruction, positiveID, negativeID,
+                            if (smartTool!="")
+                            {
+                                toolChoice = "SmartTool";
+                            }
+                            else if(actuatorTest!="")
+                            {
+                                toolChoice = "ActuatorTest";
+                            }
+                            else if (readData != "")
+                            {
+                                toolChoice = "ReadDataByIdentifier";
+                            }
+                            data.SaveSet(toolChoice, stepName, text, anim, instruction, positiveID, negativeID,
                                             positiveResult, repXml, actuatorTest, readData, smartTool, nextStep, lastStep);
                             System.Diagnostics.Debug.WriteLine(repXml);
                             GUI.IncrementSteps();

@@ -6,14 +6,14 @@ namespace XMLWriter
 {
     class WriteGFSToXML:WriteToXML
     {
-        public void OutputToXML(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<bool?> checkActuatorTest, List<string> RDBI, List<bool?> checkRDBI, List<string> smartTool, List<bool?> checkSmartTool, List<bool?> nextStep, List<bool?> lastStep, string fileName, string dataType)
+        public void OutputToXML(int stepCountMax, List<string> toolChoice, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<bool?> checkActuatorTest, List<string> RDBI, List<bool?> checkRDBI, List<string> smartTool, List<bool?> checkSmartTool, List<bool?> nextStep, List<bool?> lastStep, string fileName, string dataType)
         {
             fileName = SetFileName(fileName);//, dataType);
-            string[] output = FillList(stepCountMax, step, text, anim, instruction, posID, negID, posResult, repXML, actuatorTest, checkActuatorTest, RDBI, checkRDBI, smartTool, checkSmartTool, nextStep, lastStep);
+            string[] output = FillList(stepCountMax, step, toolChoice, text, anim, instruction, posID, negID, posResult, repXML, actuatorTest, checkActuatorTest, RDBI, checkRDBI, smartTool, checkSmartTool, nextStep, lastStep);
             //File.WriteAllLines(pathVehicleID + "/" + pathLanguage + "/" + fileName + "_" + pathLanguage + fileExtension, output);
             File.WriteAllLines(fileName + "_" + pathLanguage + fileExtension, output);
         }
-        public string[] FillList(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<bool?> checkActuatorTest, List<string> RDBI, List<bool?> checkRDBI, List<string> smartTool, List<bool?> checkSmartTool, List<bool?> nextStep, List<bool?> lastStep)
+        public string[] FillList(int stepCountMax, List<string> step, List<string> toolChoice, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<bool?> checkActuatorTest, List<string> RDBI, List<bool?> checkRDBI, List<string> smartTool, List<bool?> checkSmartTool, List<bool?> nextStep, List<bool?> lastStep)
         {
             List<String> list = new List<string> { };
             list.Add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -32,9 +32,9 @@ namespace XMLWriter
                 list.Add(WriteNegID(negID[i]));
                 list.Add(WritePosResult(posResult[i]));
                 list.Add(WriteRepXML(repXML[i]));
-                list.Add(WriteActuatorTest(actuatorTest[i]));
-                list.Add(WriteRDBI(RDBI[i]));
-                list.Add(WriteSmartTool(smartTool[i]));
+                list.Add(WriteActuatorTest(toolChoice[i], actuatorTest[i]));
+                list.Add(WriteRDBI(toolChoice[i], RDBI[i]));
+                list.Add(WriteSmartTool(toolChoice[i], smartTool[i]));
                 list.Add(WriteNextStep(nextStep[i]));
                 list.Add(WriteLastStep(lastStep[i]));
 
@@ -94,21 +94,23 @@ namespace XMLWriter
                 ? "\t\t\t" + "<RepXml>" + "false" + "</RepXml>"
                 : "\t\t\t" + "<RepXml>" + repXML + "</RepXml>";
         }
-        private string WriteActuatorTest(string actuatorTest)
+        private string WriteActuatorTest(string toolChoice, string actuatorTest)
         {
-            return actuatorTest == ""
+            return actuatorTest == "" || toolChoice != "ActuatorTest" //Variable declaration in LoadInputOptions class oben
                 ? "\t\t\t" + "<actuatorTest>" + "false" + "</actuatorTest>"
                 : "\t\t\t" + "<actuatorTest>" + actuatorTest + "</actuatorTest>";
+
+
         }
-        private string WriteRDBI(string RDBI)
+        private string WriteRDBI(string toolChoice, string RDBI)
         {
-            return RDBI == ""
+            return RDBI == "" || toolChoice != "ReadDataByIdentifier" //Variable declaration in LoadInputOptions class oben
                 ? "\t\t\t" + "<ReadData>" + "false" + "</ReadData>"
                 : "\t\t\t" + "<ReadData>" + RDBI + "</ReadData>";
         }
-        private string WriteSmartTool(string smartTool)
+        private string WriteSmartTool(string toolChoice, string smartTool)
         {
-            return smartTool == ""
+            return smartTool == "" || toolChoice != "SmartTool" //Variable declaration in LoadInputOptions class oben
                 ? "\t\t\t" + "<SmartTool>" + "false" + "</SmartTool>"
                 : "\t\t\t" + "<SmartTool>" + smartTool + "</SmartTool>";
         }
@@ -122,7 +124,6 @@ namespace XMLWriter
             {
                 return "\t\t\t" + "<NextStep>" + "false" + "</NextStep>";
             }
-            
         }
         private string WriteLastStep(bool? check)
         {

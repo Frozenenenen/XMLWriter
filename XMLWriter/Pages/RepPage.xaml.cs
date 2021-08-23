@@ -21,7 +21,7 @@ namespace XMLWriter.Pages
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
-            data.SaveRepSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputSpecialText.Text);
+            data.SaveSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputSpecialText.Text);
             GUI.IncrementSteps();
 
             _ = NavigationService.Navigate(new RepPage());
@@ -38,7 +38,7 @@ namespace XMLWriter.Pages
             }
             else
             {
-                data.SaveRepSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputSpecialText.Text);
+                data.SaveSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputSpecialText.Text);
                 GUI.DecrementSteps();
                 _ = NavigationService.Navigate(new RepPage());
             }
@@ -64,7 +64,7 @@ namespace XMLWriter.Pages
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
-            data.SaveRepSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputSpecialText.Text);
+            data.SaveSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputSpecialText.Text);
             GUI.IncrementSteps();
             GUI.DecrementStepsForSaving();
 

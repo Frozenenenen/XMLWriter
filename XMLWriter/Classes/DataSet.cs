@@ -27,7 +27,7 @@ namespace XMLWriter
         private static string fileName = "Dateiname";
 
         private static readonly string[] dataTypeChoice = { "gfs", "rep" }; //Gehört eigentlich nicht in diese Klasse, aber bis mir ein besserer Ort einfällt bleibts wohl hier
-        private static readonly string[] toolChoice = { "actuatorTest", "ReadData", "SmartTool" };
+        //private static readonly string[] toolChoice = { "actuatorTest", "ReadData", "SmartTool" };
 
 
         //Variablen von Rep und Gfs
@@ -50,6 +50,7 @@ namespace XMLWriter
         private static List<bool?> checkStepSmartTool = new List<bool?>();
         private static List<bool?> stepNextStep = new List<bool?>();
         private static List<bool?> stepLastStep = new List<bool?>();
+        private static List<string> stepToolChoice = new List<string>();
 
 
 
@@ -58,7 +59,7 @@ namespace XMLWriter
         public int GetStepCountMax() => stepCountMax;
 
         public string[] GetDataTypeChoice() => dataTypeChoice;
-        public string[] GetToolChoice() => toolChoice;
+        //public string[] GetToolChoice() => toolChoice;
         public string[] GetStepNames()
         {
             string[] stepNames = new string[stepCountMax];
@@ -279,6 +280,18 @@ namespace XMLWriter
                 return true;
             }
         }
+        public string GetToolChoice(int count)
+        {
+            try
+            {
+                return stepToolChoice[count];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("stepToolChoice: ArgumentOutOfRangeException");
+                return "Fehler";
+            }
+        }
 
         //Setter 
         public void SetStepCountMax(int inputStepCountMax) => stepCountMax = inputStepCountMax;
@@ -405,18 +418,6 @@ namespace XMLWriter
                 stepActuatorTest[stepCount] = inputActuatorTest;
             }
         }
-        /*private void SetCheckActuatorTest(bool? inputCheckActuatorTest)
-        {
-            if (stepCountMax == stepCount)
-            {
-                checkStepActuatorTest.Insert(stepCount, inputCheckActuatorTest);
-                checkStepActuatorTest[stepCount] = inputCheckActuatorTest;
-            }
-            else
-            {
-                checkStepActuatorTest[stepCount] = inputCheckActuatorTest;
-            }
-        }*/
         private void SetRDBI(string inputRDBI)
         {
             if (stepCountMax == stepCount)
@@ -429,18 +430,6 @@ namespace XMLWriter
                 stepRDBI[stepCount] = inputRDBI;
             }
         }
-        /*private void SetCheckRDBI(bool? inputCheckRDBI)
-        {
-            if (stepCountMax == stepCount)
-            {
-                checkStepRDBI.Insert(stepCount, inputCheckRDBI);
-                checkStepRDBI[stepCount] = inputCheckRDBI;
-            }
-            else
-            {
-                checkStepRDBI[stepCount] = inputCheckRDBI;
-            }
-        }*/
         private void SetSmartTool(string inputSmartTool)
         {
             if (stepCountMax == stepCount)
@@ -453,18 +442,6 @@ namespace XMLWriter
                 stepSmartTool[stepCount] = inputSmartTool;
             }
         }
-        /*private void SetCheckSmartTool(bool? inputCheckSmartTool)
-        {
-            if (stepCountMax == stepCount)
-            {
-                checkStepSmartTool.Insert(stepCount, inputCheckSmartTool);
-                checkStepSmartTool[stepCount] = inputCheckSmartTool;
-            }
-            else
-            {
-                checkStepSmartTool[stepCount] = inputCheckSmartTool;
-            }
-        }*/
         private void SetNextStep(bool? inputNextStep)
         {
             if (stepCountMax == stepCount)
@@ -487,6 +464,18 @@ namespace XMLWriter
             else
             {
                 stepLastStep[stepCount] = inputLastStep;
+            }
+        }
+        private void SetToolChoice(string inputToolChoice)
+        {
+            if (stepCountMax == stepCount)
+            {
+                stepToolChoice.Insert(stepCount, inputToolChoice);
+                stepToolChoice[stepCount] = inputToolChoice;
+            }
+            else
+            {
+                stepToolChoice[stepCount] = inputToolChoice;
             }
         }
 
@@ -522,6 +511,7 @@ namespace XMLWriter
                     checkStepSmartTool.Insert(stepCount, true);*/
                     stepNextStep.Insert(stepCount, false);
                     stepLastStep.Insert(stepCount, false);
+                    stepToolChoice.Insert(stepCount, "");
                 }
 
             }
@@ -568,7 +558,7 @@ namespace XMLWriter
         }
         
         
-        public void SaveRepSet(string stepName, string text, string anim, string specialText)
+        public void SaveSet(string stepName, string text, string anim, string specialText)
         {
             SetStep(stepName);
             SetText(text);
@@ -577,7 +567,7 @@ namespace XMLWriter
 
             System.Diagnostics.Debug.WriteLine(stepName + " Anim: " + anim + " Text: " + text + " SpText: " + specialText);
         }
-        public void SaveGfsSet(string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, string RDBI, string smartTool, bool? nextStep, bool? lastStep)
+        public void SaveSet(string toolChoice, string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, string RDBI, string smartTool, bool? nextStep, bool? lastStep)
         {
             SetStep(stepName);
             SetText(text);
@@ -592,8 +582,10 @@ namespace XMLWriter
             SetSmartTool(smartTool);
             SetNextStep(nextStep);
             SetLastStep(lastStep);
+            SetToolChoice(toolChoice);
 
-            System.Diagnostics.Debug.WriteLine("step: " + stepName + " text: " + text + " Anim: " + anim + " Instr.: " + instructionText + " posID: " + posID + " negID: " + negID +" posRes: " + posResult + " repXML: " + repXML + "\nA-Test: " + actuatorTest +  " RDBI: " + RDBI +  " SmartTool: " + smartTool +  " NextST: " + nextStep + " LastSt: " + lastStep +"\n");
+            //System.Diagnostics.Debug.WriteLine("Tool: " + toolChoice + " step: " + stepName + " text: " + text + " Anim: " + anim + " Instr.: " + instructionText + " posID: " + posID + " negID: " + negID +" posRes: " + posResult + " repXML: " + repXML + "\nA-Test: " + actuatorTest +  " RDBI: " + RDBI +  " SmartTool: " + smartTool +  " NextST: " + nextStep + " LastSt: " + lastStep +"\n");
+            System.Diagnostics.Debug.WriteLine("Tool: " + toolChoice + " step: " + stepName + " \nposRes: " + posResult + " \nRDBI: " + RDBI + " \nSmartTool: " + smartTool + "\n");
         }
 
         public void SetFileName(string inputFileName) //Damit keine vorherigen Daten überschrieben werden, wird der Dateiname iteriert, bis ein neuer Dateiname gefunden wurde.
@@ -614,7 +606,7 @@ namespace XMLWriter
                     break;
                 case "gfs":
                     WriteGFSToXML gfs = new WriteGFSToXML();
-                    gfs.OutputToXML(stepCountMax, steps, stepTexts, stepAnims, stepInstruction, stepPositiveID, stepNegativeID, stepPositiveResult, stepRepXML, stepActuatorTest, checkStepActuatorTest, stepRDBI, checkStepRDBI, stepSmartTool, checkStepSmartTool, stepNextStep, stepLastStep, fileName, dataType);
+                    gfs.OutputToXML(stepCountMax, stepToolChoice, steps, stepTexts, stepAnims, stepInstruction, stepPositiveID, stepNegativeID, stepPositiveResult, stepRepXML, stepActuatorTest, checkStepActuatorTest, stepRDBI, checkStepRDBI, stepSmartTool, checkStepSmartTool, stepNextStep, stepLastStep, fileName, dataType);
                     break;
                 default:
                     Console.WriteLine("Error in OutputToXML from DataSet");
