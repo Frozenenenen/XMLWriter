@@ -16,7 +16,6 @@ namespace XMLWriter.Pages
         GUIMovement GUI = new GUIMovement();
         LoadInputOptions input = new LoadInputOptions();
         private static string positiveResult;
-                                                
 
         public GfsPage()
         {
@@ -182,7 +181,7 @@ namespace XMLWriter.Pages
             InitFlexRightSideItems();
             ShowItemsAfterToolChoice();
         }
-
+        //Inits erste Unterbene
         private void InitLeftSideItems()
         {
             inputStepName.Text = data.GetStepNamePos(data.GetStepCount()) == ""
@@ -216,11 +215,9 @@ namespace XMLWriter.Pages
             //SmartTool
             InitSmartTool();
         }
-
+        //Inits zweite Unterbene
         private void InitActuatorTest()
         {
-            inputECUChoice_AT.ItemsSource = input.GetECUChoices();
-            inputECUChoice_AT.Text = input.GetECUChoices()[0];
             InitComponentComboBox();
 
             if (data.GetActuatorTestPos(data.GetStepCount()) == "")
@@ -234,8 +231,6 @@ namespace XMLWriter.Pages
         }
         private void InitReadData()
         {
-            inputECUChoice_RDBI.ItemsSource = input.GetECUChoices();
-            inputECUChoice_RDBI.Text = input.GetECUChoices()[0];
             InitRDBIComboBox();
             if (string.IsNullOrEmpty(data.GetRDBIPpos(data.GetStepCount())))
             {
@@ -256,8 +251,6 @@ namespace XMLWriter.Pages
         }
         private void InitSmartTool()
         {
-            inputMeasure_SM.ItemsSource = input.GetMeasurementChoices();
-            inputMeasure_SM.Text = input.GetMeasurementChoices()[0];
             InitIOComboboBox();
             if(data.GetSmartToolPos(data.GetStepCount()) == "")
             {
@@ -278,8 +271,11 @@ namespace XMLWriter.Pages
             }
             inputPositiveResult_UpperLimit.Text = "";
         }
+        //Inits dritte Unterebene
         private void InitComponentComboBox()
         {
+            inputECUChoice_AT.ItemsSource = input.GetECUChoices();
+            inputECUChoice_AT.Text = input.GetECUChoices()[0];
             switch (inputECUChoice_AT.Text)
             {
                 case "Bordnetz Steuergeraet":
@@ -294,6 +290,8 @@ namespace XMLWriter.Pages
         }
         private void InitRDBIComboBox()
         {
+            inputECUChoice_RDBI.ItemsSource = input.GetECUChoices();
+            inputECUChoice_RDBI.Text = input.GetECUChoices()[0];
             switch (inputECUChoice_RDBI.Text)
             {
                 case "Bordnetz Steuergeraet":
@@ -308,6 +306,8 @@ namespace XMLWriter.Pages
         }
         private void InitIOComboboBox()
         {
+            inputMeasure_SM.ItemsSource = input.GetMeasurementChoices();
+            inputMeasure_SM.Text = input.GetMeasurementChoices()[0];
             switch (inputECUChoice_AT.Text)
             {
                 case "Bordnetz Steuergeraet":
@@ -389,12 +389,5 @@ namespace XMLWriter.Pages
                 System.Diagnostics.Debug.Write("Dieser Pfad in ChechForWhatCaseInSmartToolPositiveResult-Method sollte nie erreicht werden: ");
             }
         }
-
-        private void inputMeasure_SM_TextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine("Textinput");
-        }
-
-
     }
 }
