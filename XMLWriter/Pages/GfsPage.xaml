@@ -112,9 +112,12 @@
         <DockPanel x:Name="smartTool" Grid.Row="7" Grid.Column="3" Grid.RowSpan="4" Grid.ColumnSpan="3" Visibility="Hidden" Margin="10,0">
             <StackPanel HorizontalAlignment="Stretch" Grid.ColumnSpan="3">
                 <Label x:Name="textSmartTool"/>
-                <ComboBox x:Name="inputSmartTool_SM" Margin="0,3,40,0" DropDownClosed="inputSmartTool_SM_DropDownClosed"/>
-                <ComboBox x:Name="inputMeasure_SM" Margin="0,3,40,0" DropDownClosed="inputMeasure_SM_DropDownClosed"/>
-                <TextBox x:Name="inputSmartTool" Margin="0,3" IsEnabled="False"/>
+                <ComboBox x:Name="inputSmartTool_SM" Margin="0,3,40,0" DropDownClosed="inputSmartTool_SM_DropDownClosed" Width="400"/>
+                <DockPanel>
+                    <ComboBox x:Name="inputMeasure_SM" Margin="23,3,40,0" DropDownClosed="inputMeasure_SM_DropDownClosed" IsEditable="True" KeyDown="inputMeasure_SM_KeyDown" Width="400"/>
+                    <Label Content="?" ToolTip="Make sure to press Enter after keybordinput or the last key might be missing" Background="Yellow" HorizontalAlignment="Left"/>
+                </DockPanel>
+                <TextBox x:Name="inputSmartTool" Margin="23,3" IsEnabled="False"/>
                 <DockPanel>
                     <StackPanel>
                         <Label Content="Lower Limit"/>

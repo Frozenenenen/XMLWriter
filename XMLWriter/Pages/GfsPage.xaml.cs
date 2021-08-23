@@ -116,6 +116,10 @@ namespace XMLWriter.Pages
         {
             inputSmartTool.Text = inputSmartTool_SM.Text + "|" + inputMeasure_SM.Text;
         }
+        private void inputMeasure_SM_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            inputSmartTool.Text = inputSmartTool_SM.Text + "|" + inputMeasure_SM.Text;
+        }
         private void inputPositiveResult_UpperLimit_TextChanged(object sender, TextChangedEventArgs e)
         {
             CheckForWhatCaseInSmartToolPositiveResult();
@@ -178,6 +182,7 @@ namespace XMLWriter.Pages
             InitFlexRightSideItems();
             ShowItemsAfterToolChoice();
         }
+
         private void InitLeftSideItems()
         {
             inputStepName.Text = data.GetStepNamePos(data.GetStepCount()) == ""
@@ -211,6 +216,7 @@ namespace XMLWriter.Pages
             //SmartTool
             InitSmartTool();
         }
+
         private void InitActuatorTest()
         {
             inputECUChoice_AT.ItemsSource = input.GetECUChoices();
@@ -239,7 +245,14 @@ namespace XMLWriter.Pages
             {
                 inputReadData.Text = data.GetRDBIPpos(data.GetStepCount());
             }
-            inputPositiveResult_RDBI.Text = data.GetPositiveResultPos(data.GetStepCount());
+            if (inputToolChoice.Text == input.GetToolChoice()[3])
+            {
+                inputPositiveResult_RDBI.Text = data.GetPositiveResultPos(data.GetStepCount());
+            }
+            else
+            {
+                inputPositiveResult_RDBI.Text = "";
+            }
         }
         private void InitSmartTool()
         {
@@ -260,7 +273,8 @@ namespace XMLWriter.Pages
             }
             else
             {
-                inputPositiveResult_SM.Text = data.GetPositiveResultPos(data.GetStepCount());
+                if (inputToolChoice.Text == input.GetToolChoice()[2])
+                    inputPositiveResult_SM.Text = data.GetPositiveResultPos(data.GetStepCount());
             }
             inputPositiveResult_UpperLimit.Text = "";
         }
@@ -375,5 +389,12 @@ namespace XMLWriter.Pages
                 System.Diagnostics.Debug.Write("Dieser Pfad in ChechForWhatCaseInSmartToolPositiveResult-Method sollte nie erreicht werden: ");
             }
         }
+
+        private void inputMeasure_SM_TextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Textinput");
+        }
+
+
     }
 }
