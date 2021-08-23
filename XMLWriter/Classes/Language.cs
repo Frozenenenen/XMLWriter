@@ -150,7 +150,7 @@ namespace XMLWriter
             instructions = "Arbeitsanweisungen";
             posID = "Positive ID";
             negID = "Negative ID";
-            posResult = "Positives Ergebnis";
+            posResult = "Erwarteter Wert";
             repXML = "RepXML";
             actuatorTest = "Aktortest";
             readData = "Identifier (RDBI)";

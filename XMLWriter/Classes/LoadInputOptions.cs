@@ -11,6 +11,7 @@ namespace XMLWriter.Classes
         private static string filePathECU = @"Files/ECU_List.txt";
         private static string filePathIO = "Files/IO_BCM.txt";
         private static string filePathRDID = "Files/RDID_BCM.txt";
+        private static string filePathMeasure = @"Files/Measure_BCM.txt";
         private static string[] toolChoice = { "ActuatorTest", "SmartTool", "ReadDataByIdentifier" };
         /*private static List<string> fullECUName;*/
         private static List<string> shortECUName = new List<string>();
@@ -20,6 +21,7 @@ namespace XMLWriter.Classes
         private static List<string> componentNameEN = new List<string>();
         private static List<string> readDataID_DE = new List<string>();
         private static List<string> readDataID_EN = new List<string>();
+        private static string[] measurements;
         /*private static string[] shortECUName;
         private static string[] longECUName;*/
 
@@ -28,23 +30,18 @@ namespace XMLWriter.Classes
             LoadECUOptions();
             LoadIOOptions();
             LoadRDIDOptions();
-            /*System.Diagnostics.Debug.WriteLine(fullECUName[0]);
-            System.Diagnostics.Debug.WriteLine(shortECUName[0]);
-            System.Diagnostics.Debug.WriteLine(longECUName[0]);
-            System.Diagnostics.Debug.WriteLine(componentNameDE[0]);
-            System.Diagnostics.Debug.WriteLine(componentNameEN[0]);
-            System.Diagnostics.Debug.WriteLine(readDataID_DE[0]);
-            System.Diagnostics.Debug.WriteLine(readDataID_EN[0]);*/
+            LoadMeasurementOptions();
         }
         public string[] GetToolChoice()
         {
             return toolChoice;
         }
-        public string[] GetECUOptions()
+        public string[] GetECUChoices()
         {
-            return fullECUName;
+            //return fullECUName;
+            return longECUName.ToArray();
         }
-        public string[] GetIOOptions()
+        public string[] GetIOChoices()
         {
             Language language = new Language();
             string[] IOs;
@@ -62,15 +59,16 @@ namespace XMLWriter.Classes
             }
             return IOs;
         }
-        public string[] GetRDIDs(string language)
+        public string[] GetRDIDChoices()
         {
+            Language language = new Language();
             string[] RDIDs;
-            switch (language)
+            switch (language.GetStringLanguage())
             {
-                case "de":
+                case "Deutsch":
                     RDIDs = readDataID_DE.ToArray();
                     break;
-                case "en":
+                case "English":
                     RDIDs = readDataID_EN.ToArray();
                     break;
                 default:
@@ -79,7 +77,10 @@ namespace XMLWriter.Classes
             }
             return RDIDs;
         }
-
+        public string[] GetMeasurementChoices()
+        {
+            return measurements;
+        }
 
         private string LoadInputFromTxtFile(string fileNameAndPath)
         {
@@ -126,6 +127,12 @@ namespace XMLWriter.Classes
                 readDataID_DE.Add(temp[1]);
             }
         }
+        private void LoadMeasurementOptions()
+        {
+            string stream = LoadInputFromTxtFile(filePathMeasure);
+            measurements = stream.Split('|');
+        }
+
 
 
 

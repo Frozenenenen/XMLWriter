@@ -14,6 +14,8 @@ namespace XMLWriter.Pages
         Language language = new Language();
         GUIMovement GUI = new GUIMovement();
         LoadInputOptions input = new LoadInputOptions();
+        private static string positiveResult;
+
         public GfsPage()
         {
             InitializeComponent();
@@ -22,9 +24,11 @@ namespace XMLWriter.Pages
             InitValueItems();
         }
 
+        //buttons
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
-            data.SaveGfsSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, inputPositiveResult.Text,
+            positiveResult= inputPositiveResult_RDBI.Text + "" + inputPositiveResult_SM.Text;
+            data.SaveGfsSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, positiveResult,
                             inputRepXML.Text, inputActuatorTest.Text, inputReadData.Text, inputSmartTool.Text, inputNextStep.IsChecked, inputLastStep.IsChecked);
             GUI.IncrementSteps();
 
@@ -42,7 +46,7 @@ namespace XMLWriter.Pages
             }
             else
             {
-                data.SaveGfsSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, inputPositiveResult.Text,
+                data.SaveGfsSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, positiveResult,
                                 inputRepXML.Text, inputActuatorTest.Text, inputReadData.Text, inputSmartTool.Text, inputNextStep.IsChecked, inputLastStep.IsChecked);
                 GUI.DecrementSteps();
                 _ = NavigationService.Navigate(new GfsPage());
@@ -69,14 +73,16 @@ namespace XMLWriter.Pages
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
-            data.SaveGfsSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, inputPositiveResult.Text,
+            data.SaveGfsSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, positiveResult,
                             inputRepXML.Text, inputActuatorTest.Text, inputReadData.Text, inputSmartTool.Text, inputNextStep.IsChecked, inputLastStep.IsChecked);
             GUI.IncrementSteps();
             GUI.DecrementStepsForSaving(); //Entweder ich mach ne extra Funktion für die letzte Dateneingabe oder ich in- und decrementiere direkt nacheinander. i++ i--. Anonsten hab ich beim zurückgehen Probleme^^
 
             _ = NavigationService.Navigate(new SavePage());
         }
-        private void btnToolChoice_Click(object sender, RoutedEventArgs e)
+
+        //Comboboxes
+        private void inputToolChoice_DropDownClosed(object sender, System.EventArgs e)
         {
             switch (inputToolChoice.Text)
             {
@@ -94,14 +100,32 @@ namespace XMLWriter.Pages
                 case "ReadDataByIdentifier":
                     HideAllItemsWithToggleVisibility();
                     RDBI.Visibility = Visibility.Visible;
-                    positiveResult.Visibility = Visibility.Visible;
                     break;
 
                 default:
                     break;
             }
         }
+        private void inputECUChoice_AT_DropDownClosed(object sender, System.EventArgs e)
+        {
+            inputActuatorTest.Text = inputComponentChoice_AT.Text + "|" + inputECUChoice_AT.Text;
+            InitComponentComboBox();
+        }
+        private void inputComponentChoice_AT_DropDownClosed(object sender, System.EventArgs e)
+        {
+            inputActuatorTest.Text = inputComponentChoice_AT.Text + "|" + inputECUChoice_AT.Text;
+        }
+        private void inputECUChoice_RDBI_DropDownClosed(object sender, System.EventArgs e)
+        {
+            inputReadData.Text = inputRDBIChoice_RDBI.Text + "|" + inputECUChoice_RDBI.Text;
+            InitRDBIComboBox();
+        }
+        private void inputRDBIChoice_RDBI_DropDownClosed(object sender, System.EventArgs e)
+        {
+            inputReadData.Text = inputRDBIChoice_RDBI.Text + "|" + inputECUChoice_RDBI.Text;
+        }
 
+        //Inits
         private void InitTextItems()
         {
             DataSet data = new DataSet();
@@ -127,7 +151,8 @@ namespace XMLWriter.Pages
             //Inhalte rechte Spalte
             textPositiveID.Content = language.GetStringPosID();
             textNegativeID.Content = language.GetStringNegID();
-            textPositiveResult.Content = language.GetStringPosResult();
+            textPositiveResult_SM.Content = language.GetStringPosResult();
+            textPositiveResult_RDBI.Content = language.GetStringPosResult();
             textRepXML.Content = language.GetStringRepXML();
             textActuatorTest.Content = language.GetStringActuatorTest();
             textReadData.Content = language.GetStringReadData();
@@ -135,10 +160,9 @@ namespace XMLWriter.Pages
             inputNextStep.Content = language.GetStringNextStep();
             inputLastStep.Content = language.GetStringLastStep();
             inputToolChoice.Text = language.GetStringToolChoise();
-            textActuatorOptional.Content = language.GetStringOptional();
-            textRDBIOptional.Content = language.GetStringOptional();
+            //textRDBIOptional.Content = language.GetStringOptional();
             textSmartToolOptional.Content = language.GetStringOptional();
-
+            
             //Buttons
             btnNext.Content = language.GetStringNext();
             btnSave.Content = language.GetStringSave();
@@ -147,7 +171,6 @@ namespace XMLWriter.Pages
                 ? language.GetStringBack() 
                 : language.GetStringReset();
         }
-
         private void InitValueItems()
         {
             InitLeftSideItems();
@@ -181,32 +204,112 @@ namespace XMLWriter.Pages
         }
         private void InitFlexRightSideItems()
         {
-            inputPositiveResult.Text = data.GetPositiveResultPos(data.GetStepCount());
-            //Abhängig von Auswahl
-            // Aktortest
-            inputECUChoice.ItemsSource = input.GetECUOptions();
-            inputECUChoice.Text = input.GetECUOptions()[0];
-            inputComponentChoice.ItemsSource = input.GetIOOptions();
-            inputComponentChoice.Text = input.GetIOOptions()[0];
-            inputActuatorTest.Text = data.GetActuatorTestPos(data.GetStepCount());
-
-            inputReadData.Text = data.GetRDBIPpos(data.GetStepCount());
-            inputSmartTool.Text = data.GetSmartToolPos(data.GetStepCount());
             inputToolChoice.ItemsSource = input.GetToolChoice();
+            InitActuatorTest();
+            InitReadData();
+            //SmartTool
+            InitSmartTool();
+        }
+        private void InitActuatorTest()
+        {
+            inputECUChoice_AT.ItemsSource = input.GetECUChoices();
+            inputECUChoice_AT.Text = input.GetECUChoices()[0];
+            InitComponentComboBox();
+
+            if (data.GetActuatorTestPos(data.GetStepCount()) == "")
+            {
+                inputActuatorTest.Text = inputComponentChoice_AT.Text + "|" + inputECUChoice_AT.Text;
+            }
+            else
+            {
+                inputActuatorTest.Text = data.GetActuatorTestPos(data.GetStepCount());
+            }
+        }
+        private void InitReadData()
+        {
+            inputECUChoice_RDBI.ItemsSource = input.GetECUChoices();
+            inputECUChoice_RDBI.Text = input.GetECUChoices()[0];
+            InitRDBIComboBox();
+            if (data.GetRDBIPpos(data.GetStepCount()) == "")
+            {
+                inputReadData.Text = inputRDBIChoice_RDBI.Text + "|" + inputECUChoice_RDBI.Text;
+            }
+            else
+            {
+                inputReadData.Text = data.GetRDBIPpos(data.GetStepCount());
+            }
+            inputPositiveResult_RDBI.Text = data.GetPositiveResultPos(data.GetStepCount());
+        }
+        private void InitSmartTool()
+        {
+            inputMeasure_SM.ItemsSource = input.GetMeasurementChoices();
+            inputMeasure_SM.Text = input.GetMeasurementChoices()[0];
+            InitIOComboboBox();
+            inputSmartTool.Text = data.GetSmartToolPos(data.GetStepCount());
+        }
+        private void InitComponentComboBox()
+        {
+            switch (inputECUChoice_AT.Text)
+            {
+                case "Bordnetz Steuergeraet":
+                    inputComponentChoice_AT.ItemsSource = input.GetIOChoices();
+                    inputComponentChoice_AT.Text = input.GetIOChoices()[0];
+                    break;
+                default:
+                    inputComponentChoice_AT.ItemsSource = "";
+                    inputComponentChoice_AT.Text = "";
+                    break;
+            }
+        }
+        private void InitRDBIComboBox()
+        {
+            switch (inputECUChoice_AT.Text)
+            {
+                case "Bordnetz Steuergeraet":
+                    inputRDBIChoice_RDBI.ItemsSource = input.GetRDIDChoices();
+                    inputRDBIChoice_RDBI.Text = input.GetRDIDChoices()[0];
+                    break;
+                default:
+                    inputRDBIChoice_RDBI.ItemsSource = "";
+                    inputRDBIChoice_RDBI.Text = "";
+                    break;
+            }
+        }
+        private void InitIOComboboBox()
+        {
+            switch (inputECUChoice_AT.Text)
+            {
+                case "Bordnetz Steuergeraet":
+                    inputSmartTool_SM.ItemsSource = input.GetIOChoices();
+                    inputSmartTool_SM.Text = input.GetIOChoices()[0];
+                    break;
+                default:
+                    inputSmartTool_SM.ItemsSource = "";
+                    inputSmartTool_SM.Text = "";
+                    break;
+            }
         }
 
-        
+        //Anderes
         private void HideAllItemsWithToggleVisibility()
         {
             RDBI.Visibility = Visibility.Hidden;
             smartTool.Visibility = Visibility.Hidden;
             actuatorTest.Visibility = Visibility.Hidden;
-            positiveResult.Visibility = Visibility.Hidden;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void inputSmartTool_SM_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputActuatorTest.Text = inputComponentChoice.Text + "|" + inputECUChoice.Text;
+            inputSmartTool.Text = inputSmartTool_SM.Text + "|" + inputMeasure_SM.Text;
+            InitIOComboboBox();
         }
+
+        private void inputMeasure_SM_DropDownClosed(object sender, System.EventArgs e)
+        {
+            inputSmartTool.Text = inputSmartTool_SM.Text + "|" + inputMeasure_SM.Text;
+        }
+
+        //    inputPositiveResult_SM.Text = inputPositiveResult_LowerLimit.Text + "<x<" + inputPositiveResult_UpperLimit.Text + " oder so ähnlich";
+        
     }
 }
