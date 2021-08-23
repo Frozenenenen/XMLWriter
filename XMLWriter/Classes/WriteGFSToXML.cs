@@ -10,7 +10,8 @@ namespace XMLWriter
         {
             fileName = SetFileName(fileName);//, dataType);
             string[] output = FillList(stepCountMax, step, text, anim, instruction, posID, negID, posResult, repXML, actuatorTest, checkActuatorTest, RDBI, checkRDBI, smartTool, checkSmartTool, nextStep, lastStep);
-            File.WriteAllLines(pathVehicleID + "/" + pathLanguage + "/" + fileName + "_" + pathLanguage + fileExtension, output);
+            //File.WriteAllLines(pathVehicleID + "/" + pathLanguage + "/" + fileName + "_" + pathLanguage + fileExtension, output);
+            File.WriteAllLines(fileName + "_" + pathLanguage + fileExtension, output);
         }
         public string[] FillList(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<bool?> checkActuatorTest, List<string> RDBI, List<bool?> checkRDBI, List<string> smartTool, List<bool?> checkSmartTool, List<bool?> nextStep, List<bool?> lastStep)
         {
