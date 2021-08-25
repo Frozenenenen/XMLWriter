@@ -24,7 +24,7 @@ namespace XMLWriter.Pages
         DataSet data = new DataSet();
         Language language = new Language();
         LoadDataSet loadData = new LoadDataSet();
-        LoadInputOptions loadInput = new LoadInputOptions();
+        LoadInputOptions input = new LoadInputOptions();
         public StartPage()
         {
             InitializeComponent();
@@ -32,11 +32,11 @@ namespace XMLWriter.Pages
             language.InitLanguage("Deutsch");
             InitTextItems();
             InitValueItems();
-            loadInput.LoadAllOptions();
         }
 
         private void BtnNext(object sender, RoutedEventArgs e)
         {
+            input.SetDataBase(inputFromDataBase.IsChecked);
             data.SetDataType(inputType.Text);
             data.SetStepCount(0);   //has to be reset to 0 coz of loading
 
@@ -93,7 +93,7 @@ namespace XMLWriter.Pages
         }
         private void InitValueItems()
         {
-            //Ähm... ja
+            inputFromDataBase.IsChecked = input.GetDataBase();
         }
     }
 }

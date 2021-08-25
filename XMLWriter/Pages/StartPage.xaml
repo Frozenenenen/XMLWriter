@@ -34,6 +34,8 @@
             <ColumnDefinition Width="70"/>
         </Grid.ColumnDefinitions>
 
+        <CheckBox x:Name="inputFromDataBase" Grid.Row="10" Grid.Column="4" Grid.ColumnSpan="2" Margin="0,0" IsChecked="False" Content="Laden über Datenbank?" ToolTip="Wenn false Laden von txt-dateien" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        
         <Button x:Name="textSaveNotice" Content="X" FontSize="20" ToolTip="Das schließen des Fenster's über das Kreuz löscht das Programm nicht aus dem Speicher. Beim speichern funktioniert dies. Ansonsten hier klicken"  VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="6" Background="Red"  Click="BtnClose" Width="35"/>
         <Label x:Name="textInstructions" ToolTip="Leere Felder werden automatisch befüllt"  VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Background="Yellow"  Margin="0,19,0,0"/>
         <Label x:Name="textTitel" Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="3" Content="Datensatz anlegen" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>

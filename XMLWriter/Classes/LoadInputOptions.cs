@@ -7,83 +7,171 @@ namespace XMLWriter.Classes
 {
     class LoadInputOptions
     {
+        private static bool DataBaseOrTxtFile; //True=Database, False=txt
+        Language language = new Language();
         //private static string filePathECU = @"D:\Projekte\Studium\XMLWriter\XMLWriter\XMLWriter\bin\Debug\netcoreapp3.1\Files\ECU_";
-        private static string filePathECU = @"Files/ECU_List.txt";
-        private static string filePathIO = "Files/IO_BCM.txt";
-        private static string filePathRDID = "Files/RDID_BCM.txt";
-        private static string filePathMeasure = @"Files/Measure_BCM.txt";
-        private static string[] toolChoice = { "", "ActuatorTest", "SmartTool", "ReadDataByIdentifier" };
-        /*private static List<string> fullECUName;*/
-        private static List<string> shortECUName = new List<string>();
-        private static List<string> longECUName = new List<string>();
-        private static string[] fullECUName;
-        private static List<string> componentNameDE = new List<string>();
-        private static List<string> componentNameEN = new List<string>();
-        private static List<string> readDataID_DE = new List<string>();
-        private static List<string> readDataID_EN = new List<string>();
-        private static string[] measurements;
-        /*private static string[] shortECUName;
-        private static string[] longECUName;*/
+        private static readonly string path = @"Files/";
+        private static readonly string[] toolChoice = { "", "ActuatorTest", "SmartTool", "ReadDataByIdentifier" };
 
-        public void LoadAllOptions()
+        public void SetDataBase(bool? check)
         {
-            LoadECUOptions();
-            LoadIOOptions();
-            LoadRDIDOptions();
-            LoadMeasurementOptions();
+            if (check==true)
+            {
+                DataBaseOrTxtFile = true;
+            }
+            else
+            {
+                DataBaseOrTxtFile = false;
+            }
         }
-        public string[] GetToolChoice()
-        {
-            return toolChoice;
-        }
+        public bool? GetDataBase() => DataBaseOrTxtFile;
+        public string[] GetToolChoice() => toolChoice;
         public string[] GetECUChoices()
         {
-            //return fullECUName;
-            return longECUName.ToArray();
+            return LoadVariableOptions("long", "ECU"); //Es dürfte egal sein, was in dem dritten Parameter steht.
         }
-        public string[] GetIOChoices()
+        public string[] GetSmartToolChoices()
         {
-            Language language = new Language();
-            string[] IOs;
-            switch (language.GetStringLanguage())
-            {
-                case "Deutsch":
-                    IOs = componentNameDE.ToArray();
-                    break;
-                case "English":
-                    IOs = componentNameEN.ToArray();
-                    break;
-                default:
-                    IOs = componentNameEN.ToArray();
-                    break;
-            }
-            return IOs;
-        }
-        public string[] GetRDIDChoices()
-        {
-            Language language = new Language();
-            string[] RDIDs;
-            switch (language.GetStringLanguage())
-            {
-                case "Deutsch":
-                    RDIDs = readDataID_DE.ToArray();
-                    break;
-                case "English":
-                    RDIDs = readDataID_EN.ToArray();
-                    break;
-                default:
-                    RDIDs = readDataID_EN.ToArray();
-                    break;
-            }
-            return RDIDs;
-        }
-        public string[] GetMeasurementChoices()
-        {
-            return measurements;
+            return LoadVariableOptions("long", "SmartTool");
         }
 
+
+        //Get Acturtortest 2nd Dropdown Options 
+        public string[] Get_AT_IOChoices(string language, string longSpecificECU) 
+        {
+            System.Diagnostics.Debug.WriteLine("\nIO -1");
+            string shortSpecificECU = GetFirstPartOfTupel("ECU", longSpecificECU);
+            System.Diagnostics.Debug.WriteLine("\nIO -2");
+            System.Diagnostics.Debug.WriteLine(shortSpecificECU);
+            
+            return LoadVariableOptions(language, toolChoice[1], shortSpecificECU); ;
+        }
+        //Get ReadData 2nd Dropdown Options 
+        public string[] GetRDIDChoices(string language, string longSpecificECU) 
+        {
+            string shortSpecificECU = GetFirstPartOfTupel("ECU",longSpecificECU);
+            return LoadVariableOptions(language, toolChoice[3], shortSpecificECU); ;
+        }
+        //Get SmartTool 2nd Dropdown Options 
+        public string[] GetMeasurementChoices(string language, string specificSmartTool) 
+        {
+            System.Diagnostics.Debug.WriteLine("hier?");
+            return LoadVariableOptions(language, toolChoice[2], specificSmartTool); ;
+        }
+
+        private string[] LoadVariableOptions(string languageORLengthChoice, string toolChoice, string smartToolOrECU)
+        {
+            string[] fileContentPart_EN_DE;
+            if (DataBaseOrTxtFile)
+            {
+                string stream = LoadInputFromDatabase();
+                fileContentPart_EN_DE = stream.Split('|');
+            }
+            else
+            {
+                string filePath = CreatePathString(toolChoice, smartToolOrECU);
+                string stream = LoadInputFromTxtFile(filePath);
+                fileContentPart_EN_DE = stream.Split('|');
+            }
+            System.Diagnostics.Debug.WriteLine("LoadVar: " + fileContentPart_EN_DE);
+            return GetFirstOrSecondPartOfSubString(languageORLengthChoice, fileContentPart_EN_DE);
+        }
+        private string[] LoadVariableOptions(string languageORLengthChoice, string toolChoice)
+        {
+            string[] fileContentPart_EN_DE;
+            if (DataBaseOrTxtFile)
+            {
+                string stream = LoadInputFromDatabase();
+                fileContentPart_EN_DE = stream.Split('|');
+            }
+            else
+            {
+                string filePath = CreatePathString(toolChoice);
+                string stream = LoadInputFromTxtFile(filePath);
+                fileContentPart_EN_DE = stream.Split('|');
+            }
+            System.Diagnostics.Debug.WriteLine("LoadVar: " + fileContentPart_EN_DE);
+            return GetFirstOrSecondPartOfSubString(languageORLengthChoice, fileContentPart_EN_DE);
+        }
+        private string[] GetFirstOrSecondPartOfSubString(string languageORLengthChoice, string[] fileContentPart)
+        {
+            string[] output;
+            List<string> tempOutput = new List<string>();
+            string[] fileContentSubPart;
+            for (int i = 0; i < fileContentPart.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
+            {
+                fileContentSubPart = fileContentPart[i].Split(';');
+
+                if (languageORLengthChoice == language.GetLanguageChoises()[1] || languageORLengthChoice == "first" || languageORLengthChoice == "short") //"English"
+                {
+                    tempOutput.Add(fileContentSubPart[0]);
+                }
+                else if (languageORLengthChoice == language.GetLanguageChoises()[0] || languageORLengthChoice == "second" || languageORLengthChoice == "long") //"Deutsch"
+                {
+                    tempOutput.Add(fileContentSubPart[1]);
+                }
+                else
+                {
+                    tempOutput.Add("Fehler in LoadInputOptions.LoadInputFromTxtFile");
+                    System.Diagnostics.Debug.WriteLine("Fehler in LoadInputOptions.GetFirstOrSecondPartOfSubString");
+                }
+            }
+            System.Diagnostics.Debug.WriteLine("GetFirstOrSecondPartOfSubString: " + tempOutput);
+            output = tempOutput.ToArray();
+            return output;
+    }
+        private string CreatePathString(string toolChoiceFromDropDown, string SmartToolOrECU)
+        {
+            string filePathAndName;
+            if (toolChoiceFromDropDown == toolChoice[1])
+            {
+                filePathAndName = path + "IO_" + SmartToolOrECU + ".txt";
+            }
+            else if(toolChoiceFromDropDown== toolChoice[2])
+            {
+                filePathAndName = path + "Measure_" + SmartToolOrECU + ".txt";
+            }
+            else if (toolChoiceFromDropDown == toolChoice[3])
+            {
+                filePathAndName = path + "RDID_" + SmartToolOrECU + ".txt";
+            }
+            else if (toolChoiceFromDropDown == "ECU")
+            {
+                filePathAndName = path + "ECU_List" + ".txt";
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Fehler in LoadInputOptions.CreatePathString");
+                filePathAndName = "";
+            }
+            return filePathAndName;
+        }
+        private string CreatePathString(string toolChoiceFromDropDown)
+        {
+            System.Diagnostics.Debug.WriteLine("CreatePathString: " + toolChoiceFromDropDown + "---");
+            string filePathAndName;
+            if (toolChoiceFromDropDown == "ECU")
+            {
+                filePathAndName = path + "ECU_List.txt";
+            }
+            else if (toolChoiceFromDropDown == "SmartTool")
+            {
+                filePathAndName = path + "SmartTool_List.txt";
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Fehler in LoadInputOptions.CreatePathString");
+                filePathAndName = "";
+            }
+            return filePathAndName;
+        }
         private string LoadInputFromTxtFile(string fileNameAndPath)
         {
+            System.Diagnostics.Debug.WriteLine("Bla: " + fileNameAndPath);
+            System.Diagnostics.Debug.WriteLine(fileNameAndPath);
+            System.Diagnostics.Debug.WriteLine(fileNameAndPath);
+            System.Diagnostics.Debug.WriteLine(fileNameAndPath);
+            System.Diagnostics.Debug.WriteLine(fileNameAndPath);
             StreamReader sr = new StreamReader(fileNameAndPath);
             return sr.ReadLine();
         }
@@ -91,48 +179,21 @@ namespace XMLWriter.Classes
         {
             throw new NotImplementedException();
         }
-        private void LoadECUOptions()
-        {
-            string stream = LoadInputFromTxtFile(filePathECU);
-            fullECUName = stream.Split('|');
-            for (int i = 0; i < fullECUName.Length-1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
-            {
-                string[] temp = fullECUName[i].Split(';');
-                shortECUName.Add(temp[0]);
-                longECUName.Add(temp[1]);
-                System.Diagnostics.Debug.WriteLine(shortECUName[i] + " " + longECUName[i]);
-            }
-        }
-        private void LoadIOOptions()
-        {
-            string[] componentNames;
-            string stream = LoadInputFromTxtFile(filePathIO);
-            componentNames = stream.Split('|');
-            for (int i = 0; i < componentNames.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
-            {
-                string[] temp = componentNames[i].Split(';');
-                componentNameEN.Add(temp[0]);
-                componentNameDE.Add(temp[1]);
-            }
-        }
-        private void LoadRDIDOptions()
-        {
-            string[] readDataIDNames;
-            string stream = LoadInputFromTxtFile(filePathRDID);
-            readDataIDNames = stream.Split('|');
-            for (int i = 0; i < readDataIDNames.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
-            {
-                string[] temp = readDataIDNames[i].Split(';');
-                readDataID_EN.Add(temp[0]);
-                readDataID_DE.Add(temp[1]);
-            }
-        }
-        private void LoadMeasurementOptions()
-        {
-            string stream = LoadInputFromTxtFile(filePathMeasure);
-            measurements = stream.Split('|');
-        }
 
+        
+        //Firt Part is Short ECU or english Name
+        public string GetFirstPartOfTupel(string toolChoice, string smartToolOrECU) //Man ey, das werden so verdammt viele Zugriffe ;<
+        {//kA wie ich das erklären soll. Ich stig ja selbst kaum noch durch.
+            System.Diagnostics.Debug.WriteLine("getFirstPartOfTupel: " + toolChoice + " " + smartToolOrECU);
+            int index = Array.IndexOf(LoadVariableOptions("second", toolChoice, smartToolOrECU), smartToolOrECU);
+            System.Diagnostics.Debug.WriteLine("getFirstPartOfTupel: " + toolChoice + " " + smartToolOrECU + " " + index);
+            return LoadVariableOptions("first", toolChoice, smartToolOrECU)[index];
+        }
+        public string GetSecondPartOfTupel(string toolChoice, string smartToolOrECU) 
+        {
+            int index = Array.IndexOf(LoadVariableOptions("first", toolChoice, smartToolOrECU), smartToolOrECU);
+            return LoadVariableOptions("second", toolChoice, smartToolOrECU)[index];
+        }
 
 
 

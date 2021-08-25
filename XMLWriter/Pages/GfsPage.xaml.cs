@@ -274,51 +274,30 @@ namespace XMLWriter.Pages
         //Inits dritte Unterebene
         private void InitComponentComboBox()
         {
+            System.Diagnostics.Debug.WriteLine("GFS-Init-ECU");
             inputECUChoice_AT.ItemsSource = input.GetECUChoices();
             inputECUChoice_AT.Text = input.GetECUChoices()[0];
-            switch (inputECUChoice_AT.Text)
-            {
-                case "Bordnetz Steuergeraet":
-                    inputComponentChoice_AT.ItemsSource = input.GetIOChoices();
-                    inputComponentChoice_AT.Text = input.GetIOChoices()[0];
-                    break;
-                default:
-                    inputComponentChoice_AT.ItemsSource = "";
-                    inputComponentChoice_AT.Text = "";
-                    break;
-            }
+            System.Diagnostics.Debug.WriteLine("GFS-Init-ECUsub");
+            inputComponentChoice_AT.ItemsSource = input.Get_AT_IOChoices(language.GetLanguageChoises()[0], inputECUChoice_AT.Text);
+            inputComponentChoice_AT.Text = input.Get_AT_IOChoices(language.GetLanguageChoises()[0], inputECUChoice_AT.Text)[0];
         }
         private void InitRDBIComboBox()
         {
             inputECUChoice_RDBI.ItemsSource = input.GetECUChoices();
             inputECUChoice_RDBI.Text = input.GetECUChoices()[0];
-            switch (inputECUChoice_RDBI.Text)
-            {
-                case "Bordnetz Steuergeraet":
-                    inputRDBIChoice_RDBI.ItemsSource = input.GetRDIDChoices();
-                    inputRDBIChoice_RDBI.Text = input.GetRDIDChoices()[0];
-                    break;
-                default:
-                    inputRDBIChoice_RDBI.ItemsSource = "";
-                    inputRDBIChoice_RDBI.Text = "";
-                    break;
-            }
+            inputRDBIChoice_RDBI.ItemsSource = input.GetRDIDChoices(language.GetLanguageChoises()[0], inputECUChoice_RDBI.Text);
+            inputRDBIChoice_RDBI.Text = input.GetRDIDChoices(language.GetLanguageChoises()[0], inputECUChoice_RDBI.Text)[0];
         }
         private void InitIOComboboBox()
         {
-            inputMeasure_SM.ItemsSource = input.GetMeasurementChoices();
-            inputMeasure_SM.Text = input.GetMeasurementChoices()[0];
-            switch (inputECUChoice_AT.Text)
-            {
-                case "Bordnetz Steuergeraet":
-                    inputSmartTool_SM.ItemsSource = input.GetIOChoices();
-                    inputSmartTool_SM.Text = input.GetIOChoices()[0];
-                    break;
-                default:
-                    inputSmartTool_SM.ItemsSource = "";
-                    inputSmartTool_SM.Text = "";
-                    break;
-            }
+            System.Diagnostics.Debug.WriteLine("\nAnfang IO");
+            inputMeasure_SM.ItemsSource = input.GetSmartToolChoices();
+            System.Diagnostics.Debug.WriteLine("\nIO 2");
+            inputMeasure_SM.Text = input.GetSmartToolChoices()[0];
+            System.Diagnostics.Debug.WriteLine("\nIO 3");
+            inputSmartTool_SM.ItemsSource = input.GetMeasurementChoices(language.GetLanguageChoises()[0], inputMeasure_SM.Text);
+            System.Diagnostics.Debug.WriteLine("\nIO 4");
+            inputSmartTool_SM.Text = input.GetMeasurementChoices(language.GetLanguageChoises()[0], inputMeasure_SM.Text)[0];
         }
 
         //Anderes
