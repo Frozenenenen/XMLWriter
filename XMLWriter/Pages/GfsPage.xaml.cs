@@ -89,7 +89,7 @@ namespace XMLWriter.Pages
         private void inputECUChoice_AT_DropDownClosed(object sender, System.EventArgs e)
         {
             inputActuatorTest.Text = inputComponentChoice_AT.Text + "|" + inputECUChoice_AT.Text;
-            InitComponentComboBox();
+            InitComponentComboBox_AT();
         }
         private void inputComponentChoice_AT_DropDownClosed(object sender, System.EventArgs e)
         {
@@ -99,7 +99,7 @@ namespace XMLWriter.Pages
         private void inputECUChoice_RDBI_DropDownClosed(object sender, System.EventArgs e)
         {
             inputReadData.Text = inputRDBIChoice_RDBI.Text + "|" + inputECUChoice_RDBI.Text;
-            InitRDBIComboBox();
+            InitMeasureValueComboBox_RDBI();
         }
         private void inputRDBIChoice_RDBI_DropDownClosed(object sender, System.EventArgs e)
         {
@@ -109,13 +109,9 @@ namespace XMLWriter.Pages
         private void inputSmartTool_SM_DropDownClosed(object sender, System.EventArgs e)
         {
             inputSmartTool.Text = inputSmartTool_SM.Text + "|" + inputMeasure_SM.Text;
-            InitIOComboboBox();
+            InitIOComboboBox_SmT();
         }
         private void inputMeasure_SM_DropDownClosed(object sender, System.EventArgs e)
-        {
-            inputSmartTool.Text = inputSmartTool_SM.Text + "|" + inputMeasure_SM.Text;
-        }
-        private void inputMeasure_SM_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             inputSmartTool.Text = inputSmartTool_SM.Text + "|" + inputMeasure_SM.Text;
         }
@@ -218,8 +214,8 @@ namespace XMLWriter.Pages
         //Inits zweite Unterbene
         private void InitActuatorTest()
         {
-            InitComponentComboBox();
-
+            InitECUComboBox_AT();
+            InitComponentComboBox_AT();
             if (data.GetActuatorTestPos(data.GetStepCount()) == "")
             {
                 inputActuatorTest.Text = inputComponentChoice_AT.Text + "|" + inputECUChoice_AT.Text;
@@ -231,7 +227,8 @@ namespace XMLWriter.Pages
         }
         private void InitReadData()
         {
-            InitRDBIComboBox();
+            InitECUComboBox_RDBI();
+            InitMeasureValueComboBox_RDBI();
             if (string.IsNullOrEmpty(data.GetRDBIPpos(data.GetStepCount())))
             {
                 inputReadData.Text = inputRDBIChoice_RDBI.Text + "|" + inputECUChoice_RDBI.Text;
@@ -251,7 +248,8 @@ namespace XMLWriter.Pages
         }
         private void InitSmartTool()
         {
-            InitIOComboboBox();
+            InitSmartToolComboboBox_SmT();
+            InitIOComboboBox_SmT();
             if(data.GetSmartToolPos(data.GetStepCount()) == "")
             {
                 inputSmartTool.Text = inputSmartTool_SM.Text + "|" + inputMeasure_SM.Text;
@@ -271,33 +269,52 @@ namespace XMLWriter.Pages
             }
             inputPositiveResult_UpperLimit.Text = "";
         }
+
         //Inits dritte Unterebene
-        private void InitComponentComboBox()
+        private void InitECUComboBox_AT()
         {
-            System.Diagnostics.Debug.WriteLine("GFS-Init-ECU");
+            System.Diagnostics.Debug.WriteLine("\n>AT-ECU-Start<");
             inputECUChoice_AT.ItemsSource = input.GetECUChoices();
             inputECUChoice_AT.Text = input.GetECUChoices()[0];
-            System.Diagnostics.Debug.WriteLine("GFS-Init-ECUsub");
-            inputComponentChoice_AT.ItemsSource = input.Get_AT_IOChoices(language.GetLanguageChoises()[0], inputECUChoice_AT.Text);
-            inputComponentChoice_AT.Text = input.Get_AT_IOChoices(language.GetLanguageChoises()[0], inputECUChoice_AT.Text)[0];
         }
-        private void InitRDBIComboBox()
+        private void InitComponentComboBox_AT()
         {
+            System.Diagnostics.Debug.WriteLine("\n>AT-Comp-Start<");
+            System.Diagnostics.Debug.WriteLine("> " + inputECUChoice_AT.Text + " <");
+            inputComponentChoice_AT.ItemsSource = input.GetIOChoices_ActuatorTest(language.GetLanguageChoises()[0], inputECUChoice_AT.Text);
+            inputComponentChoice_AT.Text = input.GetIOChoices_ActuatorTest(language.GetLanguageChoises()[0], inputECUChoice_AT.Text)[0];
+            System.Diagnostics.Debug.WriteLine(">AT-Ende<\n");
+        }
+        private void InitECUComboBox_RDBI()
+        {//Upper Dropdown RDBI
+            System.Diagnostics.Debug.WriteLine("\n>RD-ECU-Start<");
             inputECUChoice_RDBI.ItemsSource = input.GetECUChoices();
             inputECUChoice_RDBI.Text = input.GetECUChoices()[0];
-            inputRDBIChoice_RDBI.ItemsSource = input.GetRDIDChoices(language.GetLanguageChoises()[0], inputECUChoice_RDBI.Text);
-            inputRDBIChoice_RDBI.Text = input.GetRDIDChoices(language.GetLanguageChoises()[0], inputECUChoice_RDBI.Text)[0];
         }
-        private void InitIOComboboBox()
+        private void InitMeasureValueComboBox_RDBI()
+        {//Lower Dropdown RDBI
+            System.Diagnostics.Debug.WriteLine("\n>RD-ID-Start<");
+            System.Diagnostics.Debug.WriteLine("> " + inputECUChoice_RDBI.Text + " <");
+            inputRDBIChoice_RDBI.ItemsSource = input.GetMeasureValueChoices_ReadData(language.GetLanguageChoises()[0], inputECUChoice_RDBI.Text);
+            inputRDBIChoice_RDBI.Text = input.GetMeasureValueChoices_ReadData(language.GetLanguageChoises()[0], inputECUChoice_RDBI.Text)[0];
+            System.Diagnostics.Debug.WriteLine(">RD2-Ende<\n");
+        }
+
+        private void InitSmartToolComboboBox_SmT()
         {
-            System.Diagnostics.Debug.WriteLine("\nAnfang IO");
-            inputMeasure_SM.ItemsSource = input.GetSmartToolChoices();
-            System.Diagnostics.Debug.WriteLine("\nIO 2");
-            inputMeasure_SM.Text = input.GetSmartToolChoices()[0];
-            System.Diagnostics.Debug.WriteLine("\nIO 3");
-            inputSmartTool_SM.ItemsSource = input.GetMeasurementChoices(language.GetLanguageChoises()[0], inputMeasure_SM.Text);
-            System.Diagnostics.Debug.WriteLine("\nIO 4");
-            inputSmartTool_SM.Text = input.GetMeasurementChoices(language.GetLanguageChoises()[0], inputMeasure_SM.Text)[0];
+            System.Diagnostics.Debug.WriteLine("\n> SM-SM-Start <");
+            inputSmartTool_SM.ItemsSource = input.GetSmartToolChoices();
+            inputSmartTool_SM.Text = input.GetSmartToolChoices()[0];
+        }
+        private void InitIOComboboBox_SmT()
+        {
+            
+            System.Diagnostics.Debug.WriteLine("\n> SM-Measure-Start <");
+            System.Diagnostics.Debug.WriteLine("> " + inputSmartTool_SM.Text + " <");
+            inputMeasure_SM.ItemsSource = input.GetMeasurementChoices_SmartTool(language.GetLanguageChoises()[0], inputSmartTool_SM.Text);
+            System.Diagnostics.Debug.WriteLine("><><");
+            inputMeasure_SM.Text = input.GetMeasurementChoices_SmartTool(language.GetLanguageChoises()[0], inputSmartTool_SM.Text)[0];
+            System.Diagnostics.Debug.WriteLine("> SM-Ende <\n");
         }
 
         //Anderes
