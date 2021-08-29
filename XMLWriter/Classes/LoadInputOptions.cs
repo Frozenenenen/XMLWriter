@@ -11,7 +11,7 @@ namespace XMLWriter.Classes
         private static string filePathECU = @"Files/ECU_List.txt";
         private static string filePathIO = "Files/IO_BCM.txt";
         private static string filePathRDID = "Files/RDID_BCM.txt";
-        private static string filePathMeasure = @"Files/Measure_BCM.txt";
+        private static string filePathMeasure = @"Files/Measure_three.txt";
         private static string[] toolChoice = { "", "ActuatorTest", "SmartTool", "ReadDataByIdentifier" };
         /*private static List<string> fullECUName;*/
         private static List<string> shortECUName = new List<string>();
