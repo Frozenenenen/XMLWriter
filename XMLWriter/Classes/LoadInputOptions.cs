@@ -26,33 +26,37 @@ namespace XMLWriter.Classes
         public string[] GetToolChoice() => toolChoice;
         public string[] GetECUChoices()
         {//Loads long part of ECU_List
-            return LoadVariableOptions("long", "ECU"); //Es dürfte egal sein, was in dem dritten Parameter steht.
+            string filePathAndName = CreatePathString("ECU");
+            return LoadVariableOptions("long", filePathAndName);
         }
         public string[] GetSmartToolChoices()
         {//Loads german part of SmartTools_List
-            return LoadVariableOptions(language.GetLanguageChoises()[0], "SmartTool");
+            string filePathAndName = CreatePathString("SmartTool");
+            return LoadVariableOptions(language.GetStringLanguage(), filePathAndName);
         }
-
-
-        public string[] GetIOChoices_ActuatorTest(string language, string longSpecificECU)
+        public string[] GetIOChoices_ActuatorTest(string longSpecificECU)
         {//Takes long string of ECU an looks up short version. Then loads languagespecific List of selected ECU
             string shortSpecificECU = GetFirstPartOfTupel("ECU", longSpecificECU);
-            return LoadVariableOptions(language, toolChoice[1], shortSpecificECU); ;
+            //return LoadVariableOptions(language.GetStringLanguage(), toolChoice[1], shortSpecificECU);
+            string filePathAndName = CreatePathAndNameString(toolChoice[1], shortSpecificECU);
+            return LoadVariableOptions(language.GetStringLanguage(), filePathAndName);
         }
-        public string[] GetMeasureValueChoices_ReadData(string language, string longSpecificECU)
+        public string[] GetMeasureValueChoices_ReadData(string longSpecificECU)
         {//Takes long string of ECU an looks up short version. Then loads languagespecific List of selected ECU
             string shortSpecificECU = GetFirstPartOfTupel("ECU", longSpecificECU);
-            return LoadVariableOptions(language, toolChoice[3], shortSpecificECU); ;
+            string filePathAndName = CreatePathAndNameString(toolChoice[3], shortSpecificECU);
+            return LoadVariableOptions(language.GetStringLanguage(), shortSpecificECU); ;
         }
-        public string[] GetMeasurementChoices_SmartTool(string language, string specificSmartTool)
+        public string[] GetMeasurementChoices_SmartTool( string specificSmartTool)
         {
             System.Diagnostics.Debug.WriteLine("SM_Tupelwechsel von " + specificSmartTool);
-            string englishName = GetFirstPartOfTupel("SmartTool", specificSmartTool);
-            System.Diagnostics.Debug.WriteLine(" zu " + englishName);
-            return LoadVariableOptions(language, toolChoice[2], englishName); ;
+            string shortSpecificECU = GetFirstPartOfTupel("SmartTool", specificSmartTool);
+            System.Diagnostics.Debug.WriteLine(" zu " + shortSpecificECU);
+            string filePathAndName = CreatePathAndNameString(toolChoice[2], shortSpecificECU);
+            return LoadVariableOptions(language.GetStringLanguage(), shortSpecificECU); ;
         }
 
-        private string[] LoadVariableOptions(string languageORLengthChoice, string toolChoice, string smartToolOrECU)
+        private string[] LoadVariableOptions(string languageORLengthChoice, string fileNameAndPath)
         {//Depending on Chosen input Loads String and splits it apart. That gives it to another method that splits even further 
             string[] fileContentPart_EN_DE;
             if (DataBaseOrTxtFile)
@@ -62,30 +66,13 @@ namespace XMLWriter.Classes
             }
             else
             {
-                string filePath = CreatePathString(toolChoice, smartToolOrECU);
-                string stream = LoadInputFromTxtFile(filePath);
+                string stream = LoadInputFromTxtFile(fileNameAndPath);
                 fileContentPart_EN_DE = stream.Split('|');
             }
             return GetFirstOrSecondPartOfSubString(languageORLengthChoice, fileContentPart_EN_DE);
         }
-        private string[] LoadVariableOptions(string languageORLengthChoice, string toolChoice)
-        {//Depending on Chosen input Loads String and splits it apart. That gives it to another method that splits even further 
-            string[] fileContentPart_EN_DE;
-            if (DataBaseOrTxtFile)
-            {
-                string stream = LoadInputFromDatabase();
-                fileContentPart_EN_DE = stream.Split('|');
-            }
-            else
-            {
-                string filePath = CreatePathString(toolChoice);
-                string stream = LoadInputFromTxtFile(filePath);
-                fileContentPart_EN_DE = stream.Split('|');
-            }
-            System.Diagnostics.Debug.WriteLine("LoadVar: " + fileContentPart_EN_DE);
-            return GetFirstOrSecondPartOfSubString(languageORLengthChoice, fileContentPart_EN_DE);
-        }
-        private string CreatePathString(string toolChoiceFromDropDown, string smartToolOrECU)
+
+        private string CreatePathAndNameString(string toolChoiceFromDropDown, string smartToolOrECU)
         {
             string filePathAndName;
             if (toolChoiceFromDropDown == toolChoice[1])
@@ -99,10 +86,6 @@ namespace XMLWriter.Classes
             else if (toolChoiceFromDropDown == toolChoice[3])
             {
                 filePathAndName = path + "RDID_" + smartToolOrECU + ".txt";
-            }
-            else if (toolChoiceFromDropDown == "ECU")
-            {
-                filePathAndName = path + "ECU_List" + ".txt";
             }
             else
             {
@@ -118,6 +101,10 @@ namespace XMLWriter.Classes
             if (toolChoiceFromDropDown == "ECU")
             {
                 filePathAndName = path + "ECU_List.txt";
+            }
+            else if (toolChoiceFromDropDown == "ECU")
+            {
+                filePathAndName = path + "ECU_List" + ".txt";
             }
             else if (toolChoiceFromDropDown == "SmartTool")
             {
@@ -156,35 +143,45 @@ namespace XMLWriter.Classes
             return output;
         }
 
-        private string LoadInputFromTxtFile(string fileNameAndPath)
-        {
-            //System.Diagnostics.Debug.WriteLine("Load File: " + fileNameAndPath);
-            StreamReader sr = new StreamReader(fileNameAndPath);
-            return sr.ReadLine();
-        }
+        
         private string LoadInputFromDatabase()
         {
             throw new NotImplementedException();
         }
-
-
-        public string GetFirstPartOfTupel(string toolChoice, string smartToolOrECU) //Man ey, das werden so verdammt viele Zugriffe ;<
+        public string GetFirstPartOfTupel(string toolChoice, string wantedElement) //Man ey, das werden so verdammt viele Zugriffe ;<
         {//Gets Index of the item in the List it derives from and returns the opposite Part of the Tupel
-
-            int index;
-            string temp;
+            string filePath = CreatePathAndNameString(toolChoice, wantedElement);
+            int index = GetIndexOfElementFromFile(wantedElement,filePath,"second");
+            string firstPart = LoadVariableOptions("first", toolChoice)[index];
+            /*int index;
+            string firstPart;
             if (toolChoice == "SmartTool")
             {
                 index = Array.IndexOf(LoadVariableOptions("second", toolChoice), smartToolOrECU);
                 System.Diagnostics.Debug.WriteLine("FirstOfTupel_SmartTool");
-                temp = LoadVariableOptions("first", toolChoice)[index];
+                
             }
             else
             {
                 index = Array.IndexOf(LoadVariableOptions("second", toolChoice, smartToolOrECU), smartToolOrECU);
                 System.Diagnostics.Debug.WriteLine("FirstOfTupel_Nicht-SmartTool");
-                temp = LoadVariableOptions("first", toolChoice, smartToolOrECU)[index];
-            }
+                firstPart = LoadVariableOptions("first", toolChoice, smartToolOrECU)[index];
+            }*/
+
+            return firstPart;
+        }
+        public string GetFirstPartOfTupel(string toolChoice, string smartToolOrECU, string specificTool) 
+        {//Gets Index of the item in the List it derives from and returns the opposite Part of the Tupel
+
+            int index;
+            string temp;
+            string SmartToolOrECU_en = GetFirstPartOfTupel("ECU", smartToolOrECU);
+            System.Diagnostics.Debug.WriteLine(SmartToolOrECU_en);
+            string fileName = CreatePathAndNameString(toolChoice, smartToolOrECU);
+                index = Array.IndexOf(LoadVariableOptions("second", fileName), specificTool);
+                System.Diagnostics.Debug.WriteLine("FirstOfTupel_Nicht-SmartTool");
+                temp = LoadVariableOptions("first", toolChoice, specificTool)[index];
+            
             if (index == -1)
             {
                 System.Diagnostics.Debug.WriteLine("->->->->->-> " + index + " <-<-<-<-<-<-");
@@ -196,10 +193,28 @@ namespace XMLWriter.Classes
             }//Errormessage
             return temp;
         }
-        public string GetSecondPartOfTupel(string toolChoice, string smartToolOrECU)
-        {//Gets Index of the item in the List it derives from and returns the opposite Part of the Tupel
-            int index = Array.IndexOf(LoadVariableOptions("first", toolChoice, smartToolOrECU), smartToolOrECU);
-            return LoadVariableOptions("second", toolChoice, smartToolOrECU)[index];
+        public int GetIndexOfElementFromFile(string Element, string fileName, string firstOrSecondPart)
+        {
+            int index;
+            string[] elements;
+            elements = LoadVariableOptions(firstOrSecondPart, fileName);
+            index = Array.IndexOf(elements,fileName);
+            if (index == -1)
+            {
+                System.Diagnostics.Debug.WriteLine("->->->->->-> " + index + " <-<-<-<-<-<-");
+                System.Diagnostics.Debug.WriteLine("-> " + toolChoice + " " + smartToolOrECU + " <-");
+                for (int i = 0; i < LoadVariableOptions("second", toolChoice, smartToolOrECU).Length; i++)
+                {
+                    System.Diagnostics.Debug.WriteLine("-> " + LoadVariableOptions("second", toolChoice, smartToolOrECU)[i] + " <-");
+                }
+            }//Errormessage
+            return index;
+        }
+        private string LoadInputFromTxtFile(string fileNameAndPath)
+        {
+            //System.Diagnostics.Debug.WriteLine("Load File: " + fileNameAndPath);
+            StreamReader sr = new StreamReader(fileNameAndPath);
+            return sr.ReadLine();
         }
     }
 }
