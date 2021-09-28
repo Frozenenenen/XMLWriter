@@ -93,7 +93,7 @@ namespace XMLWriter.Pages
         }
         private void InitValueItems()
         {
-            inputFromDataBase.IsChecked = input.GetDataBase();
+            inputFromDataBase.IsChecked = input.GetDataBaseStatus();
         }
     }
 }

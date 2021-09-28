@@ -300,8 +300,8 @@ namespace XMLWriter.Pages
         {//Lower Dropdown RDBI
             System.Diagnostics.Debug.WriteLine("\n>RD-ID-Start<");
             System.Diagnostics.Debug.WriteLine("> " + inputECUChoice_RDBI.Text + " <");
-            inputRDBIChoice_RDBI.ItemsSource = input.GetMeasureValueChoices_ReadData(language.GetLanguageChoises()[0], inputECUChoice_RDBI.Text);
-            inputRDBIChoice_RDBI.Text = input.GetMeasureValueChoices_ReadData(language.GetLanguageChoises()[0], inputECUChoice_RDBI.Text)[0];
+            inputRDBIChoice_RDBI.ItemsSource = input.GetMeasureValueChoices_ReadData(inputECUChoice_RDBI.Text);
+            inputRDBIChoice_RDBI.Text = input.GetMeasureValueChoices_ReadData(inputECUChoice_RDBI.Text)[0];
             System.Diagnostics.Debug.WriteLine(">RD2-Ende<\n");
         }
 
@@ -315,9 +315,9 @@ namespace XMLWriter.Pages
         {
             System.Diagnostics.Debug.WriteLine("\n> SM-Measure-Start <");
             System.Diagnostics.Debug.WriteLine("> " + inputSmartTool_SM.Text + " <");
-            inputMeasure_SM.ItemsSource = input.GetMeasurementChoices_SmartTool(language.GetLanguageChoises()[0], inputSmartTool_SM.Text);
+            inputMeasure_SM.ItemsSource = input.GetMeasurementChoices_SmartTool(inputSmartTool_SM.Text);
             System.Diagnostics.Debug.WriteLine("><><");
-            inputMeasure_SM.Text = input.GetMeasurementChoices_SmartTool(language.GetLanguageChoises()[0], inputSmartTool_SM.Text)[0];
+            inputMeasure_SM.Text = input.GetMeasurementChoices_SmartTool(inputSmartTool_SM.Text)[0];
             System.Diagnostics.Debug.WriteLine("> SM-Ende <\n");
         }
 
