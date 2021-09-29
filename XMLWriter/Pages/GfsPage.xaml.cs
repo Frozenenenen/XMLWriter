@@ -88,8 +88,8 @@ namespace XMLWriter.Pages
         //Aktortest
         private void inputECUChoice_AT_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputActuatorTest.Text = input.GetFirstPartOfTupel(input.GetToolChoice()[1], inputECUChoice_AT.Text, inputComponentChoice_AT.Text) + 
-                "|" + input.GetFirstPartOfTupel(input.GetToolChoice()[1], inputECUChoice_AT.Text);
+            inputActuatorTest.Text = input.GetOtherPartOfTupel(input.GetToolChoice()[1], inputECUChoice_AT.Text, inputComponentChoice_AT.Text, "first") + 
+                "|" + input.GetOtherPartOfTupel(input.GetToolChoice()[1], inputECUChoice_AT.Text, "first");
             //inputActuatorTest.Text = inputComponentChoice_AT.Text + "|" + inputECUChoice_AT.Text;
             InitComponentComboBox_AT();
         }
@@ -100,7 +100,8 @@ namespace XMLWriter.Pages
         //RDBI
         private void inputECUChoice_RDBI_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputReadData.Text = input.GetFirstPartOfTupel(input.GetToolChoice()[3], inputRDBIChoice_RDBI.Text) + "|" + input.GetFirstPartOfTupel(input.GetToolChoice()[3], inputECUChoice_RDBI.Text);
+            inputReadData.Text = input.GetOtherPartOfTupel(input.GetToolChoice()[3], inputRDBIChoice_RDBI.Text) + 
+                "|" + input.GetOtherPartOfTupel(input.GetToolChoice()[3], inputECUChoice_RDBI.Text);
             //inputReadData.Text = inputRDBIChoice_RDBI.Text + "|" + inputECUChoice_RDBI.Text;
             InitMeasureValueComboBox_RDBI();
         }
@@ -111,13 +112,13 @@ namespace XMLWriter.Pages
         //SmartTool
         private void inputSmartTool_SM_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputSmartTool.Text = input.GetFirstPartOfTupel(input.GetToolChoice()[2],inputSmartTool_SM.Text) + "|" + input.GetFirstPartOfTupel(input.GetToolChoice()[2], inputMeasure_SM.Text);
+            inputSmartTool.Text = input.GetOtherPartOfTupel(input.GetToolChoice()[2],inputSmartTool_SM.Text) + "|" + input.GetOtherPartOfTupel(input.GetToolChoice()[2], inputMeasure_SM.Text);
 //            inputSmartTool.Text = inputSmartTool_SM.Text + "|" + inputMeasure_SM.Text;
             InitIOComboboBox_SmT();
         }
         private void inputMeasure_SM_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputSmartTool.Text = input.GetFirstPartOfTupel(input.GetToolChoice()[2], inputSmartTool_SM.Text) + "|" + input.GetFirstPartOfTupel(input.GetToolChoice()[2], inputMeasure_SM.Text);
+            inputSmartTool.Text = input.GetOtherPartOfTupel(input.GetToolChoice()[2], inputSmartTool_SM.Text) + "|" + input.GetOtherPartOfTupel(input.GetToolChoice()[2], inputMeasure_SM.Text);
 //            inputSmartTool.Text = inputSmartTool_SM.Text + "|" + inputMeasure_SM.Text;
         }
         private void inputPositiveResult_UpperLimit_TextChanged(object sender, TextChangedEventArgs e)
