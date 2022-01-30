@@ -24,7 +24,7 @@ namespace XMLWriter.Pages
         DataSet data = new DataSet();
         Language language = new Language();
         LoadDataSet loadData = new LoadDataSet();
-        LoadInputOptions loadInput = new LoadInputOptions();
+        DropDownOptionLists loadInput = new DropDownOptionLists();
         public StartPage()
         {
             InitializeComponent();
@@ -51,6 +51,14 @@ namespace XMLWriter.Pages
             else
             {
                 Console.WriteLine("Fehler in der gfs/rep-Wahl");
+            }
+            if (checkUseTxtOrDatabse.IsChecked==true)
+            {
+                loadInput.UseDataBase();
+            }
+            else
+            {
+                loadInput.DontUseDataBase();
             }
         }
         private void BtnSelectLanguage_Click(object sender, RoutedEventArgs e)
