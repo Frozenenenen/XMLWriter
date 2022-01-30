@@ -14,7 +14,7 @@ namespace XMLWriter.Pages
         DataSet data = new DataSet();
         Language language = new Language();
         GUIMovement GUI = new GUIMovement();
-        LoadInputOptions input = new LoadInputOptions();
+        DropDownOptionLists input = new DropDownOptionLists();
         private static string positiveResult;
 
         public GfsPage()
@@ -212,10 +212,9 @@ namespace XMLWriter.Pages
             inputToolChoice.Text = data.GetToolChoice(data.GetStepCount());
             InitActuatorTest();
             InitReadData();
-            //SmartTool
             InitSmartTool();
         }
-        //Inits zweite Unterbene
+        //Inits zweite Unterebene
         private void InitActuatorTest()
         {
             InitComponentComboBox();
@@ -279,8 +278,8 @@ namespace XMLWriter.Pages
             switch (inputECUChoice_AT.Text)
             {
                 case "Bordnetz Steuergeraet":
-                    inputComponentChoice_AT.ItemsSource = input.GetIOChoices();
-                    inputComponentChoice_AT.Text = input.GetIOChoices()[0];
+                    inputComponentChoice_AT.ItemsSource = input.GetSmartToolChoices();
+                    inputComponentChoice_AT.Text = input.GetSmartToolChoices()[0];
                     break;
                 default:
                     inputComponentChoice_AT.ItemsSource = "";
@@ -291,28 +290,21 @@ namespace XMLWriter.Pages
         private void InitRDBIComboBox()
         {
             inputECUChoice_RDBI.ItemsSource = input.GetECUChoices();
-            inputECUChoice_RDBI.Text = input.GetECUChoices()[0];
-            switch (inputECUChoice_RDBI.Text)
-            {
-                case "Bordnetz Steuergeraet":
-                    inputRDBIChoice_RDBI.ItemsSource = input.GetRDIDChoices();
-                    inputRDBIChoice_RDBI.Text = input.GetRDIDChoices()[0];
-                    break;
-                default:
-                    inputRDBIChoice_RDBI.ItemsSource = "";
-                    inputRDBIChoice_RDBI.Text = "";
-                    break;
-            }
+            //inputECUChoice_RDBI.Text = input.GetECUChoices()[0]; //Wird erst wieder gebraucht, wenn der Wert vorher aus XML geladen wurde. Muss ggf Init von Aktualisierung getrennt werden
+
+            System.Diagnostics.Debug.WriteLine(" -InitRDBIDropDown- " + inputECUChoice_RDBI.Text + " " + input.GetRDIDChoices(inputECUChoice_RDBI.Text)[0] + input.GetRDIDChoices(inputECUChoice_RDBI.Text)[1] + input.GetRDIDChoices(inputECUChoice_RDBI.Text)[2]);
+            inputRDBIChoice_RDBI.ItemsSource = input.GetRDIDChoices(inputECUChoice_RDBI.Text);
+            inputRDBIChoice_RDBI.Text = input.GetRDIDChoices(inputECUChoice_RDBI.Text)[0];
         }
         private void InitIOComboboBox()
         {
             inputMeasure_SM.ItemsSource = input.GetMeasurementChoices();
-            inputMeasure_SM.Text = input.GetMeasurementChoices()[0];
+            //inputMeasure_SM.Text = input.GetMeasurementChoices()[0]; //Wird erst wieder gebraucht, wenn der Wert vorher aus XML geladen wurde. Muss ggf Init von Aktualisierung getrennt werden
             switch (inputECUChoice_AT.Text)
             {
                 case "Bordnetz Steuergeraet":
-                    inputSmartTool_SM.ItemsSource = input.GetIOChoices();
-                    inputSmartTool_SM.Text = input.GetIOChoices()[0];
+                    inputSmartTool_SM.ItemsSource = input.GetSmartToolChoices(inputMeasure_SM.Text);
+                    inputSmartTool_SM.Text = input.GetSmartToolChoices(inputMeasure_SM.Text)[0];
                     break;
                 default:
                     inputSmartTool_SM.ItemsSource = "";
