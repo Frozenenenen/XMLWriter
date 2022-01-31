@@ -115,23 +115,20 @@ namespace XMLWriter.Classes
             }
             return "";
         }
+        
 
-        //erste Dropdownebene
         public string[] GetToolChoice()
         {
             return toolChoice;
         }
-        //zweite Dropdownebene
         public List<DropDownOptionTupel> GetECUChoices()
         {
-            System.Diagnostics.Debug.WriteLine(GetECUChoices().ToArray());
             return ECU_List; 
         }
         public List<DropDownOptionTupel> GetSmartToolChoices()
         {
             return SmartTool_List;
         }
-        //dritte Dropdownebene
         public List<DropDownOptionTupel> GetRDIDChoices(string chosenECU)
         {
             if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[0])

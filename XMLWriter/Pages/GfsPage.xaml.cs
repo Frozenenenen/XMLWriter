@@ -99,12 +99,12 @@ namespace XMLWriter.Pages
         //RDBI
         private void inputECUChoice_RDBI_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputComponentChoice_AT.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
+            inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputECUChoice_RDBI.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
             InitRDBIComboBox();
         }
         private void inputRDBIChoice_RDBI_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputComponentChoice_AT.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
+            inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputECUChoice_RDBI.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
         }
         //SmartTool
         private void inputSmartTool_SM_DropDownClosed(object sender, System.EventArgs e)
@@ -243,7 +243,7 @@ namespace XMLWriter.Pages
             InitRDBIComboBox();
             if (string.IsNullOrEmpty(data.GetRDBIPpos(data.GetStepCount())))
             {
-                inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputComponentChoice_AT.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
+                inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputECUChoice_RDBI.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
             }
             else
             {
