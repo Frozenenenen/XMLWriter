@@ -8,19 +8,19 @@ namespace XMLWriter.Classes
 {
     class DropDownOptionLists
     {
-        
-        private static bool useDataBase=true;           //Hier ist noch ein Fehler
+
+        private static bool useDataBase = true;           //Hier ist noch ein Fehler
         private static string[] toolChoice = { "", "ActuatorTest", "SmartTool", "ReadDataByIdentifier" };
         private static string filePath = @"Files/";
         private static string databasePath = @"Files/";
         //Die Dateinamen sind MIT SICHERHEIT nicht final
-        private static string[] fileNames = { @"ECU_List.txt", @"SmartTool_List.txt" , @"IO_BCM.txt" , @"IO_LWR.txt", @"IO_MSG.txt" , @"RDID_BCM.txt", @"RDID_LWR.txt" , @"RDID_MSG.txt" , @"Measure_URI.txt" , @"Measure_Two.txt" , @"Measure_Three.txt" };
+        private static string[] fileNames = { @"ECU_List.txt", @"SmartTool_List.txt", @"IO_BCM.txt", @"IO_LWR.txt", @"IO_MSG.txt", @"Measure_URI.txt", @"Measure_Two.txt", @"Measure_Three.txt", @"RDID_BCM.txt", @"RDID_LWR.txt", @"RDID_MSG.txt" };
         private static string[] databaseQuerys = { @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"" };
 
 
 
 
-        
+
 
         //First Part is always the Save/load option and second part is the display option
         private static List<DropDownOptionTupel> ECU_List = new List<DropDownOptionTupel>();
@@ -32,13 +32,13 @@ namespace XMLWriter.Classes
 
         private static List<DropDownOptionTupel> Measure_URI = new List<DropDownOptionTupel>();
         private static List<DropDownOptionTupel> Measure_Two = new List<DropDownOptionTupel>();
-        private static List<DropDownOptionTupel> Measure_Three= new List<DropDownOptionTupel>();
+        private static List<DropDownOptionTupel> Measure_Three = new List<DropDownOptionTupel>();
 
-        private static List<DropDownOptionTupel> RDID_BCM= new List<DropDownOptionTupel>();
+        private static List<DropDownOptionTupel> RDID_BCM = new List<DropDownOptionTupel>();
         private static List<DropDownOptionTupel> RDID_LWR = new List<DropDownOptionTupel>();
         private static List<DropDownOptionTupel> RDID_MSG = new List<DropDownOptionTupel>();
-        
-        
+
+
         public void UseDataBase()
         {
             System.Diagnostics.Debug.WriteLine("Loads from database - Init");
@@ -87,22 +87,33 @@ namespace XMLWriter.Classes
                 list.Add(new DropDownOptionTupel(temp[0], temp[1]));
             }
         }
-       
-        public string GetOtherPartOf(List<DropDownOptionTupel> list, string item)
+
+        public string GetDisplayPartOf(List<DropDownOptionTupel> list, string item)
         {
-            if (list.Find(x => x.firstPart.Equals(item)).secondPart != null)
+            if (list != null && item != "")
             {
-                return list.Find(x => x.firstPart.Equals(item)).secondPart;
+                System.Diagnostics.Debug.WriteLine(item);
+                int index = list.FindIndex(x => x.firstPart.Equals(item));
+                if (index != -1)
+                {
+                    return list.ElementAt(index).secondPart;
+                }
             }
-            else if(list.Find(x => x.firstPart.Equals(item)).secondPart == null)
+            return "";
+        }
+       
+        public string GetKeyPartOf(List<DropDownOptionTupel> list, string item)
+        {
+            if (list != null && item !="")
             {
-                return list.Find(x => x.secondPart.Equals(item)).firstPart;
+                System.Diagnostics.Debug.WriteLine(item);
+                int index = list.FindIndex(x => x.secondPart.Equals(item));
+                if (index!=-1)
+                {
+                    return list.ElementAt(index).firstPart;
+                }
             }
-            else
-            {
-                return "Fehler";
-            }
-            
+            return "";
         }
 
         //erste Dropdownebene
@@ -113,6 +124,7 @@ namespace XMLWriter.Classes
         //zweite Dropdownebene
         public List<DropDownOptionTupel> GetECUChoices()
         {
+            System.Diagnostics.Debug.WriteLine(GetECUChoices().ToArray());
             return ECU_List; 
         }
         public List<DropDownOptionTupel> GetSmartToolChoices()

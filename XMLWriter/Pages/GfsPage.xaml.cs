@@ -89,36 +89,43 @@ namespace XMLWriter.Pages
         //Aktortest
         private void inputECUChoice_AT_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputActuatorTest.Text = inputComponentChoice_AT.Text + "|" + inputECUChoice_AT.Text;
+            inputActuatorTest.Text = ddList.GetKeyPartOf(ddList.GetIOChoices(inputECUChoice_AT.Text), inputComponentChoice_AT.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_AT.Text);
             InitComponentComboBox();
         }
         private void inputComponentChoice_AT_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputActuatorTest.Text = inputComponentChoice_AT.Text + "|" + inputECUChoice_AT.Text;
+            inputActuatorTest.Text = ddList.GetKeyPartOf(ddList.GetIOChoices(inputECUChoice_AT.Text), inputComponentChoice_AT.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_AT.Text);
         }
         //RDBI
         private void inputECUChoice_RDBI_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputReadData.Text = inputRDBIChoice_RDBI.Text + "|" + inputECUChoice_RDBI.Text;
+            inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputComponentChoice_AT.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
             InitRDBIComboBox();
         }
         private void inputRDBIChoice_RDBI_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputReadData.Text = inputRDBIChoice_RDBI.Text + "|" + inputECUChoice_RDBI.Text;
+            inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputComponentChoice_AT.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
         }
         //SmartTool
         private void inputSmartTool_SM_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputSmartTool.Text = inputSmartTool_SM.Text + "|" + inputMeasure_SM.Text;
+            inputSmartTool.Text = ddList.GetKeyPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + ddList.GetKeyPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
             InitIOComboboBox();
         }
         private void inputMeasure_SM_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputSmartTool.Text = inputSmartTool_SM.Text + "|" + inputMeasure_SM.Text;
+            inputSmartTool.Text = ddList.GetKeyPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + ddList.GetKeyPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
         }
-        private void inputMeasure_SM_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void inputMeasure_SM_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            inputSmartTool.Text = inputSmartTool_SM.Text + "|" + inputMeasure_SM.Text;
+            if (ddList.GetKeyPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text) == "") //Is empty if FindIndex is 0. To get direct input ... well it has to be direct^^
+            {
+                inputSmartTool.Text = ddList.GetKeyPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + inputMeasure_SM.Text;
+            }
+            else
+            {
+                inputSmartTool.Text = ddList.GetKeyPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + ddList.GetKeyPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
+            }
         }
         private void inputPositiveResult_UpperLimit_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -224,7 +231,7 @@ namespace XMLWriter.Pages
 
             if (data.GetActuatorTestPos(data.GetStepCount()) == "")
             {
-                inputActuatorTest.Text = inputComponentChoice_AT.Text + "|" + inputECUChoice_AT.Text;
+                inputActuatorTest.Text = ddList.GetKeyPartOf(ddList.GetIOChoices(inputECUChoice_AT.Text), inputComponentChoice_AT.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_AT.Text);
             }
             else
             {
@@ -236,7 +243,7 @@ namespace XMLWriter.Pages
             InitRDBIComboBox();
             if (string.IsNullOrEmpty(data.GetRDBIPpos(data.GetStepCount())))
             {
-                inputReadData.Text = inputRDBIChoice_RDBI.Text + "|" + inputECUChoice_RDBI.Text;
+                inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputComponentChoice_AT.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
             }
             else
             {
@@ -256,8 +263,7 @@ namespace XMLWriter.Pages
             InitIOComboboBox();
             if(data.GetSmartToolPos(data.GetStepCount()) == "")
             {
-                inputSmartTool.Text = ddList.GetOtherPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" 
-                    + ddList.GetOtherPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
+                inputSmartTool.Text = ddList.GetKeyPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + ddList.GetKeyPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
             }
             else
             {
@@ -374,5 +380,7 @@ namespace XMLWriter.Pages
                 System.Diagnostics.Debug.Write("Dieser Pfad in ChechForWhatCaseInSmartToolPositiveResult-Method sollte nie erreicht werden: ");
             }
         }
+
+
     }
 }

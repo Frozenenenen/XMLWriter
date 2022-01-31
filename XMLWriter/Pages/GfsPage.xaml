@@ -114,8 +114,7 @@
                 <Label x:Name="textSmartTool"/>
                 <ComboBox x:Name="inputSmartTool_SM" Margin="0,3,40,0" DropDownClosed="inputSmartTool_SM_DropDownClosed" Width="400"/>
                 <DockPanel>
-                    <ComboBox x:Name="inputMeasure_SM" Margin="23,3,40,0" DropDownClosed="inputMeasure_SM_DropDownClosed" IsEditable="True" KeyDown="inputMeasure_SM_KeyDown" Width="400"/>
-                    <Label Content="?" ToolTip="Make sure to press Enter after keybordinput or the last key might be missing" Background="Yellow" HorizontalAlignment="Left"/>
+                    <ComboBox x:Name="inputMeasure_SM" Margin="23,3,40,0" DropDownClosed="inputMeasure_SM_DropDownClosed" IsEditable="True" Width="400" KeyUp="inputMeasure_SM_KeyUp"/>
                 </DockPanel>
                 <TextBox x:Name="inputSmartTool" Margin="23,3" IsEnabled="False"/>
                 <DockPanel>
