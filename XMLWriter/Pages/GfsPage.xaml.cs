@@ -91,7 +91,7 @@ namespace XMLWriter.Pages
         private void inputECUChoice_AT_DropDownClosed(object sender, System.EventArgs e)
         {
             FillInputActuatorTestText();
-            UpdateComponentComboBox();
+            UpdateActuatorTestComboBox();
         }
         private void inputComponentChoice_AT_DropDownClosed(object sender, System.EventArgs e)
         {
@@ -111,7 +111,7 @@ namespace XMLWriter.Pages
         private void inputSmartTool_SM_DropDownClosed(object sender, System.EventArgs e)
         {
             FillInputSmartToolText();
-            UpdateIOComboboBox();
+            UpdateSmartToolComboboBox();
         }
         private void inputMeasure_SM_DropDownClosed(object sender, System.EventArgs e)
         {
@@ -218,11 +218,9 @@ namespace XMLWriter.Pages
         {
             CheckForWhatToolHasBeenChosen();
             inputToolChoice.ItemsSource = ddList.GetToolChoice();
-            System.Diagnostics.Debug.WriteLine("Sollte >" + inputToolChoice.Text + "< Dropdowns laden.");
-            
 
-            InitComponentComboBox();
-            InitIOComboboBox();
+            InitActuatorTextComboBox();
+            InitSmartToolComboboBox();
             InitRDBIComboBox();
 
             if (inputToolChoice.Text == ddList.GetToolChoice()[1])
@@ -245,24 +243,24 @@ namespace XMLWriter.Pages
         //Inits zweite Dropdown Ebene
         private void InitActuatorTest()
         {
-            if (data.GetActuatorTestOfIndex(data.GetStepCount()) == "")
+            if (string.IsNullOrEmpty(data.GetActuatorTestOfIndex(data.GetStepCount())))
             {
                 FillInputActuatorTestText();
             }
             else
             {
-                inputActuatorTest.Text = ddList.GetDisplayNameOf(ddList.GetECUChoices() ,data.GetActuatorTestOfIndex(data.GetStepCount()));
+                inputActuatorTest.Text = ddList.GetDisplayPartOf(ddList.GetECUChoices() ,data.GetActuatorTestOfIndex(data.GetStepCount()));
             }
         }
         private void InitSmartTool()
         {
-            if (data.GetSmartToolOfIndex(data.GetStepCount()) == "")
+            if (string.IsNullOrEmpty(data.GetSmartToolOfIndex(data.GetStepCount())))
             {
                 FillInputSmartToolText();
             }
             else
             {
-                inputSmartTool.Text = ddList.GetDisplayNameOf(ddList.GetSmartToolChoices(), data.GetSmartToolOfIndex(data.GetStepCount()));
+                inputSmartTool.Text = ddList.GetDisplayPartOf(ddList.GetSmartToolChoices(), data.GetSmartToolOfIndex(data.GetStepCount()));
             }
             if (data.GetPositiveResultOfIndex(data.GetStepCount()) == "")
             {
@@ -288,14 +286,26 @@ namespace XMLWriter.Pages
         }
 
         //Inits dritte Dropdown Eebene
-        private void InitComponentComboBox()
+        private void InitActuatorTextComboBox()
         {
             inputECUChoice_AT.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
-            inputECUChoice_AT.Text = ddList.GetECUChoices().Select(x => x.secondPart).ToArray()[0];
-            inputComponentChoice_AT.ItemsSource = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray();
-            inputComponentChoice_AT.Text = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray()[0];
+            if (data.GetActuatorTestOfIndex(data.GetStepCount()) != "false" && data.GetActuatorTestOfIndex(data.GetStepCount()) != "")
+            {
+                string[] positiveResultDupel = data.GetActuatorTestOfIndex(data.GetStepCount()).Split('|');
+                inputECUChoice_AT.Text = ddList.GetDisplayPartOf(ddList.GetECUChoices(), positiveResultDupel[1]);
+                inputComponentChoice_AT.ItemsSource = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray();
+                inputComponentChoice_AT.Text = ddList.GetDisplayPartOf(ddList.GetIOChoices(inputECUChoice_AT.Text), positiveResultDupel[0]);
+            }
+            else
+            {
+                inputECUChoice_AT.Text = ddList.GetECUChoices().ElementAt(0).secondPart;
+                inputComponentChoice_AT.ItemsSource = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray();
+                inputComponentChoice_AT.Text = ddList.GetIOChoices(inputECUChoice_AT.Text).ElementAt(0).secondPart;
+            }
+            FillInputActuatorTestText();
+
         }
-        private void UpdateComponentComboBox()
+        private void UpdateActuatorTestComboBox()
         {
             inputECUChoice_AT.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
             inputComponentChoice_AT.ItemsSource = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray();
@@ -304,9 +314,24 @@ namespace XMLWriter.Pages
         private void InitRDBIComboBox()
         {
             inputECUChoice_RDBI.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
-            inputECUChoice_RDBI.Text = ddList.GetECUChoices().Select(x => x.secondPart).ToArray()[0];
-            inputRDBIChoice_RDBI.ItemsSource = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray(); 
-            inputRDBIChoice_RDBI.Text = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray()[0];
+            if (data.GetRDIDOfIndex(data.GetStepCount()) != "false" && data.GetRDIDOfIndex(data.GetStepCount()) != "")
+            {
+                string[] positiveResultDupel = data.GetRDIDOfIndex(data.GetStepCount()).Split('|');
+                System.Diagnostics.Debug.WriteLine("PosRes: " + data.GetRDIDOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine("ECU: " + positiveResultDupel[1]);
+                System.Diagnostics.Debug.WriteLine("RDID: " + positiveResultDupel[0]);
+                inputECUChoice_RDBI.Text = ddList.GetDisplayPartOf(ddList.GetECUChoices(), positiveResultDupel[1]);
+                inputRDBIChoice_RDBI.ItemsSource = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray();
+                inputRDBIChoice_RDBI.Text = ddList.GetDisplayPartOf(ddList.GetRDIDChoices(inputECUChoice_RDBI.Text), positiveResultDupel[0]);
+            }
+            else
+            {
+                inputECUChoice_RDBI.Text = ddList.GetECUChoices().ElementAt(0).secondPart;
+                inputRDBIChoice_RDBI.ItemsSource = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray();
+                inputRDBIChoice_RDBI.Text = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).ElementAt(0).secondPart;
+            }
+            
+            
         }
         private void UpdateRDBIComboBox()
         {
@@ -314,14 +339,30 @@ namespace XMLWriter.Pages
             inputRDBIChoice_RDBI.ItemsSource = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray();
             inputRDBIChoice_RDBI.Text = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray()[0];
         }
-        private void InitIOComboboBox()
+        private void InitSmartToolComboboBox()
         {
             inputSmartTool_SM.ItemsSource = ddList.GetSmartToolChoices().Select(x => x.secondPart).ToArray();
-            inputSmartTool_SM.Text = ddList.GetSmartToolChoices().Select(x => x.secondPart).ToArray()[0];
-            inputMeasure_SM.ItemsSource = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray();
-            inputMeasure_SM.Text = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray()[0];
+            
+            if (data.GetSmartToolOfIndex(data.GetStepCount()) != "false" && data.GetSmartToolOfIndex(data.GetStepCount()) != "")
+            {
+                inputSmartTool.Text = data.GetSmartToolOfIndex(data.GetStepCount());
+                System.Diagnostics.Debug.WriteLine(data.GetSmartToolOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine(inputSmartTool.Text);
+                string[] positiveResultDupel = data.GetSmartToolOfIndex(data.GetStepCount()).Split('|');
+                inputSmartTool_SM.Text = ddList.GetDisplayPartOf(ddList.GetSmartToolChoices(), positiveResultDupel[0]);
+                inputMeasure_SM.ItemsSource = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray();
+                inputMeasure_SM.Text = ddList.GetDisplayPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), positiveResultDupel[1]);
+            }
+            else //Wenn nicht vorhanden, dann zeig das erste Element an.
+            {
+                inputSmartTool_SM.Text = ddList.GetSmartToolChoices().ElementAt(0).secondPart;
+                inputMeasure_SM.ItemsSource = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray();
+                inputMeasure_SM.Text = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).ElementAt(0).secondPart;
+            }
+            FillInputSmartToolText();
+
         }
-        private void UpdateIOComboboBox()
+        private void UpdateSmartToolComboboBox()
         {
             inputSmartTool_SM.ItemsSource = ddList.GetSmartToolChoices().Select(x => x.secondPart).ToArray();
             inputMeasure_SM.ItemsSource = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray();

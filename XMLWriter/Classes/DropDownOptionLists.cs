@@ -79,6 +79,7 @@ namespace XMLWriter.Classes
             {
                 stream = LoadInputFromDatabase(databasePath + databaseQuery);
             }
+            list.Clear();
             string[] TupelString;
             TupelString = stream.Split('|');
             for (int i = 0; i < TupelString.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
@@ -88,31 +89,37 @@ namespace XMLWriter.Classes
             }
         }
 
-        public string GetDisplayNameOf(List<DropDownOptionTupel> list, string item)
+        public string GetDisplayPartOf(List<DropDownOptionTupel> list, string item)
         {
-            if (list != null && item != "")
+            if (list != null && item != "" && item != "false")
             {
-                System.Diagnostics.Debug.WriteLine(item);
                 int index = list.FindIndex(x => x.firstPart.Equals(item));
+                System.Diagnostics.Debug.Write("Suche nach: >" + item + "< in GetDisplayPartOf(...) - ");
                 if (index != -1)
                 {
+                    System.Diagnostics.Debug.WriteLine("Ergebnis: " + list.ElementAt(index).secondPart);
                     return list.ElementAt(index).secondPart;
                 }
             }
+            System.Diagnostics.Debug.WriteLine("Ergebnis: " + -1);
             return "";
         }
        
         public string GetKeyPartOf(List<DropDownOptionTupel> list, string item)
         {
-            if (list != null && item !="")
+            
+            
+            if (list != null && item !="" && item != "false")
             {
-                System.Diagnostics.Debug.WriteLine(item);
                 int index = list.FindIndex(x => x.secondPart.Equals(item));
+                System.Diagnostics.Debug.Write("Suche nach: >" + item + "< in GetDisplayNameOf() - ");
                 if (index!=-1)
                 {
+                    System.Diagnostics.Debug.WriteLine("Ergebnis: " + list.ElementAt(index).secondPart);
                     return list.ElementAt(index).firstPart;
                 }
             }
+            System.Diagnostics.Debug.WriteLine("Ergebnis: " + -1);
             return "";
         }
         
