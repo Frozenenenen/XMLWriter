@@ -9,37 +9,16 @@ namespace XMLWriter.Classes
     class DropDownOptionLists
     {
         
-        private static bool useDataBase=true;
+        private static bool useDataBase=true;           //Hier ist noch ein Fehler
         private static string[] toolChoice = { "", "ActuatorTest", "SmartTool", "ReadDataByIdentifier" };
         private static string filePath = @"Files/";
         private static string databasePath = @"Files/";
-        //private static string filePathECU = @"D:\Projekte\Studium\XMLWriter\XMLWriter\XMLWriter\bin\Debug\netcoreapp3.1\Files\ECU_";
         //Die Dateinamen sind MIT SICHERHEIT nicht final
-        private static string fileNameECU = @"ECU_List.txt";
-        private static string databaseQueryECU = @"";
-        private static string fileNameSmartTool = @"SmartTool_List.txt";
-        private static string databaseQuerySmartTool = @"";
+        private static string[] fileNames = { @"ECU_List.txt", @"SmartTool_List.txt" , @"IO_BCM.txt" , @"IO_LWR.txt", @"IO_MSG.txt" , @"RDID_BCM.txt", @"RDID_LWR.txt" , @"RDID_MSG.txt" , @"Measure_URI.txt" , @"Measure_Two.txt" , @"Measure_Three.txt" };
+        private static string[] databaseQuerys = { @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"" };
 
-        private static string fileNameIO_BCM = "IO_BCM.txt";
-        private static string databaseQueryIO_BCM = "";
-        private static string fileNameIO_LWR = "IO_LWR.txt";
-        private static string databaseQueryIO_LWR = "";
-        private static string fileNameIO_MSG = "IO_MSG.txt";
-        private static string databaseQueryIO_MSG = "";
 
-        private static string fileNameRDID_BCM = "RDID_BCM.txt";
-        private static string databaseQueryRDID_BCM = "";
-        private static string fileNameRDID_LWR = "RDID_LWR.txt";
-        private static string databaseQueryRDID_LWR = "";
-        private static string fileNameRDID_MSG = "RDID_MSG.txt";
-        private static string databaseQueryRDID_MSG = "";
 
-        private static string fileNameMeasure_URI = @"Measure_URI.txt";
-        private static string databaseQueryMeasure_URI = @"";
-        private static string fileNameMeasure_Two = @"Measure_Two.txt";
-        private static string databaseQueryMeasure_Two = @"";
-        private static string fileNameMeasure_Three = @"Measure_Three.txt";
-        private static string databaseQueryMeasure_Three = @"";
 
         
 
@@ -59,15 +38,15 @@ namespace XMLWriter.Classes
         private static List<DropDownOptionTupel> RDID_LWR = new List<DropDownOptionTupel>();
         private static List<DropDownOptionTupel> RDID_MSG = new List<DropDownOptionTupel>();
         
-
+        
         public void UseDataBase()
         {
-            System.Diagnostics.Debug.WriteLine("Loads from database");
+            System.Diagnostics.Debug.WriteLine("Loads from database - Init");
             useDataBase = true;
         }
         public void DontUseDataBase()
         {
-            System.Diagnostics.Debug.WriteLine("Loads from text file");
+            System.Diagnostics.Debug.WriteLine("Loads from text file - Init");
             useDataBase = false;
         }
         public void LoadAllOptions()
@@ -76,310 +55,127 @@ namespace XMLWriter.Classes
         }
         private void FillAllLists()
         {
-            FillECU_List();
-            FillSmartTool_List();
-            FillIO_BCM();
-            FillIO_LWR();
-            FillIO_MSG();
-            FillRDID_BCM();
-            FillRDID_LWR();
-            FillRDID_MSG();
-            FillMeasure_URI(); 
-            FillMeasure_two();      //Hier gibts sicherlich Bedarf an Umbenennung
-            FillMeasure_three();    //Hier gibts sicherlich Bedarf an Umbenennung
+            FillList(ECU_List, fileNames[0], databaseQuerys[0]);
+            FillList(SmartTool_List, fileNames[1], databaseQuerys[1]);
+            FillList(IO_BCM, fileNames[2], databaseQuerys[2]);
+            FillList(IO_LWR, fileNames[3], databaseQuerys[3]);
+            FillList(IO_MSG, fileNames[4], databaseQuerys[4]);
+            FillList(Measure_URI, fileNames[5], databaseQuerys[5]);
+            FillList(Measure_Two, fileNames[6], databaseQuerys[6]);
+            FillList(Measure_Three, fileNames[7], databaseQuerys[7]);
+            FillList(RDID_BCM, fileNames[8], databaseQuerys[8]);
+            FillList(RDID_LWR, fileNames[9], databaseQuerys[9]);
+            FillList(RDID_MSG, fileNames[10], databaseQuerys[10]);
         }
-        private void FillECU_List()
+
+        private void FillList(List<DropDownOptionTupel> list, string fileName, string databaseQuery)
         {
             string stream;
-            System.Diagnostics.Debug.WriteLine(filePath + fileNameECU);
             if (useDataBase)
             {
-                stream = LoadInputFromTxtFile(filePath + fileNameECU);
+                stream = LoadInputFromTxtFile(filePath + fileName);
             }
             else
             {
-                stream = LoadInputFromDatabase(databasePath + databaseQueryECU);
+                stream = LoadInputFromDatabase(databasePath + databaseQuery);
+            }
+            string[] TupelString;
+            TupelString = stream.Split('|');
+            for (int i = 0; i < TupelString.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
+            {
+                string[] temp = TupelString[i].Split(';');
+                list.Add(new DropDownOptionTupel(temp[0], temp[1]));
+            }
+        }
+       
+        public string GetOtherPartOf(List<DropDownOptionTupel> list, string item)
+        {
+            if (list.Find(x => x.firstPart.Equals(item)).secondPart != null)
+            {
+                return list.Find(x => x.firstPart.Equals(item)).secondPart;
+            }
+            else if(list.Find(x => x.firstPart.Equals(item)).secondPart == null)
+            {
+                return list.Find(x => x.secondPart.Equals(item)).firstPart;
+            }
+            else
+            {
+                return "Fehler";
             }
             
-            string[] TupelString;
-            TupelString = stream.Split('|');
-            for (int i = 0; i < TupelString.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
-            {
-                string[] temp = TupelString[i].Split(';');
-                ECU_List.Add(new DropDownOptionTupel(temp[0], temp[1]));
-                System.Diagnostics.Debug.WriteLine(temp[0] + " " + temp[1]);
-            }
         }
-        private void FillSmartTool_List()
-        {
-            string stream;
-            if (useDataBase)
-            {
-                stream = LoadInputFromTxtFile(filePath + fileNameSmartTool);
-            }
-            else
-            {
-                stream = LoadInputFromDatabase(databasePath + databaseQuerySmartTool);
-            }
 
-            string[] TupelString;
-            TupelString = stream.Split('|');
-            for (int i = 0; i < TupelString.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
-            {
-                string[] temp = TupelString[i].Split(';');
-                SmartTool_List.Add(new DropDownOptionTupel(temp[0], temp[1]));
-                System.Diagnostics.Debug.WriteLine(temp[0] + " " + temp[1]);
-            }
-        }
-        private void FillIO_BCM()
-        {
-            string stream;
-            if (useDataBase)
-            {
-                stream = LoadInputFromTxtFile(filePath + fileNameIO_BCM);
-            }
-            else
-            {
-                stream = LoadInputFromDatabase(databasePath + databaseQueryIO_BCM);
-            }
-
-            string[] TupelString;
-            TupelString = stream.Split('|');
-            for (int i = 0; i < TupelString.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
-            {
-                string[] temp = TupelString[i].Split(';');
-                IO_BCM.Add(new DropDownOptionTupel(temp[0], temp[1]));
-                System.Diagnostics.Debug.WriteLine(temp[0] + " " + temp[1]);
-            }
-        }
-        private void FillIO_LWR()
-        {
-            string stream;
-            if (useDataBase)
-            {
-                stream = LoadInputFromTxtFile(filePath + fileNameIO_LWR);
-            }
-            else
-            {
-                stream = LoadInputFromDatabase(databasePath + databaseQueryIO_LWR);
-            }
-
-            string[] TupelString;
-            TupelString = stream.Split('|');
-            for (int i = 0; i < TupelString.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
-            {
-                string[] temp = TupelString[i].Split(';');
-                IO_LWR.Add(new DropDownOptionTupel(temp[0], temp[1]));
-                System.Diagnostics.Debug.WriteLine(temp[0] + " " + temp[1]);
-            }
-        }
-        private void FillIO_MSG()
-        {
-            string stream;
-            if (useDataBase)
-            {
-                stream = LoadInputFromTxtFile(filePath + fileNameIO_MSG);
-            }
-            else
-            {
-                stream = LoadInputFromDatabase(databasePath + databaseQueryIO_MSG);
-            }
-
-            string[] TupelString;
-            TupelString = stream.Split('|');
-            for (int i = 0; i < TupelString.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
-            {
-                string[] temp = TupelString[i].Split(';');
-                IO_MSG.Add(new DropDownOptionTupel(temp[0], temp[1]));
-                System.Diagnostics.Debug.WriteLine(temp[0] + " " + temp[1]);
-            }
-        }
-        private void FillRDID_BCM()
-        {
-            string stream;
-            if (useDataBase)
-            {
-                stream = LoadInputFromTxtFile(filePath + fileNameRDID_BCM);
-            }
-            else
-            {
-                stream = LoadInputFromDatabase(databasePath + databaseQueryRDID_BCM);
-            }
-
-            string[] TupelString;
-            TupelString = stream.Split('|');
-            for (int i = 0; i < TupelString.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
-            {
-                string[] temp = TupelString[i].Split(';');
-                RDID_BCM.Add(new DropDownOptionTupel(temp[0], temp[1]));
-                System.Diagnostics.Debug.WriteLine(temp[0] + " " + temp[1]);
-            }
-        }
-        private void FillRDID_LWR()
-        {
-            string stream;
-            if (useDataBase)
-            {
-                stream = LoadInputFromTxtFile(filePath + fileNameRDID_LWR);
-            }
-            else
-            {
-                stream = LoadInputFromDatabase(databasePath + databaseQueryRDID_LWR);
-            }
-
-            string[] TupelString;
-            TupelString = stream.Split('|');
-            for (int i = 0; i < TupelString.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
-            {
-                string[] temp = TupelString[i].Split(';');
-                RDID_LWR.Add(new DropDownOptionTupel(temp[0], temp[1]));
-                System.Diagnostics.Debug.WriteLine(temp[0] + " " + temp[1]);
-            }
-        }
-        private void FillRDID_MSG()
-        {
-            string stream;
-            if (useDataBase)
-            {
-                stream = LoadInputFromTxtFile(filePath + fileNameRDID_MSG);
-            }
-            else
-            {
-                stream = LoadInputFromDatabase(databasePath + databaseQueryRDID_MSG);
-            }
-
-            string[] TupelString;
-            TupelString = stream.Split('|');
-            for (int i = 0; i < TupelString.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
-            {
-                string[] temp = TupelString[i].Split(';');
-                RDID_MSG.Add(new DropDownOptionTupel(temp[0], temp[1]));
-                System.Diagnostics.Debug.WriteLine(temp[0] + " " + temp[1]);
-            }
-        }
-        private void FillMeasure_URI()
-        {
-            string stream;
-            if (useDataBase)
-            {
-                stream = LoadInputFromTxtFile(filePath + fileNameMeasure_URI);
-            }
-            else
-            {
-                stream = LoadInputFromDatabase(databasePath + databaseQueryMeasure_URI);
-            }
-
-            string[] TupelString;
-            TupelString = stream.Split('|');
-            for (int i = 0; i < TupelString.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
-            {
-                string[] temp = TupelString[i].Split(';');
-                Measure_URI.Add(new DropDownOptionTupel(temp[0], temp[1]));
-                System.Diagnostics.Debug.WriteLine(temp[0] + " " + temp[1]);
-            }
-        }
-        private void FillMeasure_two()
-        {
-            string stream;
-            if (useDataBase)
-            {
-                stream = LoadInputFromTxtFile(filePath + fileNameMeasure_Two);
-            }
-            else
-            {
-                stream = LoadInputFromDatabase(databasePath + databaseQueryMeasure_Two);
-            }
-
-            string[] TupelString;
-            TupelString = stream.Split('|');
-            for (int i = 0; i < TupelString.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
-            {
-                string[] temp = TupelString[i].Split(';');
-                Measure_Two.Add(new DropDownOptionTupel(temp[0], temp[1]));
-                System.Diagnostics.Debug.WriteLine(temp[0] + " " + temp[1]);
-            }
-        }
-        private void FillMeasure_three()
-        {
-            string stream;
-            if (useDataBase)
-            {
-                stream = LoadInputFromTxtFile(filePath + fileNameMeasure_Three);
-            }
-            else
-            {
-                stream = LoadInputFromDatabase(databasePath + databaseQueryMeasure_Three);
-            }
-
-            string[] TupelString;
-            TupelString = stream.Split('|');
-            for (int i = 0; i < TupelString.Length - 1; i++)      //Die txt Dateien haben immer ein | am Ende, weshalb Length-1 ...
-            {
-                string[] temp = TupelString[i].Split(';');
-                Measure_Three.Add(new DropDownOptionTupel(temp[0], temp[1]));
-                System.Diagnostics.Debug.WriteLine(temp[0] + " " + temp[1]);
-            }
-        }
-        
-
-        //nullte Dropdownebene
+        //erste Dropdownebene
         public string[] GetToolChoice()
         {
             return toolChoice;
         }
-        //erste Dropdownebene
-        public string[] GetECUChoices()
-        {
-            return ECU_List.Select(x => x.secondPart).ToArray();
-        }
-        public string[] GetSmartToolChoices()
-        {
-            return SmartTool_List.Select(x => x.secondPart).ToArray();
-        }
         //zweite Dropdownebene
-        public string[] GetRDIDChoices(string chosenECU)
+        public List<DropDownOptionTupel> GetECUChoices()
         {
-            switch (chosenECU)
-            {//Inhalt hier ist redundant. Ich weiß noch nicht, in welcher Art chosenECU übergeben werden soll
-                case "BCM":
-                    return RDID_BCM.Select(x => x.secondPart).ToArray();
-                case "LWR":
-                    return RDID_LWR.Select(x => x.secondPart).ToArray();
-                case "MSG":
-                    return RDID_MSG.Select(x => x.secondPart).ToArray();
-                case "Bordnetz Steuergeraet":
-                    return RDID_BCM.Select(x => x.secondPart).ToArray();
-                case "Leuchtweitenregulierung":
-                    return RDID_LWR.Select(x => x.secondPart).ToArray();
-                case "Motorsteuergeraet":
-                    return RDID_MSG.Select(x => x.secondPart).ToArray();
-                default:
-                    return toolChoice; //Mangels besserer Ideen die Anzeige für einen fehlerhaften Inhalt
+            return ECU_List; 
+        }
+        public List<DropDownOptionTupel> GetSmartToolChoices()
+        {
+            return SmartTool_List;
+        }
+        //dritte Dropdownebene
+        public List<DropDownOptionTupel> GetRDIDChoices(string chosenECU)
+        {
+            if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[0])
+            {
+                return RDID_BCM;
+            }
+            else if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[1])
+            {
+                return RDID_LWR;
+            }
+            else if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[2])
+            {
+                return RDID_MSG;
+            }
+            else
+            {
+                return RDID_BCM; //Mangels besserer Ideen die Anzeige für einen fehlerhaften Inhalt
             }
         }
-        public string[] GetMeasurementChoices(string chosenECU)
+        public List<DropDownOptionTupel> GetIOChoices(string chosenECU)
         {
-            switch (chosenECU)
-            {//Inhalt hier ist redundant. Ich weiß noch nicht, in welcher Art chosenECU übergeben werden soll
-                case "BCM":
-                    return IO_BCM.Select(x => x.secondPart).ToArray();
-                case "LWR":
-                    return IO_LWR.Select(x => x.secondPart).ToArray();
-                case "MSG":
-                    return IO_MSG.Select(x => x.secondPart).ToArray();
-                case "Bordnetz Steuergeraet":
-                    return IO_BCM.Select(x => x.secondPart).ToArray();
-                case "Leuchtweitenregulierung":
-                    return IO_LWR.Select(x => x.secondPart).ToArray();
-                case "Motorsteuergeraet":
-                    return IO_MSG.Select(x => x.secondPart).ToArray();
-                default:
-                    return toolChoice; //Mangels besserer Ideen die Anzeige für einen fehlerhaften Inhalt
+            if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[0])
+            {
+                return IO_BCM;
+            }
+            else if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[1])
+            {
+                return IO_LWR;
+            }
+            else if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[2])
+            {
+                return IO_MSG;
+            }
+            else
+            {
+                return IO_BCM;
             }
         }
-        public string[] GetMeasurementChoices()
+        public List<DropDownOptionTupel> GetMeasurementChoices(string chosenSmartTool)
         {
-            return Measure_URI.Select(x => x.secondPart).ToArray();
+            if (chosenSmartTool == SmartTool_List.Select(x => x.secondPart).ToArray()[0])
+            {
+                return Measure_URI;
+            }
+            else if (chosenSmartTool == SmartTool_List.Select(x => x.secondPart).ToArray()[1])
+            {
+                return Measure_Two;
+            }
+            else if (chosenSmartTool == SmartTool_List.Select(x => x.secondPart).ToArray()[2]) //Wenn es nur 2 Smarttools gibt, wird hier wohl ein Fehler entstehen 
+            {
+                return Measure_Three;
+            }
+            else
+            {
+                return Measure_URI; 
+            }
         }
 
 

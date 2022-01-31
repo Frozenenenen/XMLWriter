@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using System.Linq;
 using XMLWriter.Classes;
 
 namespace XMLWriter.Pages
@@ -14,7 +15,7 @@ namespace XMLWriter.Pages
         DataSet data = new DataSet();
         Language language = new Language();
         GUIMovement GUI = new GUIMovement();
-        DropDownOptionLists input = new DropDownOptionLists();
+        DropDownOptionLists ddList = new DropDownOptionLists();
         private static string positiveResult;
 
         public GfsPage()
@@ -181,7 +182,7 @@ namespace XMLWriter.Pages
             InitFlexRightSideItems();
             ShowItemsAfterToolChoice();
         }
-        //Inits erste Unterbene
+        //Inits erste Unterebene
         private void InitLeftSideItems()
         {
             inputStepName.Text = data.GetStepNamePos(data.GetStepCount()) == ""
@@ -208,12 +209,14 @@ namespace XMLWriter.Pages
         }
         private void InitFlexRightSideItems()
         {
-            inputToolChoice.ItemsSource = input.GetToolChoice();
+            inputToolChoice.ItemsSource = ddList.GetToolChoice();
             inputToolChoice.Text = data.GetToolChoice(data.GetStepCount());
             InitActuatorTest();
             InitReadData();
             InitSmartTool();
         }
+
+
         //Inits zweite Unterebene
         private void InitActuatorTest()
         {
@@ -239,7 +242,7 @@ namespace XMLWriter.Pages
             {
                 inputReadData.Text = data.GetRDBIPpos(data.GetStepCount());
             }
-            if (inputToolChoice.Text == input.GetToolChoice()[3])
+            if (inputToolChoice.Text == ddList.GetToolChoice()[3])
             {
                 inputPositiveResult_RDBI.Text = data.GetPositiveResultPos(data.GetStepCount());
             }
@@ -253,7 +256,8 @@ namespace XMLWriter.Pages
             InitIOComboboBox();
             if(data.GetSmartToolPos(data.GetStepCount()) == "")
             {
-                inputSmartTool.Text = inputSmartTool_SM.Text + "|" + inputMeasure_SM.Text;
+                inputSmartTool.Text = ddList.GetOtherPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" 
+                    + ddList.GetOtherPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
             }
             else
             {
@@ -265,52 +269,41 @@ namespace XMLWriter.Pages
             }
             else
             {
-                if (inputToolChoice.Text == input.GetToolChoice()[2])
+                if (inputToolChoice.Text == ddList.GetToolChoice()[0]);             //Hier wurde ein Index entfernt. leider kA was vorher drin stand. 0 eigefügt
                     inputPositiveResult_SM.Text = data.GetPositiveResultPos(data.GetStepCount());
             }
             inputPositiveResult_UpperLimit.Text = "";
+            
         }
+
+        
+
+
         //Inits dritte Unterebene
         private void InitComponentComboBox()
         {
-            inputECUChoice_AT.ItemsSource = input.GetECUChoices();
-            inputECUChoice_AT.Text = input.GetECUChoices()[0];
-            switch (inputECUChoice_AT.Text)
-            {
-                case "Bordnetz Steuergeraet":
-                    inputComponentChoice_AT.ItemsSource = input.GetSmartToolChoices();
-                    inputComponentChoice_AT.Text = input.GetSmartToolChoices()[0];
-                    break;
-                default:
-                    inputComponentChoice_AT.ItemsSource = "";
-                    inputComponentChoice_AT.Text = "";
-                    break;
-            }
+            inputECUChoice_AT.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
+            //inputECUChoice_AT.Text = input.GetECUChoices()[0]; //Wird erst wieder gebraucht, wenn der Wert vorher aus XML geladen wurde. Muss ggf Init von Aktualisierung getrennt werden
+
+            inputComponentChoice_AT.ItemsSource = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray();
+            inputComponentChoice_AT.Text = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray()[0];
+
         }
         private void InitRDBIComboBox()
         {
-            inputECUChoice_RDBI.ItemsSource = input.GetECUChoices();
+            inputECUChoice_RDBI.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
             //inputECUChoice_RDBI.Text = input.GetECUChoices()[0]; //Wird erst wieder gebraucht, wenn der Wert vorher aus XML geladen wurde. Muss ggf Init von Aktualisierung getrennt werden
 
-            System.Diagnostics.Debug.WriteLine(" -InitRDBIDropDown- " + inputECUChoice_RDBI.Text + " " + input.GetRDIDChoices(inputECUChoice_RDBI.Text)[0] + input.GetRDIDChoices(inputECUChoice_RDBI.Text)[1] + input.GetRDIDChoices(inputECUChoice_RDBI.Text)[2]);
-            inputRDBIChoice_RDBI.ItemsSource = input.GetRDIDChoices(inputECUChoice_RDBI.Text);
-            inputRDBIChoice_RDBI.Text = input.GetRDIDChoices(inputECUChoice_RDBI.Text)[0];
+            inputRDBIChoice_RDBI.ItemsSource = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray(); 
+            inputRDBIChoice_RDBI.Text = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray()[0];
         }
         private void InitIOComboboBox()
         {
-            inputMeasure_SM.ItemsSource = input.GetMeasurementChoices();
-            //inputMeasure_SM.Text = input.GetMeasurementChoices()[0]; //Wird erst wieder gebraucht, wenn der Wert vorher aus XML geladen wurde. Muss ggf Init von Aktualisierung getrennt werden
-            switch (inputECUChoice_AT.Text)
-            {
-                case "Bordnetz Steuergeraet":
-                    inputSmartTool_SM.ItemsSource = input.GetSmartToolChoices(inputMeasure_SM.Text);
-                    inputSmartTool_SM.Text = input.GetSmartToolChoices(inputMeasure_SM.Text)[0];
-                    break;
-                default:
-                    inputSmartTool_SM.ItemsSource = "";
-                    inputSmartTool_SM.Text = "";
-                    break;
-            }
+         inputSmartTool_SM.ItemsSource = ddList.GetSmartToolChoices().Select(x => x.secondPart).ToArray();
+          //inputSmartTool_SM.Text = input.GetSmartToolChoices()[0]; //Wird erst wieder gebraucht, wenn der Wert vorher aus XML geladen wurde. Muss ggf Init von Aktualisierung getrennt werden
+          
+            inputMeasure_SM.ItemsSource = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray();
+            inputMeasure_SM.Text = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray()[0];
         }
 
         //Anderes

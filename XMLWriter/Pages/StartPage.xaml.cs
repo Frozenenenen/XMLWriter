@@ -27,12 +27,13 @@ namespace XMLWriter.Pages
         DropDownOptionLists loadInput = new DropDownOptionLists();
         public StartPage()
         {
+            loadInput.LoadAllOptions(); //Ich lad das aktuell einfach 2 Mal. 1 Mal hier und 1 Mal bei btn_next. Ich weiß nicht, warum es nicht anders geht, aber es ist so natürlich eine Fehlerquelle
             InitializeComponent();
             data.InitNewDataSet();
             language.InitLanguage("Deutsch");
             InitTextItems();
             InitValueItems();
-            loadInput.LoadAllOptions();
+            
         }
 
         private void BtnNext(object sender, RoutedEventArgs e)
@@ -60,6 +61,8 @@ namespace XMLWriter.Pages
             {
                 loadInput.DontUseDataBase();
             }
+            loadInput.LoadAllOptions();    //Ich lad das aktuell einfach 2 Mal. 1 Mal hier und 1 Mal beim Initialisieren. Ich weiß nicht, warum es nicht anders geht, aber es ist so natürlich eine Fehlerquelle
+
         }
         private void BtnSelectLanguage_Click(object sender, RoutedEventArgs e)
         {
