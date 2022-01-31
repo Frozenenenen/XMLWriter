@@ -95,16 +95,16 @@ namespace XMLWriter.Pages
         {
             DataSet data = new DataSet();
 
-            inputStepName.Text = data.GetStepNamePos(data.GetStepCount()) == ""
+            inputStepName.Text = data.GetStepNameOfIndex(data.GetStepCount()) == ""
                 ? "Schritt " + (data.GetStepCount() + 1)
-                : data.GetStepNamePos(data.GetStepCount());
-            inputText.Text = data.GetStepTextPos(data.GetStepCount());
-            inputAnim.Text = data.GetStepAnimsPos(data.GetStepCount()) == ""
+                : data.GetStepNameOfIndex(data.GetStepCount());
+            inputText.Text = data.GetStepTextOfIndex(data.GetStepCount());
+            inputAnim.Text = data.GetStepAnimsOfIndex(data.GetStepCount()) == ""
                 ? "default"
-                : data.GetStepAnimsPos(data.GetStepCount());
-            inputSpecialText.Text = data.GetStepSpecialTextPos(data.GetStepCount());
+                : data.GetStepAnimsOfIndex(data.GetStepCount());
+            inputSpecialText.Text = data.GetStepSpecialTextOfIndex(data.GetStepCount());
 
-            Console.WriteLine("Ausgabe: Schritt: " + (data.GetStepCount() + 1) + " Anim: " + data.GetStepAnimsPos(data.GetStepCount()) + " Text: " + data.GetStepTextPos(data.GetStepCount()) + " SpText: " + data.GetStepSpecialTextPos(data.GetStepCount()));
+            Console.WriteLine("Ausgabe: Schritt: " + (data.GetStepCount() + 1) + " Anim: " + data.GetStepAnimsOfIndex(data.GetStepCount()) + " Text: " + data.GetStepTextOfIndex(data.GetStepCount()) + " SpText: " + data.GetStepSpecialTextOfIndex(data.GetStepCount()));
         }
     }
 }

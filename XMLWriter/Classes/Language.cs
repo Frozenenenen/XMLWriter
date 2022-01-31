@@ -20,7 +20,7 @@ namespace XMLWriter
         private static string fileNameTitel;
         private static string generalInstruction;
         private static string generalInstructionText;
-        private static string toolChoice;
+        private static string pleaseChoose;
         private static string optional;
         /*private static string model; //Vermutlich nicht mehr drin
         private static string vin;*/
@@ -63,7 +63,7 @@ namespace XMLWriter
         public string GetStringCreateDataSet() => createDataSet;
         public string GetStringGeneralInstruction() => generalInstruction;
         public string GetStringGeneralInstructionText() => generalInstructionText;
-        public string GetStringToolChoise() => toolChoice;
+        public string GetStringPleaseChoose() => pleaseChoose;
         public string GetStringOptional() => optional;
         public string GetStringStep() => step;
         public string GetStringSteps() => steps;
@@ -137,7 +137,7 @@ namespace XMLWriter
             createDataSet = "Datensatz anlegen oder laden";
             generalInstruction = "Anleitung";
             generalInstructionText = "Leere Felder werden automatisch mit 'default' oder 'false' befüllt, falls erforderlich";
-            toolChoice = "Bitte wählen";
+            pleaseChoose = "Bitte wählen";
             optional = "Optional: direkter input. Priorisiert, falls befüllt!";
             step = "Schrittbezeichnung";
             steps = "Schritte";
@@ -173,7 +173,7 @@ namespace XMLWriter
             createDataSet = "Create Data Set";
             generalInstruction = "general instructions";
             generalInstructionText = "Empty boxes will be automatically filled with e.g. 'default' or 'false'";
-            toolChoice = "Please choose";
+            pleaseChoose = "Please choose";
             optional = "Optional: direct input. Prioritized if filled";
             step = "Step";
             steps = "Steps";
@@ -209,7 +209,7 @@ namespace XMLWriter
             createDataSet = "Crear expediente";
             generalInstruction = "general instructions";
             generalInstructionText = "Empty boxes will be automatically filled with e.g. 'default' or 'false'.";
-            toolChoice = "Please choose";
+            pleaseChoose = "Please choose";
             optional = "Optional: direct input. Prioritized if filled";
             step = "Paso";
             steps = "Pasos";

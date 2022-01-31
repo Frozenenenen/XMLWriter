@@ -74,11 +74,11 @@ namespace XMLWriter
         public string GetDataType() => dataType;
         public string GetFileName() => fileName;
 
-        public string GetStepNamePos(int count)
+        public string GetStepNameOfIndex(int index)
         {
             try
             {
-                return steps[count];
+                return steps[index];
             }
             catch (SystemException)
             {
@@ -86,11 +86,11 @@ namespace XMLWriter
                 return "Fehler";
             }
         }
-        public string GetStepAnimsPos(int count)
+        public string GetStepAnimsOfIndex(int index)
         {
             try
             {
-                return stepAnims[count];
+                return stepAnims[index];
             }
             catch (SystemException)
             {
@@ -99,11 +99,11 @@ namespace XMLWriter
             }
 
         }
-        public string GetStepTextPos(int count)
+        public string GetStepTextOfIndex(int index)
         {
             try
             {
-                return stepTexts[count];
+                return stepTexts[index];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -111,11 +111,11 @@ namespace XMLWriter
                 return "Fehler";
             }
         }
-        public string GetStepSpecialTextPos(int count)
+        public string GetStepSpecialTextOfIndex(int index)
         {
             try
             {
-                return stepSpecial[count];
+                return stepSpecial[index];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -124,11 +124,11 @@ namespace XMLWriter
             }
 
         }
-        public string GetStepInstructionPos(int count)
+        public string GetStepInstructionOfIndex(int index)
         {
             try
             {
-                return stepInstruction[count];
+                return stepInstruction[index];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -136,11 +136,11 @@ namespace XMLWriter
                 return "Fehler";
             }
         }
-        public string GetStepPositiveIDPos(int count)
+        public string GetStepPositiveIDOfIndex(int index)
         {
             try
             {
-                return stepPositiveID[count];
+                return stepPositiveID[index];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -148,11 +148,11 @@ namespace XMLWriter
                 return "Fehler";
             }
         }
-        public string GetNegativeIDPos(int count)
+        public string GetNegativeIDOfIndex(int index)
         {
             try
             {
-                return stepNegativeID[count];
+                return stepNegativeID[index];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -160,11 +160,11 @@ namespace XMLWriter
                 return "Fehler";
             }
         }
-        public string GetPositiveResultPos(int count)
+        public string GetPositiveResultOfIndex(int index)
         {
             try
             {
-                return stepPositiveResult[count];
+                return stepPositiveResult[index];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -172,11 +172,11 @@ namespace XMLWriter
                 return "Fehler";
             }
         }
-        public string GetRepXMLPos(int count)
+        public string GetRepXMLOfIndex(int index)
         {
             try
             {
-                return stepRepXML[count];
+                return stepRepXML[index];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -184,11 +184,11 @@ namespace XMLWriter
                 return "Fehler";
             }
         }
-        public string GetActuatorTestPos(int count)
+        public string GetActuatorTestOfIndex(int index)
         {
             try
             {
-                return stepActuatorTest[count];
+                return stepActuatorTest[index];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -196,11 +196,11 @@ namespace XMLWriter
                 return "Fehler";
             }
         }
-        public bool? GetCheckActuatorTestPos(int count)
+        public bool? GetCheckActuatorTestOfIndex(int index)
         {
             try
             {
-                return checkStepActuatorTest[count];
+                return checkStepActuatorTest[index];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -208,11 +208,11 @@ namespace XMLWriter
                 return true;
             }
         }
-        public string GetRDBIPpos(int count)
+        public string GetRDIDOfIndex(int index)
         {
             try
             {
-                return stepRDBI[count];
+                return stepRDBI[index];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -220,11 +220,11 @@ namespace XMLWriter
                 return "Fehler";
             }
         }
-        public bool? GetCheckRDBIPos(int count)
+        public bool? GetCheckRDBIOfIndex(int index)
         {
             try
             {
-                return checkStepRDBI[count];
+                return checkStepRDBI[index];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -232,11 +232,11 @@ namespace XMLWriter
                 return true; 
             }
         }
-        public string GetSmartToolPos(int count)
+        public string GetSmartToolOfIndex(int index)
         {
             try
             {
-                return stepSmartTool[count];
+                return stepSmartTool[index];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -244,11 +244,11 @@ namespace XMLWriter
                 return "Fehler";
             }
         }
-        public bool? GetCheckSmartTool(int count)
+        public bool? GetCheckSmartToolOfIndex(int index)
         {
             try
             {
-                return checkStepSmartTool[count];
+                return checkStepSmartTool[index];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -256,11 +256,11 @@ namespace XMLWriter
                 return true; 
             }
         }    
-        public bool? GetNextStepPos(int count)
+        public bool? GetNextStepOfIndex(int index)
         {
             try
             {
-                return stepNextStep[count];
+                return stepNextStep[index];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -268,11 +268,11 @@ namespace XMLWriter
                 return true; //kA wie man hier dann nen Fehler erkennen soll
             }
         }
-        public bool? GetLastStepPos(int count)
+        public bool? GetLastStepOfIndex(int index)
         {
             try
             {
-                return stepLastStep[count];
+                return stepLastStep[index];
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -280,11 +280,11 @@ namespace XMLWriter
                 return true;
             }
         }
-        public string GetToolChoice(int count)
+        public string GetToolChoiceOfIndex(int index)
         {
             try
             {
-                return stepToolChoice[count];
+                return stepToolChoice[index];
             }
             catch (ArgumentOutOfRangeException)
             {

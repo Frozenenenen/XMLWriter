@@ -88,7 +88,7 @@ namespace XMLWriter.Classes
             }
         }
 
-        public string GetDisplayPartOf(List<DropDownOptionTupel> list, string item)
+        public string GetDisplayNameOf(List<DropDownOptionTupel> list, string item)
         {
             if (list != null && item != "")
             {

@@ -158,7 +158,7 @@ namespace XMLWriter.Pages
                 btnBack.Content = language.GetStringReset();
             }
 
-            inputAnim.Text = data.GetStepAnimsPos(data.GetStepCount());
+            inputAnim.Text = data.GetStepAnimsOfIndex(data.GetStepCount());
 
             //Inhalte rechte Spalte
             textPositiveID.Content = language.GetStringPosID();
@@ -171,7 +171,6 @@ namespace XMLWriter.Pages
             textSmartTool.Content = language.GetStringSmartTool();
             inputNextStep.Content = language.GetStringNextStep();
             inputLastStep.Content = language.GetStringLastStep();
-            inputToolChoice.Text = language.GetStringToolChoise();
             //textRDBIOptional.Content = language.GetStringOptional();
             textSmartToolOptional.Content = language.GetStringOptional();
             
@@ -190,114 +189,105 @@ namespace XMLWriter.Pages
             InitFlexRightSideItems();
             ShowItemsAfterToolChoice();
         }
-        //Inits erste Unterebene
         private void InitLeftSideItems()
         {
-            inputStepName.Text = data.GetStepNamePos(data.GetStepCount()) == ""
+            inputStepName.Text = data.GetStepNameOfIndex(data.GetStepCount()) == ""
                ? "Schritt " + (data.GetStepCount() + 1)
-               : data.GetStepNamePos(data.GetStepCount());
-            inputText.Text = data.GetStepTextPos(data.GetStepCount());
-            inputAnim.Text = data.GetStepAnimsPos(data.GetStepCount()) == ""
+               : data.GetStepNameOfIndex(data.GetStepCount());
+            inputText.Text = data.GetStepTextOfIndex(data.GetStepCount());
+            inputAnim.Text = data.GetStepAnimsOfIndex(data.GetStepCount()) == ""
                 ? "default"
-                : data.GetStepAnimsPos(data.GetStepCount());
-            inputInstruction.Text = data.GetStepInstructionPos(data.GetStepCount());
+                : data.GetStepAnimsOfIndex(data.GetStepCount());
+            inputInstruction.Text = data.GetStepInstructionOfIndex(data.GetStepCount());
         }
         private void InitFixedRightSideItems()
         {
             inputPositiveID.ItemsSource = data.GetStepNames();
-            inputPositiveID.Text = data.GetStepPositiveIDPos(data.GetStepCount());
-            inputNegativeID.Text = data.GetNegativeIDPos(data.GetStepCount());
+            inputPositiveID.Text = data.GetStepPositiveIDOfIndex(data.GetStepCount());
+            inputNegativeID.Text = data.GetNegativeIDOfIndex(data.GetStepCount());
             inputNegativeID.ItemsSource = data.GetStepNames();
             
-            inputRepXML.Text = data.GetRepXMLPos(data.GetStepCount());
+            inputRepXML.Text = data.GetRepXMLOfIndex(data.GetStepCount());
 
             //Check boxes
-            inputNextStep.IsChecked = data.GetNextStepPos(data.GetStepCount());
-            inputLastStep.IsChecked = data.GetLastStepPos(data.GetStepCount());
+            inputNextStep.IsChecked = data.GetNextStepOfIndex(data.GetStepCount());
+            inputLastStep.IsChecked = data.GetLastStepOfIndex(data.GetStepCount());
         }
+        //Inits erste Dropdown Ebene
         private void InitFlexRightSideItems()
         {
+            CheckForWhatToolHasBeenChosen();
             inputToolChoice.ItemsSource = ddList.GetToolChoice();
-            inputToolChoice.Text = data.GetToolChoice(data.GetStepCount());
-            InitActuatorTest();
-            InitReadData();
-            InitSmartTool();
+            System.Diagnostics.Debug.WriteLine("Sollte >" + inputToolChoice.Text + "< Dropdowns laden.");
+            
+
+            InitComponentComboBox();
+            InitIOComboboBox();
+            InitRDBIComboBox();
+
+            if (inputToolChoice.Text == ddList.GetToolChoice()[1])
+            {
+                InitActuatorTest();
+            }
+            else if(inputToolChoice.Text == ddList.GetToolChoice()[2])
+            {
+                InitSmartTool();
+            }
+            else if(inputToolChoice.Text == ddList.GetToolChoice()[3])
+            {
+                InitReadData();
+            }
+            else
+            {
+
+            }
         }
-
-
-        //Inits zweite Unterebene
+        //Inits zweite Dropdown Ebene
         private void InitActuatorTest()
         {
-            InitComponentComboBox();
-
-            if (data.GetActuatorTestPos(data.GetStepCount()) == "")
+            if (data.GetActuatorTestOfIndex(data.GetStepCount()) == "")
             {
                 FillInputActuatorTestText();
             }
             else
             {
-                inputActuatorTest.Text = data.GetActuatorTestPos(data.GetStepCount());
-            }
-        }
-        private void InitReadData()
-        {
-            InitRDBIComboBox();
-            if (string.IsNullOrEmpty(data.GetRDBIPpos(data.GetStepCount())))
-            {
-                FillInputReadDataText();
-            }
-            else
-            {
-                inputReadData.Text = data.GetRDBIPpos(data.GetStepCount());
-            }
-            if (inputToolChoice.Text == ddList.GetToolChoice()[3])
-            {
-                inputPositiveResult_RDBI.Text = data.GetPositiveResultPos(data.GetStepCount());
-            }
-            else
-            {
-                inputPositiveResult_RDBI.Text = "";
+                inputActuatorTest.Text = ddList.GetDisplayNameOf(ddList.GetECUChoices() ,data.GetActuatorTestOfIndex(data.GetStepCount()));
             }
         }
         private void InitSmartTool()
         {
-            InitIOComboboBox();
-            if(data.GetSmartToolPos(data.GetStepCount()) == "")
+            if (data.GetSmartToolOfIndex(data.GetStepCount()) == "")
             {
                 FillInputSmartToolText();
             }
             else
             {
-                inputSmartTool.Text = ddList.GetDisplayPartOf(ddList.GetSmartToolChoices(), data.GetSmartToolPos(data.GetStepCount()));
+                inputSmartTool.Text = ddList.GetDisplayNameOf(ddList.GetSmartToolChoices(), data.GetSmartToolOfIndex(data.GetStepCount()));
             }
-            if (data.GetPositiveResultPos(data.GetStepCount()) == "")
+            if (data.GetPositiveResultOfIndex(data.GetStepCount()) == "")
             {
                 CheckForWhatCaseInSmartToolPositiveResult();
             }
             else
             {
-                if (inputToolChoice.Text == ddList.GetToolChoice()[0]);             //Hier wurde ein Index entfernt. leider kA was vorher drin stand. 0 eigefügt
-                    inputPositiveResult_SM.Text = data.GetPositiveResultPos(data.GetStepCount());
+                if (inputToolChoice.Text == ddList.GetToolChoice()[2]) ;
+                inputPositiveResult_SM.Text = data.GetPositiveResultOfIndex(data.GetStepCount());
             }
             inputPositiveResult_UpperLimit.Text = "";
         }
-        private void FillInputSmartToolText()
+        private void InitReadData()
         {
-            inputSmartTool.Text = ddList.GetKeyPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + ddList.GetKeyPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
-        }
-        private void FillInputReadDataText()
-        {
-            inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputECUChoice_RDBI.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
-        }
-        private void FillInputActuatorTestText()
-        {
-            inputActuatorTest.Text = ddList.GetKeyPartOf(ddList.GetIOChoices(inputECUChoice_AT.Text), inputComponentChoice_AT.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_AT.Text);
+            if (string.IsNullOrEmpty(data.GetRDIDOfIndex(data.GetStepCount())))
+            {
+                FillInputReadDataText();
+            }
+            else
+            {
+                inputReadData.Text = data.GetRDIDOfIndex(data.GetStepCount());
+            }
         }
 
-        
-
-
-        //Inits dritte Unterebene
+        //Inits dritte Dropdown Eebene
         private void InitComponentComboBox()
         {
             inputECUChoice_AT.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
@@ -347,37 +337,34 @@ namespace XMLWriter.Pages
         }
         private void ShowItemsAfterToolChoice()
         {
-            switch (inputToolChoice.Text)
+            if (inputToolChoice.Text == ddList.GetToolChoice()[1]) //AT
             {
-                case "ActuatorTest":
-                    HideAllItemsWithToggleVisibility();
-                    actuatorTest.Visibility = Visibility.Visible;
-
-                    break;
-
-                case "SmartTool":
-                    HideAllItemsWithToggleVisibility();
-                    smartTool.Visibility = Visibility.Visible;
-                    break;
-
-                case "ReadDataByIdentifier":
-                    HideAllItemsWithToggleVisibility();
-                    RDBI.Visibility = Visibility.Visible;
-                    break;
-
-                default:
-                    HideAllItemsWithToggleVisibility();
-                    break;
+                HideAllItemsWithToggleVisibility();
+                actuatorTest.Visibility = Visibility.Visible;
+            }
+            else if(inputToolChoice.Text == ddList.GetToolChoice()[2])  //SmT
+            {
+                HideAllItemsWithToggleVisibility();
+                smartTool.Visibility = Visibility.Visible;
+            }
+            else if(inputToolChoice.Text == ddList.GetToolChoice()[3]) //RDID
+            {
+                HideAllItemsWithToggleVisibility();
+                RDBI.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                HideAllItemsWithToggleVisibility();
             }
         }
         private void DifferntiatePositiveResultSourceBeforeSaving()
         {
-            System.Diagnostics.Debug.WriteLine(inputToolChoice.Text);
-            if (inputToolChoice.Text == "ReadDataByIdentifier")
+            System.Diagnostics.Debug.WriteLine("Whatt, wo????"+inputToolChoice.Text);
+            if (inputToolChoice.Text == ddList.GetToolChoice()[3]) //RDID
             {
                 positiveResult = inputPositiveResult_RDBI.Text;
             }
-            else if (inputToolChoice.Text == "SmartTool")
+            else if (inputToolChoice.Text == ddList.GetToolChoice()[2]) //SmT
             {
                 positiveResult = inputPositiveResult_SM.Text;
             }
@@ -406,7 +393,41 @@ namespace XMLWriter.Pages
                 System.Diagnostics.Debug.Write("Dieser Pfad in ChechForWhatCaseInSmartToolPositiveResult-Method sollte nie erreicht werden: ");
             }
         }
-
+        private void FillInputSmartToolText()
+        {
+            inputSmartTool.Text = ddList.GetKeyPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + ddList.GetKeyPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
+        }
+        private void FillInputReadDataText()
+        {
+            inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputECUChoice_RDBI.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
+        }
+        private void FillInputActuatorTestText()
+        {
+            inputActuatorTest.Text = ddList.GetKeyPartOf(ddList.GetIOChoices(inputECUChoice_AT.Text), inputComponentChoice_AT.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_AT.Text);
+        }
+        private void CheckForWhatToolHasBeenChosen()
+        {
+            System.Diagnostics.Debug.WriteLine("AT: " + data.GetActuatorTestOfIndex(data.GetStepCount()));
+            System.Diagnostics.Debug.WriteLine("SmT: " + data.GetSmartToolOfIndex(data.GetStepCount()));
+            System.Diagnostics.Debug.WriteLine("RDID: " + data.GetRDIDOfIndex(data.GetStepCount()));
+            
+            if (data.GetActuatorTestOfIndex(data.GetStepCount())!="" && data.GetActuatorTestOfIndex(data.GetStepCount()) != "false")
+            {
+                inputToolChoice.Text = ddList.GetToolChoice()[1];
+            }
+            else if (data.GetSmartToolOfIndex(data.GetStepCount()) != "" && data.GetSmartToolOfIndex(data.GetStepCount()) != "false")
+            {
+                inputToolChoice.Text = ddList.GetToolChoice()[2];
+            }
+            else if (data.GetRDIDOfIndex(data.GetStepCount()) != "" && data.GetRDIDOfIndex(data.GetStepCount()) != "false")
+            {
+                inputToolChoice.Text = ddList.GetToolChoice()[3];
+            }
+            else
+            {
+                inputToolChoice.Text = language.GetStringPleaseChoose();
+            }
+        }
 
     }
 }
