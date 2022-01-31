@@ -29,16 +29,13 @@ namespace XMLWriter.Pages
         //buttons
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
-            DifferntiatePositiveResultSourceBeforeSaving();
-            data.SaveSet(inputToolChoice.Text, inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, positiveResult,
-                            inputRepXML.Text, inputActuatorTest.Text, inputReadData.Text, inputSmartTool.Text, inputNextStep.IsChecked, inputLastStep.IsChecked);
+            SaveStep();
             GUI.IncrementSteps();
 
             _ = NavigationService.Navigate(new GfsPage());
         }
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            DifferntiatePositiveResultSourceBeforeSaving();
             if (data.GetStepCount() == 0)
             {
                 _ = NavigationService.Navigate(new StartPage());
@@ -46,8 +43,7 @@ namespace XMLWriter.Pages
             }
             else
             {
-                data.SaveSet(inputToolChoice.Text, inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, positiveResult,
-                                inputRepXML.Text, inputActuatorTest.Text, inputReadData.Text, inputSmartTool.Text, inputNextStep.IsChecked, inputLastStep.IsChecked);
+                SaveStep();
                 GUI.DecrementSteps();
                 _ = NavigationService.Navigate(new GfsPage());
             }
@@ -73,12 +69,17 @@ namespace XMLWriter.Pages
         {
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
-            data.SaveSet(inputToolChoice.Text, inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, positiveResult,
-                            inputRepXML.Text, inputActuatorTest.Text, inputReadData.Text, inputSmartTool.Text, inputNextStep.IsChecked, inputLastStep.IsChecked);
+            SaveStep();
             GUI.IncrementSteps();
             GUI.DecrementStepsForSaving(); //Entweder ich mach ne extra Funktion für die letzte Dateneingabe oder ich in- und decrementiere direkt nacheinander. i++ i--. Anonsten hab ich beim zurückgehen Probleme^^
 
             _ = NavigationService.Navigate(new SavePage());
+        }
+        private void SaveStep()
+        {
+            DifferntiatePositiveResultSourceBeforeSaving();
+            data.SaveSet(inputToolChoice.Text, inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, positiveResult,
+                            inputRepXML.Text, inputActuatorTest.Text, inputReadData.Text, inputSmartTool.Text, inputNextStep.IsChecked, inputLastStep.IsChecked);
         }
 
         //Comboboxes and Texboxes
@@ -89,32 +90,32 @@ namespace XMLWriter.Pages
         //Aktortest
         private void inputECUChoice_AT_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputActuatorTest.Text = ddList.GetKeyPartOf(ddList.GetIOChoices(inputECUChoice_AT.Text), inputComponentChoice_AT.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_AT.Text);
-            InitComponentComboBox();
+            FillInputActuatorTestText();
+            UpdateComponentComboBox();
         }
         private void inputComponentChoice_AT_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputActuatorTest.Text = ddList.GetKeyPartOf(ddList.GetIOChoices(inputECUChoice_AT.Text), inputComponentChoice_AT.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_AT.Text);
+            FillInputActuatorTestText();
         }
         //RDBI
         private void inputECUChoice_RDBI_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputECUChoice_RDBI.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
-            InitRDBIComboBox();
+            FillInputReadDataText();
+            UpdateRDBIComboBox();
         }
         private void inputRDBIChoice_RDBI_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputECUChoice_RDBI.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
+            FillInputReadDataText();
         }
         //SmartTool
         private void inputSmartTool_SM_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputSmartTool.Text = ddList.GetKeyPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + ddList.GetKeyPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
-            InitIOComboboBox();
+            FillInputSmartToolText();
+            UpdateIOComboboBox();
         }
         private void inputMeasure_SM_DropDownClosed(object sender, System.EventArgs e)
         {
-            inputSmartTool.Text = ddList.GetKeyPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + ddList.GetKeyPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
+            FillInputSmartToolText();
         }
         private void inputMeasure_SM_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
@@ -124,7 +125,7 @@ namespace XMLWriter.Pages
             }
             else
             {
-                inputSmartTool.Text = ddList.GetKeyPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + ddList.GetKeyPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
+                FillInputSmartToolText();
             }
         }
         private void inputPositiveResult_UpperLimit_TextChanged(object sender, TextChangedEventArgs e)
@@ -231,7 +232,7 @@ namespace XMLWriter.Pages
 
             if (data.GetActuatorTestPos(data.GetStepCount()) == "")
             {
-                inputActuatorTest.Text = ddList.GetKeyPartOf(ddList.GetIOChoices(inputECUChoice_AT.Text), inputComponentChoice_AT.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_AT.Text);
+                FillInputActuatorTestText();
             }
             else
             {
@@ -243,7 +244,7 @@ namespace XMLWriter.Pages
             InitRDBIComboBox();
             if (string.IsNullOrEmpty(data.GetRDBIPpos(data.GetStepCount())))
             {
-                inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputECUChoice_RDBI.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
+                FillInputReadDataText();
             }
             else
             {
@@ -263,11 +264,11 @@ namespace XMLWriter.Pages
             InitIOComboboBox();
             if(data.GetSmartToolPos(data.GetStepCount()) == "")
             {
-                inputSmartTool.Text = ddList.GetKeyPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + ddList.GetKeyPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
+                FillInputSmartToolText();
             }
             else
             {
-                inputSmartTool.Text = data.GetSmartToolPos(data.GetStepCount());
+                inputSmartTool.Text = ddList.GetDisplayPartOf(ddList.GetSmartToolChoices(), data.GetSmartToolPos(data.GetStepCount()));
             }
             if (data.GetPositiveResultPos(data.GetStepCount()) == "")
             {
@@ -279,7 +280,18 @@ namespace XMLWriter.Pages
                     inputPositiveResult_SM.Text = data.GetPositiveResultPos(data.GetStepCount());
             }
             inputPositiveResult_UpperLimit.Text = "";
-            
+        }
+        private void FillInputSmartToolText()
+        {
+            inputSmartTool.Text = ddList.GetKeyPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + ddList.GetKeyPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
+        }
+        private void FillInputReadDataText()
+        {
+            inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputECUChoice_RDBI.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
+        }
+        private void FillInputActuatorTestText()
+        {
+            inputActuatorTest.Text = ddList.GetKeyPartOf(ddList.GetIOChoices(inputECUChoice_AT.Text), inputComponentChoice_AT.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_AT.Text);
         }
 
         
@@ -289,25 +301,39 @@ namespace XMLWriter.Pages
         private void InitComponentComboBox()
         {
             inputECUChoice_AT.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
-            //inputECUChoice_AT.Text = input.GetECUChoices()[0]; //Wird erst wieder gebraucht, wenn der Wert vorher aus XML geladen wurde. Muss ggf Init von Aktualisierung getrennt werden
-
+            inputECUChoice_AT.Text = ddList.GetECUChoices().Select(x => x.secondPart).ToArray()[0];
             inputComponentChoice_AT.ItemsSource = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray();
             inputComponentChoice_AT.Text = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray()[0];
-
+        }
+        private void UpdateComponentComboBox()
+        {
+            inputECUChoice_AT.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
+            inputComponentChoice_AT.ItemsSource = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray();
+            inputComponentChoice_AT.Text = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray()[0];
         }
         private void InitRDBIComboBox()
         {
             inputECUChoice_RDBI.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
-            //inputECUChoice_RDBI.Text = input.GetECUChoices()[0]; //Wird erst wieder gebraucht, wenn der Wert vorher aus XML geladen wurde. Muss ggf Init von Aktualisierung getrennt werden
-
+            inputECUChoice_RDBI.Text = ddList.GetECUChoices().Select(x => x.secondPart).ToArray()[0];
             inputRDBIChoice_RDBI.ItemsSource = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray(); 
+            inputRDBIChoice_RDBI.Text = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray()[0];
+        }
+        private void UpdateRDBIComboBox()
+        {
+            inputECUChoice_RDBI.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
+            inputRDBIChoice_RDBI.ItemsSource = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray();
             inputRDBIChoice_RDBI.Text = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray()[0];
         }
         private void InitIOComboboBox()
         {
-         inputSmartTool_SM.ItemsSource = ddList.GetSmartToolChoices().Select(x => x.secondPart).ToArray();
-          //inputSmartTool_SM.Text = input.GetSmartToolChoices()[0]; //Wird erst wieder gebraucht, wenn der Wert vorher aus XML geladen wurde. Muss ggf Init von Aktualisierung getrennt werden
-          
+            inputSmartTool_SM.ItemsSource = ddList.GetSmartToolChoices().Select(x => x.secondPart).ToArray();
+            inputSmartTool_SM.Text = ddList.GetSmartToolChoices().Select(x => x.secondPart).ToArray()[0];
+            inputMeasure_SM.ItemsSource = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray();
+            inputMeasure_SM.Text = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray()[0];
+        }
+        private void UpdateIOComboboBox()
+        {
+            inputSmartTool_SM.ItemsSource = ddList.GetSmartToolChoices().Select(x => x.secondPart).ToArray();
             inputMeasure_SM.ItemsSource = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray();
             inputMeasure_SM.Text = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray()[0];
         }
