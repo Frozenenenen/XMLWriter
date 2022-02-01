@@ -16,6 +16,7 @@ namespace XMLWriter.Pages
         Language language = new Language();
         GUIMovement GUI = new GUIMovement();
         DropDownOptionLists ddList = new DropDownOptionLists();
+        ConsoleControl consol = new ConsoleControl();
         private static string positiveResult;
 
         public GfsPage()
@@ -31,7 +32,7 @@ namespace XMLWriter.Pages
         {
             SaveStep();
             GUI.IncrementSteps();
-
+            if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnNext Gfs - - - \n - - - Nächster Schritt " + (data.GetStepCount()) + " - - - \n - - - BtnNext Gf - - - ");
             _ = NavigationService.Navigate(new GfsPage());
         }
         private void BtnBack_Click(object sender, RoutedEventArgs e)
@@ -47,12 +48,10 @@ namespace XMLWriter.Pages
                 GUI.DecrementSteps();
                 _ = NavigationService.Navigate(new GfsPage());
             }
+            if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnBack Gfs - - - \n  - - - Nächster Schritt " + (data.GetStepCount()) + " - - - \n - - - BtnBack Gf - - - ");
         }
         private void BtnBackDelete_Click(object sender, RoutedEventArgs e)
         {
-            DataSet data = new DataSet();
-            GUIMovement GUI = new GUIMovement();
-
             if (data.GetStepCount() == 0)
             {
 
@@ -61,14 +60,14 @@ namespace XMLWriter.Pages
             }
             else
             {
-                GUI.DecrementStepsMax();
+                GUI.DecrementStepsMax(); //decreases normal stepcount aswell
                 _ = NavigationService.Navigate(new GfsPage());
             }
+            if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnDel Gfs - - - \n  - - - Nächster Schritt " + (data.GetStepCount()) + " - - - \n - - - BtnDel Gf - - - ");
         }
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            DataSet data = new DataSet();
-            GUIMovement GUI = new GUIMovement();
+            if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnSave Gfs - - - \n - - - BtnSave Gf - - - ");
             SaveStep();
             GUI.IncrementSteps();
             GUI.DecrementStepsForSaving(); //Entweder ich mach ne extra Funktion für die letzte Dateneingabe oder ich in- und decrementiere direkt nacheinander. i++ i--. Anonsten hab ich beim zurückgehen Probleme^^
@@ -140,8 +139,7 @@ namespace XMLWriter.Pages
         //Inits
         private void InitTextItems()
         {
-            DataSet data = new DataSet();
-            Language language = new Language();
+            if(consol.showStep) System.Diagnostics.Debug.WriteLine("\n - - - Index Start Gfs - - - \n              " + data.GetStepCount() + "\n - - - Index Start Gfs - - - ");
 
             //Inhalte linke Spalte
             textStep.Content = language.GetStringStep() + " " + (data.GetStepCount() + 1);
@@ -188,6 +186,8 @@ namespace XMLWriter.Pages
             InitFixedRightSideItems();
             InitFlexRightSideItems();
             ShowItemsAfterToolChoice();
+            ShowAllDataInConsole();
+            if (consol.showStep) System.Diagnostics.Debug.WriteLine(" - - - Index Ende Gfs - - - \n              " + data.GetStepCount() + "\n - - - Index Ende Gfs - - - \n");
         }
         private void InitLeftSideItems()
         {
@@ -219,74 +219,17 @@ namespace XMLWriter.Pages
             CheckForWhatToolHasBeenChosen();
             inputToolChoice.ItemsSource = ddList.GetToolChoice();
 
-            InitActuatorTextComboBox();
-            InitSmartToolComboboBox();
-            InitRDBIComboBox();
-
-            if (inputToolChoice.Text == ddList.GetToolChoice()[1])
-            {
-                InitActuatorTest();
-            }
-            else if(inputToolChoice.Text == ddList.GetToolChoice()[2])
-            {
-                InitSmartTool();
-            }
-            else if(inputToolChoice.Text == ddList.GetToolChoice()[3])
-            {
-                InitReadData();
-            }
-            else
-            {
-
-            }
+            InitActuatorTextDropdowns();
+            InitSmartToolDropdowns();
+            InitReadDataDropdowns();
+            if (inputToolChoice.Text == ddList.GetToolChoice()[3]) InitReadData();
         }
         //Inits zweite Dropdown Ebene
-        private void InitActuatorTest()
-        {
-            if (string.IsNullOrEmpty(data.GetActuatorTestOfIndex(data.GetStepCount())))
-            {
-                FillInputActuatorTestText();
-            }
-            else
-            {
-                inputActuatorTest.Text = ddList.GetDisplayPartOf(ddList.GetECUChoices() ,data.GetActuatorTestOfIndex(data.GetStepCount()));
-            }
-        }
-        private void InitSmartTool()
-        {
-            if (string.IsNullOrEmpty(data.GetSmartToolOfIndex(data.GetStepCount())))
-            {
-                FillInputSmartToolText();
-            }
-            else
-            {
-                inputSmartTool.Text = ddList.GetDisplayPartOf(ddList.GetSmartToolChoices(), data.GetSmartToolOfIndex(data.GetStepCount()));
-            }
-            if (data.GetPositiveResultOfIndex(data.GetStepCount()) == "")
-            {
-                CheckForWhatCaseInSmartToolPositiveResult();
-            }
-            else
-            {
-                if (inputToolChoice.Text == ddList.GetToolChoice()[2]) ;
-                inputPositiveResult_SM.Text = data.GetPositiveResultOfIndex(data.GetStepCount());
-            }
-            inputPositiveResult_UpperLimit.Text = "";
-        }
-        private void InitReadData()
-        {
-            if (string.IsNullOrEmpty(data.GetRDIDOfIndex(data.GetStepCount())))
-            {
-                FillInputReadDataText();
-            }
-            else
-            {
-                inputReadData.Text = data.GetRDIDOfIndex(data.GetStepCount());
-            }
-        }
+
+
 
         //Inits dritte Dropdown Eebene
-        private void InitActuatorTextComboBox()
+        private void InitActuatorTextDropdowns()
         {
             inputECUChoice_AT.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
             if (data.GetActuatorTestOfIndex(data.GetStepCount()) != "false" && data.GetActuatorTestOfIndex(data.GetStepCount()) != "")
@@ -311,15 +254,15 @@ namespace XMLWriter.Pages
             inputComponentChoice_AT.ItemsSource = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray();
             inputComponentChoice_AT.Text = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray()[0];
         }
-        private void InitRDBIComboBox()
+        private void InitReadDataDropdowns()
         {
             inputECUChoice_RDBI.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
             if (data.GetRDIDOfIndex(data.GetStepCount()) != "false" && data.GetRDIDOfIndex(data.GetStepCount()) != "")
             {
                 string[] positiveResultDupel = data.GetRDIDOfIndex(data.GetStepCount()).Split('|');
-                System.Diagnostics.Debug.WriteLine("PosRes: " + data.GetRDIDOfIndex(data.GetStepCount()));
-                System.Diagnostics.Debug.WriteLine("ECU: " + positiveResultDupel[1]);
-                System.Diagnostics.Debug.WriteLine("RDID: " + positiveResultDupel[0]);
+                if (consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("PosRes: " + data.GetRDIDOfIndex(data.GetStepCount()) + "                                                 ---GfsPage(cs).InitReadDataDropDowns()");
+                if (consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("ECU: " + positiveResultDupel[1] + "                                                      ---GfsPage(cs).InitReadDataDropDowns()");
+                if (consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("RDID: " + positiveResultDupel[0] + "                                                     ---GfsPage(cs).InitReadDataDropDowns()\n");
                 inputECUChoice_RDBI.Text = ddList.GetDisplayPartOf(ddList.GetECUChoices(), positiveResultDupel[1]);
                 inputRDBIChoice_RDBI.ItemsSource = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray();
                 inputRDBIChoice_RDBI.Text = ddList.GetDisplayPartOf(ddList.GetRDIDChoices(inputECUChoice_RDBI.Text), positiveResultDupel[0]);
@@ -333,21 +276,32 @@ namespace XMLWriter.Pages
             
             
         }
+        private void InitReadData()
+        {
+            if (string.IsNullOrEmpty(data.GetRDIDOfIndex(data.GetStepCount())))
+            {
+                FillInputReadDataText();
+            }
+            else
+            {
+                inputReadData.Text = data.GetRDIDOfIndex(data.GetStepCount());
+            }
+        }
         private void UpdateRDBIComboBox()
         {
             inputECUChoice_RDBI.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
             inputRDBIChoice_RDBI.ItemsSource = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray();
             inputRDBIChoice_RDBI.Text = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray()[0];
         }
-        private void InitSmartToolComboboBox()
+        private void InitSmartToolDropdowns()
         {
             inputSmartTool_SM.ItemsSource = ddList.GetSmartToolChoices().Select(x => x.secondPart).ToArray();
             
             if (data.GetSmartToolOfIndex(data.GetStepCount()) != "false" && data.GetSmartToolOfIndex(data.GetStepCount()) != "")
             {
                 inputSmartTool.Text = data.GetSmartToolOfIndex(data.GetStepCount());
-                System.Diagnostics.Debug.WriteLine(data.GetSmartToolOfIndex(data.GetStepCount()));
-                System.Diagnostics.Debug.WriteLine(inputSmartTool.Text);
+                if(consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("Init SM: " + data.GetSmartToolOfIndex(data.GetStepCount()) + "                              ----GfsPage(cs).InitSmartToolDropdowns()");
+                if (consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("Init SM: " + inputSmartTool.Text);
                 string[] positiveResultDupel = data.GetSmartToolOfIndex(data.GetStepCount()).Split('|');
                 inputSmartTool_SM.Text = ddList.GetDisplayPartOf(ddList.GetSmartToolChoices(), positiveResultDupel[0]);
                 inputMeasure_SM.ItemsSource = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray();
@@ -360,6 +314,28 @@ namespace XMLWriter.Pages
                 inputMeasure_SM.Text = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).ElementAt(0).secondPart;
             }
             FillInputSmartToolText();
+            if (data.GetToolChoiceOfIndex(data.GetStepCount()) == ddList.GetToolChoice()[2])            
+            {
+                if(consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("SmartTool not Epty or false check: >"+inputSmartTool.Text+ "<                                 ---GfsPage(cs).FillInputSmartToolText()");
+                InitSmartToolLimits();
+            }
+
+
+        }
+        private void InitSmartToolLimits()
+        {
+            if (data.GetPositiveResultOfIndex(data.GetStepCount()) == "" || data.GetPositiveResultOfIndex(data.GetStepCount()) == "false")
+            {
+                CheckForWhatCaseInSmartToolPositiveResult();
+            }
+            else
+            {
+                if(consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("SmT - PosRes: >" + data.GetPositiveResultOfIndex(data.GetStepCount()) + "<                          ---InitSmartToolLimits()");
+                inputPositiveResult_SM.Text = data.GetPositiveResultOfIndex(data.GetStepCount());
+                string[] PosResDupel = data.GetPositiveResultOfIndex(data.GetStepCount()).Split('|');
+                inputPositiveResult_UpperLimit.Text = PosResDupel[1];
+                inputPositiveResult_LowerLimit.Text = PosResDupel[0];
+            }
 
         }
         private void UpdateSmartToolComboboBox()
@@ -400,7 +376,7 @@ namespace XMLWriter.Pages
         }
         private void DifferntiatePositiveResultSourceBeforeSaving()
         {
-            System.Diagnostics.Debug.WriteLine("Whatt, wo????"+inputToolChoice.Text);
+            if(consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("Oberstes Dropdown: >" + inputToolChoice.Text + "<                                    -GfsPage(cs).DifferentiatePositiveResultSourceBeforeSavon()");
             if (inputToolChoice.Text == ddList.GetToolChoice()[3]) //RDID
             {
                 positiveResult = inputPositiveResult_RDBI.Text;
@@ -448,10 +424,14 @@ namespace XMLWriter.Pages
         }
         private void CheckForWhatToolHasBeenChosen()
         {
-            System.Diagnostics.Debug.WriteLine("AT: " + data.GetActuatorTestOfIndex(data.GetStepCount()));
+            if (consol.showMiscGfs) 
+            { 
+            System.Diagnostics.Debug.WriteLine("AT: " + data.GetActuatorTestOfIndex(data.GetStepCount())+ "                                                      GfsPage(cs).CheckForWhatToolHasBeenChosen()");
             System.Diagnostics.Debug.WriteLine("SmT: " + data.GetSmartToolOfIndex(data.GetStepCount()));
             System.Diagnostics.Debug.WriteLine("RDID: " + data.GetRDIDOfIndex(data.GetStepCount()));
-            
+            System.Diagnostics.Debug.WriteLine("PosRes: " + data.GetPositiveResultOfIndex(data.GetStepCount()) + "\n");
+            }
+
             if (data.GetActuatorTestOfIndex(data.GetStepCount())!="" && data.GetActuatorTestOfIndex(data.GetStepCount()) != "false")
             {
                 inputToolChoice.Text = ddList.GetToolChoice()[1];
@@ -468,6 +448,29 @@ namespace XMLWriter.Pages
             {
                 inputToolChoice.Text = language.GetStringPleaseChoose();
             }
+        }
+        private void ShowAllDataInConsole()
+        {
+            if (consol.showGfsData)
+            {
+                System.Diagnostics.Debug.WriteLine("GFS Data Start");
+                System.Diagnostics.Debug.WriteLine("Index:  " + data.GetStepCount());
+                System.Diagnostics.Debug.WriteLine("Step:   " + data.GetStepNameOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine("Content:" + data.GetStepTextOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine("Anim:   " + data.GetStepAnimsOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine("instr:  " + data.GetStepInstructionOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine("posID:  " + data.GetStepPositiveIDOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine("negID:  " + data.GetNegativeIDOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine("posRes: " + data.GetPositiveResultOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine("repXML: " + data.GetRepXMLOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine("A-Test: " + data.GetActuatorTestOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine("SmarT:  " + data.GetSmartToolOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine("RDID:   " + data.GetRDIDOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine("Next:   " + data.GetNextStepOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine("Last:   " + data.GetLastStepOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine("GFS Data End");
+            }
+            
         }
 
     }

@@ -11,6 +11,8 @@ namespace XMLWriter.Classes
     {
         DataSet data = new DataSet();
         GUIMovement GUI = new GUIMovement();
+        DropDownOptionLists ddList = new DropDownOptionLists(); 
+        ConsoleControl consol = new ConsoleControl();  
         private static string fileNameAndPath = "";
         private static string dataType = "";
         public string GetFileNameAndPath() => fileNameAndPath;
@@ -35,6 +37,7 @@ namespace XMLWriter.Classes
 
         public void LoadDataFromFile()
         {
+            
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
             openFileDialog.Filter = "Text files (*.txt;*.xml)|*.txt;*.xml|All files (*.*)|*.*";
@@ -55,10 +58,8 @@ namespace XMLWriter.Classes
             }
 
 
-
-
-
-
+            if (consol.showLoad)
+                System.Diagnostics.Debug.WriteLine("\nStarte Laden!!!\n");
             while (xtr.Read())
             {
                 if (xtr.NodeType == XmlNodeType.Element)
@@ -112,21 +113,21 @@ namespace XMLWriter.Classes
                             break;
                         case "lastStep":
                             lastStep = xtr.ReadElementString() == "true" ? true : false;
-                            if (smartTool!="")
+                            if (smartTool!="" && smartTool!= "false")
                             {
-                                toolChoice = "SmartTool";
+                                toolChoice = ddList.GetToolChoice()[2];
                             }
-                            else if(actuatorTest!="")
+                            else if(actuatorTest!="" && actuatorTest != "false")
                             {
-                                toolChoice = "ActuatorTest";
+                                toolChoice = ddList.GetToolChoice()[1];
                             }
-                            else if (readData != "")
+                            else if (readData != "" && readData !="false")
                             {
-                                toolChoice = "ReadDataByIdentifier";
+                                toolChoice = ddList.GetToolChoice()[3];
                             }
                             data.SaveSet(toolChoice, stepName, text, anim, instruction, positiveID, negativeID,
                                             positiveResult, repXml, actuatorTest, readData, smartTool, nextStep, lastStep);
-                            System.Diagnostics.Debug.WriteLine(repXml);
+                            if(consol.showMiscLoadData) System.Diagnostics.Debug.WriteLine("repXML= " + repXml + "                ---LoadData.LoadDataFromFile()");
                             GUI.IncrementSteps();
                             dataType = "gfs";
                             break;
@@ -138,6 +139,8 @@ namespace XMLWriter.Classes
                     }
                 }
             }
+            if (consol.showLoad)
+            System.Diagnostics.Debug.WriteLine("\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\n");
         }
     }
 }

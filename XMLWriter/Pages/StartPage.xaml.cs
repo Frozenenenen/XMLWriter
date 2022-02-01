@@ -51,7 +51,7 @@ namespace XMLWriter.Pages
             }
             else
             {
-                Console.WriteLine("Fehler in der gfs/rep-Wahl");
+                Console.WriteLine("Fehler in der gfs/rep-Wahl---                    BtnNext() aus StartPage");
             }
             if (checkUseTxtOrDatabse.IsChecked==true)
             {

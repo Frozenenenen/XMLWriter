@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using XMLWriter.Classes;
 
 /***********************
  * Mögliche Fehlerquelle:
@@ -16,11 +17,11 @@ using System.Collections.Generic;
 //Todo:prio2 Last step im letzten Schritt true
 //Todo:prio4 Listenvariablen zu einer Objektliste
 
-//System.Diagnostics.Debug.WriteLine("");
 namespace XMLWriter
 {
     class DataSet
     {
+        ConsoleControl consol = new ConsoleControl();
         private static int stepCount = 0;
         private static int stepCountMax = 0;
         private static string dataType = "Fehler";
@@ -82,7 +83,7 @@ namespace XMLWriter
             }
             catch (SystemException)
             {
-                System.Diagnostics.Debug.WriteLine("steps: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("steps: ArgumentOutOfRangeException                   ---GetStepNameOfIndex() in DataSet");
                 return "Fehler";
             }
         }
@@ -94,7 +95,7 @@ namespace XMLWriter
             }
             catch (SystemException)
             {
-                System.Diagnostics.Debug.WriteLine("stepAnims: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepAnims: ArgumentOutOfRangeException                   ---GetStepAnimsOfIndex() DataSet");
                 return "Fehler";
             }
 
@@ -107,7 +108,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("stepTexts: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepTexts: ArgumentOutOfRangeException                   ---DataSet.GetStepTextOfIndex");
                 return "Fehler";
             }
         }
@@ -119,7 +120,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("stepSpecialTexts: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepSpecialTexts: ArgumentOutOfRangeException                   ---DataSet.GetStepSpecialTextOfIndex()");
                 return "Fehler";
             }
 
@@ -132,7 +133,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("stepInstruction: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepInstruction: ArgumentOutOfRangeException                   ---DataSet.");
                 return "Fehler";
             }
         }
@@ -144,7 +145,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("stepPositiveID: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepPositiveID: ArgumentOutOfRangeException                   ---DataSet.");
                 return "Fehler";
             }
         }
@@ -156,7 +157,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("stepNegativeID: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepNegativeID: ArgumentOutOfRangeException                   ---DataSet.");
                 return "Fehler";
             }
         }
@@ -168,7 +169,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("stepPositiveResult: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepPositiveResult: ArgumentOutOfRangeException                   ---DataSet.");
                 return "Fehler";
             }
         }
@@ -180,7 +181,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("stepRepXML: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepRepXML: ArgumentOutOfRangeException                   ---DataSet.");
                 return "Fehler";
             }
         }
@@ -192,7 +193,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("stepActuatorTest: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepActuatorTest: ArgumentOutOfRangeException                   ---DataSet.");
                 return "Fehler";
             }
         }
@@ -204,7 +205,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("CheckStepActuatorTest: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("CheckStepActuatorTest: ArgumentOutOfRangeException                   ---DataSet.");
                 return true;
             }
         }
@@ -216,7 +217,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("stepRDBI: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepRDBI: ArgumentOutOfRangeException                   ---DataSet.");
                 return "Fehler";
             }
         }
@@ -228,7 +229,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("CheckStepRDBIPos: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("CheckStepRDBIPos: ArgumentOutOfRangeException                   ---DataSet.");
                 return true; 
             }
         }
@@ -240,7 +241,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("stepSmartTool: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepSmartTool: ArgumentOutOfRangeException                   ---DataSet.");
                 return "Fehler";
             }
         }
@@ -252,7 +253,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("CheckStepSmartTool: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("CheckStepSmartTool: ArgumentOutOfRangeException                   ---DataSet.");
                 return true; 
             }
         }    
@@ -264,7 +265,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("stepNextStep: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepNextStep: ArgumentOutOfRangeException                   ---DataSet.");
                 return true; //kA wie man hier dann nen Fehler erkennen soll
             }
         }
@@ -276,7 +277,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("stepLastStep: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepLastStep: ArgumentOutOfRangeException                   ---DataSet.");
                 return true;
             }
         }
@@ -288,7 +289,7 @@ namespace XMLWriter
             }
             catch (ArgumentOutOfRangeException)
             {
-                System.Diagnostics.Debug.WriteLine("stepToolChoice: ArgumentOutOfRangeException");
+                System.Diagnostics.Debug.WriteLine("stepToolChoice: ArgumentOutOfRangeException                   ---DataSet.");
                 return "Fehler";
             }
         }
@@ -564,8 +565,8 @@ namespace XMLWriter
             SetText(text);
             SetAnim(anim);
             SetSpecialText(specialText);
-
-            System.Diagnostics.Debug.WriteLine(stepName + " Anim: " + anim + " Text: " + text + " SpText: " + specialText);
+            if (consol.showSave)
+                System.Diagnostics.Debug.WriteLine(stepName + " Anim: " + anim + " Text: " + text + " SpText: " + specialText + "                   ---DataSet.SaveSet(rep)");
         }
         public void SaveSet(string toolChoice, string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, string RDBI, string smartTool, bool? nextStep, bool? lastStep)
         {
@@ -584,8 +585,9 @@ namespace XMLWriter
             SetLastStep(lastStep);
             SetToolChoice(toolChoice);
 
-            //System.Diagnostics.Debug.WriteLine("Tool: " + toolChoice + " step: " + stepName + " text: " + text + " Anim: " + anim + " Instr.: " + instructionText + " posID: " + posID + " negID: " + negID +" posRes: " + posResult + " repXML: " + repXML + "\nA-Test: " + actuatorTest +  " RDBI: " + RDBI +  " SmartTool: " + smartTool +  " NextST: " + nextStep + " LastSt: " + lastStep +"\n");
-            System.Diagnostics.Debug.WriteLine("Tool: " + toolChoice + " step: " + stepName + " \nposRes: " + posResult + " \nRDBI: " + RDBI + " \nSmartTool: " + smartTool + "\n");
+            if(consol.showSave)
+                System.Diagnostics.Debug.WriteLine("     vvvvvvvvvvvvvvvvvvvvvvvv---DataSet.SaveSet(gfs)\nTool: " + toolChoice + "\nstep: " + stepName + "\ntext: " + text + "\nAnim: " + anim + "\nInstr.: " + instructionText + "\nposID: " + posID + "\nnegID: " + negID + "\nposRes: " + posResult + "\nrepXML: " + repXML + "\nA-Test: " + actuatorTest + "\nRDBI: " + RDBI + "\nSmT: " + smartTool + "\nNextST: " + nextStep + "\nLastSt: " + lastStep + "\n       ^^^^^^^^^^^^^^^^^^^^^---DataSet.SaveSet(gfs)");
+            //System.Diagnostics.Debug.WriteLine("     ---------------------DataSet.SaveSet(gfs) \nTool: " + toolChoice + " step: " + stepName + " \nposRes: " + posResult + "AktorTest: " + actuatorTest + " \nSmartTool: " + smartTool + "\nRDBI: " + RDBI + "\n     ^^^^^^^^^^^^^^^^^^^^^---DataSet.SaveSet(gfs)");
         }
 
         public void SetFileName(string inputFileName) //Damit keine vorherigen Daten überschrieben werden, wird der Dateiname iteriert, bis ein neuer Dateiname gefunden wurde.
@@ -609,7 +611,7 @@ namespace XMLWriter
                     gfs.OutputToXML(stepCountMax, stepToolChoice, steps, stepTexts, stepAnims, stepInstruction, stepPositiveID, stepNegativeID, stepPositiveResult, stepRepXML, stepActuatorTest, checkStepActuatorTest, stepRDBI, checkStepRDBI, stepSmartTool, checkStepSmartTool, stepNextStep, stepLastStep, fileName, dataType);
                     break;
                 default:
-                    Console.WriteLine("Error in OutputToXML from DataSet");
+                    Console.WriteLine("Error in OutputToXML from DataSet                   ---DataSet.OutputToXML()");
                     break;
             }
         }

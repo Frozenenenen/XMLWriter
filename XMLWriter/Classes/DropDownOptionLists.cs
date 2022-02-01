@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using XMLWriter.Classes;
 using System.Text;
 
 namespace XMLWriter.Classes
 {
     class DropDownOptionLists
     {
-
+        ConsoleControl consol = new ConsoleControl();  
         private static bool useDataBase = true;           //Hier ist noch ein Fehler
         private static string[] toolChoice = { "", "ActuatorTest", "SmartTool", "ReadDataByIdentifier" };
         private static string filePath = @"Files/";
@@ -94,14 +95,14 @@ namespace XMLWriter.Classes
             if (list != null && item != "" && item != "false")
             {
                 int index = list.FindIndex(x => x.firstPart.Equals(item));
-                System.Diagnostics.Debug.Write("Suche nach: >" + item + "< in GetDisplayPartOf(...) - ");
+                if (consol.showGetOtherPart) System.Diagnostics.Debug.WriteLine("Suche nach: >" + item + "< in GetDisplayPartOf(...)                      ---DroDownOptionLists.GetDisplayPartOf()");
                 if (index != -1)
                 {
-                    System.Diagnostics.Debug.WriteLine("Ergebnis: " + list.ElementAt(index).secondPart);
+                    if (consol.showGetOtherPart) System.Diagnostics.Debug.WriteLine("Ergebnis: " + list.ElementAt(index).secondPart + "\n");
                     return list.ElementAt(index).secondPart;
                 }
             }
-            System.Diagnostics.Debug.WriteLine("Ergebnis: " + -1);
+            if(consol.showGetOtherPart) System.Diagnostics.Debug.WriteLine("Ergebnis: " + -1);
             return "";
         }
        
@@ -112,14 +113,14 @@ namespace XMLWriter.Classes
             if (list != null && item !="" && item != "false")
             {
                 int index = list.FindIndex(x => x.secondPart.Equals(item));
-                System.Diagnostics.Debug.Write("Suche nach: >" + item + "< in GetDisplayNameOf() - ");
+                if (consol.showGetOtherPart) System.Diagnostics.Debug.WriteLine("Suche nach: >" + item + "< in GetKeyPartOf()                      ---DroDownOptionLists.GetKeyPartOf()");
                 if (index!=-1)
                 {
-                    System.Diagnostics.Debug.WriteLine("Ergebnis: " + list.ElementAt(index).secondPart);
+                    if (consol.showGetOtherPart) System.Diagnostics.Debug.WriteLine("Ergebnis: " + list.ElementAt(index).firstPart + "\n");
                     return list.ElementAt(index).firstPart;
                 }
             }
-            System.Diagnostics.Debug.WriteLine("Ergebnis: " + -1);
+            if (consol.showGetOtherPart) System.Diagnostics.Debug.WriteLine("Ergebnis: " + -1);
             return "";
         }
         
