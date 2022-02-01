@@ -42,8 +42,8 @@ namespace XMLWriter.Pages
             {
                 System.Diagnostics.Debug.WriteLine("Error with DataType - Savepage Savebutton");
             }
-            
-            App.Current.Shutdown(0);
+            _ = NavigationService.Navigate(new StartPage());
+            //App.Current.Shutdown(0);
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)

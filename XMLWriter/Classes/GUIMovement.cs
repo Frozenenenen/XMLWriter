@@ -8,7 +8,8 @@ namespace XMLWriter
     class GUIMovement
     {
         DataSet data = new DataSet();
-        ConsoleControl consol = new ConsoleControl();   
+        ConsoleControl consol = new ConsoleControl();
+
         public void IncrementSteps()
         {
             if(consol.showInDecrement) System.Diagnostics.Debug.WriteLine("In IncrementSteps");

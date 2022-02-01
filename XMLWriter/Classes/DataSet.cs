@@ -24,7 +24,7 @@ namespace XMLWriter
         ConsoleControl consol = new ConsoleControl();
         private static int stepCount = 0;
         private static int stepCountMax = 0;
-        private static string dataType = "Fehler";
+        private static string dataType = "rep";
         private static string fileName = "Dateiname";
 
         private static readonly string[] dataTypeChoice = { "gfs", "rep" }; //Gehört eigentlich nicht in diese Klasse, aber bis mir ein besserer Ort einfällt bleibts wohl hier

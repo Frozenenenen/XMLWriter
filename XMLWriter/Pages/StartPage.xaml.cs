@@ -25,8 +25,10 @@ namespace XMLWriter.Pages
         Language language = new Language();
         LoadDataSet loadData = new LoadDataSet();
         DropDownOptionLists loadInput = new DropDownOptionLists();
+        ConsoleControl consol = new ConsoleControl();   
         public StartPage()
         {
+
             loadInput.LoadAllOptions(); //Ich lad das aktuell einfach 2 Mal. 1 Mal hier und 1 Mal bei btn_next. Ich weiß nicht, warum es nicht anders geht, aber es ist so natürlich eine Fehlerquelle
             InitializeComponent();
             data.InitNewDataSet();
@@ -43,10 +45,12 @@ namespace XMLWriter.Pages
 
             if (inputType.Text == "rep")
             {
+
                 _ = NavigationService.Navigate(new RepPage());
             }
             else if (inputType.Text == "gfs")
             {
+
                 _ = NavigationService.Navigate(new GfsPage());
             }
             else
@@ -96,10 +100,11 @@ namespace XMLWriter.Pages
             inputType.ItemsSource = data.GetDataTypeChoice();
             textInstructions.Content = language.GetStringGeneralInstruction();
             textInstructions.ToolTip = language.GetStringGeneralInstructionText();
-            inputType.Text = "rep";     //Aus irgendeinem Grund wird es nicht angezeigt, wenn gfs statt rep genutzt wird... Ich sag mal es reicht so
+            inputType.Text = data.GetDataType();
+            if(consol.showMiscStarPage) System.Diagnostics.Debug.WriteLine("Type (rep/gfs): " + inputType.Text + "                                     ---StartPage.InitTextItems()");
             textLoadFile.Content = language.GetStringFileNameTitel();
             btnLoadFile.Content = language.GetStringLoadFile();
-            btnReset.Content = language.GetStringReset();
+            btnReset.Content = language.GetStringDeleteSet();   
             textStepCount.Content = language.GetStringSteps() + " " + data.GetStepCountMax();
         }
         private void InitValueItems()

@@ -17,6 +17,7 @@ namespace XMLWriter
         private static string steps;
         private static string summary;
         private static string reset;
+        private static string deleteSet;
         private static string fileNameTitel;
         private static string generalInstruction;
         private static string generalInstructionText;
@@ -73,6 +74,7 @@ namespace XMLWriter
         public string GetStringAnim() => anim;
         public string GetStringSummary() => summary;
         public string GetStringReset() => reset;
+        public string GetStringDeleteSet() => deleteSet;
         public string GetStringRep() => rep;
         public string GetStringPosID() => posID;
         public string GetStringNegID() => negID;
@@ -146,6 +148,7 @@ namespace XMLWriter
             anim = "Animation";
             summary = "Übersicht";
             reset = "löschen";
+            deleteSet = "Datensatz löschen!";
             rep = "Reparatur";
             instructions = "Arbeitsanweisungen";
             posID = "Positive ID";
@@ -182,6 +185,7 @@ namespace XMLWriter
             anim = "Animation";
             summary = "Summary";
             reset = "Reset";
+            deleteSet = "Delete dataset!";
             rep = "Repair";
             instructions = "Instructions";
             posID = "Positive ID";
@@ -218,6 +222,7 @@ namespace XMLWriter
             anim = "Animación";
             summary = "Resumen";
             reset = "Reset";
+            deleteSet = "Cancelar  expediente!";
             rep = "Reparo";
             instructions = "Ensenanza";
             posID = "Positive ID?";

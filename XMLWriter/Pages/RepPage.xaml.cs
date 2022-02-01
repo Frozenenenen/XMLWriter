@@ -31,14 +31,14 @@ namespace XMLWriter.Pages
             DataSet data = new DataSet();
             GUIMovement GUI = new GUIMovement();
 
+            data.SaveSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputSpecialText.Text);
+
             if (data.GetStepCount() == 0)
             {
                 _ = NavigationService.Navigate(new StartPage());
-                data.ResetDataSet();
             }
             else
             {
-                data.SaveSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputSpecialText.Text);
                 GUI.DecrementSteps();
                 _ = NavigationService.Navigate(new RepPage());
             }
@@ -82,11 +82,9 @@ namespace XMLWriter.Pages
             textAnimTitel.Content = language.GetStringAnim();
             textSpecialContentTitel.Content = language.GetStringSpecialStep();
             textTitel.Content = language.GetStringPleaseFill();
-            
+
             //Buttons
-            btnBack.Content = data.GetStepCount() != 0
-                ? language.GetStringBack()
-                : language.GetStringReset();
+            btnBack.Content = language.GetStringBack();
             btnBackDelete.Content = language.GetStringReset();
             btnNext.Content = language.GetStringNext();
             btnSave.Content = language.GetStringSave();

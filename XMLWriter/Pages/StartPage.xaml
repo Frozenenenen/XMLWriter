@@ -58,7 +58,7 @@
         <Label x:Name="textLoadFile" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom"/>
         <TextBox x:Name="inputLoadFile" Grid.Row="3" Grid.Column="1" Margin="2,2,2,2" Grid.ColumnSpan="2" TextWrapping="Wrap"/>
         <Button x:Name="btnLoadFile" Grid.Row="4" Grid.Column="1" Click="BtnLoadFile" Margin=" 2,2,2,2" Width="85" Height="35" HorizontalAlignment="Left"/>
-        <Button x:Name="btnReset" Grid.Row="4" Grid.Column="2" Click="BtnReset" Margin=" 2,2,2,2" Width="85" Height="35" HorizontalAlignment="Right"/>
+        <Button x:Name="btnReset" Grid.Row="4" Grid.Column="4" Click="BtnReset" Margin=" 2,2,2,2" Width="85" Height="35" HorizontalAlignment="Right"/>
 
     </Grid>
 </Page>

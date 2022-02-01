@@ -38,17 +38,15 @@ namespace XMLWriter.Pages
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
             SaveStep();
-            GUI.DecrementSteps();
-            _ = NavigationService.Navigate(new GfsPage());
-            /*if (data.GetStepCount() == 0)
+            if (data.GetStepCount() == 0)
             {
                 _ = NavigationService.Navigate(new StartPage());
-                data.ResetDataSet();
             }
             else
             {
- 
-            }*/
+                GUI.DecrementSteps();
+                _ = NavigationService.Navigate(new GfsPage());
+            }
             if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnBack Gfs - - - \n  - - - Nächster Schritt " + (data.GetStepCount()) + " - - - \n - - - BtnBack Gf - - - ");
         }
         private void BtnBackDelete_Click(object sender, RoutedEventArgs e)
@@ -159,7 +157,7 @@ namespace XMLWriter.Pages
         //Inits
         private void InitTextItems()
         {
-            if(consol.showStep) System.Diagnostics.Debug.WriteLine("\n - - - Index Start Gfs - - - \n              " + data.GetStepCount() + "\n - - - Index Start Gfs - - - ");
+            if(consol.showStep) System.Diagnostics.Debug.WriteLine("\n - - - Index Start Gfs - - - \n              " + data.GetStepCount() + "\n - - - Index Start Gfs - - -                                      ---GfsPage.InitTextItems()");
 
             //Inhalte linke Spalte
             textStep.Content = language.GetStringStep() + " " + (data.GetStepCount() + 1);
@@ -167,15 +165,6 @@ namespace XMLWriter.Pages
             textAnimTitel.Content = language.GetStringAnim();
             textInstructionTitel.Content = language.GetStringInstruction();
             textTitel.Content = language.GetStringPleaseFill();
-            if (data.GetStepCount() != 0)
-            {
-                btnBack.Content = language.GetStringBack();
-            }
-            else
-            {
-                btnBack.Content = language.GetStringReset();
-            }
-
             inputAnim.Text = data.GetStepAnimsOfIndex(data.GetStepCount());
 
             //Inhalte rechte Spalte
@@ -196,9 +185,7 @@ namespace XMLWriter.Pages
             btnNext.Content = language.GetStringNext();
             btnSave.Content = language.GetStringSave();
             btnBackDelete.Content = language.GetStringReset();
-            btnBack.Content = data.GetStepCount() != 0
-                ? language.GetStringBack() 
-                : language.GetStringReset();
+            btnBack.Content = language.GetStringBack();
         }
         private void InitValueItems()
         {
