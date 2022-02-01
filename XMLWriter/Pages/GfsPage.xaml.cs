@@ -76,7 +76,26 @@ namespace XMLWriter.Pages
         }
         private void SaveStep()
         {
-            DifferntiatePositiveResultSourceBeforeSaving();
+            if (inputToolChoice.Text == ddList.GetToolChoice()[1]) //AT
+            {
+                inputSmartTool.Text = "false";
+                inputReadData.Text = "false";
+                positiveResult = "";
+            }
+            else if (inputToolChoice.Text == ddList.GetToolChoice()[2]) //SmT
+            {
+                inputActuatorTest.Text = "false";
+                inputReadData.Text = "false";
+                inputPositiveResult_RDBI.Text = "false";
+                positiveResult = inputPositiveResult_SM.Text;
+            }
+            else if (inputToolChoice.Text == ddList.GetToolChoice()[3]) //RDID
+            {
+                inputSmartTool.Text = "false";
+                inputActuatorTest.Text = "false";
+                inputPositiveResult_SM.Text = "false";
+                positiveResult = inputPositiveResult_RDBI.Text;
+            }
             data.SaveSet(inputToolChoice.Text, inputStepName.Text, inputText.Text, inputAnim.Text, inputInstruction.Text, inputPositiveID.Text, inputNegativeID.Text, positiveResult,
                             inputRepXML.Text, inputActuatorTest.Text, inputReadData.Text, inputSmartTool.Text, inputNextStep.IsChecked, inputLastStep.IsChecked);
         }
@@ -222,7 +241,6 @@ namespace XMLWriter.Pages
             InitActuatorTextDropdowns();
             InitSmartToolDropdowns();
             InitReadDataDropdowns();
-            if (inputToolChoice.Text == ddList.GetToolChoice()[3]) InitReadData();
         }
         //Inits zweite Dropdown Ebene
 
@@ -232,7 +250,7 @@ namespace XMLWriter.Pages
         private void InitActuatorTextDropdowns()
         {
             inputECUChoice_AT.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
-            if (data.GetActuatorTestOfIndex(data.GetStepCount()) != "false" && data.GetActuatorTestOfIndex(data.GetStepCount()) != "")
+            if (inputToolChoice.Text == ddList.GetToolChoice()[1])
             {
                 string[] positiveResultDupel = data.GetActuatorTestOfIndex(data.GetStepCount()).Split('|');
                 inputECUChoice_AT.Text = ddList.GetDisplayPartOf(ddList.GetECUChoices(), positiveResultDupel[1]);
@@ -257,36 +275,30 @@ namespace XMLWriter.Pages
         private void InitReadDataDropdowns()
         {
             inputECUChoice_RDBI.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
-            if (data.GetRDIDOfIndex(data.GetStepCount()) != "false" && data.GetRDIDOfIndex(data.GetStepCount()) != "")
+            
+            if (inputToolChoice.Text==ddList.GetToolChoice()[3])
             {
                 string[] positiveResultDupel = data.GetRDIDOfIndex(data.GetStepCount()).Split('|');
-                if (consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("PosRes: " + data.GetRDIDOfIndex(data.GetStepCount()) + "                                                 ---GfsPage(cs).InitReadDataDropDowns()");
-                if (consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("ECU: " + positiveResultDupel[1] + "                                                      ---GfsPage(cs).InitReadDataDropDowns()");
-                if (consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("RDID: " + positiveResultDupel[0] + "                                                     ---GfsPage(cs).InitReadDataDropDowns()\n");
+                if (consol.showMiscGfs)
+                {
+                    System.Diagnostics.Debug.WriteLine("PosRes: " + data.GetRDIDOfIndex(data.GetStepCount()) + "                                                 ---GfsPage(cs).InitReadDataDropDowns()");
+                    System.Diagnostics.Debug.WriteLine("ECU: " + positiveResultDupel[1] + "                                                      ---GfsPage(cs).InitReadDataDropDowns()");
+                    System.Diagnostics.Debug.WriteLine("RDID: " + positiveResultDupel[0] + "                                                     ---GfsPage(cs).InitReadDataDropDowns()\n");
+                }
                 inputECUChoice_RDBI.Text = ddList.GetDisplayPartOf(ddList.GetECUChoices(), positiveResultDupel[1]);
                 inputRDBIChoice_RDBI.ItemsSource = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray();
                 inputRDBIChoice_RDBI.Text = ddList.GetDisplayPartOf(ddList.GetRDIDChoices(inputECUChoice_RDBI.Text), positiveResultDupel[0]);
+                inputPositiveResult_RDBI.Text = data.GetPositiveResultOfIndex(data.GetStepCount());
+                inputReadData.Text = data.GetRDIDOfIndex(data.GetStepCount());
             }
-            else
+            else  //Wenn nicht vorhanden, dann zeig das erste Element an.
             {
                 inputECUChoice_RDBI.Text = ddList.GetECUChoices().ElementAt(0).secondPart;
                 inputRDBIChoice_RDBI.ItemsSource = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray();
                 inputRDBIChoice_RDBI.Text = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).ElementAt(0).secondPart;
             }
-            
-            
         }
-        private void InitReadData()
-        {
-            if (string.IsNullOrEmpty(data.GetRDIDOfIndex(data.GetStepCount())))
-            {
-                FillInputReadDataText();
-            }
-            else
-            {
-                inputReadData.Text = data.GetRDIDOfIndex(data.GetStepCount());
-            }
-        }
+
         private void UpdateRDBIComboBox()
         {
             inputECUChoice_RDBI.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
@@ -297,7 +309,7 @@ namespace XMLWriter.Pages
         {
             inputSmartTool_SM.ItemsSource = ddList.GetSmartToolChoices().Select(x => x.secondPart).ToArray();
             
-            if (data.GetSmartToolOfIndex(data.GetStepCount()) != "false" && data.GetSmartToolOfIndex(data.GetStepCount()) != "")
+            if (inputToolChoice.Text == ddList.GetToolChoice()[2])
             {
                 inputSmartTool.Text = data.GetSmartToolOfIndex(data.GetStepCount());
                 if(consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("Init SM: " + data.GetSmartToolOfIndex(data.GetStepCount()) + "                              ----GfsPage(cs).InitSmartToolDropdowns()");
@@ -319,8 +331,6 @@ namespace XMLWriter.Pages
                 if(consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("SmartTool not Epty or false check: >"+inputSmartTool.Text+ "<                                 ---GfsPage(cs).FillInputSmartToolText()");
                 InitSmartToolLimits();
             }
-
-
         }
         private void InitSmartToolLimits()
         {
@@ -332,9 +342,27 @@ namespace XMLWriter.Pages
             {
                 if(consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("SmT - PosRes: >" + data.GetPositiveResultOfIndex(data.GetStepCount()) + "<                          ---InitSmartToolLimits()");
                 inputPositiveResult_SM.Text = data.GetPositiveResultOfIndex(data.GetStepCount());
-                string[] PosResDupel = data.GetPositiveResultOfIndex(data.GetStepCount()).Split('|');
-                inputPositiveResult_UpperLimit.Text = PosResDupel[1];
-                inputPositiveResult_LowerLimit.Text = PosResDupel[0];
+                if (data.GetPositiveResultOfIndex(data.GetStepCount()).Contains('|'))
+                {
+                    string[] PosResDupel = data.GetPositiveResultOfIndex(data.GetStepCount()).Split('|');
+                    inputPositiveResult_UpperLimit.Text = PosResDupel[1];
+                    inputPositiveResult_LowerLimit.Text = PosResDupel[0];
+                }
+                else if(data.GetPositiveResultOfIndex(data.GetStepCount()).Contains(';'))
+                {
+                    string[] PosResDupel = data.GetPositiveResultOfIndex(data.GetStepCount()).Split(';');
+                    if (PosResDupel[1]=="lower")
+                    {
+                        inputPositiveResult_LowerLimit.Text = PosResDupel[0];
+                    }
+                    else if(PosResDupel[1] == "upper")
+                    {
+                        inputPositiveResult_UpperLimit.Text = PosResDupel[0];
+                    }
+                    
+                    
+                }
+                
             }
 
         }
@@ -374,18 +402,7 @@ namespace XMLWriter.Pages
                 HideAllItemsWithToggleVisibility();
             }
         }
-        private void DifferntiatePositiveResultSourceBeforeSaving()
-        {
-            if(consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("Oberstes Dropdown: >" + inputToolChoice.Text + "<                                    -GfsPage(cs).DifferentiatePositiveResultSourceBeforeSavon()");
-            if (inputToolChoice.Text == ddList.GetToolChoice()[3]) //RDID
-            {
-                positiveResult = inputPositiveResult_RDBI.Text;
-            }
-            else if (inputToolChoice.Text == ddList.GetToolChoice()[2]) //SmT
-            {
-                positiveResult = inputPositiveResult_SM.Text;
-            }
-        }
+
         private void CheckForWhatCaseInSmartToolPositiveResult()
         {
             if (!string.IsNullOrWhiteSpace(inputPositiveResult_LowerLimit.Text) && string.IsNullOrWhiteSpace(inputPositiveResult_UpperLimit.Text))
@@ -453,10 +470,11 @@ namespace XMLWriter.Pages
         {
             if (consol.showGfsData)
             {
-                System.Diagnostics.Debug.WriteLine("GFS Data Start");
+                System.Diagnostics.Debug.WriteLine(">>>GFS Data Start<<<");
                 System.Diagnostics.Debug.WriteLine("Index:  " + data.GetStepCount());
+                System.Diagnostics.Debug.WriteLine("Tool:   " + data.GetToolChoiceOfIndex(data.GetStepCount()));
                 System.Diagnostics.Debug.WriteLine("Step:   " + data.GetStepNameOfIndex(data.GetStepCount()));
-                System.Diagnostics.Debug.WriteLine("Content:" + data.GetStepTextOfIndex(data.GetStepCount()));
+                System.Diagnostics.Debug.WriteLine("Text:   " + data.GetStepTextOfIndex(data.GetStepCount()));
                 System.Diagnostics.Debug.WriteLine("Anim:   " + data.GetStepAnimsOfIndex(data.GetStepCount()));
                 System.Diagnostics.Debug.WriteLine("instr:  " + data.GetStepInstructionOfIndex(data.GetStepCount()));
                 System.Diagnostics.Debug.WriteLine("posID:  " + data.GetStepPositiveIDOfIndex(data.GetStepCount()));
@@ -468,7 +486,7 @@ namespace XMLWriter.Pages
                 System.Diagnostics.Debug.WriteLine("RDID:   " + data.GetRDIDOfIndex(data.GetStepCount()));
                 System.Diagnostics.Debug.WriteLine("Next:   " + data.GetNextStepOfIndex(data.GetStepCount()));
                 System.Diagnostics.Debug.WriteLine("Last:   " + data.GetLastStepOfIndex(data.GetStepCount()));
-                System.Diagnostics.Debug.WriteLine("GFS Data End");
+                System.Diagnostics.Debug.WriteLine(">>>GFS Data End<<<");
             }
             
         }

@@ -566,7 +566,7 @@ namespace XMLWriter
             SetAnim(anim);
             SetSpecialText(specialText);
             if (consol.showSave)
-                System.Diagnostics.Debug.WriteLine(stepName + " Anim: " + anim + " Text: " + text + " SpText: " + specialText + "                   ---DataSet.SaveSet(rep)");
+                System.Diagnostics.Debug.WriteLine("Index: " + stepCount + "\nSchritt: " + stepName + "\nAnim: " + anim + "\nText: " + text + "\nSpText: " + specialText + "                   ---DataSet.SaveSet(rep)");
         }
         public void SaveSet(string toolChoice, string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, string RDBI, string smartTool, bool? nextStep, bool? lastStep)
         {
@@ -585,9 +585,7 @@ namespace XMLWriter
             SetLastStep(lastStep);
             SetToolChoice(toolChoice);
 
-            if(consol.showSave)
-                System.Diagnostics.Debug.WriteLine("     vvvvvvvvvvvvvvvvvvvvvvvv---DataSet.SaveSet(gfs)\nTool: " + toolChoice + "\nstep: " + stepName + "\ntext: " + text + "\nAnim: " + anim + "\nInstr.: " + instructionText + "\nposID: " + posID + "\nnegID: " + negID + "\nposRes: " + posResult + "\nrepXML: " + repXML + "\nA-Test: " + actuatorTest + "\nRDBI: " + RDBI + "\nSmT: " + smartTool + "\nNextST: " + nextStep + "\nLastSt: " + lastStep + "\n       ^^^^^^^^^^^^^^^^^^^^^---DataSet.SaveSet(gfs)");
-            //System.Diagnostics.Debug.WriteLine("     ---------------------DataSet.SaveSet(gfs) \nTool: " + toolChoice + " step: " + stepName + " \nposRes: " + posResult + "AktorTest: " + actuatorTest + " \nSmartTool: " + smartTool + "\nRDBI: " + RDBI + "\n     ^^^^^^^^^^^^^^^^^^^^^---DataSet.SaveSet(gfs)");
+            ConsoleShowGfsSaveContent(toolChoice, stepName, text, anim, instructionText, posID, negID, posResult, repXML, actuatorTest, RDBI, smartTool, nextStep, lastStep); //Nur Konsolenausgaben hier
         }
 
         public void SetFileName(string inputFileName) //Damit keine vorherigen Daten überschrieben werden, wird der Dateiname iteriert, bis ein neuer Dateiname gefunden wurde.
@@ -613,6 +611,29 @@ namespace XMLWriter
                 default:
                     Console.WriteLine("Error in OutputToXML from DataSet                   ---DataSet.OutputToXML()");
                     break;
+            }
+        }
+        private void ConsoleShowGfsSaveContent(string toolChoice, string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, string RDBI, string smartTool, bool? nextStep, bool? lastStep)
+        {
+            if (consol.showSave)
+            {
+                System.Diagnostics.Debug.WriteLine("       vvvvvvvvvvvvv-Speichern-vvvvvvvvvvvvv---DataSet.SaveSet(gfs)");
+                System.Diagnostics.Debug.WriteLine("Index:  " + stepCount);
+                System.Diagnostics.Debug.WriteLine("Tool:   " + toolChoice);
+                System.Diagnostics.Debug.WriteLine("step:   " + stepName);
+                System.Diagnostics.Debug.WriteLine("Text:   " + text);
+                System.Diagnostics.Debug.WriteLine("Anim:   " + anim);
+                System.Diagnostics.Debug.WriteLine("Instr:  " + instructionText);
+                System.Diagnostics.Debug.WriteLine("posID:  " + posID);
+                System.Diagnostics.Debug.WriteLine("negID:  " + negID);
+                System.Diagnostics.Debug.WriteLine("posRes: " + posResult);
+                System.Diagnostics.Debug.WriteLine("repXML: " + repXML);
+                System.Diagnostics.Debug.WriteLine("A-Test: " + actuatorTest);
+                System.Diagnostics.Debug.WriteLine("SmT:    " + smartTool);
+                System.Diagnostics.Debug.WriteLine("RDID:   " + RDBI);                
+                System.Diagnostics.Debug.WriteLine("NextST: " + nextStep);
+                System.Diagnostics.Debug.WriteLine("LastSt: " + lastStep);
+                System.Diagnostics.Debug.WriteLine("       ^^^^^^^^^^^^^-Speichern-^^^^^^^^^^^^^---DataSet.SaveSet(gfs)");
             }
         }
     }

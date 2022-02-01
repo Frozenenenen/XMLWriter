@@ -58,7 +58,7 @@ namespace XMLWriter.Classes
             }
 
 
-            if (consol.showLoad)
+            if (consol.showLoadFile)
                 System.Diagnostics.Debug.WriteLine("\nStarte Laden!!!\n");
             while (xtr.Read())
             {
@@ -139,7 +139,7 @@ namespace XMLWriter.Classes
                     }
                 }
             }
-            if (consol.showLoad)
+            if (consol.showLoadFile)
             System.Diagnostics.Debug.WriteLine("\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\n");
         }
     }
