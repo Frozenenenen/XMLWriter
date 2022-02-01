@@ -37,17 +37,18 @@ namespace XMLWriter.Pages
         }
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            if (data.GetStepCount() == 0)
+            SaveStep();
+            GUI.DecrementSteps();
+            _ = NavigationService.Navigate(new GfsPage());
+            /*if (data.GetStepCount() == 0)
             {
                 _ = NavigationService.Navigate(new StartPage());
                 data.ResetDataSet();
             }
             else
             {
-                SaveStep();
-                GUI.DecrementSteps();
-                _ = NavigationService.Navigate(new GfsPage());
-            }
+ 
+            }*/
             if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnBack Gfs - - - \n  - - - Nächster Schritt " + (data.GetStepCount()) + " - - - \n - - - BtnBack Gf - - - ");
         }
         private void BtnBackDelete_Click(object sender, RoutedEventArgs e)
@@ -242,11 +243,8 @@ namespace XMLWriter.Pages
             InitSmartToolDropdowns();
             InitReadDataDropdowns();
         }
-        //Inits zweite Dropdown Ebene
 
-
-
-        //Inits dritte Dropdown Eebene
+        //Inits zweite und dritte Dropdown Eebene
         private void InitActuatorTextDropdowns()
         {
             inputECUChoice_AT.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
