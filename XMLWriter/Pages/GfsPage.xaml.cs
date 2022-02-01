@@ -69,7 +69,6 @@ namespace XMLWriter.Pages
             if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnSave Gfs - - - \n - - - BtnSave Gf - - - ");
             SaveStep();
             GUI.IncrementSteps();
-            GUI.DecrementStepsForSaving(); //Entweder ich mach ne extra Funktion für die letzte Dateneingabe oder ich in- und decrementiere direkt nacheinander. i++ i--. Anonsten hab ich beim zurückgehen Probleme^^
 
             _ = NavigationService.Navigate(new SavePage());
         }

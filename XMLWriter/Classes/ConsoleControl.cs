@@ -7,7 +7,7 @@ namespace XMLWriter.Classes
     internal class ConsoleControl
     {
         public bool showSave = false;
-        public bool showInDecrement = false;
+        public bool showInDecrement = true;
         public bool showGetOtherPart = false;
         public bool showLoadFile = true;
         public bool showStep = true;

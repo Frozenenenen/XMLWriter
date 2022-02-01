@@ -21,7 +21,7 @@ namespace XMLWriter
             data.SetStepCount(data.GetStepCount() + 1);
             if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Nachm Increment: " + data.GetStepCount());
         }
-        public void DecrementStepsForSaving()
+        public void DecrementStepsForGoingBackFromSaving()
         {
             if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("In DecrementStepsForSaving");
             if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Vorm Decrement: " + data.GetStepCount());
@@ -30,7 +30,7 @@ namespace XMLWriter
                 data.SetStepCountMax(data.GetStepCountMax() - 1);
             }
             data.SetStepCount(data.GetStepCount() - 1);
-            if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Nachm Increment: " + data.GetStepCount());
+            if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Nachm Decrement: " + data.GetStepCount());
         }
         public void DecrementSteps()
         {

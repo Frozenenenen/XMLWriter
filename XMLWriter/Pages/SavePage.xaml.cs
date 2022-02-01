@@ -18,6 +18,9 @@ namespace XMLWriter.Pages
     /// </summary>
     public partial class SavePage : Page
     {
+        DataSet data = new DataSet();
+        GUIMovement gui = new GUIMovement();
+
         public SavePage()
         {
             InitializeComponent();
@@ -27,7 +30,6 @@ namespace XMLWriter.Pages
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            DataSet data = new DataSet();
             
             data.SetFileName(inputFileName.Text);
             if (data.GetDataType() == "rep")
@@ -48,7 +50,7 @@ namespace XMLWriter.Pages
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            DataSet data = new DataSet();
+            gui.DecrementStepsForGoingBackFromSaving();
             if (data.GetDataType() == "rep")
             {
                 _ = NavigationService.Navigate(new RepPage());
@@ -73,7 +75,7 @@ namespace XMLWriter.Pages
             inputLanguage.ItemsSource = writer.GetPathLanguageChoises();
             textTitel.Content = language.GetStringSummary();
             textFileNameTitel.Content = language.GetStringFileNameTitel();
-            textStepCount.Content = (data.GetStepCountMax() + 1) + " " + language.GetStringSteps();
+            textStepCount.Content = (data.GetStepCountMax()) + " " + language.GetStringSteps();
             btnBack.Content = language.GetStringBack();
             btnSave.Content = language.GetStringSave();
             inputVehicleID.Text = "eGolf";

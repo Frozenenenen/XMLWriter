@@ -20,7 +20,7 @@ namespace XMLWriter
             list.Add("<GfsCollection>");
             list.Add("\t" + "<GfsContent>");
 
-            for (int i = 0; i <= stepCountMax; i++)
+            for (int i = 0; i < stepCountMax; i++)
             {
                 Console.WriteLine(i);
 

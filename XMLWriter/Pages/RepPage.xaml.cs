@@ -66,8 +66,6 @@ namespace XMLWriter.Pages
             GUIMovement GUI = new GUIMovement();
             data.SaveSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputSpecialText.Text);
             GUI.IncrementSteps();
-            GUI.DecrementStepsForSaving();
-
             _ = NavigationService.Navigate(new SavePage());
         }
 
