@@ -44,7 +44,7 @@ namespace XMLWriter.Classes
                 FillDataSets();
             }
         }
-        private void OpenFileDialog()
+        public void OpenFileDialog()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 

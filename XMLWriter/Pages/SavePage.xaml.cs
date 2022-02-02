@@ -1,4 +1,5 @@
 ﻿using System;
+using XMLWriter.Classes;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -20,6 +21,8 @@ namespace XMLWriter.Pages
     {
         DataSet data = new DataSet();
         GUIMovement gui = new GUIMovement();
+        LoadDataSet loadData = new LoadDataSet();
+        Language language = new Language();     
 
         public SavePage()
         {
@@ -88,6 +91,11 @@ namespace XMLWriter.Pages
             inputFileName.Text = data.GetFileName();
         }
 
-    
+        private void BtnLoadFile(object sender, RoutedEventArgs e)
+        {
+            btnLoadFile.Content = language.GetStringFilePathDialog();
+            loadData.OpenFileDialog();
+            inputFileName.Text = loadData.GetFileNameAndPath();
+        }
     }
 }

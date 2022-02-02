@@ -51,10 +51,10 @@
         <TextBox x:Name="inputAnim" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,5"/>
 
         <Label x:Name="textContentTitel" Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="inputText" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="10,0"/>
+        <TextBox x:Name="inputText" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="10,0"  TextWrapping="Wrap"/>
 
         <Label x:Name="textInstructionTitel" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="inputInstruction" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="10,0"/>
+        <TextBox x:Name="inputInstruction" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Margin="10,0"  TextWrapping="Wrap"/>
 
         
         <!--rechtee Spalte-->

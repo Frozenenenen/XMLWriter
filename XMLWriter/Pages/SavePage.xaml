@@ -43,8 +43,12 @@
         <ComboBox x:Name="inputVehicleID" Grid.Row="9" Grid.Column="3" Margin="5,5"/>
 
 
-        <Label x:Name="textFileNameTitel" Grid.Column="4" Grid.Row="10" Grid.ColumnSpan="2" HorizontalAlignment="Center"/>
-        <TextBox x:Name="inputFileName" Text="Dateiname" Grid.Column="4" Grid.Row="11" Grid.ColumnSpan="2" Margin="2"/>
+        <StackPanel Grid.Column="4" Grid.Row="10" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="2">
+            <Label x:Name="textFileNameTitel" HorizontalAlignment="Center"/>
+            <TextBox x:Name="inputFileName" Text="Dateiname" Height="55" TextWrapping="Wrap"/>
+        </StackPanel>
+        <Button x:Name="btnLoadFile" Grid.Column="3" Grid.Row="10
+                " Click="BtnLoadFile" Margin=" 2,2,2,2" Width="85" Height="35" HorizontalAlignment="Left"/>
 
         <Button x:Name="btnSave" Grid.Column="6" Grid.Row="11" Margin="0,0,10,10" Click="btnSave_Click"/>
         <Button x:Name="btnBack" Grid.Column="0" Grid.Row="11" Margin="10,0,0,10" Height="25" Click="btnBack_Click" />

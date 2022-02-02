@@ -565,7 +565,7 @@ namespace XMLWriter
             SetText(text);
             SetAnim(anim);
             SetSpecialText(specialText);
-            if (consol.showSave)
+            if (consol.showSaveStep)
                 System.Diagnostics.Debug.WriteLine("Index: " + stepCount + "\nSchritt: " + stepName + "\nAnim: " + anim + "\nText: " + text + "\nSpText: " + specialText + "                   ---DataSet.SaveSet(rep)");
         }
         public void SaveSet(string toolChoice, string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, string RDBI, string smartTool, bool? nextStep, bool? lastStep)
@@ -615,7 +615,7 @@ namespace XMLWriter
         }
         private void ConsoleShowGfsSaveContent(string toolChoice, string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, string RDBI, string smartTool, bool? nextStep, bool? lastStep)
         {
-            if (consol.showSave)
+            if (consol.showSaveStep)
             {
                 System.Diagnostics.Debug.WriteLine("       vvvvvvvvvvvvv-Speichern-vvvvvvvvvvvvv---DataSet.SaveSet(gfs)");
                 System.Diagnostics.Debug.WriteLine("Index:  " + stepCount);

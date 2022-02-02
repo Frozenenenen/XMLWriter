@@ -6,7 +6,7 @@ namespace XMLWriter.Classes
 {
     internal class ConsoleControl
     {
-        public bool showSave = false;
+        public bool showSaveStep = false;
         public bool showInDecrement = true;
         public bool showGetOtherPart = false;
         public bool showLoadFile = true;
@@ -16,5 +16,8 @@ namespace XMLWriter.Classes
         public bool showBtn = false;
         public bool showGfsData = false;
         public bool showMiscStarPage = true;
+        public bool showWriteFile = true;//macht gerade nix
+        public bool showSaveFile = true;
+
     }
 }

@@ -8,6 +8,7 @@ namespace XMLWriter
         private static string language; 
         private static string defaultNotice;
         private static string loadFile;
+        private static string filePathDialog;
         private static string saveFile;
         private static string next;
         private static string back;
@@ -55,6 +56,7 @@ namespace XMLWriter
         public string GetStringLanguage() => language;
         public string GetInstructionNotice() => defaultNotice;
         public string GetStringLoadFile() => loadFile;
+        public string GetStringFilePathDialog() => filePathDialog;
         public string GetStringSave() => saveFile;
         public string GetStringNext() => next;
         public string GetStringBack() => back;
@@ -130,6 +132,7 @@ namespace XMLWriter
             language = "Deutsch";
             defaultNotice = "Leere Felder werden automatisch mit defaultwert befüllt.";
             loadFile = "Datei Laden?";
+            filePathDialog = "Dialogfenster";
             saveFile = "Sichern";
             next = "Weiter";
             back = "Zurück";
@@ -167,6 +170,7 @@ namespace XMLWriter
             language = "English";
             defaultNotice = "Empty boxes will be automatically filled with default values.";
             loadFile = "Load file?";
+            filePathDialog = "Open Dialogwindow";
             saveFile = "Save";
             next = "Next";
             back = "Back";
@@ -204,6 +208,7 @@ namespace XMLWriter
             language = "Espanol"; //Meinem Spanisch sollte man nicht trauen! Das ist hauptsächlich zu Test- und Vorführzwecken hier
             defaultNotice = "Empty boxes will be automatically filled with default values.";
             loadFile = "Load file?";
+            filePathDialog = "Open Dialog";
             saveFile = "Grabar algo";
             next = "Próximo";
             back = "Atrás";
