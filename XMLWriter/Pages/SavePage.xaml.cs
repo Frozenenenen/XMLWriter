@@ -111,7 +111,7 @@ namespace XMLWriter.Pages
             }
             else
             {
-                btnSave.Background = Brushes.White;
+                btnSave.Background = Brushes.Green;
                 btnSave.IsEnabled = true;
             }
         }
