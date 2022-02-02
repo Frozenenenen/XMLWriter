@@ -14,6 +14,9 @@ namespace XMLWriter.Classes
         DropDownOptionLists ddList = new DropDownOptionLists(); 
         ConsoleControl consol = new ConsoleControl();
         XmlTextReader xtr;
+        private static string initialDirectory = "";
+        private static string initialDirectoryFilePath = @"Files/";
+        private static string initialDirectoryFileName = @"InitialDirectory.txt";
         private static string fileNameAndPath = "";
         private static string dataType = "";
         public string GetFileNameAndPath() => fileNameAndPath;
@@ -37,6 +40,7 @@ namespace XMLWriter.Classes
 
         public void LoadDataFromFile()
         {
+            LookForInitialDirectory();
             OpenFileDialog();
             if (!string.IsNullOrEmpty(fileNameAndPath))
             {
@@ -44,13 +48,21 @@ namespace XMLWriter.Classes
                 FillDataSets();
             }
         }
+        private void LookForInitialDirectory()
+        {
+            StreamReader sr = new StreamReader(initialDirectoryFilePath + initialDirectoryFileName);
+            if(consol.showLoadFile) System.Diagnostics.Debug.WriteLine(sr);
+            initialDirectory = sr.ReadLine();
+        }
         public void OpenFileDialog()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
             openFileDialog.Filter = "Text files (*.txt;*.xml)|*.txt;*.xml|All files (*.*)|*.*";
-                //Falls der Standardordner gewechselt werden soll
-                //openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (initialDirectory!="")
+            {
+                openFileDialog.InitialDirectory = initialDirectory;
+            }
             if (openFileDialog.ShowDialog() == true)
             {
                 fileNameAndPath = openFileDialog.FileName;

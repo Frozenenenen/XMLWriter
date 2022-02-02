@@ -29,6 +29,7 @@ namespace XMLWriter.Pages
             InitializeComponent();
             InitTextItems();
             InitValueItems();
+            InitButtons();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -85,6 +86,12 @@ namespace XMLWriter.Pages
             inputLanguage.Text = "de";
 
         }
+        private void InitButtons()
+        {
+            btnLoadFile.Content = language.GetStringFilePathDialog();
+            btnSave.Background = Brushes.Gray;
+            btnSave.IsEnabled = false;
+        }
         private void InitValueItems()
         {
             DataSet data = new DataSet();
@@ -96,6 +103,17 @@ namespace XMLWriter.Pages
             btnLoadFile.Content = language.GetStringFilePathDialog();
             loadData.OpenFileDialog();
             inputFileName.Text = loadData.GetFileNameAndPath();
+            textFileName.Text = loadData.GetFileNameAndPath();
+            if (textFileName.Text=="")
+            {
+                btnSave.Background = Brushes.Gray;
+                btnSave.IsEnabled = false;  
+            }
+            else
+            {
+                btnSave.Background = Brushes.White;
+                btnSave.IsEnabled = true;
+            }
         }
     }
 }

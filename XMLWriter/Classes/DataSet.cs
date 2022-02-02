@@ -25,7 +25,7 @@ namespace XMLWriter
         private static int stepCount = 0;
         private static int stepCountMax = 0;
         private static string dataType = "rep";
-        private static string fileName = "Dateiname";
+        private static string fileName = "Dateiname"; //can include the path
 
         private static readonly string[] dataTypeChoice = { "gfs", "rep" }; //Gehört eigentlich nicht in diese Klasse, aber bis mir ein besserer Ort einfällt bleibts wohl hier
         //private static readonly string[] toolChoice = { "actuatorTest", "ReadData", "SmartTool" };
@@ -56,11 +56,9 @@ namespace XMLWriter
 
 
         //Getter
-        public int GetStepCount() => stepCount;
-        public int GetStepCountMax() => stepCountMax;
-
-        public string[] GetDataTypeChoice() => dataTypeChoice;
-        //public string[] GetToolChoice() => toolChoice;
+        public string GetDataType() => dataType;  // active rep or gfs
+        public string GetFileName() => fileName; //Where it should be written to. Includes the Path
+        public string[] GetDataTypeChoice() => dataTypeChoice; //rep or gfs selection
         public string[] GetStepNames()
         {
             string[] stepNames = new string[stepCountMax];
@@ -69,12 +67,11 @@ namespace XMLWriter
                 stepNames[i] = steps[i];
             }
             return stepNames;
-        }
+        } //This is the list of all entries of StepName used in a Set to use for the dropdown/textfields of postiveID and negativeID
+        //DataSet data
+        public int GetStepCountMax() => stepCountMax;
 
-
-        public string GetDataType() => dataType;
-        public string GetFileName() => fileName;
-
+        public int GetStepCount() => stepCount; //Index
         public string GetStepNameOfIndex(int index)
         {
             try
@@ -84,6 +81,18 @@ namespace XMLWriter
             catch (SystemException)
             {
                 System.Diagnostics.Debug.WriteLine("steps: ArgumentOutOfRangeException                   ---GetStepNameOfIndex() in DataSet");
+                return "Fehler";
+            }
+        }
+        public string GetToolChoiceOfIndex(int index)
+        {
+            try
+            {
+                return stepToolChoice[index];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("stepToolChoice: ArgumentOutOfRangeException                   ---DataSet.");
                 return "Fehler";
             }
         }
@@ -279,18 +288,6 @@ namespace XMLWriter
             {
                 System.Diagnostics.Debug.WriteLine("stepLastStep: ArgumentOutOfRangeException                   ---DataSet.");
                 return true;
-            }
-        }
-        public string GetToolChoiceOfIndex(int index)
-        {
-            try
-            {
-                return stepToolChoice[index];
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                System.Diagnostics.Debug.WriteLine("stepToolChoice: ArgumentOutOfRangeException                   ---DataSet.");
-                return "Fehler";
             }
         }
 
@@ -517,24 +514,6 @@ namespace XMLWriter
 
             }
         }
-
-        public void IncrementStepCount()    //Increment und Decrement sollten wohl noch durch setter und getter ersetzt und nur in GUIMovement bearbeitet werden
-        {
-            stepCount++;
-        }
-        public void DecrementStepCount()
-        {
-            stepCount--;
-        }
-        public void IncrementMaxSteps()
-        {
-            stepCountMax++;
-        }
-        public void DecrementMaxSteps()
-        {
-            stepCountMax--;
-        }
-
         public void ResetDataSet()
         {
             stepCountMax = 0;
@@ -609,7 +588,7 @@ namespace XMLWriter
                     gfs.OutputToXML(stepCountMax, stepToolChoice, steps, stepTexts, stepAnims, stepInstruction, stepPositiveID, stepNegativeID, stepPositiveResult, stepRepXML, stepActuatorTest, checkStepActuatorTest, stepRDBI, checkStepRDBI, stepSmartTool, checkStepSmartTool, stepNextStep, stepLastStep, fileName, dataType);
                     break;
                 default:
-                    Console.WriteLine("Error in OutputToXML from DataSet                   ---DataSet.OutputToXML()");
+                    if(consol.showErrors) Console.WriteLine("Error in OutputToXML from DataSet                   ---DataSet.OutputToXML()");
                     break;
             }
         }

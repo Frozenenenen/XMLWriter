@@ -132,7 +132,7 @@ namespace XMLWriter
             language = "Deutsch";
             defaultNotice = "Leere Felder werden automatisch mit defaultwert befüllt.";
             loadFile = "Datei Laden?";
-            filePathDialog = "Dialogfenster";
+            filePathDialog = "Dateibrowser";
             saveFile = "Sichern";
             next = "Weiter";
             back = "Zurück";
@@ -141,7 +141,7 @@ namespace XMLWriter
             pleaseFill = "Bitte ausfüllen";
             createDataSet = "Datensatz anlegen oder laden";
             generalInstruction = "Anleitung";
-            generalInstructionText = "Leere Felder werden automatisch mit 'default' oder 'false' befüllt, falls erforderlich";
+            generalInstructionText = "Leere Felder werden automatisch mit 'default' oder 'false' befüllt, falls erforderlich. Es gibt eine Datei 'InitialDirectory' in die man den gewünschten Startpfad permanent schreiben kann.";
             pleaseChoose = "Bitte wählen";
             optional = "Optional: direkter input. Priorisiert, falls befüllt!";
             step = "Schrittbezeichnung";
@@ -163,7 +163,7 @@ namespace XMLWriter
             smartTool = "SmartTool";
             nextStep = "Nächster Schritt";
             lastStep = "Letzter Schritt";
-            fileNameTitel = "Dateiname. ggf. mit Pfad.";
+            fileNameTitel = "Dateipfad:";
         }
         void InitEnglish()
         {
@@ -179,7 +179,7 @@ namespace XMLWriter
             pleaseFill = "Please Fill";
             createDataSet = "Create Data Set";
             generalInstruction = "general instructions";
-            generalInstructionText = "Empty boxes will be automatically filled with e.g. 'default' or 'false'";
+            generalInstructionText = "Empty boxes will be automatically filled with e.g. 'default' or 'false'; There is a File to permanently change the startig path for the windowbrowser";
             pleaseChoose = "Please choose";
             optional = "Optional: direct input. Prioritized if filled";
             step = "Step";
@@ -201,7 +201,7 @@ namespace XMLWriter
             readData = "Identifier (RDBI)";
             smartTool = "SmartTool";
             nextStep = "Next Step";
-            fileNameTitel = "File Name with or without path";
+            fileNameTitel = "Filepath:";
         }
         void InitEspanol()
         {
