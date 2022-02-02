@@ -12,7 +12,8 @@ namespace XMLWriter.Classes
         DataSet data = new DataSet();
         GUIMovement GUI = new GUIMovement();
         DropDownOptionLists ddList = new DropDownOptionLists(); 
-        ConsoleControl consol = new ConsoleControl();  
+        ConsoleControl consol = new ConsoleControl();
+        XmlTextReader xtr;
         private static string fileNameAndPath = "";
         private static string dataType = "";
         public string GetFileNameAndPath() => fileNameAndPath;
@@ -34,10 +35,17 @@ namespace XMLWriter.Classes
         private static bool? lastStep;
         private static string toolChoice="";
 
-
         public void LoadDataFromFile()
         {
-            
+            OpenFileDialog();
+            if (!string.IsNullOrEmpty(fileNameAndPath))
+            {
+                xtr = new XmlTextReader(fileNameAndPath);
+                FillDataSets();
+            }
+        }
+        private void OpenFileDialog()
+        {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
             openFileDialog.Filter = "Text files (*.txt;*.xml)|*.txt;*.xml|All files (*.*)|*.*";
@@ -47,19 +55,11 @@ namespace XMLWriter.Classes
             {
                 fileNameAndPath = openFileDialog.FileName;
             }
-            XmlTextReader xtr;
-            try
-            {
-                xtr = new XmlTextReader(fileNameAndPath);
-            }
-            catch
-            {
-                xtr = new XmlTextReader("");
-            }
-
-
-            if (consol.showLoadFile)
-                System.Diagnostics.Debug.WriteLine("\nStarte Laden!!!\n");
+            
+        }
+        private void FillDataSets()
+        {
+            if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("\nStarte Laden!!!\n");
             while (xtr.Read())
             {
                 if (xtr.NodeType == XmlNodeType.Element)
@@ -113,21 +113,21 @@ namespace XMLWriter.Classes
                             break;
                         case "lastStep":
                             lastStep = xtr.ReadElementString() == "true" ? true : false;
-                            if (smartTool!="" && smartTool!= "false")
+                            if (smartTool != "" && smartTool != "false")
                             {
                                 toolChoice = ddList.GetToolChoice()[2];
                             }
-                            else if(actuatorTest!="" && actuatorTest != "false")
+                            else if (actuatorTest != "" && actuatorTest != "false")
                             {
                                 toolChoice = ddList.GetToolChoice()[1];
                             }
-                            else if (readData != "" && readData !="false")
+                            else if (readData != "" && readData != "false")
                             {
                                 toolChoice = ddList.GetToolChoice()[3];
                             }
                             data.SaveSet(toolChoice, stepName, text, anim, instruction, positiveID, negativeID,
                                             positiveResult, repXml, actuatorTest, readData, smartTool, nextStep, lastStep);
-                            if(consol.showMiscLoadData) System.Diagnostics.Debug.WriteLine("repXML= " + repXml + "                ---LoadData.LoadDataFromFile()");
+                            if (consol.showMiscLoadData) System.Diagnostics.Debug.WriteLine("repXML= " + repXml + "                ---LoadData.LoadDataFromFile()");
                             GUI.IncrementSteps();
                             dataType = "gfs";
                             break;
@@ -139,8 +139,7 @@ namespace XMLWriter.Classes
                     }
                 }
             }
-            if (consol.showLoadFile)
-            System.Diagnostics.Debug.WriteLine("\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\n");
+            if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\n");
         }
     }
 }
