@@ -20,7 +20,6 @@ namespace XMLWriter.Pages
         Language language = new Language();
         public RepPage()
         {
-            data.InitNewSet();
             dataSet = data.GetDataSets().ElementAt(data.GetStepCount());
             InitializeComponent();
             InitTextItems();
@@ -29,11 +28,14 @@ namespace XMLWriter.Pages
 
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
+            data.InitNewSet();
+
             WriteInputToDataSet();
             data.SetDataSet(dataSet);
             GUI.IncrementSteps();
-
+            
             _ = NavigationService.Navigate(new RepPage());
+
         }
 
         private void BtnBack_Click(object sender, RoutedEventArgs e)

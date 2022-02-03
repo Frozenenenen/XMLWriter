@@ -153,8 +153,8 @@ namespace XMLWriter.Classes
                             dataType = "gfs";
                             break;
                         default:
-                            //System.Diagnostics.Debug.WriteLine(readLine);
-                            //System.Diagnostics.Debug.WriteLine(xtr.Name);
+                            if(consol.showLoadFile) System.Diagnostics.Debug.WriteLine(xtr.Name);
+                            if(consol.showLoadFile) System.Diagnostics.Debug.WriteLine(xtr.Name);
 
                             break;
                     }

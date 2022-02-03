@@ -23,8 +23,8 @@ namespace XMLWriter.Pages
 
         public GfsPage()
         {
-            data.InitNewSet();
             dataSet = data.GetDataSets().ElementAt(data.GetStepCount());
+            ShowAllDataInConsole("Beim Start");
             InitializeComponent();
             InitTextItems();
             InitValueItems();
@@ -33,7 +33,10 @@ namespace XMLWriter.Pages
         //buttons
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
+            data.InitNewSet();
+
             SaveStep();
+            ShowAllDataInConsole("Vorm Speichern");
             data.SetDataSet(dataSet);
             GUI.IncrementSteps();
             if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnNext Gfs - - - \n - - - Nächster Schritt " + (data.GetStepCount()) + " - - - \n - - - BtnNext Gf - - - ");
@@ -214,7 +217,6 @@ namespace XMLWriter.Pages
             InitFixedRightSideItems();
             InitFlexRightSideItems();
             ShowItemsAfterToolChoice();
-            ShowAllDataInConsole();
             if (consol.showStep) System.Diagnostics.Debug.WriteLine(" - - - Index Ende Gfs - - - \n              " + data.GetStepCount() + "\n - - - Index Ende Gfs - - - \n");
         }
         private void InitLeftSideItems()
@@ -471,11 +473,11 @@ namespace XMLWriter.Pages
                 inputToolChoice.Text = language.GetStringPleaseChoose();
             }
         }
-        private void ShowAllDataInConsole()
+        private void ShowAllDataInConsole(string a)
         {
             if (consol.showGfsData)
             {
-                System.Diagnostics.Debug.WriteLine(">>>GFS Data Start<<<");
+                System.Diagnostics.Debug.WriteLine(">>>" + a + "<<<");
                 System.Diagnostics.Debug.WriteLine("Index:  " + data.GetStepCount());
                 System.Diagnostics.Debug.WriteLine("Tool:   " + dataSet.toolChoice);
                 System.Diagnostics.Debug.WriteLine("Step:   " + dataSet.stepName);
@@ -491,7 +493,7 @@ namespace XMLWriter.Pages
                 System.Diagnostics.Debug.WriteLine("RDID:   " + dataSet.RDID);
                 System.Diagnostics.Debug.WriteLine("Next:   " + dataSet.nextStep);
                 System.Diagnostics.Debug.WriteLine("Last:   " + dataSet.lastStep);
-                System.Diagnostics.Debug.WriteLine(">>>GFS Data End<<<");
+                System.Diagnostics.Debug.WriteLine(">>>" + a + "<<<");
             }
             
         }

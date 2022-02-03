@@ -11,10 +11,10 @@ namespace XMLWriter
     {
         public MainWindow()
         {
+            System.Diagnostics.Debug.WriteLine("!!!Start - 1!!!");
             InitializeComponent();
+            System.Diagnostics.Debug.WriteLine("!!!Start - 2!!!");
             Main.Content = new StartPage();
-            Console.WriteLine("Start:");
-
         }
 
     }

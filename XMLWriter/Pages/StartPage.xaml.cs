@@ -28,8 +28,11 @@ namespace XMLWriter.Pages
         ConsoleControl consol = new ConsoleControl();   
         public StartPage()
         {
+            System.Diagnostics.Debug.WriteLine("!!!Start!!!");
             data.InitNewSet();
+            System.Diagnostics.Debug.WriteLine("!!!Nach Init!!!");
             loadInput.LoadAllOptions(); //Ich lad das aktuell einfach 2 Mal. 1 Mal hier und 1 Mal bei btn_next. Ich weiß nicht, warum es nicht anders geht, aber es ist so natürlich eine Fehlerquelle
+            System.Diagnostics.Debug.WriteLine("!!!Nach Laden der .txts!!!");
             InitializeComponent();
             language.InitLanguage("Deutsch");
             InitTextItems();

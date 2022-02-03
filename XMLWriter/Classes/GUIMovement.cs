@@ -12,14 +12,14 @@ namespace XMLWriter
 
         public void IncrementSteps()
         {
-            if(consol.showInDecrement) System.Diagnostics.Debug.WriteLine("In IncrementSteps");
+            if(consol.showInDecrement) System.Diagnostics.Debug.WriteLine("\nIn IncrementSteps");
             if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Vorm Increment: " + data.GetStepCount());
             if (data.GetStepCount() == data.GetStepCountMax())
             {
                 data.SetStepCountMax(data.GetStepCountMax() + 1);
             }
             data.SetStepCount(data.GetStepCount() + 1);
-            if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Nachm Increment: " + data.GetStepCount());
+            if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Nachm Increment: " + data.GetStepCount() + "\n");
         }
         public void DecrementStepsForGoingBackFromSaving()
         {

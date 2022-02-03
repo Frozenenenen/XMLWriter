@@ -55,6 +55,7 @@ namespace XMLWriter.Classes
             {
                 dataSets.Insert(stepCount, _dataSet);
             }
+            ShowAllDataInConsole(_dataSet);
         }  
         public void SetStepCountMax(int _inputStepCountMax) => stepCountMax = _inputStepCountMax;
         public void SetStepCount(int _inputStepCount) => stepCount = _inputStepCount;
@@ -64,15 +65,15 @@ namespace XMLWriter.Classes
         public void ResetDataSet()
         {
             dataSets.Clear();
-            DataSet dataSet = new DataSet("","","","default","","","","","","","","",false,false,"");
-            SetDataSet(dataSet);
+            SetStepCount(0);
+            SetStepCountMax(0);
+            InitNewSet();
         }
         public void InitNewSet()
         {
             if(stepCount == stepCountMax)
             {
-                DataSet dataSet = new DataSet("", "", "", "default", "", "", "", "", "", "", "", "", false, false, "");
-                dataSets.Add(dataSet);
+                dataSets.Add(new DataSet("", "", "", "default", "", "", "", "", "", "", "", "", false, false, ""));
             }
         }
 
@@ -95,32 +96,33 @@ namespace XMLWriter.Classes
                     gfs.OutputToXML(stepCountMax, dataSets, fileName);
                     break;
                 default:
-                    if (consol.showErrors) Console.WriteLine("Error in OutputToXML from DataSet                   ---DataSet.OutputToXML()");
+                    //if (consol.showErrors) Console.WriteLine("Error in OutputToXML from DataSet                   ---DataSet.OutputToXML()");
                     break;
             }
         }
-        private void ConsoleShowGfsSaveContent(string toolChoice, string stepName, string text, string anim, string instructionText, string posID, string negID, string posResult, string repXML, string actuatorTest, string RDBI, string smartTool, bool? nextStep, bool? lastStep)
+        private void ShowAllDataInConsole(DataSet dataSet)
         {
             if (consol.showSaveStep)
             {
-                System.Diagnostics.Debug.WriteLine("       vvvvvvvvvvvvv-Speichern-vvvvvvvvvvvvv---DataSet.SaveSet(gfs)");
+                System.Diagnostics.Debug.WriteLine("vvvvvvvvvvvvvvvvv Speichern vvvvvvvvvvvvvvvvv");
                 System.Diagnostics.Debug.WriteLine("Index:  " + stepCount);
-                System.Diagnostics.Debug.WriteLine("Tool:   " + toolChoice);
-                System.Diagnostics.Debug.WriteLine("step:   " + stepName);
-                System.Diagnostics.Debug.WriteLine("Text:   " + text);
-                System.Diagnostics.Debug.WriteLine("Anim:   " + anim);
-                System.Diagnostics.Debug.WriteLine("Instr:  " + instructionText);
-                System.Diagnostics.Debug.WriteLine("posID:  " + posID);
-                System.Diagnostics.Debug.WriteLine("negID:  " + negID);
-                System.Diagnostics.Debug.WriteLine("posRes: " + posResult);
-                System.Diagnostics.Debug.WriteLine("repXML: " + repXML);
-                System.Diagnostics.Debug.WriteLine("A-Test: " + actuatorTest);
-                System.Diagnostics.Debug.WriteLine("SmT:    " + smartTool);
-                System.Diagnostics.Debug.WriteLine("RDID:   " + RDBI);
-                System.Diagnostics.Debug.WriteLine("NextST: " + nextStep);
-                System.Diagnostics.Debug.WriteLine("LastSt: " + lastStep);
-                System.Diagnostics.Debug.WriteLine("       ^^^^^^^^^^^^^-Speichern-^^^^^^^^^^^^^---DataSet.SaveSet(gfs)");
+                System.Diagnostics.Debug.WriteLine("Tool:   " + dataSet.toolChoice);
+                System.Diagnostics.Debug.WriteLine("Step:   " + dataSet.stepName);
+                System.Diagnostics.Debug.WriteLine("Text:   " + dataSet.text);
+                System.Diagnostics.Debug.WriteLine("Anim:   " + dataSet.anim);
+                System.Diagnostics.Debug.WriteLine("instr:  " + dataSet.instruction);
+                System.Diagnostics.Debug.WriteLine("posID:  " + dataSet.positiveID);
+                System.Diagnostics.Debug.WriteLine("negID:  " + dataSet.negativeID);
+                System.Diagnostics.Debug.WriteLine("posRes: " + dataSet.positiveResult);
+                System.Diagnostics.Debug.WriteLine("repXML: " + dataSet.repXML);
+                System.Diagnostics.Debug.WriteLine("A-Test: " + dataSet.actuatorTest);
+                System.Diagnostics.Debug.WriteLine("SmarT:  " + dataSet.smartTool);
+                System.Diagnostics.Debug.WriteLine("RDID:   " + dataSet.RDID);
+                System.Diagnostics.Debug.WriteLine("Next:   " + dataSet.nextStep);
+                System.Diagnostics.Debug.WriteLine("Last:   " + dataSet.lastStep);
+                System.Diagnostics.Debug.WriteLine("^^^^^^^^^^^^^^^^^ Speichern ^^^^^^^^^^^^^^^^^");
             }
+
         }
     }
     
