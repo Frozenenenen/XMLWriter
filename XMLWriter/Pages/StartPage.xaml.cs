@@ -26,6 +26,7 @@ namespace XMLWriter.Pages
         LoadDataSet loadData = new LoadDataSet();
         DropDownOptionLists loadInput = new DropDownOptionLists();
         ConsoleControl consol = new ConsoleControl();   
+        XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         public StartPage()
         {
             System.Diagnostics.Debug.WriteLine("!!!Start!!!");
@@ -83,7 +84,7 @@ namespace XMLWriter.Pages
         {
             
             loadData.LoadDataFromFile();
-            inputType.Text = loadData.GetDataType(); 
+            inputType.Text = data.GetDataType(); 
             inputLoadFile.Text = loadData.GetFileNameAndPath();
             textStepCount.Content = language.GetStringSteps() + " " + data.GetStepCountMax();
         }
@@ -102,13 +103,15 @@ namespace XMLWriter.Pages
             inputType.ItemsSource = data.GetDataTypeChoice();
             textInstructions.Content = language.GetStringGeneralInstruction();
             textInstructions.ToolTip = language.GetStringGeneralInstructionText();
-            inputType.Text = data.GetDataType();
-            if(consol.showMiscStarPage) System.Diagnostics.Debug.WriteLine("Type (rep/gfs): " + inputType.Text + "                                     ---StartPage.InitTextItems()");
+            xamlHelper.SetActiveELementFor(inputType, data);
+            if (consol.showMiscStarPage) System.Diagnostics.Debug.WriteLine("Type (rep/gfs): " + inputType.Text + "                                     ---StartPage.InitTextItems()");
             textLoadFile.Content = language.GetStringFileNameTitel();
             btnLoadFile.Content = language.GetStringLoadFile();
             btnReset.Content = language.GetStringDeleteSet();   
             textStepCount.Content = language.GetStringSteps() + " " + data.GetStepCountMax();
         }
+
+
         private void InitValueItems()
         {
             //Ähm... ja

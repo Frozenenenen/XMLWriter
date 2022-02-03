@@ -25,9 +25,7 @@ namespace XMLWriter.Classes
         private static string initialDirectoryFilePath = @"Files/";
         private static string initialDirectoryFileName = @"InitialDirectory.txt";
         private static string fileNameAndPath = "";
-        private static string dataType = "";
         public string GetFileNameAndPath() => fileNameAndPath;
-        public string GetDataType() => dataType;
 
         private static string stepName;
         private static string text;
@@ -103,7 +101,7 @@ namespace XMLWriter.Classes
                             SaveSet(i, stepName, text, anim, specialStep);
                             data.SetDataSet(dataSet);
                             GUI.IncrementSteps();
-                            dataType = "rep";
+                            //dataType = "rep";
                             break;
                         case "instructions":
                             instruction = xtr.ReadElementString();
@@ -150,7 +148,7 @@ namespace XMLWriter.Classes
                                             positiveResult, repXml, actuatorTest, readData, smartTool, nextStep, lastStep);
                             if (consol.showMiscLoadData) System.Diagnostics.Debug.WriteLine("repXML= " + repXml + "                ---LoadData.LoadDataFromFile()");
                             GUI.IncrementSteps();
-                            dataType = "gfs";
+                            //dataType = "gfs";
                             break;
                         default:
                             if(consol.showLoadFile) System.Diagnostics.Debug.WriteLine(xtr.Name);

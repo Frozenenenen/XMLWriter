@@ -18,7 +18,7 @@ namespace XMLWriter.Classes
         //rep
         public bool showMiscRep = true;
         //loadData
-        public bool showMiscLoadData = false;
+        public bool showMiscLoadData = true;
         public bool showBtn = false;
         
         public bool showMiscStarPage = true;
