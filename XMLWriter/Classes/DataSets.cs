@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using XMLWriter.Classes;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
 
 using System.Text;
 
@@ -22,14 +17,13 @@ namespace XMLWriter.Classes
         private static string dataType = "rep";
         private static string fileName = "Dateiname"; //can include the path
 
-        private static readonly string[] dataTypeChoice = { "gfs", "rep" }; //Gehört eigentlich nicht in diese Klasse, aber bis mir ein besserer Ort einfällt bleibts wohl hier
-                                                                            //private static readonly string[] toolChoice = { "actuatorTest", "ReadData", "SmartTool" };
+        
 
         //Getter
         public List<DataSet> GetDataSets() => dataSets;
         public string GetDataType() => dataType;  // active rep or gfs
         public string GetFileName() => fileName; //Where it should be written to. Includes the Path
-        public string[] GetDataTypeChoice() => dataTypeChoice; //rep or gfs selection
+        
         public string[] GetStepNames()
         {
             string[] stepNames = new string[stepCountMax]; //foreach wäre eleganter

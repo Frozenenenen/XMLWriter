@@ -4,7 +4,7 @@ namespace XMLWriter
     class Language
     {
         //General UI
-        private static string[] languageChoices = { "Deutsch", "English", "Espanol" };
+        
         private static string language; 
         private static string defaultNotice;
         private static string loadFile;
@@ -96,12 +96,7 @@ namespace XMLWriter
         //public void SetLanguage(string inputLanguage) => language = inputLanguage;
 
         //public string[] GetLanguageChoises() => File.ReadAllLines(@"Testgelände\languages.txt"); //Falls mal die SPrache aus einer Textdatei gezogen werden soll
-        public string[] GetLanguageChoises()
-        {//Attention! if the strings get altered they have to get altered down below in the switch aswell
 
-            string[] languageChoises = languageChoices; //Kurze Version
-            return languageChoises;
-        }
 
 
         public void InitLanguage(string languageChoice) //Method to fill the variables with the language specific words

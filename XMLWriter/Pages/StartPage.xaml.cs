@@ -1,18 +1,9 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using XMLWriter.Classes;
+using XMLWriter.Classes.StartPage;
 
 namespace XMLWriter.Pages
 {
@@ -22,6 +13,7 @@ namespace XMLWriter.Pages
     public partial class StartPage : Page
     {
         DataSets data = new DataSets();
+        StartPageData startPageData = new StartPageData();
         Language language = new Language();
         LoadDataSet loadData = new LoadDataSet();
         DropDownOptionLists loadInput = new DropDownOptionLists();
@@ -98,9 +90,9 @@ namespace XMLWriter.Pages
         private void InitTextItems()
         {
             btnWeiter.Content = "--->";
-            inputLanguage.ItemsSource = language.GetLanguageChoises();
+            inputLanguage.ItemsSource = startPageData.GetLanguageChoises();
             inputLanguage.Text = language.GetStringLanguage();
-            inputType.ItemsSource = data.GetDataTypeChoice();
+            inputType.ItemsSource = startPageData.GetDataTypeChoice();
             textInstructions.Content = language.GetStringGeneralInstruction();
             textInstructions.ToolTip = language.GetStringGeneralInstructionText();
             xamlHelper.SetActiveELementFor(inputType, data.GetDataType());
