@@ -21,17 +21,16 @@ namespace XMLWriter.Pages
     /// </summary>
     public partial class StartPage : Page
     {
-        DataSet data = new DataSet();
+        DataSets data = new DataSets();
         Language language = new Language();
         LoadDataSet loadData = new LoadDataSet();
         DropDownOptionLists loadInput = new DropDownOptionLists();
         ConsoleControl consol = new ConsoleControl();   
         public StartPage()
         {
-
+            data.InitNewSet();
             loadInput.LoadAllOptions(); //Ich lad das aktuell einfach 2 Mal. 1 Mal hier und 1 Mal bei btn_next. Ich weiß nicht, warum es nicht anders geht, aber es ist so natürlich eine Fehlerquelle
             InitializeComponent();
-            data.InitNewDataSet();
             language.InitLanguage("Deutsch");
             InitTextItems();
             InitValueItems();

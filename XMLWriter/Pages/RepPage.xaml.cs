@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Windows;
+using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using System.Linq;
+using XMLWriter.Classes;
 
 namespace XMLWriter.Pages
 {
@@ -10,8 +13,15 @@ namespace XMLWriter.Pages
     /// </summary>
     public partial class RepPage : Page
     {
+        DataSets data = new DataSets();
+        GUIMovement GUI = new GUIMovement();
+        DataSet dataSet;
+        ConsoleControl consol = new ConsoleControl();   
+        Language language = new Language();
         public RepPage()
         {
+            data.InitNewSet();
+            dataSet = data.GetDataSets().ElementAt(data.GetStepCount());
             InitializeComponent();
             InitTextItems();
             InitValueItems();
@@ -19,20 +29,17 @@ namespace XMLWriter.Pages
 
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
-            DataSet data = new DataSet();
-            GUIMovement GUI = new GUIMovement();
-            data.SaveSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputSpecialText.Text);
+            WriteInputToDataSet();
+            data.SetDataSet(dataSet);
             GUI.IncrementSteps();
 
             _ = NavigationService.Navigate(new RepPage());
         }
+
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            DataSet data = new DataSet();
-            GUIMovement GUI = new GUIMovement();
-
-            data.SaveSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputSpecialText.Text);
-
+            WriteInputToDataSet();
+            data.SetDataSet(dataSet);
             if (data.GetStepCount() == 0)
             {
                 _ = NavigationService.Navigate(new StartPage());
@@ -45,9 +52,6 @@ namespace XMLWriter.Pages
         }
         private void BtnBackDelete_Click(object sender, RoutedEventArgs e)
         {
-            DataSet data = new DataSet();
-            GUIMovement GUI = new GUIMovement();
-
             if (data.GetStepCount() == 0)
             {
 
@@ -62,18 +66,14 @@ namespace XMLWriter.Pages
         }
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            DataSet data = new DataSet();
-            GUIMovement GUI = new GUIMovement();
-            data.SaveSet(inputStepName.Text, inputText.Text, inputAnim.Text, inputSpecialText.Text);
+            WriteInputToDataSet();
+            data.SetDataSet(dataSet);
             GUI.IncrementSteps();
             _ = NavigationService.Navigate(new SavePage());
         }
 
         private void InitTextItems()
         {
-            DataSet data = new DataSet();
-            Language language = new Language();
-
             //Schritzüge
             textStep.Content = language.GetStringStep() + " " + (data.GetStepCount() + 1);
             textContentTitel.Content = language.GetStringContent();
@@ -89,18 +89,23 @@ namespace XMLWriter.Pages
         }
         private void InitValueItems()
         {
-            DataSet data = new DataSet();
-
-            inputStepName.Text = data.GetStepNameOfIndex(data.GetStepCount()) == ""
+            inputStepName.Text = dataSet.stepName == ""
                 ? "Schritt " + (data.GetStepCount() + 1)
-                : data.GetStepNameOfIndex(data.GetStepCount());
-            inputText.Text = data.GetStepTextOfIndex(data.GetStepCount());
-            inputAnim.Text = data.GetStepAnimsOfIndex(data.GetStepCount()) == ""
+                : dataSet.stepName;
+            inputText.Text = dataSet.text;
+            inputAnim.Text = dataSet.anim == ""
                 ? "default"
-                : data.GetStepAnimsOfIndex(data.GetStepCount());
-            inputSpecialText.Text = data.GetStepSpecialTextOfIndex(data.GetStepCount());
+                : dataSet.anim;
+            inputSpecialText.Text = dataSet.specialText;
 
-            Console.WriteLine("Ausgabe: Schritt: " + (data.GetStepCount() + 1) + " Anim: " + data.GetStepAnimsOfIndex(data.GetStepCount()) + " Text: " + data.GetStepTextOfIndex(data.GetStepCount()) + " SpText: " + data.GetStepSpecialTextOfIndex(data.GetStepCount()));
+            if(consol.showMiscRep) Console.WriteLine("Ausgabe: Schritt: " + (data.GetStepCount() + 1) + " Anim: " + dataSet.anim + " Text: " + dataSet.text + " SpText: " + dataSet.specialText);
+        }
+        private void WriteInputToDataSet()
+        {
+            dataSet.stepName = inputStepName.Text;
+            dataSet.text = inputText.Text;
+            dataSet.anim = inputAnim.Text;
+            dataSet.specialText = inputSpecialText.Text;
         }
     }
 }

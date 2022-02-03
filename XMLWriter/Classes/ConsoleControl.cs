@@ -13,6 +13,7 @@ namespace XMLWriter.Classes
         public bool showLoadFile = true;
         public bool showStep = true;
         public bool showMiscGfs = false;
+        public bool showMiscRep = true;
         public bool showMiscLoadData = false;
         public bool showBtn = false;
         public bool showGfsData = false;

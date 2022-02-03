@@ -1,16 +1,9 @@
 ﻿using System;
 using XMLWriter.Classes;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace XMLWriter.Pages
 {
@@ -19,10 +12,10 @@ namespace XMLWriter.Pages
     /// </summary>
     public partial class SavePage : Page
     {
-        DataSet data = new DataSet();
+        DataSets data = new DataSets();
         GUIMovement gui = new GUIMovement();
         LoadDataSet loadData = new LoadDataSet();
-        Language language = new Language();     
+        Language language = new Language();
 
         public SavePage()
         {
@@ -72,8 +65,6 @@ namespace XMLWriter.Pages
 
         private void InitTextItems()
         {
-            Language language = new Language();
-            DataSet data = new DataSet();
             WriteToXML writer = new WriteToXML();
             inputVehicleID.ItemsSource = writer.GetPathVehicleIDChoises();
             inputLanguage.ItemsSource = writer.GetPathLanguageChoises();
@@ -94,7 +85,6 @@ namespace XMLWriter.Pages
         }
         private void InitValueItems()
         {
-            DataSet data = new DataSet();
             inputFileName.Text = data.GetFileName();
         }
 

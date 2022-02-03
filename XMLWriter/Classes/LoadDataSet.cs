@@ -4,16 +4,23 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
+using System.Linq;
+using XMLWriter.Classes;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Navigation;
 
 namespace XMLWriter.Classes
 {
     class LoadDataSet
     {
-        DataSet data = new DataSet();
+        DataSets data = new DataSets();
         GUIMovement GUI = new GUIMovement();
         DropDownOptionLists ddList = new DropDownOptionLists(); 
         ConsoleControl consol = new ConsoleControl();
         XmlTextReader xtr;
+        DataSet dataSet;
         private static string initialDirectory = "";
         private static string initialDirectoryFilePath = @"Files/";
         private static string initialDirectoryFileName = @"InitialDirectory.txt";
@@ -71,6 +78,7 @@ namespace XMLWriter.Classes
         }
         private void FillDataSets()
         {
+            int i = 0;
             if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("\nStarte Laden!!!\n");
             while (xtr.Read())
             {
@@ -92,7 +100,8 @@ namespace XMLWriter.Classes
                             break;
                         case "specialStep":
                             specialStep = xtr.ReadElementString();
-                            data.SaveSet(stepName, text, anim, specialStep);
+                            SaveSet(i, stepName, text, anim, specialStep);
+                            data.SetDataSet(dataSet);
                             GUI.IncrementSteps();
                             dataType = "rep";
                             break;
@@ -137,7 +146,7 @@ namespace XMLWriter.Classes
                             {
                                 toolChoice = ddList.GetToolChoice()[3];
                             }
-                            data.SaveSet(toolChoice, stepName, text, anim, instruction, positiveID, negativeID,
+                            SaveSet(i, toolChoice, stepName, text, anim, instruction, positiveID, negativeID,
                                             positiveResult, repXml, actuatorTest, readData, smartTool, nextStep, lastStep);
                             if (consol.showMiscLoadData) System.Diagnostics.Debug.WriteLine("repXML= " + repXml + "                ---LoadData.LoadDataFromFile()");
                             GUI.IncrementSteps();
@@ -149,9 +158,39 @@ namespace XMLWriter.Classes
 
                             break;
                     }
+                    i++;
                 }
             }
             if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\n");
+        }
+        private DataSet SaveSet(int i, string stepName, string text, string anim, string specialStep)
+        {
+            dataSet = data.GetDataSets().ElementAt(i);
+            dataSet.stepName = stepName;
+            dataSet.text = text;
+            dataSet.anim = anim;
+            dataSet.specialText = specialStep;
+            return dataSet;
+        }
+        private DataSet SaveSet(int i, string toolChoice, string stepName, string text, string anim, string instruction, string positiveID, string negativeID,
+                                            string positiveResult, string repXml, string actuatorTest, string readData, string smartTool, bool? nextStep, bool? lastStep)
+        {
+            dataSet = data.GetDataSets().ElementAt(i);
+            dataSet.toolChoice = toolChoice;
+            dataSet.stepName = stepName;
+            dataSet.text = text;
+            dataSet.anim = anim;
+            dataSet.instruction = instruction;
+            dataSet.positiveID = positiveID;
+            dataSet.negativeID = negativeID;
+            dataSet.positiveResult = positiveResult;
+            dataSet.repXML = repXml;
+            dataSet.actuatorTest = actuatorTest;
+            dataSet.smartTool = smartTool;
+            dataSet.RDID = readData;
+            dataSet.nextStep = nextStep;
+            dataSet.lastStep = lastStep;
+            return dataSet;
         }
     }
 }
