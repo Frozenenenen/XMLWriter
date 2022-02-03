@@ -103,7 +103,7 @@ namespace XMLWriter.Pages
             inputType.ItemsSource = data.GetDataTypeChoice();
             textInstructions.Content = language.GetStringGeneralInstruction();
             textInstructions.ToolTip = language.GetStringGeneralInstructionText();
-            xamlHelper.SetActiveELementFor(inputType, data);
+            xamlHelper.SetActiveELementFor(inputType, data.GetDataType());
             if (consol.showMiscStarPage) System.Diagnostics.Debug.WriteLine("Type (rep/gfs): " + inputType.Text + "                                     ---StartPage.InitTextItems()");
             textLoadFile.Content = language.GetStringFileNameTitel();
             btnLoadFile.Content = language.GetStringLoadFile();

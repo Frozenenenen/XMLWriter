@@ -18,6 +18,7 @@ namespace XMLWriter.Pages
         GUIMovement GUI = new GUIMovement();
         DropDownOptionLists ddList = new DropDownOptionLists();
         ConsoleControl consol = new ConsoleControl();
+        XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         private static string positiveResult;
         DataSet dataSet;
 
@@ -247,7 +248,8 @@ namespace XMLWriter.Pages
         {
             CheckForWhatToolHasBeenChosen();
             inputToolChoice.ItemsSource = ddList.GetToolChoice();
-
+            xamlHelper.SetActiveELementFor(inputToolChoice, dataSet.toolChoice);
+            System.Diagnostics.Debug.WriteLine(dataSet.toolChoice);
             InitActuatorTextDropdowns();
             InitSmartToolDropdowns();
             InitReadDataDropdowns();

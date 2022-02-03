@@ -6,19 +6,19 @@ namespace XMLWriter.Classes
 {
     internal class ConsoleControl
     {
-        public bool showErrors = true;
+        public bool showErrors = false;
         public bool showSaveStep = true;
-        public bool showInDecrement = true;
+        public bool showInDecrement = false;
         public bool showGetOtherPart = false;
         public bool showLoadFile = true;
         public bool showStep = true;
         //gfs
         public bool showMiscGfs = false;
-        public bool showGfsData = true;
+        public bool showGfsData = false;
         //rep
-        public bool showMiscRep = true;
+        public bool showMiscRep = false;
         //loadData
-        public bool showMiscLoadData = true;
+        public bool showMiscLoadData = false;
         public bool showBtn = false;
         
         public bool showMiscStarPage = true;
