@@ -28,7 +28,7 @@ namespace XMLWriter.Pages
             loadInput.LoadAllOptions(); //Ich lad das aktuell einfach 2 Mal. 1 Mal hier und 1 Mal bei btn_next. Ich weiß nicht, warum es nicht anders geht, aber es ist so natürlich eine Fehlerquelle
             System.Diagnostics.Debug.WriteLine("!!!Nach Laden der .txts!!!");
             InitializeComponent();
-            language.InitLanguage("Deutsch");
+            language.InitLanguage(startPageData.GetSelectedLanguage());
             InitTextItems();
             InitValueItems();
             
@@ -53,8 +53,9 @@ namespace XMLWriter.Pages
             inputType.ItemsSource = startPageData.GetProcessTypeList();
             xamlHelper.SetActiveELementFor(inputType, data.GetDataType());
             if (consol.showMiscStarPage) System.Diagnostics.Debug.WriteLine("Type (rep/gfs): " + inputType.Text + "                                     ---StartPage.InitTextItems()");
+            //language init
             inputLanguage.ItemsSource = startPageData.GetLanguageList();
-            inputLanguage.Text = language.GetStringLanguage();
+            xamlHelper.SetActiveELementFor(inputLanguage, startPageData.GetSelectedLanguage());
         }
         private void BtnNext(object sender, RoutedEventArgs e)
         {
@@ -88,8 +89,10 @@ namespace XMLWriter.Pages
         }
         private void BtnSelectLanguage_Click(object sender, RoutedEventArgs e)
         {
-            language.InitLanguage(inputLanguage.Text); //Befüllt die Variablen mit den Wörtern  der jeweiligen Sprache
-            textTitel.Content = language.GetStringCreateDataSet(); //Ausgabe der Überschrift "Create Data Set"
+            startPageData.SetLangauge(inputLanguage.Text);
+            //language.InitLanguage(startPageData.GetSelectedLanguage()); //Befüllt die Variablen mit den Wörtern  der jeweiligen Sprache
+
+            textTitel.Content = startPageData.GetStartPageTitel();
         }
         private void BtnClose(object sender, RoutedEventArgs e)
         {

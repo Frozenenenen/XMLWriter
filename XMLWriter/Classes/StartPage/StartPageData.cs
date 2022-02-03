@@ -7,18 +7,26 @@ namespace XMLWriter.Classes.StartPage
     internal class StartPageData
     {
         UtilityFunctions utility = new UtilityFunctions();
+        Language language = new Language();
+
+        private static string startPageTitel = Language.GetStringCreateDataSet();
         private static readonly string[] processTypeList = { "gfs", "rep" };
-        private static string[] languageList = { "Deutsch", "English", "Espanol" };
+        private static readonly string[] languageList = { "Deutsch", "English", "Espanol" };
         private string selectedLanguage = languageList[0];
         private string selectedProcessType = "rep";
+
+        public string GetStartPageTitel() => startPageTitel;
         public string[] GetLanguageList() => languageList;
         public string GetSelectedLanguage() => selectedLanguage;
         public void SetLangauge(string _language)
         {
-                if (utility.ContainsElement(languageList, _language))
-                {
-                    selectedLanguage = _language;
-                }
+            if (utility.ArrayContainsElement(languageList, _language))
+            {
+                selectedLanguage = _language;
+                language.InitLanguage(selectedLanguage);
+                startPageTitel = Language.GetStringCreateDataSet();
+            }
+
         } 
         
         
@@ -26,7 +34,7 @@ namespace XMLWriter.Classes.StartPage
         public string GetSelectedProcessType() => selectedProcessType;
         public void SetProcessType(string _processType)
         {
-            if (utility.ContainsElement(processTypeList, _processType))
+            if (utility.ArrayContainsElement(processTypeList, _processType))
             {
                 selectedProcessType = _processType;
             }

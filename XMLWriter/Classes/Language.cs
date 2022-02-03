@@ -13,7 +13,7 @@ namespace XMLWriter
         private static string next;
         private static string back;
         private static string pleaseFill;
-        private static string createDataSet;
+        private static string createDataSet ="";
         private static string step;
         private static string steps;
         private static string summary;
@@ -63,7 +63,7 @@ namespace XMLWriter
         /*public string GetStringModel() => model;
         public string GetStringVin() => vin;*/
         public string GetStringPleaseFill() => pleaseFill;
-        public string GetStringCreateDataSet() => createDataSet;
+        public static string GetStringCreateDataSet() => createDataSet;
         public string GetStringGeneralInstruction() => generalInstruction;
         public string GetStringGeneralInstructionText() => generalInstructionText;
         public string GetStringPleaseChoose() => pleaseChoose;

@@ -6,7 +6,7 @@ namespace XMLWriter.Classes
 {
     internal class UtilityFunctions
     {
-        public bool ContainsElement(string[] list, string element)
+        public bool ArrayContainsElement(string[] list, string element)
         {
             foreach (var listElement in list)
             {
