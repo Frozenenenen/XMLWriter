@@ -6,15 +6,32 @@ namespace XMLWriter.Classes.StartPage
 {
     internal class StartPageData
     {
-        private static readonly string[] dataTypeChoice = { "gfs", "rep" };
-        private static string[] languageChoices = { "Deutsch", "English", "Espanol" };
-        public string[] GetLanguageChoises()
-        {//Attention! if the strings get altered they have to get altered down below in the switch aswell
-
-            string[] languageChoises = languageChoices; //Kurze Version
-            return languageChoises;
+        UtilityFunctions utility = new UtilityFunctions();
+        private static readonly string[] processTypeList = { "gfs", "rep" };
+        private static string[] languageList = { "Deutsch", "English", "Espanol" };
+        private string selectedLanguage = languageList[0];
+        private string selectedProcessType = "rep";
+        public string[] GetLanguageList() => languageList;
+        public string GetSelectedLanguage() => selectedLanguage;
+        public void SetLangauge(string _language)
+        {
+                if (utility.ContainsElement(languageList, _language))
+                {
+                    selectedLanguage = _language;
+                }
+        } 
+        
+        
+        public string[] GetProcessTypeList() => processTypeList;
+        public string GetSelectedProcessType() => selectedProcessType;
+        public void SetProcessType(string _processType)
+        {
+            if (utility.ContainsElement(processTypeList, _processType))
+            {
+                selectedProcessType = _processType;
+            }
         }
-        public string[] GetDataTypeChoice() => dataTypeChoice; //rep or gfs selection
 
+        
     }
 }

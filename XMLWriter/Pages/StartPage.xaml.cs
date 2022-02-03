@@ -21,6 +21,7 @@ namespace XMLWriter.Pages
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         public StartPage()
         {
+            //---------------------------------------------
             System.Diagnostics.Debug.WriteLine("!!!Start!!!");
             data.InitNewSet();
             System.Diagnostics.Debug.WriteLine("!!!Nach Init!!!");
@@ -33,6 +34,28 @@ namespace XMLWriter.Pages
             
         }
 
+
+
+        private void InitTextItems()
+        {
+            btnWeiter.Content = "--->";
+            textInstructions.Content = language.GetStringGeneralInstruction();
+            textInstructions.ToolTip = language.GetStringGeneralInstructionText();
+            textLoadFile.Content = language.GetStringFileNameTitel();
+            btnLoadFile.Content = language.GetStringLoadFile();
+            btnReset.Content = language.GetStringDeleteSet();   
+            textStepCount.Content = language.GetStringSteps() + " " + data.GetStepCountMax();
+        }
+
+
+        private void InitValueItems()
+        {
+            inputType.ItemsSource = startPageData.GetProcessTypeList();
+            xamlHelper.SetActiveELementFor(inputType, data.GetDataType());
+            if (consol.showMiscStarPage) System.Diagnostics.Debug.WriteLine("Type (rep/gfs): " + inputType.Text + "                                     ---StartPage.InitTextItems()");
+            inputLanguage.ItemsSource = startPageData.GetLanguageList();
+            inputLanguage.Text = language.GetStringLanguage();
+        }
         private void BtnNext(object sender, RoutedEventArgs e)
         {
             data.SetDataType(inputType.Text);
@@ -52,7 +75,7 @@ namespace XMLWriter.Pages
             {
                 Console.WriteLine("Fehler in der gfs/rep-Wahl---                    BtnNext() aus StartPage");
             }
-            if (checkUseTxtOrDatabse.IsChecked==true)
+            if (checkUseTxtOrDatabse.IsChecked == true)
             {
                 loadInput.UseDataBase();
             }
@@ -74,9 +97,9 @@ namespace XMLWriter.Pages
         }
         private void BtnLoadFile(object sender, RoutedEventArgs e)
         {
-            
+
             loadData.LoadDataFromFile();
-            inputType.Text = data.GetDataType(); 
+            inputType.Text = data.GetDataType();
             inputLoadFile.Text = loadData.GetFileNameAndPath();
             textStepCount.Content = language.GetStringSteps() + " " + data.GetStepCountMax();
         }
@@ -85,28 +108,6 @@ namespace XMLWriter.Pages
         {
             data.ResetDataSet();
             inputLoadFile.Text = "";
-        }
-
-        private void InitTextItems()
-        {
-            btnWeiter.Content = "--->";
-            inputLanguage.ItemsSource = startPageData.GetLanguageChoises();
-            inputLanguage.Text = language.GetStringLanguage();
-            inputType.ItemsSource = startPageData.GetDataTypeChoice();
-            textInstructions.Content = language.GetStringGeneralInstruction();
-            textInstructions.ToolTip = language.GetStringGeneralInstructionText();
-            xamlHelper.SetActiveELementFor(inputType, data.GetDataType());
-            if (consol.showMiscStarPage) System.Diagnostics.Debug.WriteLine("Type (rep/gfs): " + inputType.Text + "                                     ---StartPage.InitTextItems()");
-            textLoadFile.Content = language.GetStringFileNameTitel();
-            btnLoadFile.Content = language.GetStringLoadFile();
-            btnReset.Content = language.GetStringDeleteSet();   
-            textStepCount.Content = language.GetStringSteps() + " " + data.GetStepCountMax();
-        }
-
-
-        private void InitValueItems()
-        {
-            //Ähm... ja
         }
     }
 }
