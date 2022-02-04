@@ -30,9 +30,13 @@ namespace XMLWriter.Pages
         }
         private void InitLabels()
         {
-            startPageData.SetLabelContent(labelTitel, startPageData.GetTextFileNameTitel());
+            startPageData.SetTitelText(labelTitel);
+            startPageData.SetLoadFileText(labelLoadFile);
+            startPageData.SetDisplayStepText(labelStepCount);
+            startPageData.SetTxtOrDataBaseCheckBoxText(textUseDatabaseChecked, textUseDatabaseUnchecked);
+            /*startPageData.SetLabelContent(labelTitel, startPageData.GetTextFileNameTitel());
             startPageData.SetLabelContent(labelLoadFile, startPageData.GetTextLoadFile());
-            startPageData.SetLabelContent(labelStepCount, startPageData.GetTextDisplayStep() + data.GetStepCount());
+            startPageData.SetLabelContent(labelStepCount, startPageData.GetTextDisplayStep() + data.GetStepCount());*/
         }
         private void InitButtons()
         {
@@ -43,22 +47,24 @@ namespace XMLWriter.Pages
         }
         private void InitDropDowns()
         {
-            startPageData.SetDropDownContent(dropDownProcesses, startPageData.GetProcessTypeList(), data.GetDataType());
-            startPageData.SetDropDownContent(dropDownLanguage, startPageData.GetLanguageList(), startPageData.GetSelectedLanguage());
+            startPageData.InitProcessTypeDropDown(dropDownProcesses);
+            startPageData.InitLanguageSelectionDropDown(dropDownLanguage);
+            //startPageData.SetDropDownContent(dropDownProcesses, startPageData.GetProcessTypeList(), data.GetDataType());
+            //startPageData.SetDropDownContent(dropDownLanguage, startPageData.GetLanguageList(), startPageData.GetSelectedLanguage());
         }
         private void btnStart(object sender, RoutedEventArgs e)
         {
             startPageData.InitNewDataSet();
-            startPageData.LoadDropDownOptions();
             data.SetStepCount(0);   // This should rather be in Load
             startPageData.DatabaseOrTxtCheck(checkUseTxtOrDatabse.IsChecked);
 
-            if (startPageData.GetSelectedProcessType() == "rep")
+            if (startPageData.GetSelectedProcessType() == startPageData.GetProcessTypeList()[1]) //rep - Reparatur
             {
                 _ = NavigationService.Navigate(new RepPage());
             }
-            else if (dropDownProcesses.Text == "gfs")
+            else if (dropDownProcesses.Text == startPageData.GetProcessTypeList()[0]) //gfs - geführte Fehlersuche
             {
+                startPageData.LoadDropDownOptions();
                 _ = NavigationService.Navigate(new GfsPage());
             }
             else
@@ -68,15 +74,14 @@ namespace XMLWriter.Pages
         }
         private void BtnSelectLanguage_Click(object sender, RoutedEventArgs e)
         {
-            startPageData.SetLangauge(dropDownLanguage.Text);
             startPageData.SetLabelContent(labelTitel, startPageData.GetTextTitel());
+            startPageData.SetLangauge(dropDownLanguage.Text);
         }
  
         private void BtnLoadFile(object sender, RoutedEventArgs e)
         {
             loadData.LoadDataFromFile();
-            startPageData.SetProcessActiveElement(dropDownProcesses);
-            //xamlHelper.SetDropDownActiveELementFor(dropDownProcesses, data.GetDataType());
+            startPageData.ChangeDropDownContentActiveElement(dropDownProcesses, dropDownProcesses.Text);
             startPageData.SetTextBlockContent(textBlockLoadFile, loadData.GetFileNameAndPath());
             startPageData.SetLabelContent(labelStepCount, startPageData.GetTextDisplayStep() + data.GetStepCountMax());
         }

@@ -40,12 +40,14 @@
         <Button x:Name="btnWeiter"  Grid.Row="9" Grid.Column="5" Grid.RowSpan="1" Height="50" Width="100" Margin="15,5,15,5" Click="btnStart"/>
 
         <StackPanel Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="1" Grid.RowSpan="2">
-            <Label x:Name="textUseDatabaseChecked" Content="Checked: Use Database"/>
-            <Label x:Name="textUseDatabaseUnchecked" Content="Unchecked: Use Txt-file"/>
+            <Label x:Name="textUseDatabaseChecked"/>
+            <Label x:Name="textUseDatabaseUnchecked"/>
             <CheckBox x:Name="checkUseTxtOrDatabse" HorizontalAlignment="Center" IsChecked="True"/>
         </StackPanel>
-        <ComboBox x:Name="dropDownProcesses" Grid.Row="9" Grid.Column="4" Text="gfs" HorizontalAlignment="Left" Width="132" ContextMenuClosing="dropDownProcesses_ContextMenuClosing"/>
+        
         <!--Reparatur, geführte Fehlersuche etc-->
+        <ComboBox x:Name="dropDownProcesses" Grid.Row="9" Grid.Column="4" Text="gfs" HorizontalAlignment="Left" Width="132" ContextMenuClosing="dropDownProcesses_ContextMenuClosing"/>
+        
 
         <!--Sprachwahl-->
         <Label Content="Choose Language" Grid.Row="7" Grid.Column="1" VerticalAlignment="Bottom" HorizontalContentAlignment="Center"/>

@@ -12,7 +12,7 @@ namespace XMLWriter.Classes.StartPage
 
         public void InitSavePageData()
         {
-            savePageStringFileNameTitel = language.GetStringFileNameTitel();
+            savePageStringFileNameTitel = language.GetStringFilePath();
             savePageStringSteps = language.GetStringSteps() + " ";
         }
 
