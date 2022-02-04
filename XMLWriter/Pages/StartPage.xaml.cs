@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -31,11 +32,9 @@ namespace XMLWriter.Pages
         }
         private void InitLabels()
         {
-            xamlHelper.SetLabelTextFor(labelTitel, startPageData.GetTextTitel());
-            xamlHelper.SetLabelTextFor(labelInstructions, startPageData.GetTextGeneralInstructionShort());
-            xamlHelper.SetLabelTextFor(labelInstructions, startPageData.GetTextGeneralInstructionLong());
-            xamlHelper.SetLabelTextFor(labelLoadFile, startPageData.GetTextFileNameTitel());
-            xamlHelper.SetLabelTextFor(labelStepCount, startPageData.GetTextDisplayStep() + data.GetStepCountMax());
+            List<Label> labelList = new List<Label>{ labelTitel, labelLoadFile, labelStepCount };
+            List<string> textList = new List<string> { startPageData.GetTextTitel(), startPageData.GetTextFileNameTitel(), startPageData.GetTextDisplayStep() + data.GetStepCountMax() };
+            xamlHelper.InitTextItems(labelList, textList);
         }
         private void InitButtons()
         {
@@ -57,15 +56,7 @@ namespace XMLWriter.Pages
             startPageData.InitNewDataSet();
             startPageData.LoadDropDownOptions();
             data.SetStepCount(0);   // This should rather be in Load
-
-            if (checkUseTxtOrDatabse.IsChecked == true)
-            {
-                loadInput.UseDataBase();
-            }
-            else
-            {
-                loadInput.DontUseDataBase();
-            }
+            startPageData.DatabaseOrTxtCheck(checkUseTxtOrDatabse.IsChecked);
             if (dropDownProcesses.Text == "rep")
             {
                 _ = NavigationService.Navigate(new RepPage());
@@ -82,29 +73,21 @@ namespace XMLWriter.Pages
         private void BtnSelectLanguage_Click(object sender, RoutedEventArgs e)
         {
             startPageData.SetLangauge(dropDownLanguage.Text);
-            //language.InitLanguage(startPageData.GetSelectedLanguage()); //Befüllt die Variablen mit den Wörtern  der jeweiligen Sprache
-
-            //labelTitel.Content = startPageData.GetStartPageTitel();
-            xamlHelper.SetLabelTextFor(labelTitel, startPageData.GetTextTitel());
+            xamlHelper.SetTextFor(labelTitel, startPageData.GetTextTitel());
         }
-        private void BtnClose(object sender, RoutedEventArgs e)
-        {
-            App.Current.Shutdown(0);
-        }
+ 
         private void BtnLoadFile(object sender, RoutedEventArgs e)
         {
-
             loadData.LoadDataFromFile();
-            dropDownProcesses.Text = data.GetDataType();
-            textBoxLoadFile.Text = loadData.GetFileNameAndPath();
-            labelStepCount.Content = startPageData.GetTextDisplayStep() + " " + data.GetStepCountMax();
-            xamlHelper.SetLabelTextFor(labelStepCount, startPageData.GetTextDisplayStep() + data.GetStepCountMax());
+            startPageData.SetProcessActiveElement(dropDownProcesses);
+            //xamlHelper.SetDropDownActiveELementFor(dropDownProcesses, data.GetDataType());
+            xamlHelper.SetTextFor(textBlockLoadFile, loadData.GetFileNameAndPath());
+            xamlHelper.SetTextFor(labelStepCount, startPageData.GetTextDisplayStep() + data.GetStepCountMax());
         }
 
         private void BtnReset(object sender, RoutedEventArgs e)
         {
-            data.ResetDataSet();
-            textBoxLoadFile.Text = "";
+            startPageData.Reset(textBlockLoadFile);
         }
     }
 }

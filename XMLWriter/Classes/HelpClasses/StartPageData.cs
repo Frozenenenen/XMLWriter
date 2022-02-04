@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace XMLWriter.Classes.StartPage
 {
@@ -8,8 +10,10 @@ namespace XMLWriter.Classes.StartPage
     {
         UtilityFunctions utility = new UtilityFunctions();
         Language language = new Language();
+        DropDownOptionLists loadInput = new DropDownOptionLists();
         DataSets data = new DataSets();
         DropDownOptionLists dropDownLists = new DropDownOptionLists();
+        XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
 
         private static readonly string[] processTypeList = { "gfs", "rep" };
         private static readonly string[] languageList = { "Deutsch", "English", "Espanol" };
@@ -24,6 +28,8 @@ namespace XMLWriter.Classes.StartPage
         //Buttons
         private static string stringLoadFile;
         private static string stringDeleteSet;
+        //TextBox
+        private static string stringSaveSet;
 
 
 
@@ -74,6 +80,11 @@ namespace XMLWriter.Classes.StartPage
                 selectedProcessType = _processType;
                 data.SetDataType(_processType); //Setzt auch direkt die "globale" Variable beim ändern.
             }
+            
+        }
+        public void SetProcessActiveElement(ComboBox comboBox)
+        {
+            xamlHelper.SetDropDownActiveELementFor(comboBox, data.GetDataType());
         }
 
         public void InitNewDataSet()
@@ -88,6 +99,23 @@ namespace XMLWriter.Classes.StartPage
         public void InitLanguages()
         {
             language.InitLanguage(selectedLanguage);
+        }
+
+        public void DatabaseOrTxtCheck(bool? check)
+        {
+            if (check == true)
+            {
+                loadInput.UseDataBase();
+            }
+            else
+            {
+                loadInput.DontUseDataBase();
+            }
+        }
+        public void Reset(TextBlock textBlock)
+        {
+            data.ResetDataSet();
+            textBlock.Text = "";
         }
 
     }

@@ -34,8 +34,6 @@
             <ColumnDefinition Width="70"/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="textSaveNotice" Content="X" FontSize="20" ToolTip="Das schließen des Fenster's über das Kreuz löscht das Programm nicht aus dem Speicher. Beim speichern funktioniert dies. Ansonsten hier klicken"  VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="6" Background="Red"  Click="BtnClose" Width="35"/>
-        <Label x:Name="labelInstructions" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Background="Yellow"  Margin="0,19,0,0"/>
         <Label x:Name="labelTitel" Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="3" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
         <Label x:Name="labelStepCount" Grid.Row="5" Grid.Column="1" VerticalAlignment="Top"/>
 
@@ -56,7 +54,7 @@
 
         <!--Datei Laden-->
         <Label x:Name="labelLoadFile" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="textBoxLoadFile" Grid.Row="3" Grid.Column="1" Margin="2,2,2,2" Grid.ColumnSpan="2" TextWrapping="Wrap" IsEnabled="False"/>
+        <TextBlock x:Name="textBlockLoadFile" Grid.Row="3" Grid.Column="1" Margin="2,2,2,2" Grid.ColumnSpan="2" TextWrapping="Wrap" IsEnabled="False"/>
         <Button x:Name="btnLoadFile" Grid.Row="4" Grid.Column="1" Click="BtnLoadFile" Margin=" 2,2,2,2" Width="85" Height="35" HorizontalAlignment="Left"/>
         <Button x:Name="btnReset" Grid.Row="4" Grid.Column="4" Click="BtnReset" Margin=" 2,2,2,2" Width="85" Height="35" HorizontalAlignment="Right"/>
 

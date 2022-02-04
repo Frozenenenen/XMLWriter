@@ -138,7 +138,7 @@ namespace XMLWriter
             pleaseChoose = "Bitte wählen";
             optional = "Optional: direkter input. Priorisiert, falls befüllt!";
             step = "Schrittbezeichnung";
-            steps = "Schritte";
+            steps = "Schritte:";
             description = "Beschreibung";
             specialStep = "Sonderschritt";
             anim = "Animation";

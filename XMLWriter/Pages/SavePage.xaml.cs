@@ -72,7 +72,7 @@ namespace XMLWriter.Pages
             inputVehicleID.ItemsSource = writer.GetPathVehicleIDChoises();
             inputLanguage.ItemsSource = writer.GetPathLanguageChoises();
             textTitel.Content = language.GetStringSummary();
-            xamlHelper.SetLabelTextFor(labelFileNameTitel, savePageData.GetStringFileNameTitel());
+            xamlHelper.SetTextFor(labelFileNameTitel, savePageData.GetStringFileNameTitel());
             //labelFileNameTitel.Content = language.GetStringFileNameTitel();
             textStepCount.Content = (data.GetStepCountMax()) + " " + savePageData.GetStringSteps();
             btnBack.Content = language.GetStringBack();
