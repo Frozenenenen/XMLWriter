@@ -87,7 +87,6 @@ namespace XMLWriter.Pages
         private void dropDownProcesses_DropDownClosed(object sender, EventArgs e)
         {
             startPageData.ChangeDropDownContentActiveElement(dropDownProcesses, dropDownProcesses.Text);
-
         }
     }
 }

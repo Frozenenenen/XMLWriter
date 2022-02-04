@@ -77,6 +77,7 @@ namespace XMLWriter.Classes.StartPage
         public void ChangeDropDownContentActiveElement(ComboBox comboBox, string selectedElement)
         {
             xamlHelper.SetDropDownActiveELementFor(comboBox, selectedElement);
+            data.SetDataType(selectedElement);
         }
 
          //Getter for Displaying Labels
@@ -165,6 +166,7 @@ namespace XMLWriter.Classes.StartPage
         //Init DropDowns
         public void InitProcessTypeDropDown(ComboBox comboBox)
         {
+            System.Diagnostics.Debug.WriteLine("Prozesstyp: " + data.GetDataType());
             xamlHelper.SetDropdownListFor(comboBox, processTypeList);
             xamlHelper.SetDropDownActiveELementFor(comboBox, data.GetDataType());
         }
