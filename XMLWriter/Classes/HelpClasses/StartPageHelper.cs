@@ -135,7 +135,7 @@ namespace XMLWriter.Classes.StartPage
         }
         public void SetDisplayStepsText(Label labelStepCount)
         {
-            xamlHelper.SetTextFor(labelStepCount, stringDisplaySteps + ": " + data.GetStepCountMax() + 1);
+            xamlHelper.SetTextFor(labelStepCount, stringDisplaySteps + ": " + (data.GetStepCountMax() + 1));
         }
         //Init Buttons
         public void SetStartButtonText(Button button)

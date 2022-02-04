@@ -19,7 +19,7 @@ namespace XMLWriter
         private static string next;
         private static string back;
         private static string pleaseFill;
-        private static string step;
+        private static string stepTitel;
         private static string steps;
         private static string summary;
         private static string pleaseChoose;
@@ -67,7 +67,7 @@ namespace XMLWriter
         //SavePage
         public string GetStringFilePathDialog() => filePathDialog;
         //gfs/rep spec
-        public string GetStringStep() => step;
+        public string GetStringStepTitel() => stepTitel;
         public string GetStringPleaseFill() => pleaseFill;
         public string GetStringContent() => description;
         public string GetStringAnim() => anim;
@@ -137,8 +137,8 @@ namespace XMLWriter
             createDataSet = "Datensatz anlegen oder laden";
             pleaseChoose = "Bitte wählen";
             optional = "Optional: direkter input. Priorisiert, falls befüllt!";
-            step = "Schrittbezeichnung";
-            steps = "Schritte:";
+            stepTitel = "Schrittbezeichnung";
+            steps = "Schritte";
             description = "Beschreibung";
             specialStep = "Sonderschritt";
             anim = "Animation";
@@ -170,7 +170,7 @@ namespace XMLWriter
             createDataSet = "Create Data Set";
             pleaseChoose = "Please choose";
             optional = "Optional: direct input. Prioritized if filled";
-            step = "Step";
+            stepTitel = "Step";
             steps = "Steps";
             description = "Description";
             specialStep = "Special step";
@@ -204,7 +204,7 @@ namespace XMLWriter
             createDataSet = "Crear expediente";
             pleaseChoose = "Please choose";
             optional = "Optional: direct input. Prioritized if filled";
-            step = "Paso";
+            stepTitel = "Paso";
             steps = "Pasos";
             description = "Descripción";
             specialStep = "especial paso";
