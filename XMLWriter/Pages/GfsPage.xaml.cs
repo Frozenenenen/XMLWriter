@@ -248,7 +248,7 @@ namespace XMLWriter.Pages
         {
             CheckForWhatToolHasBeenChosen();
             inputToolChoice.ItemsSource = ddList.GetToolChoice();
-            xamlHelper.SetActiveELementForDropDown(inputToolChoice, dataSet.toolChoice);
+            xamlHelper.SetDropDownActiveELementFor(inputToolChoice, dataSet.toolChoice);
             InitActuatorTextDropdowns();
             InitSmartToolDropdowns();
             InitReadDataDropdowns();

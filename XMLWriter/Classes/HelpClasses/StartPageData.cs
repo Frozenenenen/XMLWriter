@@ -14,30 +14,36 @@ namespace XMLWriter.Classes.StartPage
         private static readonly string[] languageList = { "Deutsch", "English", "Espanol" };
         private string selectedLanguage = languageList[0];
         private string selectedProcessType = "rep";
+        //Labels
+        private static string stringTitel;
+        private static string stringGeneralInstruction;
+        private static string stringGeneralInstructionText;
+        private static string stringFileNameTitel;
+        private static string stringDisplayStep;
+        //Buttons
+        private static string stringLoadFile;
+        private static string stringDeleteSet;
 
-        private static string startPageTitel;
-        private static string startPageGeneralInstruction;
-        private static string startPageGeneralInstructionText;
-        private static string startPageFileNameTitel;
-        private static string startPageDisplayStep;
 
-        
 
         public void InitStartPageDataStrings()
         {
-            startPageTitel = language.GetStringCreateDataSet();
-            startPageGeneralInstruction = language.GetStringGeneralInstruction();
-            startPageGeneralInstructionText = language.GetStringGeneralInstructionText();
-            startPageFileNameTitel = language.GetStringFileNameTitel();
-            startPageDisplayStep = language.GetStringSteps() + " ";
+            stringTitel = language.GetStringCreateDataSet();
+            stringGeneralInstruction = language.GetStringGeneralInstruction();
+            stringGeneralInstructionText = language.GetStringGeneralInstructionText();
+            stringFileNameTitel = language.GetStringFileNameTitel();
+            stringDisplayStep = language.GetStringSteps() + " ";
         }
 
-        //Getter for Displaying Text
-        public string GetStringTitel() => startPageTitel;
-        public string GetStringGeneralInstruction() => startPageGeneralInstruction;
-        public string GetStringGeneralInstructionText() => startPageGeneralInstructionText;
-        public string GetStringFileNameTitel() => startPageFileNameTitel;
-        public string GetStringDisplayStep() => startPageDisplayStep;
+        //Getter for Displaying Labels
+        public string GetTextTitel() => stringTitel;
+        public string GetTextGeneralInstruction() => stringGeneralInstruction;
+        public string GetTextGeneralInstructionText() => stringGeneralInstructionText;
+        public string GetTextFileNameTitel() => stringFileNameTitel;
+        public string GetTextDisplayStep() => stringDisplayStep;
+        //Getter for Displaying Buttons
+        public string GetTextLoadFile() => stringLoadFile;
+        public string GetTextDeleteSet() => stringDeleteSet;
 
         //Variable Getter
         public string[] GetLanguageList() => languageList;
@@ -48,7 +54,7 @@ namespace XMLWriter.Classes.StartPage
             {
                 selectedLanguage = _language;
                 language.InitLanguage(selectedLanguage);
-                startPageTitel = language.GetStringCreateDataSet();
+                stringTitel = language.GetStringCreateDataSet();
             }
 
         } 
