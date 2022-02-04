@@ -66,7 +66,7 @@ namespace XMLWriter.Pages
         {
             
             startPageHelper.LoadDataFromFile();
-            startPageHelper.ChangeDropDownContentActiveElement(dropDownProcesses, dropDownProcesses.Text);
+            startPageHelper.ChangeProcessActiveElement(dropDownProcesses, dropDownProcesses.Text);
             startPageHelper.SetFilePathText(textBlockLoadFile);
             startPageHelper.SetDisplayStepsText(labelStepCount);
         }
@@ -82,7 +82,7 @@ namespace XMLWriter.Pages
         }
         private void dropDownProcesses_OnClosed(object sender, EventArgs e)
         {
-            startPageHelper.ChangeDropDownContentActiveElement(dropDownProcesses, dropDownProcesses.Text);
+            startPageHelper.ChangeProcessActiveElement(dropDownProcesses, dropDownProcesses.Text);
         }
     }
 }

@@ -32,71 +32,12 @@ namespace XMLWriter.Classes.StartPage
         private static string stringStart ="--->";
         private static string stringLoadFile;
         private static string stringDeleteSet;
-        //TextBox
-
-        //private static string stringSaveSet;
-
 
         //----------------------Bearbeitungsbereich-----------------------
-        //----------------------Bearbeitungsbereich-----------------------
-        //----------------------Bearbeitungsbereich-----------------------
-        public void LoadDataFromFile()
-        {
-            loadData.LoadDataFromFile();
-        }
 
         //----------------------Bearbeitungsbereich-----------------------
-        //----------------------Bearbeitungsbereich-----------------------
-        //----------------------Bearbeitungsbereich-----------------------
 
-
-        private void InitDisplayText()
-        {
-            stringCreateDataSet = language.GetStringCreateDataSet();
-            strinfilePath = language.GetStringFilePath();
-            stringDisplaySteps = language.GetStringSteps();
-            stringChecked = language.GetStringUseDataBaseChecked();
-            stringUnchecked = language.GetStringUseDataBaseUnchecked();
-            //Buttons
-            stringLoadFile = language.GetStringLoadFile();
-            stringDeleteSet = language.GetStringDeleteSet();
-    }
-        public void ChangeDropDownContentActiveElement(ComboBox comboBox, string selectedElement)
-        {
-            xamlHelper.SetDropDownActiveELementFor(comboBox, selectedElement);
-            data.SetDataType(selectedElement);
-        }
-
-
-        //Dropdown Getter & Setter
-        public void SetLangauge(string _language)
-        {
-            if (utility.ArrayContainsElement(languageList, _language))
-            {
-                selectedLanguage = _language;
-                language.InitLanguage(selectedLanguage);
-                InitDisplayText();
-            }
-
-        } 
-        public string[] GetProcessTypeList() => processTypeList;
-        public string GetSelectedProcessType() => selectedProcessType;
-
-        public void InitNewDataSet()
-        {
-            data.InitNewDataSet();
-
-        }
-        public void LoadDropDownOptions()
-        {//This load the objectlist for use in gfs dropdowns from text files or from a database
-            dropDownLists.LoadAllDropDownOptionsFromTxtOrDatabase();
-        }
-        public void InitLanguages()
-        {
-            language.InitLanguage(selectedLanguage);
-            InitDisplayText();
-        }
-
+        ///---Hilfsfunktionen---///
         public void DatabaseOrTxtCheck(bool? check)
         {
             if (check == true)
@@ -113,8 +54,53 @@ namespace XMLWriter.Classes.StartPage
             data.ResetDataSet();
             textBlock.Text = "";
         }
+        public void LoadDataFromFile()
+        {
+            loadData.LoadDataFromFile();
+        }
 
+        ///---Inits von Werten---///
+        public void InitNewDataSet()
+        {
+            data.InitNewDataSet();
 
+        }
+        public void LoadDropDownOptions()
+        {//This load the objectlist for use in gfs dropdowns from text files or from a database
+            dropDownLists.LoadAllDropDownOptionsFromTxtOrDatabase();
+        }
+        public void InitLanguages()
+        {
+            language.InitLanguage(selectedLanguage);
+            InitDisplayText();
+        }
+        private void InitDisplayText()
+        {
+            stringCreateDataSet = language.GetStringCreateDataSet();
+            strinfilePath = language.GetStringFilePath();
+            stringDisplaySteps = language.GetStringSteps();
+            stringChecked = language.GetStringUseDataBaseChecked();
+            stringUnchecked = language.GetStringUseDataBaseUnchecked();
+            //Buttons
+            stringLoadFile = language.GetStringLoadFile();
+            stringDeleteSet = language.GetStringDeleteSet();
+        }
+
+        ///---Dropdown Getter---///
+        public void SetLangauge(string _language)
+        {
+            if (utility.ArrayContainsElement(languageList, _language))
+            {
+                selectedLanguage = _language;
+                language.InitLanguage(selectedLanguage);
+                InitDisplayText();
+            }
+
+        }
+        public string[] GetProcessTypeList() => processTypeList;
+        public string GetSelectedProcessType() => selectedProcessType;
+
+        ///---Inits bzw Sets von Display-Elementen---///
         //Set or Init Labels
         public void SetTitelText(Label labelTitel)
         {
@@ -152,6 +138,11 @@ namespace XMLWriter.Classes.StartPage
         {
             xamlHelper.SetDropdownListFor(comboBox, languageList);
             xamlHelper.SetDropDownActiveELementFor(comboBox, selectedLanguage);
+        }
+        public void ChangeProcessActiveElement(ComboBox comboBox, string selectedElement)
+        {
+            xamlHelper.SetDropDownActiveELementFor(comboBox, selectedElement);
+            data.SetDataType(selectedElement);
         }
         //Init CheckBoxes
         public void SetTxtOrDataBaseCheckBoxText(Label check, Label uncheck)
