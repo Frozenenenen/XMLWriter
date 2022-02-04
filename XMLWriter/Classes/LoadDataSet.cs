@@ -15,7 +15,7 @@ namespace XMLWriter.Classes
 {
     class LoadDataSet
     {
-        DataSets data = new DataSets();
+        ManageDataSets data = new ManageDataSets();
         GUIMovement GUI = new GUIMovement();
         DropDownOptionLists ddList = new DropDownOptionLists(); 
         ConsoleControl consol = new ConsoleControl();

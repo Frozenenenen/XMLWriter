@@ -13,12 +13,12 @@ namespace XMLWriter.Pages
     /// </summary>
     public partial class SavePage : Page
     {
-        DataSets data = new DataSets();
+        ManageDataSets data = new ManageDataSets();
         GUIMovement gui = new GUIMovement();
         LoadDataSet loadData = new LoadDataSet();
         Language language = new Language();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
-        SavePageData savePageData = new SavePageData();
+        SavePageHelper savePageData = new SavePageHelper();
 
         public SavePage()
         {

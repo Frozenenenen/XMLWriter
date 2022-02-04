@@ -7,7 +7,7 @@ namespace XMLWriter
 {
     class GUIMovement
     {
-        DataSets data = new DataSets();
+        ManageDataSets data = new ManageDataSets();
         ConsoleControl consol = new ConsoleControl();
 
         public void IncrementSteps()

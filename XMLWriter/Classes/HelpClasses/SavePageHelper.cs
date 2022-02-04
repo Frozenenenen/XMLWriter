@@ -4,7 +4,7 @@ using System.Text;
 
 namespace XMLWriter.Classes.StartPage
 {
-    internal class SavePageData
+    internal class SavePageHelper
     {
         Language language = new Language();
         private static string savePageStringFileNameTitel;

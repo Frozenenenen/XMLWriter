@@ -13,7 +13,7 @@ namespace XMLWriter.Pages
     /// </summary>
     public partial class GfsPage : Page
     {
-        DataSets data = new DataSets();
+        ManageDataSets data = new ManageDataSets();
         Language language = new Language();
         GUIMovement GUI = new GUIMovement();
         DropDownOptionLists ddList = new DropDownOptionLists();

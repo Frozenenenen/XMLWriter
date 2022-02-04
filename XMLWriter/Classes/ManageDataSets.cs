@@ -7,7 +7,7 @@ namespace XMLWriter.Classes
 {
     
 
-    internal class DataSets
+    internal class ManageDataSets
     {
         ConsoleControl consol = new ConsoleControl();
 

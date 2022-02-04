@@ -18,7 +18,7 @@ namespace XMLWriter.Classes.StartPage
         UtilityFunctions utility = new UtilityFunctions();
         LoadDataSet loadData = new LoadDataSet();
         Language language = new Language();
-        DataSets data = new DataSets();
+        ManageDataSets data = new ManageDataSets();
 
         private static readonly string[] processTypeList = { "gfs", "rep" };
         private static readonly string[] languageList = { "Deutsch", "English", "Espanol" };
