@@ -133,7 +133,7 @@ namespace XMLWriter.Classes.StartPage
         {
             xamlHelper.SetTextFor(labelLoadFile, stringLoadFile);
         }
-        public void SetDisplayStepText(Label labelStepCount)
+        public void SetDisplayStepsText(Label labelStepCount)
         {
             xamlHelper.SetTextFor(labelStepCount, stringDisplaySteps + ": " + data.GetStepCountMax() + 1);
         }

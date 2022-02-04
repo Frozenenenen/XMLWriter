@@ -28,7 +28,7 @@ namespace XMLWriter.Pages
         {
             startPageHelper.SetTitelText(labelTitel);
             startPageHelper.SetLoadFileText(labelLoadFile);
-            startPageHelper.SetDisplayStepText(labelStepCount);
+            startPageHelper.SetDisplayStepsText(labelStepCount);
             startPageHelper.SetTxtOrDataBaseCheckBoxText(textUseDatabaseChecked, textUseDatabaseUnchecked);
         }
         private void InitButtons()
@@ -68,7 +68,7 @@ namespace XMLWriter.Pages
             startPageHelper.LoadDataFromFile();
             startPageHelper.ChangeDropDownContentActiveElement(dropDownProcesses, dropDownProcesses.Text);
             startPageHelper.SetFilePathText(textBlockLoadFile);
-            startPageHelper.SetDisplayStepText(labelStepCount);
+            startPageHelper.SetDisplayStepsText(labelStepCount);
         }
         private void BtnReset_Click(object sender, RoutedEventArgs e)
         {
