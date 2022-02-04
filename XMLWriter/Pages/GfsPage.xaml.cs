@@ -186,7 +186,7 @@ namespace XMLWriter.Pages
             if(consol.showStep) System.Diagnostics.Debug.WriteLine("\n - - - Index Start Gfs - - - \n              " + data.GetStepCount() + "\n - - - Index Start Gfs - - -                                      ---GfsPage.InitTextItems()");
 
             //Inhalte linke Spalte
-            textStep.Content = language.GetStringStep() + " " + (data.GetStepCount() + 1);
+    //>´wieder einbauen!         //textStep.Content = language.GetStringStep() + " " + (data.GetStepCount() + 1);
             textContentTitel.Content = language.GetStringContent();
             textAnimTitel.Content = language.GetStringAnim();
             textInstructionTitel.Content = language.GetStringInstruction();
@@ -248,7 +248,7 @@ namespace XMLWriter.Pages
         {
             CheckForWhatToolHasBeenChosen();
             inputToolChoice.ItemsSource = ddList.GetToolChoice();
-            xamlHelper.SetActiveELementFor(inputToolChoice, dataSet.toolChoice);
+            xamlHelper.SetActiveELementForDropDown(inputToolChoice, dataSet.toolChoice);
             InitActuatorTextDropdowns();
             InitSmartToolDropdowns();
             InitReadDataDropdowns();

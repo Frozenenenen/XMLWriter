@@ -29,45 +29,51 @@ namespace XMLWriter.Pages
             System.Diagnostics.Debug.WriteLine("!!!Nach Laden der .txts!!!");
             InitializeComponent();
             language.InitLanguage(startPageData.GetSelectedLanguage());
-            InitTextItems();
-            InitValueItems();
+            startPageData.InitStartPageDataStrings();
+            InitLabels();
+            InitButtons();
+            InitDropDowns();
             
         }
 
 
 
-        private void InitTextItems()
+        private void InitLabels()
+        {
+            xamlHelper.SetLabelTextFor(labelTitel, startPageData.GetStringTitel());
+            System.Diagnostics.Debug.WriteLine(">>>Überschrift: " + startPageData.GetStringTitel());
+            xamlHelper.SetLabelTextFor(labelInstructions, startPageData.GetStringGeneralInstruction());
+            xamlHelper.SetLabelTextFor(labelInstructions, startPageData.GetStringGeneralInstructionText());
+            xamlHelper.SetLabelTextFor(labelLoadFile, startPageData.GetStringFileNameTitel());
+            xamlHelper.SetLabelTextFor(labelStepCount, startPageData.GetStringDisplayStep() + data.GetStepCountMax());
+        }
+        private void InitButtons()
         {
             btnWeiter.Content = "--->";
-            textInstructions.Content = language.GetStringGeneralInstruction();
-            textInstructions.ToolTip = language.GetStringGeneralInstructionText();
-            textLoadFile.Content = language.GetStringFileNameTitel();
             btnLoadFile.Content = language.GetStringLoadFile();
-            btnReset.Content = language.GetStringDeleteSet();   
-            textStepCount.Content = language.GetStringSteps() + " " + data.GetStepCountMax();
+            btnReset.Content = language.GetStringDeleteSet();
         }
 
 
-        private void InitValueItems()
+        private void InitDropDowns()
         {
-            inputType.ItemsSource = startPageData.GetProcessTypeList();
-            xamlHelper.SetActiveELementFor(inputType, data.GetDataType());
-            if (consol.showMiscStarPage) System.Diagnostics.Debug.WriteLine("Type (rep/gfs): " + inputType.Text + "                                     ---StartPage.InitTextItems()");
+            xamlHelper.SetListForDropDown(dropDownProcesses, startPageData.GetProcessTypeList());
+            xamlHelper.SetActiveELementForDropDown(dropDownProcesses, data.GetDataType());
             //language init
-            inputLanguage.ItemsSource = startPageData.GetLanguageList();
-            xamlHelper.SetActiveELementFor(inputLanguage, startPageData.GetSelectedLanguage());
+            xamlHelper.SetListForDropDown(dropDownLanguage, startPageData.GetLanguageList());
+            xamlHelper.SetActiveELementForDropDown(dropDownLanguage, startPageData.GetSelectedLanguage());
         }
         private void BtnNext(object sender, RoutedEventArgs e)
         {
-            data.SetDataType(inputType.Text);
+            data.SetDataType(dropDownProcesses.Text);
             data.SetStepCount(0);   //has to be reset to 0 coz of loading
 
-            if (inputType.Text == "rep")
+            if (dropDownProcesses.Text == "rep")
             {
 
                 _ = NavigationService.Navigate(new RepPage());
             }
-            else if (inputType.Text == "gfs")
+            else if (dropDownProcesses.Text == "gfs")
             {
 
                 _ = NavigationService.Navigate(new GfsPage());
@@ -89,10 +95,11 @@ namespace XMLWriter.Pages
         }
         private void BtnSelectLanguage_Click(object sender, RoutedEventArgs e)
         {
-            startPageData.SetLangauge(inputLanguage.Text);
+            startPageData.SetLangauge(dropDownLanguage.Text);
             //language.InitLanguage(startPageData.GetSelectedLanguage()); //Befüllt die Variablen mit den Wörtern  der jeweiligen Sprache
 
-            textTitel.Content = startPageData.GetStartPageTitel();
+            //labelTitel.Content = startPageData.GetStartPageTitel();
+            xamlHelper.SetLabelTextFor(labelTitel, startPageData.GetStringTitel());
         }
         private void BtnClose(object sender, RoutedEventArgs e)
         {
@@ -102,15 +109,16 @@ namespace XMLWriter.Pages
         {
 
             loadData.LoadDataFromFile();
-            inputType.Text = data.GetDataType();
-            inputLoadFile.Text = loadData.GetFileNameAndPath();
-            textStepCount.Content = language.GetStringSteps() + " " + data.GetStepCountMax();
+            dropDownProcesses.Text = data.GetDataType();
+            textBoxLoadFile.Text = loadData.GetFileNameAndPath();
+            labelStepCount.Content = startPageData.GetStringDisplayStep() + " " + data.GetStepCountMax();
+            xamlHelper.SetLabelTextFor(labelStepCount, startPageData.GetStringDisplayStep() + data.GetStepCountMax());
         }
 
         private void BtnReset(object sender, RoutedEventArgs e)
         {
             data.ResetDataSet();
-            inputLoadFile.Text = "";
+            textBoxLoadFile.Text = "";
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using XMLWriter.Classes.StartPage;
 
 namespace XMLWriter.Pages
 {
@@ -16,6 +17,8 @@ namespace XMLWriter.Pages
         GUIMovement gui = new GUIMovement();
         LoadDataSet loadData = new LoadDataSet();
         Language language = new Language();
+        XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
+        SavePageData savePageData = new SavePageData();
 
         public SavePage()
         {
@@ -69,8 +72,9 @@ namespace XMLWriter.Pages
             inputVehicleID.ItemsSource = writer.GetPathVehicleIDChoises();
             inputLanguage.ItemsSource = writer.GetPathLanguageChoises();
             textTitel.Content = language.GetStringSummary();
-            textFileNameTitel.Content = language.GetStringFileNameTitel();
-            textStepCount.Content = (data.GetStepCountMax()) + " " + language.GetStringSteps();
+            xamlHelper.SetLabelTextFor(labelFileNameTitel, savePageData.GetStringFileNameTitel());
+            //labelFileNameTitel.Content = language.GetStringFileNameTitel();
+            textStepCount.Content = (data.GetStepCountMax()) + " " + savePageData.GetStringSteps();
             btnBack.Content = language.GetStringBack();
             btnSave.Content = language.GetStringSave();
             inputVehicleID.Text = "eGolf";

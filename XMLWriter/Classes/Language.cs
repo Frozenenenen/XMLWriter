@@ -44,8 +44,8 @@ namespace XMLWriter
         private static string lastStep;
 
         private static string rep; //Noch drin?
-        
-        
+
+
 
 
 
@@ -60,10 +60,8 @@ namespace XMLWriter
         public string GetStringSave() => saveFile;
         public string GetStringNext() => next;
         public string GetStringBack() => back;
-        /*public string GetStringModel() => model;
-        public string GetStringVin() => vin;*/
         public string GetStringPleaseFill() => pleaseFill;
-        public static string GetStringCreateDataSet() => createDataSet;
+        public string GetStringCreateDataSet() => createDataSet;
         public string GetStringGeneralInstruction() => generalInstruction;
         public string GetStringGeneralInstructionText() => generalInstructionText;
         public string GetStringPleaseChoose() => pleaseChoose;

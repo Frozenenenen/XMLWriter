@@ -77,7 +77,7 @@ namespace XMLWriter.Pages
         private void InitTextItems()
         {
             //Schritzüge
-            textStep.Content = language.GetStringStep() + " " + (data.GetStepCount() + 1);
+//Wichtig, wieder einbauen!            //textStep.Content = language.GetStringStep() + " " + (data.GetStepCount() + 1);
             textContentTitel.Content = language.GetStringContent();
             textAnimTitel.Content = language.GetStringAnim();
             textSpecialContentTitel.Content = language.GetStringSpecialStep();
