@@ -14,7 +14,7 @@ namespace XMLWriter.Pages
     public partial class StartPage : Page
     {
         DataSets data = new DataSets();
-        StartPageData startPageData = new StartPageData();
+        StartPageHelper startPageData = new StartPageHelper();
         Language language = new Language();
         LoadDataSet loadData = new LoadDataSet();
         DropDownOptionLists loadInput = new DropDownOptionLists();
@@ -34,24 +34,20 @@ namespace XMLWriter.Pages
             startPageData.SetLoadFileText(labelLoadFile);
             startPageData.SetDisplayStepText(labelStepCount);
             startPageData.SetTxtOrDataBaseCheckBoxText(textUseDatabaseChecked, textUseDatabaseUnchecked);
-            /*startPageData.SetLabelContent(labelTitel, startPageData.GetTextFileNameTitel());
-            startPageData.SetLabelContent(labelLoadFile, startPageData.GetTextLoadFile());
-            startPageData.SetLabelContent(labelStepCount, startPageData.GetTextDisplayStep() + data.GetStepCount());*/
         }
         private void InitButtons()
         {
-
-            startPageData.SetButtonContent(btnWeiter,"--->");
-            startPageData.SetButtonContent(btnLoadFile, startPageData.GetTextLoadFile());
-            startPageData.SetButtonContent(btnReset, startPageData.GetTextDeleteSet());
+            startPageData.SetStartButtonText(btnWeiter);
+            startPageData.SetLoadButtonText(btnLoadFile);
+            startPageData.SetResetButtonText(btnReset);
+            startPageData.SetLanguageSelectButtonText(btnSelectLanguage);
         }
         private void InitDropDowns()
         {
             startPageData.InitProcessTypeDropDown(dropDownProcesses);
             startPageData.InitLanguageSelectionDropDown(dropDownLanguage);
-            //startPageData.SetDropDownContent(dropDownProcesses, startPageData.GetProcessTypeList(), data.GetDataType());
-            //startPageData.SetDropDownContent(dropDownLanguage, startPageData.GetLanguageList(), startPageData.GetSelectedLanguage());
         }
+
         private void btnStart(object sender, RoutedEventArgs e)
         {
             startPageData.InitNewDataSet();
@@ -72,12 +68,6 @@ namespace XMLWriter.Pages
                 if(consol.showErrors) Console.WriteLine("Fehler in der gfs/rep-Wahl---                    BtnNext() aus StartPage");
             }
         }
-        private void BtnSelectLanguage_Click(object sender, RoutedEventArgs e)
-        {
-            startPageData.SetLabelContent(labelTitel, startPageData.GetTextTitel());
-            startPageData.SetLangauge(dropDownLanguage.Text);
-        }
- 
         private void BtnLoadFile(object sender, RoutedEventArgs e)
         {
             loadData.LoadDataFromFile();
@@ -85,12 +75,16 @@ namespace XMLWriter.Pages
             startPageData.SetTextBlockContent(textBlockLoadFile, loadData.GetFileNameAndPath());
             startPageData.SetLabelContent(labelStepCount, startPageData.GetTextDisplayStep() + data.GetStepCountMax());
         }
-
         private void BtnReset(object sender, RoutedEventArgs e)
         {
             startPageData.Reset(textBlockLoadFile);
         }
-
+        private void BtnSelectLanguage_Click(object sender, RoutedEventArgs e)
+        {
+            startPageData.SetLangauge(dropDownLanguage.Text);
+            InitLabels();
+            InitButtons();
+        }
         private void dropDownProcesses_ContextMenuClosing(object sender, ContextMenuEventArgs e)
         {
             startPageData.ChangeDropDownContentActiveElement(dropDownProcesses, dropDownProcesses.Text);
