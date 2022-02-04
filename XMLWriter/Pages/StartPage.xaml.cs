@@ -40,7 +40,6 @@ namespace XMLWriter.Pages
             startPageData.SetStartButtonText(btnWeiter);
             startPageData.SetLoadButtonText(btnLoadFile);
             startPageData.SetResetButtonText(btnReset);
-            startPageData.SetLanguageSelectButtonText(btnSelectLanguage);
         }
         private void InitDropDowns()
         {
@@ -75,19 +74,20 @@ namespace XMLWriter.Pages
             startPageData.SetTextBlockContent(textBlockLoadFile, loadData.GetFileNameAndPath());
             startPageData.SetLabelContent(labelStepCount, startPageData.GetTextDisplayStep() + data.GetStepCountMax());
         }
-        private void BtnReset(object sender, RoutedEventArgs e)
+        private void BtnReset_Click(object sender, RoutedEventArgs e)
         {
             startPageData.Reset(textBlockLoadFile);
         }
-        private void BtnSelectLanguage_Click(object sender, RoutedEventArgs e)
+        private void dropDownLanguage_OnClosing(object sender, EventArgs e)
         {
             startPageData.SetLangauge(dropDownLanguage.Text);
             InitLabels();
             InitButtons();
         }
-        private void dropDownProcesses_ContextMenuClosing(object sender, ContextMenuEventArgs e)
+        private void dropDownProcesses_DropDownClosed(object sender, EventArgs e)
         {
             startPageData.ChangeDropDownContentActiveElement(dropDownProcesses, dropDownProcesses.Text);
+
         }
     }
 }

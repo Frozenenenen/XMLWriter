@@ -20,7 +20,7 @@ namespace XMLWriter.Classes.StartPage
         private static readonly string[] processTypeList = { "gfs", "rep" };
         private static readonly string[] languageList = { "Deutsch", "English", "Espanol" };
         private string selectedLanguage = languageList[0];
-        private string selectedProcessType;
+        private string selectedProcessType="rep";
         //Labels
         private static string stringCreateDataSet;
         private static string strinfilePath;
@@ -29,7 +29,6 @@ namespace XMLWriter.Classes.StartPage
         private static string stringUnchecked;
         //Buttons
         private static string stringStart ="--->";
-        private static string stringSelect = "Select";
         private static string stringLoadFile;
         private static string stringDeleteSet;
         //TextBox
@@ -158,10 +157,6 @@ namespace XMLWriter.Classes.StartPage
         public void SetLoadButtonText(Button button)
         {
             xamlHelper.SetTextFor(button, stringLoadFile);
-        }
-        public void SetLanguageSelectButtonText(Button button)
-        {
-            xamlHelper.SetTextFor(button, stringSelect);
         }
         public void SetResetButtonText(Button button)
         {
