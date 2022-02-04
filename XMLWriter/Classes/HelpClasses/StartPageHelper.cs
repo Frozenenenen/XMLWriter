@@ -67,17 +67,8 @@ namespace XMLWriter.Classes.StartPage
             data.SetDataType(selectedElement);
         }
 
-         //Getter for Displaying Labels
-        public string GetTextTitel() => stringCreateDataSet;
-        public string GetTextFileNameTitel() => strinfilePath;
-        public string GetTextDisplayStep() => stringDisplaySteps;
-        //Getter for Displaying Buttons
-        public string GetTextLoadFile() => stringLoadFile;
-        public string GetTextDeleteSet() => stringDeleteSet;
 
         //Dropdown Getter & Setter
-        public string[] GetLanguageList() => languageList;
-        public string GetSelectedLanguage() => selectedLanguage;
         public void SetLangauge(string _language)
         {
             if (utility.ArrayContainsElement(languageList, _language))
