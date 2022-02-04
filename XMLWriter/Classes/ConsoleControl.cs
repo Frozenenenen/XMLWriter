@@ -6,7 +6,11 @@ namespace XMLWriter.Classes
 {
     internal class ConsoleControl
     {
-        public bool showErrors = false;
+        //dont change this one if not really neccessary
+        public bool showErrors = true;
+
+        
+        
         public bool showSaveStep = true;
         public bool showInDecrement = false;
         public bool showGetOtherPart = false;

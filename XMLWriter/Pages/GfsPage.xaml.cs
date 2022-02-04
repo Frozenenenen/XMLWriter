@@ -34,7 +34,7 @@ namespace XMLWriter.Pages
         //buttons
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
-            data.InitNewSet();
+            data.InitNewDataSet();
 
             SaveStep();
             ShowAllDataInConsole("Vorm Speichern");

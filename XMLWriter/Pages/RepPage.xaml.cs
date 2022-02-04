@@ -28,7 +28,7 @@ namespace XMLWriter.Pages
 
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
-            data.InitNewSet();
+            data.InitNewDataSet();
 
             WriteInputToDataSet();
             data.SetDataSet(dataSet);

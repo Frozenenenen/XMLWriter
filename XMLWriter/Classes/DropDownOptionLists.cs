@@ -50,7 +50,7 @@ namespace XMLWriter.Classes
             System.Diagnostics.Debug.WriteLine("Loads from text file - Init");
             useDataBase = false;
         }
-        public void LoadAllOptions()
+        public void LoadAllDropDownOptionsFromTxtOrDatabase()
         {
             FillAllLists();
         }

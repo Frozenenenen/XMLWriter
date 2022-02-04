@@ -61,9 +61,9 @@ namespace XMLWriter.Classes
             dataSets.Clear();
             SetStepCount(0);
             SetStepCountMax(0);
-            InitNewSet();
+            InitNewDataSet();
         }
-        public void InitNewSet()
+        public void InitNewDataSet()
         {
             if(stepCount == stepCountMax)
             {

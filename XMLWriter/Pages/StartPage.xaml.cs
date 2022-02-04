@@ -21,28 +21,22 @@ namespace XMLWriter.Pages
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         public StartPage()
         {
-            //---------------------------------------------
-            System.Diagnostics.Debug.WriteLine("!!!Start!!!");
-            data.InitNewSet();
-            System.Diagnostics.Debug.WriteLine("!!!Nach Init!!!");
-            loadInput.LoadAllOptions(); //Ich lad das aktuell einfach 2 Mal. 1 Mal hier und 1 Mal bei btn_next. Ich weiß nicht, warum es nicht anders geht, aber es ist so natürlich eine Fehlerquelle
-            System.Diagnostics.Debug.WriteLine("!!!Nach Laden der .txts!!!");
             InitializeComponent();
-            language.InitLanguage(startPageData.GetSelectedLanguage());
+
+            startPageData.InitNewDataSet();
+            startPageData.LoadDropDownOptions();
+            startPageData.InitLanguages();
             startPageData.InitStartPageDataStrings();
             InitLabels();
             InitButtons();
             InitDropDowns();
             
         }
-
-
-
         private void InitLabels()
         {
             xamlHelper.SetLabelTextFor(labelTitel, startPageData.GetTextTitel());
-            xamlHelper.SetLabelTextFor(labelInstructions, startPageData.GetTextGeneralInstruction());
-            xamlHelper.SetLabelTextFor(labelInstructions, startPageData.GetTextGeneralInstructionText());
+            xamlHelper.SetLabelTextFor(labelInstructions, startPageData.GetTextGeneralInstructionShort());
+            xamlHelper.SetLabelTextFor(labelInstructions, startPageData.GetTextGeneralInstructionLong());
             xamlHelper.SetLabelTextFor(labelLoadFile, startPageData.GetTextFileNameTitel());
             xamlHelper.SetLabelTextFor(labelStepCount, startPageData.GetTextDisplayStep() + data.GetStepCountMax());
         }
@@ -52,35 +46,20 @@ namespace XMLWriter.Pages
             xamlHelper.SetButtonFor(btnLoadFile, startPageData.GetTextLoadFile());
             xamlHelper.SetButtonFor(btnReset, startPageData.GetTextDeleteSet());
         }
-
-
         private void InitDropDowns()
         {
+            //ProcessType init (gfs/rep)
             xamlHelper.SetDropdownListFor(dropDownProcesses, startPageData.GetProcessTypeList());
             xamlHelper.SetDropDownActiveELementFor(dropDownProcesses, data.GetDataType());
             //language init
             xamlHelper.SetDropdownListFor(dropDownLanguage, startPageData.GetLanguageList());
             xamlHelper.SetDropDownActiveELementFor(dropDownLanguage, startPageData.GetSelectedLanguage());
         }
-        private void BtnNext(object sender, RoutedEventArgs e)
+        private void btnStart(object sender, RoutedEventArgs e)
         {
-            data.SetDataType(dropDownProcesses.Text);
-            data.SetStepCount(0);   //has to be reset to 0 coz of loading
+            
+            data.SetStepCount(0);   // This should rather be in Load
 
-            if (dropDownProcesses.Text == "rep")
-            {
-
-                _ = NavigationService.Navigate(new RepPage());
-            }
-            else if (dropDownProcesses.Text == "gfs")
-            {
-
-                _ = NavigationService.Navigate(new GfsPage());
-            }
-            else
-            {
-                Console.WriteLine("Fehler in der gfs/rep-Wahl---                    BtnNext() aus StartPage");
-            }
             if (checkUseTxtOrDatabse.IsChecked == true)
             {
                 loadInput.UseDataBase();
@@ -89,8 +68,18 @@ namespace XMLWriter.Pages
             {
                 loadInput.DontUseDataBase();
             }
-            loadInput.LoadAllOptions();    //Ich lad das aktuell einfach 2 Mal. 1 Mal hier und 1 Mal beim Initialisieren. Ich weiß nicht, warum es nicht anders geht, aber es ist so natürlich eine Fehlerquelle
-
+            if (dropDownProcesses.Text == "rep")
+            {
+                _ = NavigationService.Navigate(new RepPage());
+            }
+            else if (dropDownProcesses.Text == "gfs")
+            {
+                _ = NavigationService.Navigate(new GfsPage());
+            }
+            else
+            {
+                if(consol.showErrors) Console.WriteLine("Fehler in der gfs/rep-Wahl---                    BtnNext() aus StartPage");
+            }
         }
         private void BtnSelectLanguage_Click(object sender, RoutedEventArgs e)
         {

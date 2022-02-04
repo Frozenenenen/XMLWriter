@@ -9,6 +9,7 @@ namespace XMLWriter.Classes.StartPage
         UtilityFunctions utility = new UtilityFunctions();
         Language language = new Language();
         DataSets data = new DataSets();
+        DropDownOptionLists dropDownLists = new DropDownOptionLists();
 
         private static readonly string[] processTypeList = { "gfs", "rep" };
         private static readonly string[] languageList = { "Deutsch", "English", "Espanol" };
@@ -16,8 +17,8 @@ namespace XMLWriter.Classes.StartPage
         private string selectedProcessType = "rep";
         //Labels
         private static string stringTitel;
-        private static string stringGeneralInstruction;
-        private static string stringGeneralInstructionText;
+        private static string stringGeneralInstructionShort;
+        private static string stringGeneralInstructionLong;
         private static string stringFileNameTitel;
         private static string stringDisplayStep;
         //Buttons
@@ -29,23 +30,23 @@ namespace XMLWriter.Classes.StartPage
         public void InitStartPageDataStrings()
         {
             stringTitel = language.GetStringCreateDataSet();
-            stringGeneralInstruction = language.GetStringGeneralInstruction();
-            stringGeneralInstructionText = language.GetStringGeneralInstructionText();
+            stringGeneralInstructionShort = language.GetStringGeneralInstruction();
+            stringGeneralInstructionLong = language.GetStringGeneralInstructionText();
             stringFileNameTitel = language.GetStringFileNameTitel();
             stringDisplayStep = language.GetStringSteps() + " ";
         }
 
         //Getter for Displaying Labels
         public string GetTextTitel() => stringTitel;
-        public string GetTextGeneralInstruction() => stringGeneralInstruction;
-        public string GetTextGeneralInstructionText() => stringGeneralInstructionText;
+        public string GetTextGeneralInstructionShort() => stringGeneralInstructionShort;
+        public string GetTextGeneralInstructionLong() => stringGeneralInstructionLong;
         public string GetTextFileNameTitel() => stringFileNameTitel;
         public string GetTextDisplayStep() => stringDisplayStep;
         //Getter for Displaying Buttons
         public string GetTextLoadFile() => stringLoadFile;
         public string GetTextDeleteSet() => stringDeleteSet;
 
-        //Variable Getter
+        //Dropdown Getter & Setter
         public string[] GetLanguageList() => languageList;
         public string GetSelectedLanguage() => selectedLanguage;
         public void SetLangauge(string _language)
@@ -67,9 +68,23 @@ namespace XMLWriter.Classes.StartPage
             if (utility.ArrayContainsElement(processTypeList, _processType))
             {
                 selectedProcessType = _processType;
+                data.SetDataType(_processType); //Setzt auch direkt die "globale" Variable beim ändern.
             }
         }
 
-        
+        public void InitNewDataSet()
+        {
+            data.InitNewDataSet();
+
+        }
+        public void LoadDropDownOptions()
+        {
+            dropDownLists.LoadAllDropDownOptionsFromTxtOrDatabase();
+        }
+        public void InitLanguages()
+        {
+            language.InitLanguage(selectedLanguage);
+        }
+
     }
 }
