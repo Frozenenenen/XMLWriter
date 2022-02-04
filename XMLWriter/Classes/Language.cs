@@ -45,12 +45,6 @@ namespace XMLWriter
         private static string lastStep;
 
 
-
-
-
-
-
-
         //Used in 3 or more
         public string GetStringSave() => saveFile;
         public string GetStringBack() => back;
