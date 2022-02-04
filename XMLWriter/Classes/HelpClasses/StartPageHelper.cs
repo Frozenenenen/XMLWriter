@@ -24,7 +24,7 @@ namespace XMLWriter.Classes.StartPage
         private string selectedProcessType="rep";
         //Labels
         private static string stringCreateDataSet;
-        private static string strinfilePath;
+        private static string stringFilePath;
         private static string stringDisplaySteps;
         private static string stringChecked;
         private static string stringUnchecked;
@@ -77,7 +77,7 @@ namespace XMLWriter.Classes.StartPage
         private void InitDisplayText()
         {
             stringCreateDataSet = language.GetStringCreateDataSet();
-            strinfilePath = language.GetStringFilePath();
+            stringFilePath = language.GetStringFilePath();
             stringDisplaySteps = language.GetStringSteps();
             stringChecked = language.GetStringUseDataBaseChecked();
             stringUnchecked = language.GetStringUseDataBaseUnchecked();
