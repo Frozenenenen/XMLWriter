@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using XMLWriter.Pages;
 
 namespace XMLWriter.Classes.StartPage
 {
@@ -14,6 +15,7 @@ namespace XMLWriter.Classes.StartPage
         DataSets data = new DataSets();
         DropDownOptionLists dropDownLists = new DropDownOptionLists();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
+
 
         private static readonly string[] processTypeList = { "gfs", "rep" };
         private static readonly string[] languageList = { "Deutsch", "English", "Espanol" };
@@ -29,24 +31,33 @@ namespace XMLWriter.Classes.StartPage
         private static string stringLoadFile;
         private static string stringDeleteSet;
         //TextBox
-        private static string stringSaveSet;
+
+        //private static string stringSaveSet;
 
 
-
-        public void InitTextStrings()
+        public void SetLabelContent(Label label, string text)
         {
-            //Labels
-            stringTitel = language.GetStringCreateDataSet();
-            stringGeneralInstructionShort = language.GetStringGeneralInstruction();
-            stringGeneralInstructionLong = language.GetStringGeneralInstructionText();
-            stringFileNameTitel = language.GetStringFileNameTitel();
-            stringDisplayStep = language.GetStringSteps() + " ";
-            //Buttons
-            stringLoadFile = language.GetStringLoadFile();
-            stringDeleteSet = language.GetStringDeleteSet();
+            xamlHelper.SetTextFor(label, text);
+        }
+        public void SetButtonContent(Button button, string text)
+        {
+            xamlHelper.SetTextFor(button, text);
+        }
+        public void SetTextBlockContent(TextBlock textBlock, string text)
+        {
+            xamlHelper.SetTextFor(textBlock, text);
+        }
+        public void SetDropDownContent(ComboBox comboBox, string[] array, string selectedElement)
+        {
+            xamlHelper.SetDropdownListFor(comboBox, array);
+            xamlHelper.SetDropDownActiveELementFor(comboBox, selectedElement);
+        }
+        public void ChangeDropDownContentActiveElement(ComboBox comboBox, string selectedElement)
+        {
+            xamlHelper.SetDropDownActiveELementFor(comboBox, selectedElement);
         }
 
-        //Getter for Displaying Labels
+         //Getter for Displaying Labels
         public string GetTextTitel() => stringTitel;
         public string GetTextGeneralInstructionShort() => stringGeneralInstructionShort;
         public string GetTextGeneralInstructionLong() => stringGeneralInstructionLong;
@@ -117,6 +128,5 @@ namespace XMLWriter.Classes.StartPage
             data.ResetDataSet();
             textBlock.Text = "";
         }
-
     }
 }

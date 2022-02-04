@@ -44,7 +44,7 @@
             <Label x:Name="textUseDatabaseUnchecked" Content="Unchecked: Use Txt-file"/>
             <CheckBox x:Name="checkUseTxtOrDatabse" HorizontalAlignment="Center" IsChecked="True"/>
         </StackPanel>
-        <ComboBox x:Name="dropDownProcesses" Grid.Row="9" Grid.Column="4" Text="gfs" HorizontalAlignment="Left" Width="132"/>
+        <ComboBox x:Name="dropDownProcesses" Grid.Row="9" Grid.Column="4" Text="gfs" HorizontalAlignment="Left" Width="132" ContextMenuClosing="dropDownProcesses_ContextMenuClosing"/>
         <!--Reparatur, geführte Fehlersuche etc-->
 
         <!--Sprachwahl-->

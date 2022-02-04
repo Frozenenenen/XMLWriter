@@ -17,22 +17,13 @@ namespace XMLWriter.Classes
         {
             label.Content = text;
         }
-        public void SetTextFor(TextBlock textBlock, string text)
-        {
-            textBlock.Text = text;
-        }
-        public void SetButtonFor(Button button, string text)
+        public void SetTextFor(Button button, string text)
         {
             button.Content = text;
         }
-        public void InitTextItems(List<Label> labelList, List<string> textList)
+        public void SetTextFor(TextBlock textBlock, string text)
         {
-            int i = 0;
-            foreach (Label label in labelList)
-            {
-                SetTextFor(label, textList[i]);
-                i++;
-            }
+            textBlock.Text = text;
         }
     }
 }

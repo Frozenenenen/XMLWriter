@@ -24,32 +24,27 @@ namespace XMLWriter.Pages
         {
             InitializeComponent();
             startPageData.InitLanguages();
-            startPageData.InitTextStrings();
             InitLabels();
             InitButtons();
             InitDropDowns();
-            
         }
         private void InitLabels()
         {
-            List<Label> labelList = new List<Label>{ labelTitel, labelLoadFile, labelStepCount };
-            List<string> textList = new List<string> { startPageData.GetTextTitel(), startPageData.GetTextFileNameTitel(), startPageData.GetTextDisplayStep() + data.GetStepCountMax() };
-            xamlHelper.InitTextItems(labelList, textList);
+            startPageData.SetLabelContent(labelTitel, startPageData.GetTextFileNameTitel());
+            startPageData.SetLabelContent(labelLoadFile, startPageData.GetTextLoadFile());
+            startPageData.SetLabelContent(labelStepCount, startPageData.GetTextDisplayStep() + data.GetStepCount());
         }
         private void InitButtons()
         {
-            xamlHelper.SetButtonFor(btnWeiter,"--->");
-            xamlHelper.SetButtonFor(btnLoadFile, startPageData.GetTextLoadFile());
-            xamlHelper.SetButtonFor(btnReset, startPageData.GetTextDeleteSet());
+
+            startPageData.SetButtonContent(btnWeiter,"--->");
+            startPageData.SetButtonContent(btnLoadFile, startPageData.GetTextLoadFile());
+            startPageData.SetButtonContent(btnReset, startPageData.GetTextDeleteSet());
         }
         private void InitDropDowns()
         {
-            //ProcessType init (gfs/rep)
-            xamlHelper.SetDropdownListFor(dropDownProcesses, startPageData.GetProcessTypeList());
-            xamlHelper.SetDropDownActiveELementFor(dropDownProcesses, data.GetDataType());
-            //language init
-            xamlHelper.SetDropdownListFor(dropDownLanguage, startPageData.GetLanguageList());
-            xamlHelper.SetDropDownActiveELementFor(dropDownLanguage, startPageData.GetSelectedLanguage());
+            startPageData.SetDropDownContent(dropDownProcesses, startPageData.GetProcessTypeList(), data.GetDataType());
+            startPageData.SetDropDownContent(dropDownLanguage, startPageData.GetLanguageList(), startPageData.GetSelectedLanguage());
         }
         private void btnStart(object sender, RoutedEventArgs e)
         {
@@ -57,7 +52,8 @@ namespace XMLWriter.Pages
             startPageData.LoadDropDownOptions();
             data.SetStepCount(0);   // This should rather be in Load
             startPageData.DatabaseOrTxtCheck(checkUseTxtOrDatabse.IsChecked);
-            if (dropDownProcesses.Text == "rep")
+
+            if (startPageData.GetSelectedProcessType() == "rep")
             {
                 _ = NavigationService.Navigate(new RepPage());
             }
@@ -73,7 +69,7 @@ namespace XMLWriter.Pages
         private void BtnSelectLanguage_Click(object sender, RoutedEventArgs e)
         {
             startPageData.SetLangauge(dropDownLanguage.Text);
-            xamlHelper.SetTextFor(labelTitel, startPageData.GetTextTitel());
+            startPageData.SetLabelContent(labelTitel, startPageData.GetTextTitel());
         }
  
         private void BtnLoadFile(object sender, RoutedEventArgs e)
@@ -81,13 +77,18 @@ namespace XMLWriter.Pages
             loadData.LoadDataFromFile();
             startPageData.SetProcessActiveElement(dropDownProcesses);
             //xamlHelper.SetDropDownActiveELementFor(dropDownProcesses, data.GetDataType());
-            xamlHelper.SetTextFor(textBlockLoadFile, loadData.GetFileNameAndPath());
-            xamlHelper.SetTextFor(labelStepCount, startPageData.GetTextDisplayStep() + data.GetStepCountMax());
+            startPageData.SetTextBlockContent(textBlockLoadFile, loadData.GetFileNameAndPath());
+            startPageData.SetLabelContent(labelStepCount, startPageData.GetTextDisplayStep() + data.GetStepCountMax());
         }
 
         private void BtnReset(object sender, RoutedEventArgs e)
         {
             startPageData.Reset(textBlockLoadFile);
+        }
+
+        private void dropDownProcesses_ContextMenuClosing(object sender, ContextMenuEventArgs e)
+        {
+            startPageData.ChangeDropDownContentActiveElement(dropDownProcesses, dropDownProcesses.Text);
         }
     }
 }
