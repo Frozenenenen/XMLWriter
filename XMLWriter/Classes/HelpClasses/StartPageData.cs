@@ -27,13 +27,17 @@ namespace XMLWriter.Classes.StartPage
 
 
 
-        public void InitStartPageDataStrings()
+        public void InitTextStrings()
         {
+            //Labels
             stringTitel = language.GetStringCreateDataSet();
             stringGeneralInstructionShort = language.GetStringGeneralInstruction();
             stringGeneralInstructionLong = language.GetStringGeneralInstructionText();
             stringFileNameTitel = language.GetStringFileNameTitel();
             stringDisplayStep = language.GetStringSteps() + " ";
+            //Buttons
+            stringLoadFile = language.GetStringLoadFile();
+            stringDeleteSet = language.GetStringDeleteSet();
         }
 
         //Getter for Displaying Labels

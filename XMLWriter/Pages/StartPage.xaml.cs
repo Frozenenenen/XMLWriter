@@ -22,11 +22,8 @@ namespace XMLWriter.Pages
         public StartPage()
         {
             InitializeComponent();
-
-            startPageData.InitNewDataSet();
-            startPageData.LoadDropDownOptions();
             startPageData.InitLanguages();
-            startPageData.InitStartPageDataStrings();
+            startPageData.InitTextStrings();
             InitLabels();
             InitButtons();
             InitDropDowns();
@@ -57,7 +54,8 @@ namespace XMLWriter.Pages
         }
         private void btnStart(object sender, RoutedEventArgs e)
         {
-            
+            startPageData.InitNewDataSet();
+            startPageData.LoadDropDownOptions();
             data.SetStepCount(0);   // This should rather be in Load
 
             if (checkUseTxtOrDatabse.IsChecked == true)
