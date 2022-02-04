@@ -9,12 +9,13 @@ namespace XMLWriter.Classes.StartPage
 {
     internal class StartPageHelper
     {
-        UtilityFunctions utility = new UtilityFunctions();
-        Language language = new Language();
-        DropDownOptionLists loadInput = new DropDownOptionLists();
         DataSets data = new DataSets();
-        DropDownOptionLists dropDownLists = new DropDownOptionLists();
+        Language language = new Language();
+        LoadDataSet loadData = new LoadDataSet();
+        UtilityFunctions utility = new UtilityFunctions();
+        DropDownOptionLists loadInput = new DropDownOptionLists();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
+        DropDownOptionLists dropDownLists = new DropDownOptionLists();
 
 
         private static readonly string[] processTypeList = { "gfs", "rep" };
@@ -39,7 +40,10 @@ namespace XMLWriter.Classes.StartPage
         //----------------------Bearbeitungsbereich-----------------------
         //----------------------Bearbeitungsbereich-----------------------
         //----------------------Bearbeitungsbereich-----------------------
-
+        public void LoadDataFromFile()
+        {
+            loadData.LoadDataFromFile();
+        }
 
         //----------------------Bearbeitungsbereich-----------------------
         //----------------------Bearbeitungsbereich-----------------------
@@ -57,23 +61,6 @@ namespace XMLWriter.Classes.StartPage
             stringLoadFile = language.GetStringLoadFile();
             stringDeleteSet = language.GetStringDeleteSet();
     }
-        public void SetLabelContent(Label label, string text)
-        {
-            xamlHelper.SetTextFor(label, text);
-        }
-        public void SetButtonContent(Button button, string text)
-        {
-            xamlHelper.SetTextFor(button, text);
-        }
-        public void SetTextBlockContent(TextBlock textBlock, string text)
-        {
-            xamlHelper.SetTextFor(textBlock, text);
-        }
-        public void SetDropDownContent(ComboBox comboBox, string[] array, string selectedElement)
-        {
-            xamlHelper.SetDropdownListFor(comboBox, array);
-            xamlHelper.SetDropDownActiveELementFor(comboBox, selectedElement);
-        }
         public void ChangeDropDownContentActiveElement(ComboBox comboBox, string selectedElement)
         {
             xamlHelper.SetDropDownActiveELementFor(comboBox, selectedElement);
@@ -148,7 +135,7 @@ namespace XMLWriter.Classes.StartPage
         }
         public void SetDisplayStepText(Label labelStepCount)
         {
-            xamlHelper.SetTextFor(labelStepCount, stringDisplaySteps + data.GetStepCount());
+            xamlHelper.SetTextFor(labelStepCount, stringDisplaySteps + ": " + data.GetStepCountMax() + 1);
         }
         //Init Buttons
         public void SetStartButtonText(Button button)
@@ -181,6 +168,10 @@ namespace XMLWriter.Classes.StartPage
             xamlHelper.SetTextFor(check, stringChecked);
             xamlHelper.SetTextFor(uncheck, stringUnchecked);
         }
-        //Init TextBlock - 
+        //Init TextBlock
+        public void SetFilePathText(TextBlock text)
+        {
+            xamlHelper.SetTextFor(text, loadData.GetFileNameAndPath());
+        }
     }
 }

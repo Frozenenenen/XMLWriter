@@ -158,7 +158,9 @@ namespace XMLWriter.Classes
                     }
                     i++;
                 }
+
             }
+            data.SetStepCount(0);
             if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\n");
         }
         private DataSet SaveSet(int i, string stepName, string text, string anim, string specialStep)
