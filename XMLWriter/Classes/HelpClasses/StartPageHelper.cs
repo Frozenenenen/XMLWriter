@@ -111,7 +111,7 @@ namespace XMLWriter.Classes.StartPage
         }
         public void SetLoadFileText(Label labelLoadFile)
         {
-            xamlHelper.SetTextFor(labelLoadFile, stringLoadFile);
+            xamlHelper.SetTextFor(labelLoadFile, stringFilePath);
         }
         public void SetDisplayStepsText(Label labelStepCount)
         {
