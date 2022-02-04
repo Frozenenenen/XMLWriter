@@ -7,16 +7,18 @@ using XMLWriter.Pages;
 
 namespace XMLWriter.Classes.StartPage
 {
+    /// <summary>
+    /// Helferlogik für StartPage.xaml.cs
+    /// </summary>
     internal class StartPageHelper
     {
-        DataSets data = new DataSets();
-        Language language = new Language();
-        LoadDataSet loadData = new LoadDataSet();
-        UtilityFunctions utility = new UtilityFunctions();
-        DropDownOptionLists loadInput = new DropDownOptionLists();
-        XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         DropDownOptionLists dropDownLists = new DropDownOptionLists();
-
+        XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
+        DropDownOptionLists loadInput = new DropDownOptionLists();
+        UtilityFunctions utility = new UtilityFunctions();
+        LoadDataSet loadData = new LoadDataSet();
+        Language language = new Language();
+        DataSets data = new DataSets();
 
         private static readonly string[] processTypeList = { "gfs", "rep" };
         private static readonly string[] languageList = { "Deutsch", "English", "Espanol" };
@@ -76,6 +78,7 @@ namespace XMLWriter.Classes.StartPage
         }
         private void InitDisplayText()
         {
+            //Labels
             stringCreateDataSet = language.GetStringCreateDataSet();
             stringFilePath = language.GetStringFilePath();
             stringDisplaySteps = language.GetStringSteps();

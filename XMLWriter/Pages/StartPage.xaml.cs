@@ -13,7 +13,6 @@ namespace XMLWriter.Pages
     /// </summary>
     public partial class StartPage : Page
     {
-        DataSets data = new DataSets();
         StartPageHelper startPageHelper = new StartPageHelper();
         ConsoleControl consol = new ConsoleControl();   
         public StartPage()
@@ -24,6 +23,7 @@ namespace XMLWriter.Pages
             InitButtons();
             InitDropDowns();
         }
+        ///---Inits---///
         private void InitLabels()
         {
             startPageHelper.SetTitelText(labelTitel);
@@ -42,7 +42,7 @@ namespace XMLWriter.Pages
             startPageHelper.InitProcessTypeDropDown(dropDownProcesses);
             startPageHelper.InitLanguageSelectionDropDown(dropDownLanguage);
         }
-
+        ///---Buttons---///
         private void btnStart(object sender, RoutedEventArgs e)
         {
             startPageHelper.InitNewDataSet();
