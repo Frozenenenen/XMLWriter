@@ -78,13 +78,13 @@ namespace XMLWriter.Pages
         {
             startPageData.Reset(textBlockLoadFile);
         }
-        private void dropDownLanguage_OnClosing(object sender, EventArgs e)
+        private void dropDownLanguage_OnClosed(object sender, EventArgs e)
         {
             startPageData.SetLangauge(dropDownLanguage.Text);
             InitLabels();
             InitButtons();
         }
-        private void dropDownProcesses_DropDownClosed(object sender, EventArgs e)
+        private void dropDownProcesses_OnClosed(object sender, EventArgs e)
         {
             startPageData.ChangeDropDownContentActiveElement(dropDownProcesses, dropDownProcesses.Text);
         }
