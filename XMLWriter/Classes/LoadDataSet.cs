@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using XMLWriter.Classes.HelpClasses;
 
 namespace XMLWriter.Classes
 {
@@ -19,13 +20,10 @@ namespace XMLWriter.Classes
         GUIMovement GUI = new GUIMovement();
         DropDownOptionLists ddList = new DropDownOptionLists(); 
         ConsoleControl consol = new ConsoleControl();
+        LoadHelper loadHelper = new LoadHelper();
+        LoadDataHelper loadDataHelper = new LoadDataHelper();
         XmlTextReader xtr;
         DataSet dataSet;
-        private static string initialDirectory = "";
-        private static string initialDirectoryFilePath = @"Files/";
-        private static string initialDirectoryFileName = @"InitialDirectory.txt";
-        private static string fileNameAndPath = "";
-        public string GetFileNameAndPath() => fileNameAndPath;
 
         private static string stepName;
         private static string text;
@@ -45,32 +43,27 @@ namespace XMLWriter.Classes
 
         public void LoadDataFromFile()
         {
-            LookForInitialDirectory();
+            loadHelper.LookForInitialDirectory();
             OpenFileDialog();
-            if (!string.IsNullOrEmpty(fileNameAndPath))
+            if (!string.IsNullOrEmpty(loadDataHelper.GetFileNameAndPath()))
             {
-                xtr = new XmlTextReader(fileNameAndPath);
+                xtr = new XmlTextReader(loadDataHelper.GetFileNameAndPath());
                 FillDataSets();
             }
-        }
-        private void LookForInitialDirectory()
-        {
-            StreamReader sr = new StreamReader(initialDirectoryFilePath + initialDirectoryFileName);
-            if(consol.showLoadFile) System.Diagnostics.Debug.WriteLine(sr);
-            initialDirectory = sr.ReadLine();
         }
         public void OpenFileDialog()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
             openFileDialog.Filter = "Text files (*.txt;*.xml)|*.txt;*.xml|All files (*.*)|*.*";
-            if (initialDirectory!="")
+
+            if (loadHelper.GetInitialDirectory()!="")
             {
-                openFileDialog.InitialDirectory = initialDirectory;
+                openFileDialog.InitialDirectory = loadHelper.GetInitialDirectory();
             }
             if (openFileDialog.ShowDialog() == true)
             {
-                fileNameAndPath = openFileDialog.FileName;
+                loadDataHelper.SetFilePathAndName(openFileDialog.FileName);
             }
             
         }

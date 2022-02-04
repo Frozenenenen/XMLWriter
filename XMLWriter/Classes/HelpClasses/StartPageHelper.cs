@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using XMLWriter.Classes.HelpClasses;
 using XMLWriter.Pages;
 
 namespace XMLWriter.Classes.StartPage
@@ -16,6 +17,7 @@ namespace XMLWriter.Classes.StartPage
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         DropDownOptionLists loadInput = new DropDownOptionLists();
         UtilityFunctions utility = new UtilityFunctions();
+        LoadDataHelper loadDataHelper = new LoadDataHelper();
         LoadDataSet loadData = new LoadDataSet();
         Language language = new Language();
         ManageDataSets data = new ManageDataSets();
@@ -156,7 +158,7 @@ namespace XMLWriter.Classes.StartPage
         //Init TextBlock
         public void SetFilePathText(TextBlock text)
         {
-            xamlHelper.SetTextFor(text, loadData.GetFileNameAndPath());
+            xamlHelper.SetTextFor(text, loadDataHelper.GetFileNameAndPath());
         }
     }
 }

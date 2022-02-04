@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using XMLWriter.Classes.StartPage;
+using XMLWriter.Classes.HelpClasses;
 
 namespace XMLWriter.Pages
 {
@@ -19,6 +20,7 @@ namespace XMLWriter.Pages
         Language language = new Language();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         SavePageHelper savePageData = new SavePageHelper();
+        LoadDataHelper loadDataHelper = new LoadDataHelper();
 
         public SavePage()
         {
@@ -96,8 +98,8 @@ namespace XMLWriter.Pages
         {
             btnLoadFile.Content = language.GetStringFilePathDialog();
             loadData.OpenFileDialog();
-            inputFileName.Text = loadData.GetFileNameAndPath();
-            textFileName.Text = loadData.GetFileNameAndPath();
+            inputFileName.Text = loadDataHelper.GetFileNameAndPath();
+            textFileName.Text = loadDataHelper.GetFileNameAndPath();
             if (textFileName.Text=="")
             {
                 btnSave.Background = Brushes.Gray;
