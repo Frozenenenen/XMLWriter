@@ -22,37 +22,29 @@ namespace XMLWriter.Classes
         ConsoleControl consol = new ConsoleControl();
         LoadHelper loadHelper = new LoadHelper();
         LoadDataHelper loadDataHelper = new LoadDataHelper();
+        ManageDataSets dataSets = new ManageDataSets();
         XmlTextReader xtr;
-        DataSet dataSet;
-
-        private static string stepName;
-        private static string text;
-        private static string anim;
-        private static string specialStep;
-        private static string instruction;
-        private static string positiveID;
-        private static string negativeID;
-        private static string positiveResult;
-        private static string repXml;
-        private static string actuatorTest;
-        private static string readData;
-        private static string smartTool;
-        private static bool? nextStep;
-        private static bool? lastStep;
-        private static string toolChoice="";
+        DataSet dataSet = new DataSet("","","","","","","","","","","","",false,false,"");
 
         public void LoadDataFromFile()
         {
             loadHelper.LookForInitialDirectory();
             OpenFileDialog();
+            System.Diagnostics.Debug.WriteLine("Path: " + loadDataHelper.GetFileNameAndPath());
+            System.Diagnostics.Debug.WriteLine("Path: " + loadDataHelper.GetFileNameAndPath());
+            System.Diagnostics.Debug.WriteLine("Path: " + loadDataHelper.GetFileNameAndPath());
             if (!string.IsNullOrEmpty(loadDataHelper.GetFileNameAndPath()))
             {
+                System.Diagnostics.Debug.WriteLine("Path: " + loadDataHelper.GetFileNameAndPath());
+                System.Diagnostics.Debug.WriteLine("Path: " + loadDataHelper.GetFileNameAndPath());
+                System.Diagnostics.Debug.WriteLine("Path: " + loadDataHelper.GetFileNameAndPath());
                 xtr = new XmlTextReader(loadDataHelper.GetFileNameAndPath());
                 FillDataSets();
             }
         }
         public void OpenFileDialog()
         {
+            System.Diagnostics.Debug.WriteLine("OpenFileDialog Start");
             OpenFileDialog openFileDialog = new OpenFileDialog();
 
             openFileDialog.Filter = "Text files (*.txt;*.xml)|*.txt;*.xml|All files (*.*)|*.*";
@@ -63,89 +55,93 @@ namespace XMLWriter.Classes
             }
             if (openFileDialog.ShowDialog() == true)
             {
+                System.Diagnostics.Debug.WriteLine("FilePath: " + openFileDialog.FileName);
                 loadDataHelper.SetFilePathAndName(openFileDialog.FileName);
             }
-            
+            System.Diagnostics.Debug.WriteLine("OpenFileDialog Ende");
         }
         private void FillDataSets()
         {
             int i = 0;
-            if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("\nStarte Laden!!!\n");
+            if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("\nStarte Laaden!!!\n");
+
             while (xtr.Read())
             {
                 if (xtr.NodeType == XmlNodeType.Element)
                 {
+                    //dataSet.
                     switch (xtr.Name)
                     {
                         case "Repair":
-                            stepName = xtr.GetAttribute("step");
+                            dataSet.stepName = xtr.GetAttribute("step");
                             break;
                         case "Gfs":
-                            stepName = xtr.GetAttribute("step");
+                            dataSet.stepName = xtr.GetAttribute("step");
                             break;
                         case "content":
-                            text = xtr.ReadElementString();
+                            System.Diagnostics.Debug.WriteLine("Element: " + xtr.ReadElementString());
+                            dataSet.text = xtr.ReadElementString();
                             break;
                         case "anim":
-                            anim = xtr.ReadElementString();
+                            dataSet.anim = xtr.ReadElementString();
                             break;
                         case "specialStep":
-                            specialStep = xtr.ReadElementString();
-                            SaveSet(i, stepName, text, anim, specialStep);
+                            dataSet.specialText = xtr.ReadElementString();
+                            consol.ConsoleShowDataSetOfIndex(dataSet, i);
                             data.SetDataSet(dataSet);
                             GUI.IncrementSteps();
                             //dataType = "rep";
                             break;
                         case "instructions":
-                            instruction = xtr.ReadElementString();
+                            dataSet.instruction = xtr.ReadElementString();
                             break;
                         case "positiveID":
-                            positiveID = xtr.ReadElementString();
+                            dataSet.positiveID = xtr.ReadElementString();
                             break;
                         case "negativeID":
-                            negativeID = xtr.ReadElementString();
+                            dataSet.negativeID = xtr.ReadElementString();
                             break;
                         case "positiveResult":
-                            positiveResult = xtr.ReadElementString();
+                            dataSet.positiveResult = xtr.ReadElementString();
                             break;
                         case "RepXml":
-                            repXml = xtr.ReadElementString();
+                            dataSet.repXML = xtr.ReadElementString();
                             break;
                         case "actuatorTest":
-                            actuatorTest = xtr.ReadElementString();
+                            dataSet.actuatorTest = xtr.ReadElementString();
                             break;
                         case "ReadData":
-                            readData = xtr.ReadElementString();
+                            dataSet.RDID = xtr.ReadElementString();
                             break;
                         case "SmartTool":
-                            smartTool = xtr.ReadElementString();
+                            dataSet.smartTool = xtr.ReadElementString();
                             break;
                         case "NextStep":
-                            nextStep = xtr.ReadElementString() == "true" ? true : false;
+                            dataSet.nextStep = xtr.ReadElementString() == "true" ? true : false;
                             break;
                         case "lastStep":
-                            lastStep = xtr.ReadElementString() == "true" ? true : false;
-                            if (smartTool != "" && smartTool != "false")
+                            dataSet.lastStep = xtr.ReadElementString() == "true" ? true : false;
+                            if (dataSet.smartTool != "" && dataSet.smartTool != "false")
                             {
-                                toolChoice = ddList.GetToolChoice()[2];
+                                dataSet.toolChoice = ddList.GetToolChoice()[2];
                             }
-                            else if (actuatorTest != "" && actuatorTest != "false")
+                            else if (dataSet.actuatorTest != "" && dataSet.actuatorTest != "false")
                             {
-                                toolChoice = ddList.GetToolChoice()[1];
+                                dataSet.toolChoice = ddList.GetToolChoice()[1];
                             }
-                            else if (readData != "" && readData != "false")
+                            else if (dataSet.RDID != "" && dataSet.RDID != "false")
                             {
-                                toolChoice = ddList.GetToolChoice()[3];
+                                dataSet.toolChoice = ddList.GetToolChoice()[3];
                             }
-                            SaveSet(i, toolChoice, stepName, text, anim, instruction, positiveID, negativeID,
-                                            positiveResult, repXml, actuatorTest, readData, smartTool, nextStep, lastStep);
-                            if (consol.showMiscLoadData) System.Diagnostics.Debug.WriteLine("repXML= " + repXml + "                ---LoadData.LoadDataFromFile()");
+                            if (consol.showMiscLoadData) System.Diagnostics.Debug.WriteLine("repXML= " + dataSet.repXML + "                ---LoadData.LoadDataFromFile()");
+                            consol.ConsoleShowDataSetOfIndex(dataSet, i);
+                            data.SetDataSet(dataSet);
                             GUI.IncrementSteps();
                             //dataType = "gfs";
                             break;
                         default:
-                            if(consol.showLoadFile) System.Diagnostics.Debug.WriteLine(xtr.Name);
-                            if(consol.showLoadFile) System.Diagnostics.Debug.WriteLine(xtr.Name);
+                            if(consol.showLoadFile) System.Diagnostics.Debug.WriteLine("Fehler: " + xtr.Name);
+                            if(consol.showLoadFile) System.Diagnostics.Debug.WriteLine("Fehler: " + xtr.Name);
 
                             break;
                     }
@@ -155,35 +151,6 @@ namespace XMLWriter.Classes
             }
             data.SetStepCount(0);
             if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\n");
-        }
-        private DataSet SaveSet(int i, string stepName, string text, string anim, string specialStep)
-        {
-            dataSet = data.GetDataSets().ElementAt(i);
-            dataSet.stepName = stepName;
-            dataSet.text = text;
-            dataSet.anim = anim;
-            dataSet.specialText = specialStep;
-            return dataSet;
-        }
-        private DataSet SaveSet(int i, string toolChoice, string stepName, string text, string anim, string instruction, string positiveID, string negativeID,
-                                            string positiveResult, string repXml, string actuatorTest, string readData, string smartTool, bool? nextStep, bool? lastStep)
-        {
-            dataSet = data.GetDataSets().ElementAt(i);
-            dataSet.toolChoice = toolChoice;
-            dataSet.stepName = stepName;
-            dataSet.text = text;
-            dataSet.anim = anim;
-            dataSet.instruction = instruction;
-            dataSet.positiveID = positiveID;
-            dataSet.negativeID = negativeID;
-            dataSet.positiveResult = positiveResult;
-            dataSet.repXML = repXml;
-            dataSet.actuatorTest = actuatorTest;
-            dataSet.smartTool = smartTool;
-            dataSet.RDID = readData;
-            dataSet.nextStep = nextStep;
-            dataSet.lastStep = lastStep;
-            return dataSet;
         }
     }
 }

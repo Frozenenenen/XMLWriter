@@ -25,7 +25,7 @@ namespace XMLWriter.Pages
         public GfsPage()
         {
             dataSet = data.GetDataSets().ElementAt(data.GetStepCount());
-            ShowAllDataInConsole("Beim Start");
+            consol.ConsoleShowDataSetOfIndex(dataSet,data.GetStepCount(),"Beim Start");
             InitializeComponent();
             InitTextItems();
             InitValueItems();
@@ -37,7 +37,7 @@ namespace XMLWriter.Pages
             data.InitNewDataSet();
 
             SaveStep();
-            ShowAllDataInConsole("Vorm Speichern");
+            consol.ConsoleShowDataSetOfIndex(dataSet,data.GetStepCount(),"Vorm Speichern");
             data.SetDataSet(dataSet);
             GUI.IncrementSteps();
             if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnNext Gfs - - - \n - - - Nächster Schritt " + (data.GetStepCount()) + " - - - \n - - - BtnNext Gf - - - ");
@@ -474,30 +474,7 @@ namespace XMLWriter.Pages
                 inputToolChoice.Text = language.GetStringPleaseChoose();
             }
         }
-        private void ShowAllDataInConsole(string a)
-        {
-            if (consol.showGfsData)
-            {
-                System.Diagnostics.Debug.WriteLine(">>>" + a + "<<<");
-                System.Diagnostics.Debug.WriteLine("Index:  " + data.GetStepCount());
-                System.Diagnostics.Debug.WriteLine("Tool:   " + dataSet.toolChoice);
-                System.Diagnostics.Debug.WriteLine("Step:   " + dataSet.stepName);
-                System.Diagnostics.Debug.WriteLine("Text:   " + dataSet.text);
-                System.Diagnostics.Debug.WriteLine("Anim:   " + dataSet.anim);
-                System.Diagnostics.Debug.WriteLine("instr:  " + dataSet.instruction);
-                System.Diagnostics.Debug.WriteLine("posID:  " + dataSet.positiveID);
-                System.Diagnostics.Debug.WriteLine("negID:  " + dataSet.negativeID);
-                System.Diagnostics.Debug.WriteLine("posRes: " + dataSet.positiveResult);
-                System.Diagnostics.Debug.WriteLine("repXML: " + dataSet.repXML);
-                System.Diagnostics.Debug.WriteLine("A-Test: " + dataSet.actuatorTest);
-                System.Diagnostics.Debug.WriteLine("SmarT:  " + dataSet.smartTool);
-                System.Diagnostics.Debug.WriteLine("RDID:   " + dataSet.RDID);
-                System.Diagnostics.Debug.WriteLine("Next:   " + dataSet.nextStep);
-                System.Diagnostics.Debug.WriteLine("Last:   " + dataSet.lastStep);
-                System.Diagnostics.Debug.WriteLine(">>>" + a + "<<<");
-            }
-            
-        }
+
 
     }
 }
