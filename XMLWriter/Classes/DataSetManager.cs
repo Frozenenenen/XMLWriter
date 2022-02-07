@@ -8,14 +8,12 @@ namespace XMLWriter.Classes {
 
 
     internal class DataSetManager {
-        //ConsoleControl consol = new ConsoleControl();
         LoadHelper loadHelper = new LoadHelper();
         LoadDataService loadDataHelper = new LoadDataService();
         GUIMovementService gui = new GUIMovementService();
+        ConsoleControl consol = new ConsoleControl();
 
         private static List<DataSet> dataSets = new List<DataSet>();
-        //private static int stepCount = 0;
-        //private static int stepCountMax = 0;
         private static string dataType = "rep";
         private static string fileName = "Dateiname"; //can include the path
 
@@ -34,22 +32,19 @@ namespace XMLWriter.Classes {
             return stepNames;
         } //This is the list of all entries of StepName used in a Set to use for the dropdown/textfields of postiveID and negativeID
         //DataSet data
-        public int GetStepCount() => stepCount; //Index
 
 
         //Setter 
         public void SetDataSet(DataSet _dataSet) //Ich habe kA warum ich nicht einfach das ganze Objekt übergeben kann.
         {
-            if (stepCount == stepCountMax) {
+            if (gui.GetIndex() == gui.GetIndexMax()) {
                 dataSets.Add(_dataSet);
             }
             else {
-                dataSets.Insert(stepCount, _dataSet);
+                dataSets.Insert(gui.GetIndex(), _dataSet);
             }
-            //consol.ConsoleShowDataSetOfIndex(_dataSet, stepCount, "Speichern");
+            consol.ConsoleShowDataSetOfIndex(_dataSet, gui.GetIndex(), "Speichern");
         }
-        public void SetStepCountMax(int _inputStepCountMax) => stepCountMax = _inputStepCountMax;
-        public void SetStepCount(int _inputStepCount) => stepCount = _inputStepCount;
         public void SetDataType(string _inputDataType) => dataType = _inputDataType;
 
         public void LoadDataFromFile() {
@@ -63,12 +58,12 @@ namespace XMLWriter.Classes {
         }
         public void ResetDataSet() {
             dataSets.Clear();
-            SetStepCount(0);
-            SetStepCountMax(0);
+            gui.ResetStepCount();
+            gui.ResetStepCountMax();
             InitNewDataSet();
         }
         public void InitNewDataSet() {
-            if (stepCount == stepCountMax) {
+            if (gui.GetIndex() == gui.GetIndexMax()) {
                 dataSets.Add(new DataSet("", "", "", "default", "", "", "", "", "", "", "", "", false, false, ""));
             }
         }
@@ -84,14 +79,14 @@ namespace XMLWriter.Classes {
             switch (dataType) {
                 case "rep":
                     RepToXMLWriter rep = new RepToXMLWriter();
-                    rep.OutputToXML(stepCountMax, dataSets, fileName);
+                    rep.OutputToXML(gui.GetIndexMax(), dataSets, fileName);
                     break;
                 case "gfs":
                     GFSToXMLWriter gfs = new GFSToXMLWriter();
-                    gfs.OutputToXML(stepCountMax, dataSets, fileName);
+                    gfs.OutputToXML(gui.GetIndexMax(), dataSets, fileName);
                     break;
                 default:
-                    //if (consol.showErrors) Console.WriteLine("Error in OutputToXML from DataSet                   ---DataSet.OutputToXML()");
+                    if (consol.showErrors) System.Diagnostics.Debug.WriteLine("Error in OutputToXML from DataSet                   ---DataSet.OutputToXML()");
                     break;
             }
         }

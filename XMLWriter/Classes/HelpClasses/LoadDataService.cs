@@ -98,11 +98,8 @@ namespace XMLWriter.Classes.HelpClasses {
                     }
                 }
             }
-            dataManager.SetStepCount(0);
+            GUI.ResetStepCount();
             if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\n");
-        }
-        private void SaveDataSet(DataSet dataSet) {
-            dataManager.SetDataSet(dataSet);
         }
     }
 }
