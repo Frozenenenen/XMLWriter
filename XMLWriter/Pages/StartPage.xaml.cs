@@ -6,83 +6,71 @@ using System.Windows.Navigation;
 using XMLWriter.Classes;
 using XMLWriter.Classes.StartPage;
 
-namespace XMLWriter.Pages
-{
+namespace XMLWriter.Pages {
     /// <summary>
     /// Interaktionslogik für StartPage.xaml
     /// </summary>
-    public partial class StartPage : Page
-    {
-        StartPageHelper startPageHelper = new StartPageHelper();
-        ConsoleControl consol = new ConsoleControl();   
-        public StartPage()
-        {
+    public partial class StartPage : Page {
+        StartPageService startPageService = new StartPageService();
+        ConsoleControl consol = new ConsoleControl();
+        public StartPage() {
             InitializeComponent();
-            startPageHelper.InitLanguages();
+            startPageService.InitLanguages();
             InitLabels();
             InitButtons();
             InitDropDowns();
         }
         ///---Inits---///
-        private void InitLabels()
-        {
-            startPageHelper.SetTitelText(labelTitel);
-            startPageHelper.SetLoadFileText(labelLoadFile);
-            startPageHelper.SetDisplayStepsText(labelStepCount);
-            startPageHelper.SetTxtOrDataBaseCheckBoxText(textUseDatabaseChecked, textUseDatabaseUnchecked);
+        private void InitLabels() {
+            startPageService.SetTitelText(labelTitel);
+            startPageService.SetLoadFileText(labelLoadFile);
+            startPageService.SetDisplayStepsText(labelStepCount);
+            startPageService.SetTxtOrDataBaseCheckBoxText(textUseDatabaseChecked, textUseDatabaseUnchecked);
         }
-        private void InitButtons()
-        {
-            startPageHelper.SetStartButtonText(btnWeiter);
-            startPageHelper.SetLoadButtonText(btnLoadFile);
-            startPageHelper.SetResetButtonText(btnReset);
+        private void InitButtons() {
+            startPageService.SetStartButtonText(btnWeiter);
+            startPageService.SetLoadButtonText(btnLoadFile);
+            startPageService.SetResetButtonText(btnReset);
         }
-        private void InitDropDowns()
-        {
-            startPageHelper.InitProcessTypeDropDown(dropDownProcesses);
-            startPageHelper.InitLanguageSelectionDropDown(dropDownLanguage);
+        private void InitDropDowns() {
+            startPageService.InitProcessTypeDropDown(dropDownProcesses);
+            startPageService.InitLanguageSelectionDropDown(dropDownLanguage);
         }
         ///---Buttons---///
-        private void btnStart(object sender, RoutedEventArgs e)
-        {
-            startPageHelper.InitNewDataSet();
-            startPageHelper.DatabaseOrTxtCheck(checkUseTxtOrDatabse.IsChecked);
+        private void btnStart(object sender, RoutedEventArgs e) {
+            startPageService.InitNewDataSet();
+            startPageService.DatabaseOrTxtCheck(checkUseTxtOrDatabse.IsChecked);
             //Navigation
-            if (startPageHelper.GetSelectedProcessType() == startPageHelper.GetProcessTypeList()[1]) //rep - Reparatur
+            if (startPageService.GetSelectedProcessType() == startPageService.GetProcessTypeList()[1]) //rep - Reparatur
             {
                 _ = NavigationService.Navigate(new RepPage());
             }
-            else if (dropDownProcesses.Text == startPageHelper.GetProcessTypeList()[0]) //gfs - geführte Fehlersuche
+            else if (dropDownProcesses.Text == startPageService.GetProcessTypeList()[0]) //gfs - geführte Fehlersuche
             {
-                startPageHelper.LoadDropDownOptions();
+                startPageService.LoadDropDownOptions();
                 _ = NavigationService.Navigate(new GfsPage());
             }
-            else
-            {
-                if(consol.showErrors) Console.WriteLine("Fehler in der gfs/rep-Wahl---                    BtnNext() aus StartPage");
+            else {
+                if (consol.showErrors) Console.WriteLine("Fehler in der gfs/rep-Wahl---                    BtnNext() aus StartPage");
             }
         }
-        private void BtnLoadFile(object sender, RoutedEventArgs e)
-        {
-            
-            startPageHelper.LoadDataFromFile();
-            startPageHelper.ChangeProcessActiveElement(dropDownProcesses, dropDownProcesses.Text);
-            startPageHelper.SetFilePathText(textBlockLoadFile);
-            startPageHelper.SetDisplayStepsText(labelStepCount);
+        private void BtnLoadFile(object sender, RoutedEventArgs e) {
+
+            startPageService.LoadDataFromFile();
+            startPageService.ChangeProcessActiveElement(dropDownProcesses, dropDownProcesses.Text);
+            startPageService.SetFilePathText(textBlockLoadFile);
+            startPageService.SetDisplayStepsText(labelStepCount);
         }
-        private void BtnReset_Click(object sender, RoutedEventArgs e)
-        {
-            startPageHelper.Reset(textBlockLoadFile);
+        private void BtnReset_Click(object sender, RoutedEventArgs e) {
+            startPageService.Reset(textBlockLoadFile);
         }
-        private void dropDownLanguage_OnClosed(object sender, EventArgs e)
-        {
-            startPageHelper.SetLangauge(dropDownLanguage.Text);
+        private void dropDownLanguage_OnClosed(object sender, EventArgs e) {
+            startPageService.SetLangauge(dropDownLanguage.Text);
             InitLabels();
             InitButtons();
         }
-        private void dropDownProcesses_OnClosed(object sender, EventArgs e)
-        {
-            startPageHelper.ChangeProcessActiveElement(dropDownProcesses, dropDownProcesses.Text);
+        private void dropDownProcesses_OnClosed(object sender, EventArgs e) {
+            startPageService.ChangeProcessActiveElement(dropDownProcesses, dropDownProcesses.Text);
         }
     }
 }

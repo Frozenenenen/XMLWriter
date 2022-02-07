@@ -7,69 +7,59 @@ using System.Windows.Navigation;
 using XMLWriter.Classes.StartPage;
 using XMLWriter.Classes.HelpClasses;
 
-namespace XMLWriter.Pages
-{
+namespace XMLWriter.Pages {
     /// <summary>
     /// Interaktionslogik für SavePage.xaml
     /// </summary>
-    public partial class SavePage : Page
-    {
-        ManageDataSets data = new ManageDataSets();
+    public partial class SavePage : Page {
+        DataSetManager data = new DataSetManager();
         GUIMovement gui = new GUIMovement();
-        LoadDataSet loadData = new LoadDataSet();
         Language language = new Language();
+        LoadHelper loadHelper = new LoadHelper();   
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         SavePageHelper savePageData = new SavePageHelper();
         LoadDataHelper loadDataHelper = new LoadDataHelper();
 
-        public SavePage()
-        {
+        public SavePage() {
             InitializeComponent();
             InitTextItems();
             InitValueItems();
             InitButtons();
         }
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
-        {
-            
+        private void btnSave_Click(object sender, RoutedEventArgs e) {
+
             data.SetFileName(inputFileName.Text);
-            if (data.GetDataType() == "rep")
-            {
+            if (data.GetDataType() == "rep") {
                 System.Diagnostics.Debug.WriteLine("Rep Speichern");
                 data.OutputToXML();
-            }else if(data.GetDataType() == "gfs")
-            {
+            }
+            else if (data.GetDataType() == "gfs") {
                 data.OutputToXML();
             }
-            else
-            {
+            else {
                 System.Diagnostics.Debug.WriteLine("Error with DataType - Savepage Savebutton");
             }
             _ = NavigationService.Navigate(new StartPage());
             //App.Current.Shutdown(0);
         }
 
-        private void btnBack_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnBack_Click(object sender, RoutedEventArgs e) {
             gui.DecrementStepsForGoingBackFromSaving();
-            if (data.GetDataType() == "rep")
-            {
+            if (data.GetDataType() == "rep") {
                 _ = NavigationService.Navigate(new RepPage());
-            }else if(data.GetDataType() == "gfs")
-            {
+            }
+            else if (data.GetDataType() == "gfs") {
                 _ = NavigationService.Navigate(new GfsPage());
             }
-            else
-            {
+            else {
                 Console.WriteLine("Fehler beim btnBack mit Datatype");
             }
-            
-            
+
+
         }
 
-        private void InitTextItems()
-        {
+        private void InitTextItems() {
             WriteToXML writer = new WriteToXML();
             inputVehicleID.ItemsSource = writer.GetPathVehicleIDChoises();
             inputLanguage.ItemsSource = writer.GetPathLanguageChoises();
@@ -83,30 +73,25 @@ namespace XMLWriter.Pages
             inputLanguage.Text = "de";
 
         }
-        private void InitButtons()
-        {
+        private void InitButtons() {
             btnLoadFile.Content = language.GetStringFilePathDialog();
             btnSave.Background = Brushes.Gray;
             btnSave.IsEnabled = false;
         }
-        private void InitValueItems()
-        {
+        private void InitValueItems() {
             inputFileName.Text = data.GetFileName();
         }
 
-        private void BtnLoadFile(object sender, RoutedEventArgs e)
-        {
+        private void BtnLoadFile(object sender, RoutedEventArgs e) {
             btnLoadFile.Content = language.GetStringFilePathDialog();
-            loadData.OpenFileDialog();
+            loadHelper.OpenFileDialog();
             inputFileName.Text = loadDataHelper.GetFileNameAndPath();
             textFileName.Text = loadDataHelper.GetFileNameAndPath();
-            if (textFileName.Text=="")
-            {
+            if (textFileName.Text == "") {
                 btnSave.Background = Brushes.Gray;
-                btnSave.IsEnabled = false;  
+                btnSave.IsEnabled = false;
             }
-            else
-            {
+            else {
                 btnSave.Background = Brushes.Green;
                 btnSave.IsEnabled = true;
             }

@@ -30,9 +30,9 @@ namespace XMLWriter.Classes
         public bool showWriteFile = true;//macht gerade nix
         public bool showSaveFile = false;
 
-        public void ConsoleShowDataSetOfIndex(DataSet dataSet, int index, string a)
+        public void ConsoleShowDataSetOfIndex(DataSet dataSet, int index, string text)
         {
-            System.Diagnostics.Debug.WriteLine(">>>" + a + "<<<");
+            System.Diagnostics.Debug.WriteLine("\n>>>" + text + " - Index: " + index + "<<<");
             System.Diagnostics.Debug.WriteLine("Tool:   " + dataSet.toolChoice);
             System.Diagnostics.Debug.WriteLine("Step:   " + dataSet.stepName);
             System.Diagnostics.Debug.WriteLine("Text:   " + dataSet.text);
@@ -47,7 +47,7 @@ namespace XMLWriter.Classes
             System.Diagnostics.Debug.WriteLine("RDID:   " + dataSet.RDID);
             System.Diagnostics.Debug.WriteLine("Next:   " + dataSet.nextStep);
             System.Diagnostics.Debug.WriteLine("Last:   " + dataSet.lastStep);
-            System.Diagnostics.Debug.WriteLine(">>>" + a + "<<<");
+            System.Diagnostics.Debug.WriteLine(">>>" + text + " - Index: " + index + "<<<\n");
         }
         public void ConsoleShowDataSetOfIndex(DataSet dataSet, int index)
         {

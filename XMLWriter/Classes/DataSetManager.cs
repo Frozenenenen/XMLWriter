@@ -2,14 +2,15 @@
 using System.Linq;
 
 using System.Text;
+using XMLWriter.Classes.HelpClasses;
 
-namespace XMLWriter.Classes
-{
-    
+namespace XMLWriter.Classes {
 
-    internal class ManageDataSets
-    {
+
+    internal class DataSetManager {
         ConsoleControl consol = new ConsoleControl();
+        LoadHelper loadHelper = new LoadHelper();
+        LoadDataHelper loadDataHelper = new LoadDataHelper();
 
         private static List<DataSet> dataSets = new List<DataSet>();
         private static int stepCount = 0;
@@ -17,18 +18,16 @@ namespace XMLWriter.Classes
         private static string dataType = "rep";
         private static string fileName = "Dateiname"; //can include the path
 
-        
+
 
         //Getter
         public List<DataSet> GetDataSets() => dataSets;
         public string GetDataType() => dataType;  // active rep or gfs
         public string GetFileName() => fileName; //Where it should be written to. Includes the Path
-        
-        public string[] GetStepNames()
-        {
+
+        public string[] GetStepNames() {
             string[] stepNames = new string[stepCountMax]; //foreach wäre eleganter
-            for (int i = 0; i < stepCountMax; i++)
-            {
+            for (int i = 0; i < stepCountMax; i++) {
                 stepNames[i] = dataSets.ElementAt(i).stepName;
             }
             return stepNames;
@@ -41,32 +40,35 @@ namespace XMLWriter.Classes
         //Setter 
         public void SetDataSet(DataSet _dataSet) //Ich habe kA warum ich nicht einfach das ganze Objekt übergeben kann.
         {
-            if (stepCount == stepCountMax)
-            {
+            if (stepCount == stepCountMax) {
                 dataSets.Add(_dataSet);
             }
-            else
-            {
+            else {
                 dataSets.Insert(stepCount, _dataSet);
             }
-            ShowAllDataInConsole(_dataSet);
-        }  
+            consol.ConsoleShowDataSetOfIndex(_dataSet, stepCount, "Speichern");
+        }
         public void SetStepCountMax(int _inputStepCountMax) => stepCountMax = _inputStepCountMax;
         public void SetStepCount(int _inputStepCount) => stepCount = _inputStepCount;
         public void SetDataType(string _inputDataType) => dataType = _inputDataType;
 
+        public void LoadDataFromFile() {
+            loadHelper.LookForInitialDirectory();
+            loadHelper.OpenFileDialog();
 
-        public void ResetDataSet()
-        {
+            if (loadDataHelper.IsFilePathValid()) {
+
+                loadDataHelper.ReadXMLStreamAndWriteToDataSets();
+            }
+        }
+        public void ResetDataSet() {
             dataSets.Clear();
             SetStepCount(0);
             SetStepCountMax(0);
             InitNewDataSet();
         }
-        public void InitNewDataSet()
-        {
-            if(stepCount == stepCountMax)
-            {
+        public void InitNewDataSet() {
+            if (stepCount == stepCountMax) {
                 dataSets.Add(new DataSet("", "", "", "default", "", "", "", "", "", "", "", "", false, false, ""));
             }
         }
@@ -79,8 +81,7 @@ namespace XMLWriter.Classes
         }
         public void OutputToXML() //Output to file
         {
-            switch (dataType)
-            {
+            switch (dataType) {
                 case "rep":
                     WriteRepToXML rep = new WriteRepToXML();
                     rep.OutputToXML(stepCountMax, dataSets, fileName);
@@ -94,30 +95,7 @@ namespace XMLWriter.Classes
                     break;
             }
         }
-        private void ShowAllDataInConsole(DataSet dataSet)
-        {
-            if (consol.showSaveStep)
-            {
-                System.Diagnostics.Debug.WriteLine("vvvvvvvvvvvvvvvvv Speichern vvvvvvvvvvvvvvvvv");
-                System.Diagnostics.Debug.WriteLine("Index:  " + stepCount);
-                System.Diagnostics.Debug.WriteLine("Tool:   " + dataSet.toolChoice);
-                System.Diagnostics.Debug.WriteLine("Step:   " + dataSet.stepName);
-                System.Diagnostics.Debug.WriteLine("Text:   " + dataSet.text);
-                System.Diagnostics.Debug.WriteLine("Anim:   " + dataSet.anim);
-                System.Diagnostics.Debug.WriteLine("instr:  " + dataSet.instruction);
-                System.Diagnostics.Debug.WriteLine("posID:  " + dataSet.positiveID);
-                System.Diagnostics.Debug.WriteLine("negID:  " + dataSet.negativeID);
-                System.Diagnostics.Debug.WriteLine("posRes: " + dataSet.positiveResult);
-                System.Diagnostics.Debug.WriteLine("repXML: " + dataSet.repXML);
-                System.Diagnostics.Debug.WriteLine("A-Test: " + dataSet.actuatorTest);
-                System.Diagnostics.Debug.WriteLine("SmarT:  " + dataSet.smartTool);
-                System.Diagnostics.Debug.WriteLine("RDID:   " + dataSet.RDID);
-                System.Diagnostics.Debug.WriteLine("Next:   " + dataSet.nextStep);
-                System.Diagnostics.Debug.WriteLine("Last:   " + dataSet.lastStep);
-                System.Diagnostics.Debug.WriteLine("^^^^^^^^^^^^^^^^^ Speichern ^^^^^^^^^^^^^^^^^");
-            }
 
-        }
     }
-    
+
 }
