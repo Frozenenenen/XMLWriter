@@ -8,7 +8,7 @@ namespace XMLWriter.Classes {
 
 
     internal class DataSetManager {
-        ConsoleControl consol = new ConsoleControl();
+        //ConsoleControl consol = new ConsoleControl();
         LoadHelper loadHelper = new LoadHelper();
         LoadDataHelper loadDataHelper = new LoadDataHelper();
 
@@ -46,7 +46,7 @@ namespace XMLWriter.Classes {
             else {
                 dataSets.Insert(stepCount, _dataSet);
             }
-            consol.ConsoleShowDataSetOfIndex(_dataSet, stepCount, "Speichern");
+            //consol.ConsoleShowDataSetOfIndex(_dataSet, stepCount, "Speichern");
         }
         public void SetStepCountMax(int _inputStepCountMax) => stepCountMax = _inputStepCountMax;
         public void SetStepCount(int _inputStepCount) => stepCount = _inputStepCount;
@@ -75,7 +75,7 @@ namespace XMLWriter.Classes {
 
         public void SetFileName(string inputFileName) //Damit keine vorherigen Daten überschrieben werden, wird der Dateiname iteriert, bis ein neuer Dateiname gefunden wurde.
         {
-            WriteToXML writer = new WriteToXML();
+            DataSetToXMLWriter writer = new DataSetToXMLWriter();
             writer.SetFileName(inputFileName);//, dataType);
 
         }
@@ -83,11 +83,11 @@ namespace XMLWriter.Classes {
         {
             switch (dataType) {
                 case "rep":
-                    WriteRepToXML rep = new WriteRepToXML();
+                    RepToXMLWriter rep = new RepToXMLWriter();
                     rep.OutputToXML(stepCountMax, dataSets, fileName);
                     break;
                 case "gfs":
-                    WriteGFSToXML gfs = new WriteGFSToXML();
+                    GFSToXMLWriter gfs = new GFSToXMLWriter();
                     gfs.OutputToXML(stepCountMax, dataSets, fileName);
                     break;
                 default:

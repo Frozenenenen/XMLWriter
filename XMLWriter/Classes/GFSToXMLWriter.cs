@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace XMLWriter
 {
-    class WriteGFSToXML:WriteToXML
+    class GFSToXMLWriter:DataSetToXMLWriter
     {
         public void OutputToXML(int stepCountMax, List<DataSet> data, string fileName)
         {

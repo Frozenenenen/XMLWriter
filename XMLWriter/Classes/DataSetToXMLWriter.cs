@@ -6,7 +6,7 @@ using System.Text;
 
 namespace XMLWriter
 {
-    class WriteToXML
+    class DataSetToXMLWriter
     {
         //Todo: Pfadsuche für's Speichern
         //Der Ordner muss bestehen, damit das Speichern funktioniert!

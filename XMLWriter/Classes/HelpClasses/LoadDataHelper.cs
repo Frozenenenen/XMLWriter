@@ -1,12 +1,12 @@
-﻿using System.Xml;
+﻿using System.Linq;
+using System.Xml;
 
 namespace XMLWriter.Classes.HelpClasses {
     internal class LoadDataHelper {
-        DataSet dataSet = new DataSet("", "", "", "", "", "", "", "", "", "", "", "", false, false, "");
-        ConsoleControl consol = new ConsoleControl();
-        DataSetManager manageData = new DataSetManager();
+        DataSetManager dataManager = new DataSetManager();
         GUIMovement GUI = new GUIMovement();
         DropDownOptionLists dropDownList = new DropDownOptionLists();
+        ConsoleControl consol = new ConsoleControl();
 
         XmlTextReader xtr;
         private static string fileNameAndPath = "";
@@ -18,77 +18,77 @@ namespace XMLWriter.Classes.HelpClasses {
             return !string.IsNullOrEmpty(fileNameAndPath);
         }
         public void ReadXMLStreamAndWriteToDataSets() {
+            
             xtr = new XmlTextReader(fileNameAndPath);
             int i = 0;
+            dataManager.InitNewDataSet();
             if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("\nStarte Laaden!!!\n");
-
             while (xtr.Read()) {
                 if (xtr.NodeType == XmlNodeType.Element) {
-                    //dataSet.
                     switch (xtr.Name) {
                         case "Repair":
-                            dataSet.stepName = xtr.GetAttribute("step");
+                            dataManager.GetDataSets().ElementAt(i).stepName = xtr.GetAttribute("step");
                             break;
                         case "Gfs":
-                            dataSet.stepName = xtr.GetAttribute("step");
+                            dataManager.GetDataSets().ElementAt(i).stepName = xtr.GetAttribute("step");
                             break;
                         case "content":
                             System.Diagnostics.Debug.WriteLine("Element: " + xtr.ReadElementString());
-                            dataSet.text = xtr.ReadElementString();
+                            dataManager.GetDataSets().ElementAt(i).text = xtr.ReadElementString();
                             break;
                         case "anim":
-                            dataSet.anim = xtr.ReadElementString();
+                            dataManager.GetDataSets().ElementAt(i).anim = xtr.ReadElementString();
                             break;
                         case "specialStep":
-                            dataSet.specialText = xtr.ReadElementString();
-                            manageData.SetDataSet(dataSet);
+                            dataManager.GetDataSets().ElementAt(i).specialText = xtr.ReadElementString();
+                            //Speichern dataType = "rep";
+                            dataManager.InitNewDataSet();
                             GUI.IncrementSteps();
                             i++;
-                            //dataType = "rep";
                             break;
                         case "instructions":
-                            dataSet.instruction = xtr.ReadElementString();
+                            dataManager.GetDataSets().ElementAt(i).instruction = xtr.ReadElementString();
                             break;
                         case "positiveID":
-                            dataSet.positiveID = xtr.ReadElementString();
+                            dataManager.GetDataSets().ElementAt(i).positiveID = xtr.ReadElementString();
                             break;
                         case "negativeID":
-                            dataSet.negativeID = xtr.ReadElementString();
+                            dataManager.GetDataSets().ElementAt(i).negativeID = xtr.ReadElementString();
                             break;
                         case "positiveResult":
-                            dataSet.positiveResult = xtr.ReadElementString();
+                            dataManager.GetDataSets().ElementAt(i).positiveResult = xtr.ReadElementString();
                             break;
                         case "RepXml":
-                            dataSet.repXML = xtr.ReadElementString();
+                            dataManager.GetDataSets().ElementAt(i).repXML = xtr.ReadElementString();
                             break;
                         case "actuatorTest":
-                            dataSet.actuatorTest = xtr.ReadElementString();
+                            dataManager.GetDataSets().ElementAt(i).actuatorTest = xtr.ReadElementString();
                             break;
                         case "ReadData":
-                            dataSet.RDID = xtr.ReadElementString();
+                            dataManager.GetDataSets().ElementAt(i).RDID = xtr.ReadElementString();
                             break;
                         case "SmartTool":
-                            dataSet.smartTool = xtr.ReadElementString();
+                            dataManager.GetDataSets().ElementAt(i).smartTool = xtr.ReadElementString();
                             break;
                         case "NextStep":
-                            dataSet.nextStep = xtr.ReadElementString() == "true" ? true : false;
+                            dataManager.GetDataSets().ElementAt(i).nextStep = xtr.ReadElementString() == "true" ? true : false;
                             break;
                         case "lastStep":
-                            dataSet.lastStep = xtr.ReadElementString() == "true" ? true : false;
-                            if (dataSet.smartTool != "" && dataSet.smartTool != "false") {
-                                dataSet.toolChoice = dropDownList.GetToolChoice()[2];
+                            dataManager.GetDataSets().ElementAt(i).lastStep = xtr.ReadElementString() == "true" ? true : false;
+                            if (dataManager.GetDataSets().ElementAt(i).smartTool != "" && dataManager.GetDataSets().ElementAt(i).smartTool != "false") {
+                                dataManager.GetDataSets().ElementAt(i).toolChoice = dropDownList.GetToolChoice()[2];
                             }
-                            else if (dataSet.actuatorTest != "" && dataSet.actuatorTest != "false") {
-                                dataSet.toolChoice = dropDownList.GetToolChoice()[1];
+                            else if (dataManager.GetDataSets().ElementAt(i).actuatorTest != "" && dataManager.GetDataSets().ElementAt(i).actuatorTest != "false") {
+                                dataManager.GetDataSets().ElementAt(i).toolChoice = dropDownList.GetToolChoice()[1];
                             }
-                            else if (dataSet.RDID != "" && dataSet.RDID != "false") {
-                                dataSet.toolChoice = dropDownList.GetToolChoice()[3];
+                            else if (dataManager.GetDataSets().ElementAt(i).RDID != "" && dataManager.GetDataSets().ElementAt(i).RDID != "false") {
+                                dataManager.GetDataSets().ElementAt(i).toolChoice = dropDownList.GetToolChoice()[3];
                             }
-                            if (consol.showMiscLoadData) System.Diagnostics.Debug.WriteLine("repXML= " + dataSet.repXML + "                ---LoadData.LoadDataFromFile()");
-                            manageData.SetDataSet(dataSet);
+                            if (consol.showMiscLoadData) System.Diagnostics.Debug.WriteLine("repXML= " + dataManager.GetDataSets().ElementAt(i).repXML + "                ---LoadData.LoadDataFromFile()");
+                            //Speichern dataType = "gfs";
+                            dataManager.InitNewDataSet();
                             GUI.IncrementSteps();
                             i++;
-                            //dataType = "gfs";
                             break;
                         default:
                             if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("Fehler: " + xtr.Name);
@@ -96,12 +96,13 @@ namespace XMLWriter.Classes.HelpClasses {
 
                             break;
                     }
-
                 }
-
             }
-            manageData.SetStepCount(0);
+            dataManager.SetStepCount(0);
             if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\n");
+        }
+        private void SaveDataSet(DataSet dataSet) {
+            dataManager.SetDataSet(dataSet);
         }
     }
 }

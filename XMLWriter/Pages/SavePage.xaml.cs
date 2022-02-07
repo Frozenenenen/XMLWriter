@@ -60,7 +60,7 @@ namespace XMLWriter.Pages {
         }
 
         private void InitTextItems() {
-            WriteToXML writer = new WriteToXML();
+            DataSetToXMLWriter writer = new DataSetToXMLWriter();
             inputVehicleID.ItemsSource = writer.GetPathVehicleIDChoises();
             inputLanguage.ItemsSource = writer.GetPathLanguageChoises();
             textTitel.Content = language.GetStringSummary();

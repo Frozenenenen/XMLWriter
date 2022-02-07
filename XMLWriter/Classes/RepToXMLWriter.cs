@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace XMLWriter
 {
-    class WriteRepToXML: WriteToXML
+    class RepToXMLWriter: DataSetToXMLWriter
     {
         public void OutputToXML(int stepCountMax, List<DataSet> data, string fileName) //Output to file
         {
