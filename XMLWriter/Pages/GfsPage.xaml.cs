@@ -13,7 +13,7 @@ namespace XMLWriter.Pages {
     public partial class GfsPage : Page {
         DataSetManager data = new DataSetManager();
         Language language = new Language();
-        GUIMovement GUI = new GUIMovement();
+        GUIMovementService gui = new GUIMovementService();
         DropDownOptionLists ddList = new DropDownOptionLists();
         ConsoleControl consol = new ConsoleControl();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
@@ -21,8 +21,8 @@ namespace XMLWriter.Pages {
         DataSet dataSet;
 
         public GfsPage() {
-            dataSet = data.GetDataSets().ElementAt(data.GetStepCount());
-            consol.ConsoleShowDataSetOfIndex(dataSet, data.GetStepCount(), "Beim Start");
+            dataSet = data.GetDataSets().ElementAt(gui.GetIndex());
+            consol.ConsoleShowDataSetOfIndex(dataSet, gui.GetIndex(), "Beim Start");
             InitializeComponent();
             InitTextItems();
             InitValueItems();
@@ -33,41 +33,40 @@ namespace XMLWriter.Pages {
             data.InitNewDataSet();
 
             SaveStep();
-            consol.ConsoleShowDataSetOfIndex(dataSet, data.GetStepCount(), "Vorm Speichern");
+            consol.ConsoleShowDataSetOfIndex(dataSet, gui.GetStepCount(), "Vorm Speichern");
             data.SetDataSet(dataSet);
-            GUI.IncrementSteps();
-            if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnNext Gfs - - - \n - - - Nächster Schritt " + (data.GetStepCount()) + " - - - \n - - - BtnNext Gf - - - ");
+            gui.IncrementSteps();
+            if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnNext Gfs - - - \n - - - Nächster Schritt " + (gui.GetStepCount()) + " - - - \n - - - BtnNext Gf - - - ");
             _ = NavigationService.Navigate(new GfsPage());
         }
         private void BtnBack_Click(object sender, RoutedEventArgs e) {
             SaveStep();
             data.SetDataSet(dataSet);
-            if (data.GetStepCount() == 0) {
+            if (gui.IsFirstPage()) {
                 _ = NavigationService.Navigate(new StartPage());
             }
             else {
-                GUI.DecrementSteps();
+                gui.DecrementSteps();
                 _ = NavigationService.Navigate(new GfsPage());
             }
-            if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnBack Gfs - - - \n  - - - Nächster Schritt " + (data.GetStepCount()) + " - - - \n - - - BtnBack Gf - - - ");
+            if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnBack Gfs - - - \n  - - - Nächster Schritt " + (gui.GetIndex()) + " - - - \n - - - BtnBack Gf - - - ");
         }
         private void BtnBackDelete_Click(object sender, RoutedEventArgs e) {
-            if (data.GetStepCount() == 0) {
-
+            if (gui.IsFirstPage()) {
                 _ = NavigationService.Navigate(new StartPage());
                 data.ResetDataSet();
             }
             else {
-                GUI.DecrementStepsMax(); //decreases normal stepcount aswell
+                gui.DecrementStepsMax(); //decreases normal stepcount aswell
                 _ = NavigationService.Navigate(new GfsPage());
             }
-            if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnDel Gfs - - - \n  - - - Nächster Schritt " + (data.GetStepCount()) + " - - - \n - - - BtnDel Gf - - - ");
+            if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnDel Gfs - - - \n  - - - Nächster Schritt " + (gui.GetIndex()) + " - - - \n - - - BtnDel Gf - - - ");
         }
         private void BtnSave_Click(object sender, RoutedEventArgs e) {
             if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnSave Gfs - - - \n - - - BtnSave Gf - - - ");
             SaveStep();
             data.SetDataSet(dataSet);
-            GUI.IncrementSteps();
+            gui.IncrementSteps();
 
             _ = NavigationService.Navigate(new SavePage());
         }
@@ -158,7 +157,7 @@ namespace XMLWriter.Pages {
 
         //Inits
         private void InitTextItems() {
-            if (consol.showStep) System.Diagnostics.Debug.WriteLine("\n - - - Index Start Gfs - - - \n              " + data.GetStepCount() + "\n - - - Index Start Gfs - - -                                      ---GfsPage.InitTextItems()");
+            if (consol.showStep) System.Diagnostics.Debug.WriteLine("\n - - - Index Start Gfs - - - \n              " + gui.GetIndex() + "\n - - - Index Start Gfs - - -                                      ---GfsPage.InitTextItems()");
 
             //Inhalte linke Spalte
             //>´wieder einbauen!         //textStep.Content = language.GetStringStep() + " " + (data.GetStepCount() + 1);
@@ -192,11 +191,11 @@ namespace XMLWriter.Pages {
             InitFixedRightSideItems();
             InitFlexRightSideItems();
             ShowItemsAfterToolChoice();
-            if (consol.showStep) System.Diagnostics.Debug.WriteLine(" - - - Index Ende Gfs - - - \n              " + data.GetStepCount() + "\n - - - Index Ende Gfs - - - \n");
+            if (consol.showStep) System.Diagnostics.Debug.WriteLine(" - - - Index Ende Gfs - - - \n              " + gui.GetIndex() + "\n - - - Index Ende Gfs - - - \n");
         }
         private void InitLeftSideItems() {
             inputStepName.Text = dataSet.stepName == ""
-               ? "Schritt " + (data.GetStepCount() + 1)
+               ? "Schritt " + (gui.GetStepCount())
                : dataSet.stepName;
             inputText.Text = dataSet.text;
             inputAnim.Text = dataSet.anim == ""

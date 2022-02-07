@@ -9,7 +9,7 @@ namespace XMLWriter.Classes.HelpClasses
     internal class LoadHelper
     {
         ConsoleControl consol = new ConsoleControl();   
-        LoadDataHelper loadDataHelper = new LoadDataHelper();
+        LoadDataService loadDataHelper = new LoadDataService();
         private static string initialDirectory = "";
         private static string initialDirectoryFilePath = @"Files/";
         private static string initialDirectoryFileName = @"InitialDirectory.txt";

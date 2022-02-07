@@ -15,9 +15,10 @@ namespace XMLWriter.Classes.StartPage {
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         DropDownOptionLists loadInput = new DropDownOptionLists();
         UtilityFunctions utility = new UtilityFunctions();
-        LoadDataHelper loadDataHelper = new LoadDataHelper();
+        LoadDataService loadDataHelper = new LoadDataService();
         Language language = new Language();
         DataSetManager dataManager = new DataSetManager();
+        GUIMovementService gui = new GUIMovementService();
 
         private static readonly string[] processTypeList = { "gfs", "rep" };
         private static readonly string[] languageList = { "Deutsch", "English", "Espanol" };
@@ -100,7 +101,7 @@ namespace XMLWriter.Classes.StartPage {
             xamlHelper.SetTextFor(labelLoadFile, stringFilePath);
         }
         public void SetDisplayStepsText(Label labelStepCount) {
-            xamlHelper.SetTextFor(labelStepCount, stringDisplaySteps + ": " + (dataManager.GetStepCountMax() + 1));
+            xamlHelper.SetTextFor(labelStepCount, stringDisplaySteps + ": " + (gui.GetStepCountMax() + 1));
         }
         //Init Buttons
         public void SetStartButtonText(Button button) {

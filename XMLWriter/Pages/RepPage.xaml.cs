@@ -14,13 +14,13 @@ namespace XMLWriter.Pages
     public partial class RepPage : Page
     {
         DataSetManager data = new DataSetManager();
-        GUIMovement GUI = new GUIMovement();
+        GUIMovementService gui = new GUIMovementService();
         DataSet dataSet;
         ConsoleControl consol = new ConsoleControl();   
         Language language = new Language();
         public RepPage()
         {
-            dataSet = data.GetDataSets().ElementAt(data.GetStepCount());
+            dataSet = data.GetDataSets().ElementAt(gui.GetIndex());
             InitializeComponent();
             InitTextItems();
             InitValueItems();
@@ -32,7 +32,7 @@ namespace XMLWriter.Pages
 
             WriteInputToDataSet();
             data.SetDataSet(dataSet);
-            GUI.IncrementSteps();
+            gui.IncrementSteps();
             
             _ = NavigationService.Navigate(new RepPage());
 
@@ -42,19 +42,19 @@ namespace XMLWriter.Pages
         {
             WriteInputToDataSet();
             data.SetDataSet(dataSet);
-            if (data.GetStepCount() == 0)
+            if (gui.IsFirstPage())
             {
                 _ = NavigationService.Navigate(new StartPage());
             }
             else
             {
-                GUI.DecrementSteps();
+                gui.DecrementSteps();
                 _ = NavigationService.Navigate(new RepPage());
             }
         }
         private void BtnBackDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (data.GetStepCount() == 0)
+            if (gui.IsFirstPage())
             {
 
                 _ = NavigationService.Navigate(new StartPage());
@@ -62,7 +62,7 @@ namespace XMLWriter.Pages
             }
             else
             {
-                GUI.DecrementStepsMax();
+                gui.DecrementStepsMax();
                 _ = NavigationService.Navigate(new RepPage());
             }
         }
@@ -70,7 +70,7 @@ namespace XMLWriter.Pages
         {
             WriteInputToDataSet();
             data.SetDataSet(dataSet);
-            GUI.IncrementSteps();
+            gui.IncrementSteps();
             _ = NavigationService.Navigate(new SavePage());
         }
 
@@ -92,7 +92,7 @@ namespace XMLWriter.Pages
         private void InitValueItems()
         {
             inputStepName.Text = dataSet.stepName == ""
-                ? "Schritt " + (data.GetStepCount() + 1)
+                ? "Schritt " + (gui.GetStepCount())
                 : dataSet.stepName;
             inputText.Text = dataSet.text;
             inputAnim.Text = dataSet.anim == ""
@@ -100,7 +100,7 @@ namespace XMLWriter.Pages
                 : dataSet.anim;
             inputSpecialText.Text = dataSet.specialText;
 
-            if(consol.showMiscRep) Console.WriteLine("Ausgabe: Schritt: " + (data.GetStepCount() + 1) + " Anim: " + dataSet.anim + " Text: " + dataSet.text + " SpText: " + dataSet.specialText);
+            if(consol.showMiscRep) Console.WriteLine("Ausgabe: Schritt: " + (gui.GetStepCount()) + " Anim: " + dataSet.anim + " Text: " + dataSet.text + " SpText: " + dataSet.specialText);
         }
         private void WriteInputToDataSet()
         {

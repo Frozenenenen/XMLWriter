@@ -10,11 +10,12 @@ namespace XMLWriter.Classes {
     internal class DataSetManager {
         //ConsoleControl consol = new ConsoleControl();
         LoadHelper loadHelper = new LoadHelper();
-        LoadDataHelper loadDataHelper = new LoadDataHelper();
+        LoadDataService loadDataHelper = new LoadDataService();
+        GUIMovementService gui = new GUIMovementService();
 
         private static List<DataSet> dataSets = new List<DataSet>();
-        private static int stepCount = 0;
-        private static int stepCountMax = 0;
+        //private static int stepCount = 0;
+        //private static int stepCountMax = 0;
         private static string dataType = "rep";
         private static string fileName = "Dateiname"; //can include the path
 
@@ -26,14 +27,13 @@ namespace XMLWriter.Classes {
         public string GetFileName() => fileName; //Where it should be written to. Includes the Path
 
         public string[] GetStepNames() {
-            string[] stepNames = new string[stepCountMax]; //foreach wäre eleganter
-            for (int i = 0; i < stepCountMax; i++) {
+            string[] stepNames = new string[gui.GetStepCountMax()]; //foreach wäre eleganter
+            for (int i = 0; i < gui.GetStepCountMax(); i++) {
                 stepNames[i] = dataSets.ElementAt(i).stepName;
             }
             return stepNames;
         } //This is the list of all entries of StepName used in a Set to use for the dropdown/textfields of postiveID and negativeID
         //DataSet data
-        public int GetStepCountMax() => stepCountMax;
         public int GetStepCount() => stepCount; //Index
 
 

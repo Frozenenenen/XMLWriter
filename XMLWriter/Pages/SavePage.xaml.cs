@@ -13,12 +13,12 @@ namespace XMLWriter.Pages {
     /// </summary>
     public partial class SavePage : Page {
         DataSetManager data = new DataSetManager();
-        GUIMovement gui = new GUIMovement();
+        GUIMovementService gui = new GUIMovementService();
         Language language = new Language();
         LoadHelper loadHelper = new LoadHelper();   
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         SavePageHelper savePageData = new SavePageHelper();
-        LoadDataHelper loadDataHelper = new LoadDataHelper();
+        LoadDataService loadDataHelper = new LoadDataService();
 
         public SavePage() {
             InitializeComponent();
@@ -66,7 +66,7 @@ namespace XMLWriter.Pages {
             textTitel.Content = language.GetStringSummary();
             xamlHelper.SetTextFor(labelFileNameTitel, savePageData.GetStringFileNameTitel());
             //labelFileNameTitel.Content = language.GetStringFileNameTitel();
-            textStepCount.Content = (data.GetStepCountMax()) + " " + savePageData.GetStringSteps();
+            textStepCount.Content = (gui.GetStepCountMax()) + " " + savePageData.GetStringSteps();
             btnBack.Content = language.GetStringBack();
             btnSave.Content = language.GetStringSave();
             inputVehicleID.Text = "eGolf";

@@ -2,9 +2,9 @@
 using System.Xml;
 
 namespace XMLWriter.Classes.HelpClasses {
-    internal class LoadDataHelper {
+    internal class LoadDataService {
         DataSetManager dataManager = new DataSetManager();
-        GUIMovement GUI = new GUIMovement();
+        GUIMovementService GUI = new GUIMovementService();
         DropDownOptionLists dropDownList = new DropDownOptionLists();
         ConsoleControl consol = new ConsoleControl();
 
