@@ -14,10 +14,10 @@ namespace XMLWriter.Classes.StartPage {
         DropDownOptionLists dropDownLists = new DropDownOptionLists();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         DropDownOptionLists loadInput = new DropDownOptionLists();
+        LoadHelper loadHelper = new LoadHelper();
         UtilityFunctions utility = new UtilityFunctions();
-        LoadDataService loadDataHelper = new LoadDataService();
         Language language = new Language();
-        DataSetManager dataManager = new DataSetManager();
+        DataSetService dataManager = new DataSetService();
         GUIMovementService gui = new GUIMovementService();
 
         private static readonly string[] processTypeList = { "gfs", "rep" };
@@ -134,7 +134,7 @@ namespace XMLWriter.Classes.StartPage {
         }
         //Init TextBlock
         public void SetFilePathText(TextBlock text) {
-            xamlHelper.SetTextFor(text, loadDataHelper.GetFileNameAndPath());
+            xamlHelper.SetTextFor(text, loadHelper.GetFileNameAndPath());
         }
     }
 }

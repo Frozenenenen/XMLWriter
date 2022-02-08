@@ -10,8 +10,6 @@ namespace XMLWriter
 {
     class DataSet
     {
-        ConsoleControl consol = new ConsoleControl();
-
         public string stepName="";
         public string text="";
         public string anim="";
@@ -29,6 +27,8 @@ namespace XMLWriter
         public bool? nextStep=false;
         public bool? lastStep=false;
         public string toolChoice="";
+
+        //private static List<DataSet> dataSets = new List<DataSet>();
 
         public DataSet(string _steps, string _stepTexts, string _stepAnims, string _stepSpecial, string _stepInstruction, string _stepPositiveID, 
             string _stepNegativeID, string _stepPositiveResult, string _stepRepXML, string _stepActuatorTest, string _stepRDBI, 
@@ -52,5 +52,9 @@ namespace XMLWriter
             lastStep = _stepLastStep;
             toolChoice = _stepToolChoice;
         }
+        
+        
     }
+
+    
 }

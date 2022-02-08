@@ -11,7 +11,7 @@ namespace XMLWriter.Pages {
     /// Interaktionslogik für GfsPage.xaml
     /// </summary>
     public partial class GfsPage : Page {
-        DataSetManager data = new DataSetManager();
+        DataSetService data = new DataSetService();
         Language language = new Language();
         GUIMovementService gui = new GUIMovementService();
         DropDownOptionLists ddList = new DropDownOptionLists();

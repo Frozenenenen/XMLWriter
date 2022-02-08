@@ -13,7 +13,7 @@ namespace XMLWriter.Pages
     /// </summary>
     public partial class RepPage : Page
     {
-        DataSetManager data = new DataSetManager();
+        DataSetService data = new DataSetService();
         GUIMovementService gui = new GUIMovementService();
         DataSet dataSet;
         ConsoleControl consol = new ConsoleControl();   

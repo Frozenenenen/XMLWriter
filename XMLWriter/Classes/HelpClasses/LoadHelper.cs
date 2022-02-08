@@ -8,11 +8,11 @@ namespace XMLWriter.Classes.HelpClasses
 {
     internal class LoadHelper
     {
-        ConsoleControl consol = new ConsoleControl();   
-        LoadDataService loadDataHelper = new LoadDataService();
+        readonly ConsoleControl consol = new ConsoleControl();
         private static string initialDirectory = "";
         private static string initialDirectoryFilePath = @"Files/";
         private static string initialDirectoryFileName = @"InitialDirectory.txt";
+        private static string fileNameAndPath = "";
 
 
         public void LookForInitialDirectory()
@@ -21,6 +21,7 @@ namespace XMLWriter.Classes.HelpClasses
             if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine(sr);
             initialDirectory = sr.ReadLine();
         }
+        public string GetFileNameAndPath() => fileNameAndPath;
         public string GetInitialDirectory() => initialDirectory;
         public void OpenFileDialog() {
             System.Diagnostics.Debug.WriteLine("OpenFileDialog Start");
@@ -33,7 +34,7 @@ namespace XMLWriter.Classes.HelpClasses
             }
             if (openFileDialog.ShowDialog() == true) {
                 System.Diagnostics.Debug.WriteLine("FilePath: " + openFileDialog.FileName);
-                loadDataHelper.SetFilePathAndName(openFileDialog.FileName);
+                fileNameAndPath =openFileDialog.FileName;
             }
             System.Diagnostics.Debug.WriteLine("OpenFileDialog Ende");
         }

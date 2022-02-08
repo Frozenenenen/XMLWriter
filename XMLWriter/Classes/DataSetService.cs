@@ -7,8 +7,8 @@ using XMLWriter.Classes.HelpClasses;
 namespace XMLWriter.Classes {
 
 
-    internal class DataSetManager {
-        LoadHelper loadHelper = new LoadHelper();
+    internal class DataSetService {
+        //LoadHelper loadHelper = new LoadHelper();
         LoadDataService loadDataHelper = new LoadDataService();
         GUIMovementService gui = new GUIMovementService();
         ConsoleControl consol = new ConsoleControl();
@@ -16,7 +16,6 @@ namespace XMLWriter.Classes {
         private static List<DataSet> dataSets = new List<DataSet>();
         private static string dataType = "rep";
         private static string fileName = "Dateiname"; //can include the path
-
 
 
         //Getter

@@ -12,13 +12,12 @@ namespace XMLWriter.Pages {
     /// Interaktionslogik für SavePage.xaml
     /// </summary>
     public partial class SavePage : Page {
-        DataSetManager data = new DataSetManager();
+        DataSetService data = new DataSetService();
         GUIMovementService gui = new GUIMovementService();
         Language language = new Language();
         LoadHelper loadHelper = new LoadHelper();   
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         SavePageHelper savePageData = new SavePageHelper();
-        LoadDataService loadDataHelper = new LoadDataService();
 
         public SavePage() {
             InitializeComponent();
@@ -85,8 +84,8 @@ namespace XMLWriter.Pages {
         private void BtnLoadFile(object sender, RoutedEventArgs e) {
             btnLoadFile.Content = language.GetStringFilePathDialog();
             loadHelper.OpenFileDialog();
-            inputFileName.Text = loadDataHelper.GetFileNameAndPath();
-            textFileName.Text = loadDataHelper.GetFileNameAndPath();
+            inputFileName.Text = loadHelper.GetFileNameAndPath();//Einer von beiden falsch?
+            textFileName.Text = loadHelper.GetFileNameAndPath();
             if (textFileName.Text == "") {
                 btnSave.Background = Brushes.Gray;
                 btnSave.IsEnabled = false;
