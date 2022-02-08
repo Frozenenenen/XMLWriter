@@ -13,8 +13,18 @@ namespace XMLWriter.Classes.HelpClasses {
         
 
         //public void SetFilePathAndName(string filePath, string fileName) => fileNameAndPath = filePath + fileName;
-        public bool IsFilePathValid() {
+        private bool IsFilePathValid() {
             return !string.IsNullOrEmpty(loadHelper.GetFileNameAndPath());
+        }
+        public void LoadDataFromFile() {
+            loadHelper.LookForInitialDirectory();
+            loadHelper.OpenFileDialog();
+
+            if (IsFilePathValid()) {
+
+                ReadXMLStreamAndWriteToDataSets();
+            }
+            dataSetService.TransmitDataSetListFromLoadToDataSetService(dataSetService.GetDataSets());
         }
         public void ReadXMLStreamAndWriteToDataSets() {
             

@@ -53,7 +53,8 @@ namespace XMLWriter.Classes.StartPage {
             textBlock.Text = "";
         }
         public void LoadDataFromFile() {
-            dataManager.LoadDataFromFile();
+            LoadDataService loadDataService = new LoadDataService();
+            loadDataService.LoadDataFromFile();
         }
 
         ///---Inits von Werten---///

@@ -9,7 +9,7 @@ namespace XMLWriter.Classes {
 
     internal class DataSetService {
         //LoadHelper loadHelper = new LoadHelper();
-        LoadDataService loadDataHelper = new LoadDataService();
+        //LoadDataService loadDataHelper = new LoadDataService();
         GUIMovementService gui = new GUIMovementService();
         ConsoleControl consol = new ConsoleControl();
 
@@ -46,14 +46,8 @@ namespace XMLWriter.Classes {
         }
         public void SetDataType(string _inputDataType) => dataType = _inputDataType;
 
-        public void LoadDataFromFile() {
-            loadHelper.LookForInitialDirectory();
-            loadHelper.OpenFileDialog();
-
-            if (loadDataHelper.IsFilePathValid()) {
-
-                loadDataHelper.ReadXMLStreamAndWriteToDataSets();
-            }
+        public void TransmitDataSetListFromLoadToDataSetService(List<DataSet> _dataSets) {
+            dataSets  = _dataSets;
         }
         public void ResetDataSet() {
             dataSets.Clear();
