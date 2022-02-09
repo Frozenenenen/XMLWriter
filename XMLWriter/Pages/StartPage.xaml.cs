@@ -39,7 +39,7 @@ namespace XMLWriter.Pages {
         ///---Buttons---///
         private void BtnStart(object sender, RoutedEventArgs e) {
             startPageService.InitNewDataSet();
-            startPageService.DatabaseOrTxtCheck(checkUseTxtOrDatabse.IsChecked);
+            startPageService.CheckForDataBaseOrTxt(checkUseTxtOrDatabse.IsChecked);
             //Navigation
             if (startPageService.GetSelectedProcessType() == startPageService.GetProcessTypeList()[1]) //rep - Reparatur
             {

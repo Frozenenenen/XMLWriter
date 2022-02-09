@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Controls;
-using System.Windows.Navigation;
+﻿using System.Windows.Controls;
 using XMLWriter.Classes.HelpClasses;
-using XMLWriter.Pages;
 
 namespace XMLWriter.Classes.StartPage {
     /// <summary>
     /// Helferlogik für StartPage.xaml.cs
     /// </summary>
     internal class StartPageHelper {
-        DropDownOptionLists dropDownLists = new DropDownOptionLists();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
-        DropDownOptionLists loadInput = new DropDownOptionLists();
+        DropDownOptionLists dropDownLists = new DropDownOptionLists();
         LoadHelper loadHelper = new LoadHelper();
         UtilityFunctions utility = new UtilityFunctions();
         Language language = new Language();
@@ -33,19 +27,19 @@ namespace XMLWriter.Classes.StartPage {
         //Buttons
         private static string stringStart = "--->";
         private static string stringLoadFile;
-        private static string stringDeleteSet;
+        private static string stringDeleteSets;
 
         //----------------------Bearbeitungsbereich-----------------------
 
         //----------------------Bearbeitungsbereich-----------------------
 
         ///---Hilfsfunktionen---///
-        public void DatabaseOrTxtCheck(bool? check) {
+        public void CheckForDataBaseOrTxt(bool? check) {
             if (check == true) {
-                loadInput.SetUseDataBaseTrue();
+                dropDownLists.SetUseDataBaseTrue();
             }
             else {
-                loadInput.DontUseDataBase();
+                dropDownLists.SetUseDataBaseFalse();
             }
         }
         public void Reset(TextBlock textBlock) {
@@ -63,7 +57,7 @@ namespace XMLWriter.Classes.StartPage {
 
         }
         public void LoadDropDownOptions() {//This load the objectlist for use in gfs dropdowns from text files or from a database
-            dropDownLists.LoadAllDropDownOptionsFromTxtOrDatabase();
+            dropDownLists.LoadAllDropDownOptionsFromTxtOrDataBase();
         }
         public void InitLanguages() {
             language.InitLanguage(selectedLanguage);
@@ -78,7 +72,7 @@ namespace XMLWriter.Classes.StartPage {
             stringUnchecked = language.GetStringUseDataBaseUnchecked();
             //Buttons
             stringLoadFile = language.GetStringLoadFile();
-            stringDeleteSet = language.GetStringDeleteSet();
+            stringDeleteSets = language.GetStringDeleteSet();
         }
 
         ///---Dropdown Getter---///
@@ -112,7 +106,7 @@ namespace XMLWriter.Classes.StartPage {
             xamlHelper.SetTextFor(button, stringLoadFile);
         }
         public void SetResetButtonText(Button button) {
-            xamlHelper.SetTextFor(button, stringDeleteSet);
+            xamlHelper.SetTextFor(button, stringDeleteSets);
         }
         //Init DropDowns
         public void InitProcessTypeDropDown(ComboBox comboBox) {

@@ -9,9 +9,9 @@ namespace XMLWriter.Classes {
     class DropDownOptionLists {
         ConsoleControl consol = new ConsoleControl();
         private static bool canUseDataBase = true;           //Hier ist noch ein Fehler
-        private static string[] toolChoice = { "", "ActuatorTest", "SmartTool", "ReadDataByIdentifier" };
+        private static string[] toolChoiceOptions = { "", "ActuatorTest", "SmartTool", "ReadDataByIdentifier" };
         private static string filePath = @"Files/";
-        private static string databasePath = @"Files/";
+        private static string dataBasePath = @"Files/";
         //Die Dateinamen sind MIT SICHERHEIT nicht final
         private static string[] fileNames = { @"ECU_List.txt", @"SmartTool_List.txt", @"IO_BCM.txt", @"IO_LWR.txt", @"IO_MSG.txt", @"Measure_URI.txt", @"Measure_Two.txt", @"Measure_Three.txt", @"RDID_BCM.txt", @"RDID_LWR.txt", @"RDID_MSG.txt" };
         private static string[] databaseQuerys = { @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"" };
@@ -42,11 +42,11 @@ namespace XMLWriter.Classes {
             System.Diagnostics.Debug.WriteLine("Loads from database - Init");
             canUseDataBase = true;
         }
-        public void DontUseDataBase() {
+        public void SetUseDataBaseFalse() {
             System.Diagnostics.Debug.WriteLine("Loads from text file - Init");
             canUseDataBase = false;
         }
-        public void LoadAllDropDownOptionsFromTxtOrDatabase() {
+        public void LoadAllDropDownOptionsFromTxtOrDataBase() {
             FillAllLists();
         }
         private void FillAllLists() {
@@ -63,13 +63,13 @@ namespace XMLWriter.Classes {
             FillList(RDID_MSG, fileNames[10], databaseQuerys[10]);
         }
 
-        private void FillList(List<DropDownOptionTupel> list, string fileName, string databaseQuery) {
+        private void FillList(List<DropDownOptionTupel> list, string fileName, string dataBaseQuery) {
             string stream;
             if (canUseDataBase) {
                 stream = LoadInputFromTxtFile(filePath + fileName);
             }
             else {
-                stream = LoadInputFromDatabase(databasePath + databaseQuery);
+                stream = LoadInputFromDataBase(dataBasePath + dataBaseQuery);
             }
             list.Clear();
             string[] TupelString;
@@ -111,7 +111,7 @@ namespace XMLWriter.Classes {
 
 
         public string[] GetToolChoice() {
-            return toolChoice;
+            return toolChoiceOptions;
         }
         public List<DropDownOptionTupel> GetECUChoices() {
             return ECU_List;
@@ -170,7 +170,7 @@ namespace XMLWriter.Classes {
             StreamReader sr = new StreamReader(fileNameAndPath);
             return sr.ReadLine();
         }
-        private string LoadInputFromDatabase(string databaseQuery) {
+        private string LoadInputFromDataBase(string dataBaseQuery) {
             throw new NotImplementedException();
         }
 
