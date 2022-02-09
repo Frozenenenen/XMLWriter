@@ -5,7 +5,7 @@ using System.Text;
 
 namespace XMLWriter
 {
-    class GUIMovementService
+    class GUIMovementHelper
     {
         private static int stepIndex = 0;
         private static int stepIndexMax = 0;

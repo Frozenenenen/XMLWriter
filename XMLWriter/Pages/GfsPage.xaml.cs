@@ -13,10 +13,11 @@ namespace XMLWriter.Pages {
     public partial class GfsPage : Page {
         DataSetService data = new DataSetService();
         Language language = new Language();
-        GUIMovementService gui = new GUIMovementService();
+        GUIMovementHelper gui = new GUIMovementHelper();
         DropDownOptionLists ddList = new DropDownOptionLists();
-        ConsoleControl consol = new ConsoleControl();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
+        ConsoleControl consol = new ConsoleControl();
+
         private static string positiveResult;
         DataSet dataSet;
 

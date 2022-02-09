@@ -85,18 +85,6 @@ namespace XMLWriter
         public string GetStringLastStep() => lastStep;
         
 
-
-
-
-
-
-
-        //public void SetLanguage(string inputLanguage) => language = inputLanguage;
-
-        //public string[] GetLanguageChoises() => File.ReadAllLines(@"Testgelände\languages.txt"); //Falls mal die SPrache aus einer Textdatei gezogen werden soll
-
-
-
         public void InitLanguage(string languageChoice) //Method to fill the variables with the language specific words
         {
             switch (languageChoice)
@@ -120,7 +108,7 @@ namespace XMLWriter
 
             }
         }
-        void InitGerman()
+        private void InitGerman()
         {
             loadFile = "Datei Laden?";
             filePathDialog = "Dateibrowser";
@@ -153,7 +141,7 @@ namespace XMLWriter
             useDataBaseChecked = "Checked - Daten aus Datenbank";
             useDataBaseUnchecked = "Unchecked - Daten aus Text-File";
         }
-        void InitEnglish()
+        private void InitEnglish()
         {
             loadFile = "Load file?";
             filePathDialog = "Open Dialogwindow";
@@ -186,7 +174,7 @@ namespace XMLWriter
             useDataBaseChecked = "Checked - Data from data base";
             useDataBaseUnchecked = "Unchecked - Data from Text-File";
         }
-        void InitEspanol()
+        private void InitEspanol()
         {
             //Meinem Spanisch sollte man nicht trauen! Das ist hauptsächlich zu Test- und Vorführzwecken hier
             loadFile = "Load file?";

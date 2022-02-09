@@ -8,7 +8,7 @@ namespace XMLWriter.Classes {
 
 
     internal class DataSetService {
-        GUIMovementService gui = new GUIMovementService();
+        GUIMovementHelper gui = new GUIMovementHelper();
         ConsoleControl consol = new ConsoleControl();
 
         private static List<DataSet> dataSets = new List<DataSet>();

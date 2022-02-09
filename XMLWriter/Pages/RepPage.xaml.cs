@@ -13,14 +13,15 @@ namespace XMLWriter.Pages
     /// </summary>
     public partial class RepPage : Page
     {
-        DataSetService data = new DataSetService();
-        GUIMovementService gui = new GUIMovementService();
+        DataSetService dataSetService = new DataSetService();
+        GUIMovementHelper gui = new GUIMovementHelper();
         DataSet dataSet;
-        ConsoleControl consol = new ConsoleControl();   
         Language language = new Language();
+        ConsoleControl consol = new ConsoleControl();
+
         public RepPage()
         {
-            dataSet = data.GetDataSets().ElementAt(gui.GetIndex());
+            dataSet = dataSetService.GetDataSets().ElementAt(gui.GetIndex());
             InitializeComponent();
             InitTextItems();
             InitValueItems();
@@ -28,10 +29,10 @@ namespace XMLWriter.Pages
 
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
-            data.InitNewDataSet();
+            dataSetService.InitNewDataSet();
 
             WriteInputToDataSet();
-            data.SetDataSet(dataSet);
+            dataSetService.SetDataSet(dataSet);
             gui.IncrementSteps();
             
             _ = NavigationService.Navigate(new RepPage());
@@ -41,7 +42,7 @@ namespace XMLWriter.Pages
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
             WriteInputToDataSet();
-            data.SetDataSet(dataSet);
+            dataSetService.SetDataSet(dataSet);
             if (gui.IsFirstPage())
             {
                 _ = NavigationService.Navigate(new StartPage());
@@ -58,7 +59,7 @@ namespace XMLWriter.Pages
             {
 
                 _ = NavigationService.Navigate(new StartPage());
-                data.ResetDataSet();
+                dataSetService.ResetDataSet();
             }
             else
             {
@@ -69,7 +70,7 @@ namespace XMLWriter.Pages
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             WriteInputToDataSet();
-            data.SetDataSet(dataSet);
+            dataSetService.SetDataSet(dataSet);
             gui.IncrementSteps();
             _ = NavigationService.Navigate(new SavePage());
         }

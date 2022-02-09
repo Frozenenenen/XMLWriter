@@ -6,7 +6,7 @@ namespace XMLWriter.Classes.HelpClasses {
         
         DataSetService dataSetService = new DataSetService();
         LoadHelper loadHelper = new LoadHelper();   
-        GUIMovementService GUI = new GUIMovementService();
+        GUIMovementHelper GUI = new GUIMovementHelper();
         DropDownOptionLists dropDownList = new DropDownOptionLists();
         ConsoleControl consol = new ConsoleControl();
         XmlTextReader xtr;

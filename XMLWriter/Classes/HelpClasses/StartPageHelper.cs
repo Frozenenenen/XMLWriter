@@ -12,7 +12,7 @@ namespace XMLWriter.Classes.StartPage {
         UtilityFunctions utility = new UtilityFunctions();
         Language language = new Language();
         DataSetService dataManager = new DataSetService();
-        GUIMovementService gui = new GUIMovementService();
+        GUIMovementHelper gui = new GUIMovementHelper();
 
         private static readonly string[] processTypeList = { "gfs", "rep" };
         private static readonly string[] languageList = { "Deutsch", "English", "Espanol" };
