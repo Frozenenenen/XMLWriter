@@ -17,10 +17,11 @@ namespace XMLWriter.Pages {
         Language language = new Language();
         LoadHelper loadHelper = new LoadHelper();   
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
-        SavePageHelper savePageData = new SavePageHelper();
+        SavePageHelper savePageHelper = new SavePageHelper();
 
         public SavePage() {
             InitializeComponent();
+            savePageHelper.InitSavePageData();
             InitTextItems();
             InitValueItems();
             InitButtons();
@@ -63,9 +64,9 @@ namespace XMLWriter.Pages {
             inputVehicleID.ItemsSource = writer.GetPathVehicleIDChoises();
             inputLanguage.ItemsSource = writer.GetPathLanguageChoises();
             textTitel.Content = language.GetStringSummary();
-            xamlHelper.SetTextFor(labelFileNameTitel, savePageData.GetStringFileNameTitel());
+            xamlHelper.SetTextFor(labelFileNameTitel, savePageHelper.GetTextFileNameTitel());
             //labelFileNameTitel.Content = language.GetStringFileNameTitel();
-            textStepCount.Content = (gui.GetStepCountMax()) + " " + savePageData.GetStringSteps();
+            textStepCount.Content = (gui.GetStepCountMax()) + " " + savePageHelper.GetTextSteps();
             btnBack.Content = language.GetStringBack();
             btnSave.Content = language.GetStringSave();
             inputVehicleID.Text = "eGolf";

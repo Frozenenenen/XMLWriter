@@ -1,10 +1,4 @@
-﻿using XMLWriter.Classes;
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Text;
-
-namespace XMLWriter
+﻿namespace XMLWriter
 {
     class DataSetToXMLWriter
     {

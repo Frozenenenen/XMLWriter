@@ -7,16 +7,16 @@ namespace XMLWriter.Classes.StartPage
     internal class SavePageHelper
     {
         Language language = new Language();
-        private static string savePageStringFileNameTitel;
-        private static string savePageStringSteps;
+        private static string TextFileNameTitel;
+        private static string TextStringSteps;
 
         public void InitSavePageData()
         {
-            savePageStringFileNameTitel = language.GetStringFilePath();
-            savePageStringSteps = language.GetStringSteps() + " ";
+            TextFileNameTitel = language.GetStringFilePath();
+            TextStringSteps = language.GetStringSteps() + " ";
         }
 
-        public string GetStringFileNameTitel() => savePageStringFileNameTitel;
-        public string GetStringSteps() => savePageStringSteps;
+        public string GetTextFileNameTitel() => TextFileNameTitel;
+        public string GetTextSteps() => TextStringSteps;
     }
 }

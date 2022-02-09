@@ -10,7 +10,7 @@ namespace XMLWriter.Classes.StartPage {
     /// <summary>
     /// Helferlogik für StartPage.xaml.cs
     /// </summary>
-    internal class StartPageService {
+    internal class StartPageHelper {
         DropDownOptionLists dropDownLists = new DropDownOptionLists();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         DropDownOptionLists loadInput = new DropDownOptionLists();
@@ -117,11 +117,11 @@ namespace XMLWriter.Classes.StartPage {
         //Init DropDowns
         public void InitProcessTypeDropDown(ComboBox comboBox) {
             System.Diagnostics.Debug.WriteLine("Prozesstyp: " + dataManager.GetDataType());
-            xamlHelper.SetDropdownListFor(comboBox, processTypeList);
+            xamlHelper.SetDropDownListFor(comboBox, processTypeList);
             xamlHelper.SetDropDownActiveELementFor(comboBox, dataManager.GetDataType());
         }
         public void InitLanguageSelectionDropDown(ComboBox comboBox) {
-            xamlHelper.SetDropdownListFor(comboBox, languageList);
+            xamlHelper.SetDropDownListFor(comboBox, languageList);
             xamlHelper.SetDropDownActiveELementFor(comboBox, selectedLanguage);
         }
         public void ChangeProcessActiveElement(ComboBox comboBox, string selectedElement) {

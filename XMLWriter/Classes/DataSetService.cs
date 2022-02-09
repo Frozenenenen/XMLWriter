@@ -8,8 +8,6 @@ namespace XMLWriter.Classes {
 
 
     internal class DataSetService {
-        //LoadHelper loadHelper = new LoadHelper();
-        //LoadDataService loadDataHelper = new LoadDataService();
         GUIMovementService gui = new GUIMovementService();
         ConsoleControl consol = new ConsoleControl();
 

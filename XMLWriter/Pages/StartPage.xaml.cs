@@ -11,7 +11,7 @@ namespace XMLWriter.Pages {
     /// Interaktionslogik für StartPage.xaml
     /// </summary>
     public partial class StartPage : Page {
-        StartPageService startPageService = new StartPageService();
+        StartPageHelper startPageService = new StartPageHelper();
         ConsoleControl consol = new ConsoleControl();
         public StartPage() {
             InitializeComponent();
@@ -37,7 +37,7 @@ namespace XMLWriter.Pages {
             startPageService.InitLanguageSelectionDropDown(dropDownLanguage);
         }
         ///---Buttons---///
-        private void btnStart(object sender, RoutedEventArgs e) {
+        private void BtnStart(object sender, RoutedEventArgs e) {
             startPageService.InitNewDataSet();
             startPageService.DatabaseOrTxtCheck(checkUseTxtOrDatabse.IsChecked);
             //Navigation
@@ -61,15 +61,15 @@ namespace XMLWriter.Pages {
             startPageService.SetFilePathText(textBlockLoadFile);
             startPageService.SetDisplayStepsText(labelStepCount);
         }
-        private void BtnReset_Click(object sender, RoutedEventArgs e) {
+        private void BtnReset(object sender, RoutedEventArgs e) {
             startPageService.Reset(textBlockLoadFile);
         }
-        private void dropDownLanguage_OnClosed(object sender, EventArgs e) {
+        private void DropDownLanguage_OnClosed(object sender, EventArgs e) {
             startPageService.SetLangauge(dropDownLanguage.Text);
             InitLabels();
             InitButtons();
         }
-        private void dropDownProcesses_OnClosed(object sender, EventArgs e) {
+        private void DropDownProcesses_OnClosed(object sender, EventArgs e) {
             startPageService.ChangeProcessActiveElement(dropDownProcesses, dropDownProcesses.Text);
         }
     }

@@ -5,12 +5,12 @@ namespace XMLWriter.Classes {
         public void SetDropDownActiveELementFor(ComboBox comboBox, string selectedElement) {
             comboBox.SelectedIndex = comboBox.Items.IndexOf(selectedElement);
         }
-        public void SetDropdownListFor(ComboBox comboBox, string[] array) {
+        public void SetDropDownListFor(ComboBox comboBox, string[] array) {
             comboBox.ItemsSource = array;
         }
         public void SetDropDownContent(ComboBox comboBox, string[] array, string selectedElement) {
             SetDropDownActiveELementFor(comboBox, selectedElement);
-            SetDropdownListFor(comboBox, array);
+            SetDropDownListFor(comboBox, array);
         }
         public void SetTextFor(Label label, string text) {
             label.Content = text;
