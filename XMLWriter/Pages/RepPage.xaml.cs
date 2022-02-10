@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using System.Linq;
 using XMLWriter.Classes;
+using XMLWriter.Classes.HelpClasses;
 
 namespace XMLWriter.Pages
 {
@@ -18,23 +19,20 @@ namespace XMLWriter.Pages
         DataSet dataSet;
         Language language = new Language();
         ConsoleControl consol = new ConsoleControl();
+        RepPageHelper repPageHelper = new RepPageHelper();
 
         public RepPage()
         {
-            dataSet = dataSetService.GetDataSets().ElementAt(gui.GetIndex());
             InitializeComponent();
+            repPageHelper.InitDataSet();
             InitTextItems();
             InitValueItems();
         }
 
         private void BtnNext_Click(object sender, RoutedEventArgs e)
         {
-            dataSetService.InitNewDataSet();
-
-            WriteInputToDataSet();
-            dataSetService.SetDataSet(dataSet);
-            gui.IncrementSteps();
-            
+            repPageHelper.AddCurrentDataSetToList();
+            repPageHelper.PrepareNextPage();
             _ = NavigationService.Navigate(new RepPage());
 
         }
@@ -103,12 +101,6 @@ namespace XMLWriter.Pages
 
             if(consol.showMiscRep) Console.WriteLine("Ausgabe: Schritt: " + (gui.GetStepCount()) + " Anim: " + dataSet.anim + " Text: " + dataSet.text + " SpText: " + dataSet.specialText);
         }
-        private void WriteInputToDataSet()
-        {
-            dataSet.stepName = inputStepName.Text;
-            dataSet.text = inputText.Text;
-            dataSet.anim = inputAnim.Text;
-            dataSet.specialText = inputSpecialText.Text;
-        }
+        
     }
 }

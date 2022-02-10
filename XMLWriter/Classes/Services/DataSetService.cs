@@ -10,8 +10,8 @@ namespace XMLWriter.Classes {
     internal class DataSetService {
         GUIMovementHelper gui = new GUIMovementHelper();
         ConsoleControl consol = new ConsoleControl();
-
         private static List<DataSet> dataSets = new List<DataSet>();
+
         private static string dataType = "rep";
         private static string fileName = "Dateiname"; //can include the path
 
@@ -34,12 +34,13 @@ namespace XMLWriter.Classes {
         //Setter 
         public void SetDataSet(DataSet _dataSet) //Ich habe kA warum ich nicht einfach das ganze Objekt übergeben kann.
         {
-            if (gui.GetIndex() == gui.GetIndexMax()) {
+            /*if (gui.GetIndex() == gui.GetIndexMax()) {
                 dataSets.Add(_dataSet);
             }
             else {
                 dataSets.Insert(gui.GetIndex(), _dataSet);
-            }
+            }*/
+            dataSets.Insert(gui.GetIndex(), _dataSet);
             consol.ConsoleShowDataSetOfIndex(_dataSet, gui.GetIndex(), "Speichern");
         }
         public void SetDataType(string _inputDataType) => dataType = _inputDataType;

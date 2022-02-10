@@ -11,7 +11,7 @@ namespace XMLWriter.Classes.StartPage {
         LoadHelper loadHelper = new LoadHelper();
         UtilityFunctions utility = new UtilityFunctions();
         Language language = new Language();
-        DataSetService dataManager = new DataSetService();
+        DataSetService dataSetService = new DataSetService();
         GUIMovementHelper gui = new GUIMovementHelper();
 
         private static readonly string[] processTypeList = { "gfs", "rep" };
@@ -43,7 +43,7 @@ namespace XMLWriter.Classes.StartPage {
             }
         }
         public void Reset(TextBlock textBlock) {
-            dataManager.ResetDataSet();
+            dataSetService.ResetDataSet();
             textBlock.Text = "";
         }
         public void LoadDataFromFile() {
@@ -53,7 +53,7 @@ namespace XMLWriter.Classes.StartPage {
 
         ///---Inits von Werten---///
         public void InitNewDataSet() {
-            dataManager.InitNewDataSet();
+            dataSetService.InitNewDataSet();
 
         }
         public void LoadDropDownOptions() {//This load the objectlist for use in gfs dropdowns from text files or from a database
@@ -110,9 +110,9 @@ namespace XMLWriter.Classes.StartPage {
         }
         //Init DropDowns
         public void InitProcessTypeDropDown(ComboBox comboBox) {
-            System.Diagnostics.Debug.WriteLine("Prozesstyp: " + dataManager.GetDataType());
+            System.Diagnostics.Debug.WriteLine("Prozesstyp: " + dataSetService.GetDataType());
             xamlHelper.SetDropDownListFor(comboBox, processTypeList);
-            xamlHelper.SetDropDownActiveELementFor(comboBox, dataManager.GetDataType());
+            xamlHelper.SetDropDownActiveELementFor(comboBox, dataSetService.GetDataType());
         }
         public void InitLanguageSelectionDropDown(ComboBox comboBox) {
             xamlHelper.SetDropDownListFor(comboBox, languageList);
@@ -120,7 +120,7 @@ namespace XMLWriter.Classes.StartPage {
         }
         public void ChangeProcessActiveElement(ComboBox comboBox, string selectedElement) {
             xamlHelper.SetDropDownActiveELementFor(comboBox, selectedElement);
-            dataManager.SetDataType(selectedElement);
+            dataSetService.SetDataType(selectedElement);
         }
         //Init CheckBoxes
         public void SetTxtOrDataBaseCheckBoxText(Label check, Label uncheck) {
