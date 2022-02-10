@@ -32,16 +32,9 @@ namespace XMLWriter.Classes {
 
 
         //Setter 
-        public void SetDataSet(DataSet _dataSet) //Ich habe kA warum ich nicht einfach das ganze Objekt übergeben kann.
+        public void SetDataSet(DataSet _dataSet) //Zu löschen.
         {
-            /*if (gui.GetIndex() == gui.GetIndexMax()) {
-                dataSets.Add(_dataSet);
-            }
-            else {
-                dataSets.Insert(gui.GetIndex(), _dataSet);
-            }*/
             dataSets.Insert(gui.GetIndex(), _dataSet);
-            consol.ConsoleShowDataSetOfIndex(_dataSet, gui.GetIndex(), "Speichern");
         }
         public void SetDataType(string _inputDataType) => dataType = _inputDataType;
 
@@ -52,9 +45,9 @@ namespace XMLWriter.Classes {
             dataSets.Clear();
             gui.ResetStepCount();
             gui.ResetStepCountMax();
-            InitNewDataSet();
+            InitNewDataSetWhereRequired();
         }
-        public void InitNewDataSet() {
+        public void InitNewDataSetWhereRequired() {
             if (gui.GetIndex() == gui.GetIndexMax()) {
                 dataSets.Add(new DataSet("", "", "", "default", "", "", "", "", "", "", "", "", false, false, ""));
             }

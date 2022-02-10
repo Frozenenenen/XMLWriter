@@ -53,7 +53,7 @@ namespace XMLWriter.Classes.StartPage {
 
         ///---Inits von Werten---///
         public void InitNewDataSet() {
-            dataSetService.InitNewDataSet();
+            dataSetService.InitNewDataSetWhereRequired();
 
         }
         public void LoadDropDownOptions() {//This load the objectlist for use in gfs dropdowns from text files or from a database

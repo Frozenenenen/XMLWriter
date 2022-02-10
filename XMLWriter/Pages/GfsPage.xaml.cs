@@ -1,8 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using System.Collections.Generic;
 using System.Linq;
 using XMLWriter.Classes;
 
@@ -31,7 +29,7 @@ namespace XMLWriter.Pages {
 
         //buttons
         private void BtnNext_Click(object sender, RoutedEventArgs e) {
-            data.InitNewDataSet();
+            data.InitNewDataSetWhereRequired();
 
             SaveStep();
             consol.ConsoleShowDataSetOfIndex(dataSet, gui.GetStepCount(), "Vorm Speichern");

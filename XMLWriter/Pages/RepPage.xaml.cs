@@ -7,100 +7,71 @@ using System.Linq;
 using XMLWriter.Classes;
 using XMLWriter.Classes.HelpClasses;
 
-namespace XMLWriter.Pages
-{
+namespace XMLWriter.Pages {
     /// <summary>
     /// Interaktionslogik für RepPage.xaml
     /// </summary>
-    public partial class RepPage : Page
-    {
-        DataSetService dataSetService = new DataSetService();
+    public partial class RepPage : Page {
         GUIMovementHelper gui = new GUIMovementHelper();
-        DataSet dataSet;
-        Language language = new Language();
-        ConsoleControl consol = new ConsoleControl();
         RepPageHelper repPageHelper = new RepPageHelper();
 
-        public RepPage()
-        {
+        public RepPage() {
             InitializeComponent();
-            repPageHelper.InitDataSet();
             InitTextItems();
             InitValueItems();
         }
 
-        private void BtnNext_Click(object sender, RoutedEventArgs e)
-        {
-            repPageHelper.AddCurrentDataSetToList();
+        private void BtnNext_Click(object sender, RoutedEventArgs e) {
+            repPageHelper.SaveCurrentInput(inputStepName, inputText, inputSpecialText, inputAnim);
             repPageHelper.PrepareNextPage();
             _ = NavigationService.Navigate(new RepPage());
 
         }
 
-        private void BtnBack_Click(object sender, RoutedEventArgs e)
-        {
-            WriteInputToDataSet();
-            dataSetService.SetDataSet(dataSet);
-            if (gui.IsFirstPage())
-            {
+        private void BtnBack_Click(object sender, RoutedEventArgs e) {
+            repPageHelper.PreparePreviousPage();
+            repPageHelper.SaveCurrentInput(inputStepName, inputText, inputSpecialText, inputAnim);
+            if (gui.IsFirstPage()) {
                 _ = NavigationService.Navigate(new StartPage());
             }
-            else
-            {
-                gui.DecrementSteps();
+            else {
                 _ = NavigationService.Navigate(new RepPage());
             }
         }
-        private void BtnBackDelete_Click(object sender, RoutedEventArgs e)
-        {
-            if (gui.IsFirstPage())
-            {
-
-                _ = NavigationService.Navigate(new StartPage());
-                dataSetService.ResetDataSet();
+        private void BtnBackDelete_Click(object sender, RoutedEventArgs e) {
+            repPageHelper.DeleteCurrentSet();
+            if (!gui.IsFirstPage()) {
+                repPageHelper.PreparePreviousPage();
             }
-            else
-            {
-                gui.DecrementStepsMax();
-                _ = NavigationService.Navigate(new RepPage());
-            }
+            _ = NavigationService.Navigate(new RepPage());
         }
-        private void BtnSave_Click(object sender, RoutedEventArgs e)
-        {
-            WriteInputToDataSet();
-            dataSetService.SetDataSet(dataSet);
-            gui.IncrementSteps();
+        private void BtnSave_Click(object sender, RoutedEventArgs e) {
+            repPageHelper.SaveCurrentInput(inputStepName, inputText, inputSpecialText, inputAnim);
+            repPageHelper.PrepareNextPage();
             _ = NavigationService.Navigate(new SavePage());
         }
 
-        private void InitTextItems()
-        {
+        private void InitTextItems() {
             //Schritzüge
-//Wichtig, wieder einbauen!            //textStep.Content = language.GetStringStep() + " " + (data.GetStepCount() + 1);
-            textContentTitel.Content = language.GetStringContent();
-            textAnimTitel.Content = language.GetStringAnim();
-            textSpecialContentTitel.Content = language.GetStringSpecialStep();
-            textTitel.Content = language.GetStringPleaseFill();
+
+            repPageHelper.SetLabelStepText(textStep);
+            repPageHelper.SetLabelContentTitelText(textContentTitel);
+            repPageHelper.SetLabelAnimText(textAnimTitel);
+            repPageHelper.SetLabelSpecialText(textSpecialContentTitel);
+            repPageHelper.SetLabelTitelText(textTitel);
 
             //Buttons
-            btnBack.Content = language.GetStringBack();
-            btnBackDelete.Content = language.GetStringReset();
-            btnNext.Content = language.GetStringNext();
-            btnSave.Content = language.GetStringSave();
+            repPageHelper.SetButtonNextText(btnNext);
+            repPageHelper.SetButtonBackText(btnBack);
+            repPageHelper.SetButtonDeleteText(btnBackDelete);
+            repPageHelper.SetButtonSaveText(btnSave);
         }
-        private void InitValueItems()
-        {
-            inputStepName.Text = dataSet.stepName == ""
-                ? "Schritt " + (gui.GetStepCount())
-                : dataSet.stepName;
-            inputText.Text = dataSet.text;
-            inputAnim.Text = dataSet.anim == ""
-                ? "default"
-                : dataSet.anim;
-            inputSpecialText.Text = dataSet.specialText;
+        private void InitValueItems() {
+            repPageHelper.SetBoxStepNameValue(inputStepName);
+            repPageHelper.SetBoxTextValue(inputText);
+            repPageHelper.SetBoxAnimValue(inputAnim);
+            repPageHelper.SetBoxSpecialText(inputSpecialText);
+        }
 
-            if(consol.showMiscRep) Console.WriteLine("Ausgabe: Schritt: " + (gui.GetStepCount()) + " Anim: " + dataSet.anim + " Text: " + dataSet.text + " SpText: " + dataSet.specialText);
-        }
-        
     }
 }

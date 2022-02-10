@@ -21,5 +21,8 @@ namespace XMLWriter.Classes {
         public void SetTextFor(TextBlock textBlock, string text) {
             textBlock.Text = text;
         }
+        public void SetTextFor(TextBox textBox, string text) {
+            textBox.Text = text;
+        }
     }
 }

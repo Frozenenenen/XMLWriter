@@ -3,16 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace XMLWriter
-{
-    class GUIMovementHelper
-    {
+namespace XMLWriter {
+    class GUIMovementHelper {
         private static int stepIndex = 0;
         private static int stepIndexMax = 0;
         ConsoleControl consol = new ConsoleControl();
 
-        public int GetStepCount() => (stepIndex+1);
-        public int GetStepCountMax() => (stepIndexMax+1);
+        public int GetStepCount() => (stepIndex + 1);
+        public int GetStepCountMax() => (stepIndexMax + 1);
         public int GetIndex() => stepIndex;
         public int GetIndexMax() => stepIndexMax;
         public void ResetStepCount() {
@@ -22,18 +20,22 @@ namespace XMLWriter
             stepIndexMax = 0;
         }
         public bool IsFirstPage() {
-            if (stepIndex==0) {
+            if (stepIndex == 0) {
+                return true;
+            }
+            return false;
+        }
+        public bool IsLastPage() {
+            if (stepIndex == stepIndexMax) {
                 return true;
             }
             return false;
         }
 
-        public void IncrementSteps()
-        {
-            if(consol.showInDecrement) System.Diagnostics.Debug.WriteLine("\nIn IncrementSteps");
+        public void IncrementSteps() {
+            if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("\nIn IncrementSteps");
             if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Vorm Increment: " + stepIndex);
-            if (stepIndex == stepIndexMax)
-            {
+            if (IsLastPage()) {
                 stepIndexMax++;
                 //data.SetStepCountMax(data.GetStepCountMax() + 1);
             }
@@ -41,12 +43,10 @@ namespace XMLWriter
             //data.SetStepCount(data.GetStepCount() + 1);
             if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Nachm Increment: " + stepIndex + "\n");
         }
-        public void DecrementStepsForGoingBackFromSaving()
-        {
+        public void DecrementStepsForGoingBackFromSaving() {
             if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("In DecrementStepsForSaving");
             if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Vorm Decrement: " + stepIndex);
-            if (stepIndex == stepIndexMax)
-            {
+            if (IsLastPage()) {
                 stepIndexMax--;
                 //data.SetStepCountMax(data.GetStepCountMax() - 1);
             }
@@ -54,20 +54,21 @@ namespace XMLWriter
             //data.SetStepCount(data.GetStepCount() - 1);
             if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Nachm Decrement: " + stepIndex);
         }
-        public void DecrementSteps()
-        {
+        public void DecrementSteps() {
             if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("In DecrementSteps");
-            if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Vorm Decrement: "+ stepIndex);
-            stepIndex--;
-            //data.SetStepCount(data.GetStepCount() - 1);
-            if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Nachm Decrement: "+ stepIndex);
+            if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Vorm Decrement: " + stepIndex);
+            if (!IsFirstPage()) {
+                stepIndex--;
+            }
+            if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Nachm Decrement: " + stepIndex);
         }
-        public void DecrementStepsMax()
-        {
+        public void DecrementStepsMax() {
             if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("In DecrementStepsMax");
             if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Vorm Decrement: " + stepIndex);
-            stepIndex--;
-            stepIndexMax--;
+            if (!IsFirstPage()) {
+                stepIndex--;
+                stepIndexMax--;
+            }
             if (consol.showInDecrement) System.Diagnostics.Debug.WriteLine("Nachm Decrement: " + stepIndex);
 
         }

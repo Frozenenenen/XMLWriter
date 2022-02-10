@@ -30,7 +30,7 @@ namespace XMLWriter.Classes.HelpClasses {
             
             xtr = new XmlTextReader(loadHelper.GetFileNameAndPath());
             int i = 0;
-            dataSetService.InitNewDataSet();
+            dataSetService.InitNewDataSetWhereRequired();
             if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("\nStarte Laaden!!!\n");
             while (xtr.Read()) {
                 if (xtr.NodeType == XmlNodeType.Element) {
@@ -51,7 +51,7 @@ namespace XMLWriter.Classes.HelpClasses {
                         case "specialStep":
                             dataSetService.GetDataSets().ElementAt(i).specialText = xtr.ReadElementString();
                             //Speichern dataType = "rep";
-                            dataSetService.InitNewDataSet();
+                            dataSetService.InitNewDataSetWhereRequired();
                             GUI.IncrementSteps();
                             i++;
                             break;
@@ -95,7 +95,7 @@ namespace XMLWriter.Classes.HelpClasses {
                             }
                             if (consol.showMiscLoadData) System.Diagnostics.Debug.WriteLine("repXML= " + dataSetService.GetDataSets().ElementAt(i).repXML + "                ---LoadData.LoadDataFromFile()");
                             //Speichern dataType = "gfs";
-                            dataSetService.InitNewDataSet();
+                            dataSetService.InitNewDataSetWhereRequired();
                             GUI.IncrementSteps();
                             i++;
                             break;
