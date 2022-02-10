@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Navigation;
 using System.Linq;
 using XMLWriter.Classes;
+using XMLWriter.Classes.HelpClasses;
 
 namespace XMLWriter.Pages {
     /// <summary>
@@ -10,6 +11,7 @@ namespace XMLWriter.Pages {
     /// </summary>
     public partial class GfsPage : Page {
         DataSetService data = new DataSetService();
+        GfsPageHelper gfsPageHelper = new GfsPageHelper();
         Language language = new Language();
         GUIMovementHelper gui = new GUIMovementHelper();
         DropDownOptionLists ddList = new DropDownOptionLists();
@@ -17,11 +19,8 @@ namespace XMLWriter.Pages {
         ConsoleControl consol = new ConsoleControl();
 
         private static string positiveResult;
-        DataSet dataSet;
 
         public GfsPage() {
-            dataSet = data.GetDataSets().ElementAt(gui.GetIndex());
-            consol.ConsoleShowDataSetOfIndex(dataSet, gui.GetIndex(), "Beim Start");
             InitializeComponent();
             InitTextItems();
             InitValueItems();
@@ -29,18 +28,57 @@ namespace XMLWriter.Pages {
 
         //buttons
         private void BtnNext_Click(object sender, RoutedEventArgs e) {
-            data.InitNewDataSetWhereRequired();
-
-            SaveStep();
-            consol.ConsoleShowDataSetOfIndex(dataSet, gui.GetStepCount(), "Vorm Speichern");
-            data.SetDataSet(dataSet);
-            gui.IncrementSteps();
-            if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnNext Gfs - - - \n - - - Nächster Schritt " + (gui.GetStepCount()) + " - - - \n - - - BtnNext Gf - - - ");
+            positiveResult = gfsPageHelper.handleToolChoiceAndResultingPositiveResult(
+                inputToolChoice, 
+                inputComponentChoice_AT, 
+                inputRDBIChoice_RDBI, 
+                inputSmartTool_SM, 
+                inputPositiveResult_RDBI, 
+                inputPositiveResult_SM, 
+                positiveResult);
+            gfsPageHelper.SaveCurrentInput(
+                inputStepName, 
+                inputText, 
+                inputAnim, 
+                inputInstruction, 
+                inputPositiveID, 
+                inputNegativeID, 
+                positiveResult, 
+                inputRepXML, 
+                inputComponentChoice_AT, 
+                inputRDBIChoice_RDBI, 
+                inputSmartTool_SM, 
+                inputNextStep, 
+                inputLastStep, 
+                inputToolChoice);
+            gfsPageHelper.PrepareNextPage();
             _ = NavigationService.Navigate(new GfsPage());
         }
         private void BtnBack_Click(object sender, RoutedEventArgs e) {
-            SaveStep();
-            data.SetDataSet(dataSet);
+            positiveResult = gfsPageHelper.handleToolChoiceAndResultingPositiveResult(
+                inputToolChoice, 
+                inputComponentChoice_AT, 
+                inputRDBIChoice_RDBI, 
+                inputSmartTool_SM, 
+                inputPositiveResult_RDBI, 
+                inputPositiveResult_SM, 
+                positiveResult);
+            gfsPageHelper.SaveCurrentInput(
+                inputStepName,
+                inputText,
+                inputAnim,
+                inputInstruction,
+                inputPositiveID,
+                inputNegativeID,
+                positiveResult,
+                inputRepXML,
+                inputComponentChoice_AT,
+                inputRDBIChoice_RDBI,
+                inputSmartTool_SM,
+                inputNextStep,
+                inputLastStep,
+                inputToolChoice);
+            gfsPageHelper.PreparePreviousPage();
             if (gui.IsFirstPage()) {
                 _ = NavigationService.Navigate(new StartPage());
             }
@@ -48,66 +86,41 @@ namespace XMLWriter.Pages {
                 gui.DecrementSteps();
                 _ = NavigationService.Navigate(new GfsPage());
             }
-            if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnBack Gfs - - - \n  - - - Nächster Schritt " + (gui.GetIndex()) + " - - - \n - - - BtnBack Gf - - - ");
         }
         private void BtnBackDelete_Click(object sender, RoutedEventArgs e) {
+            gfsPageHelper.DeleteCurrentSet();
             if (gui.IsFirstPage()) {
                 _ = NavigationService.Navigate(new StartPage());
-                data.ResetDataSet();
             }
             else {
-                gui.DecrementStepsMax(); //decreases normal stepcount aswell
                 _ = NavigationService.Navigate(new GfsPage());
             }
-            if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnDel Gfs - - - \n  - - - Nächster Schritt " + (gui.GetIndex()) + " - - - \n - - - BtnDel Gf - - - ");
         }
         private void BtnSave_Click(object sender, RoutedEventArgs e) {
-            if (consol.showBtn) System.Diagnostics.Debug.WriteLine("\n - - - BtnSave Gfs - - - \n - - - BtnSave Gf - - - ");
-            SaveStep();
-            data.SetDataSet(dataSet);
-            gui.IncrementSteps();
-
+            positiveResult = gfsPageHelper.handleToolChoiceAndResultingPositiveResult(
+                inputToolChoice,
+                inputComponentChoice_AT,
+                inputRDBIChoice_RDBI,
+                inputSmartTool_SM,
+                inputPositiveResult_RDBI,
+                inputPositiveResult_SM,
+                positiveResult);
+            gfsPageHelper.SaveCurrentInput(
+                inputStepName,
+                inputText,
+                inputAnim,
+                inputInstruction,
+                inputPositiveID,
+                inputNegativeID,
+                positiveResult,
+                inputRepXML,
+                inputComponentChoice_AT,
+                inputRDBIChoice_RDBI,
+                inputSmartTool_SM,
+                inputNextStep,
+                inputLastStep,
+                inputToolChoice);
             _ = NavigationService.Navigate(new SavePage());
-        }
-        private void SaveStep() {
-            if (inputToolChoice.Text == ddList.GetToolChoice()[1]) //AT
-            {
-                inputSmartTool.Text = "false";
-                inputReadData.Text = "false";
-                positiveResult = "";
-            }
-            else if (inputToolChoice.Text == ddList.GetToolChoice()[2]) //SmT
-            {
-                inputActuatorTest.Text = "false";
-                inputReadData.Text = "false";
-                inputPositiveResult_RDBI.Text = "false";
-                positiveResult = inputPositiveResult_SM.Text;
-            }
-            else if (inputToolChoice.Text == ddList.GetToolChoice()[3]) //RDID
-            {
-                inputSmartTool.Text = "false";
-                inputActuatorTest.Text = "false";
-                inputPositiveResult_SM.Text = "false";
-                positiveResult = inputPositiveResult_RDBI.Text;
-            }
-            WriteInputToDataSet();
-
-        }
-        private void WriteInputToDataSet() {
-            dataSet.toolChoice = inputToolChoice.Text;
-            dataSet.stepName = inputStepName.Text;
-            dataSet.text = inputText.Text;
-            dataSet.anim = inputAnim.Text;
-            dataSet.instruction = inputInstruction.Text;
-            dataSet.positiveID = inputPositiveID.Text;
-            dataSet.negativeID = inputNegativeID.Text;
-            dataSet.positiveResult = positiveResult;
-            dataSet.repXML = inputRepXML.Text;
-            dataSet.actuatorTest = inputActuatorTest.Text;
-            dataSet.smartTool = inputSmartTool.Text;
-            dataSet.RDID = inputReadData.Text;
-            dataSet.nextStep = inputNextStep.IsChecked;
-            dataSet.lastStep = inputLastStep.IsChecked;
         }
 
         //Comboboxes and Texboxes

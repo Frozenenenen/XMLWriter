@@ -1,10 +1,6 @@
-﻿using System;
-using System.Windows;
-using System.Collections.Generic;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using System.Linq;
-using XMLWriter.Classes;
 using XMLWriter.Classes.HelpClasses;
 
 namespace XMLWriter.Pages {
@@ -25,7 +21,6 @@ namespace XMLWriter.Pages {
             repPageHelper.SaveCurrentInput(inputStepName, inputText, inputSpecialText, inputAnim);
             repPageHelper.PrepareNextPage();
             _ = NavigationService.Navigate(new RepPage());
-
         }
 
         private void BtnBack_Click(object sender, RoutedEventArgs e) {
