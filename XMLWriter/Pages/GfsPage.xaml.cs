@@ -10,11 +10,11 @@ namespace XMLWriter.Pages {
     /// Interaktionslogik für GfsPage.xaml
     /// </summary>
     public partial class GfsPage : Page {
-        DataSetService data = new DataSetService();
+        DataSetService dataSet = new DataSetService();
         GfsPageHelper gfsPageHelper = new GfsPageHelper();
         Language language = new Language();
         GUIMovementHelper gui = new GUIMovementHelper();
-        DropDownOptionLists ddList = new DropDownOptionLists();
+        DropDownOptionLists dropDownList = new DropDownOptionLists();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         ConsoleControl consol = new ConsoleControl();
 
@@ -125,7 +125,7 @@ namespace XMLWriter.Pages {
 
         //Comboboxes and Texboxes
         private void inputToolChoice_DropDownClosed(object sender, System.EventArgs e) {
-            ShowItemsAfterToolChoice();
+            gfsPageHelper.ShowItemsAfterToolChoice(inputToolChoice, actuatorTest, smartTool, RDID);
         }
         //Aktortest
         private void inputECUChoice_AT_DropDownClosed(object sender, System.EventArgs e) {
@@ -152,84 +152,77 @@ namespace XMLWriter.Pages {
             FillInputSmartToolText();
         }
         private void inputMeasure_SM_KeyUp(object sender, System.Windows.Input.KeyEventArgs e) {
-            if (ddList.GetKeyPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text) == "") //Is empty if FindIndex is 0. To get direct input ... well it has to be direct^^
+            if (dropDownList.GetKeyPartOf(dropDownList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text) == "") //Is empty if FindIndex is 0. To get direct input ... well it has to be direct^^
             {
-                inputSmartTool.Text = ddList.GetKeyPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + inputMeasure_SM.Text;
+                gfsPageHelper.
+                inputSmartTool.Text = dropDownList.GetKeyPartOf(dropDownList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + inputMeasure_SM.Text;
             }
             else {
                 FillInputSmartToolText();
             }
         }
         private void inputPositiveResult_UpperLimit_TextChanged(object sender, TextChangedEventArgs e) {
-            CheckForWhatCaseInSmartToolPositiveResult();
+            gfsPageHelper.CheckForWhatCaseInSmartToolPositiveResult(inputPositiveResult_SM, inputPositiveResult_UpperLimit, inputPositiveResult_LowerLimit);
         }
         private void inputPositiveResult_LowerLimit_TextChanged(object sender, TextChangedEventArgs e) {
-            CheckForWhatCaseInSmartToolPositiveResult();
+            gfsPageHelper.CheckForWhatCaseInSmartToolPositiveResult(inputPositiveResult_SM, inputPositiveResult_UpperLimit, inputPositiveResult_LowerLimit);
         }
 
         //Inits
         private void InitTextItems() {
-            if (consol.showStep) System.Diagnostics.Debug.WriteLine("\n - - - Index Start Gfs - - - \n              " + gui.GetIndex() + "\n - - - Index Start Gfs - - -                                      ---GfsPage.InitTextItems()");
 
             //Inhalte linke Spalte
-            //>´wieder einbauen!         //textStep.Content = language.GetStringStep() + " " + (data.GetStepCount() + 1);
-            textContentTitel.Content = language.GetStringContent();
-            textAnimTitel.Content = language.GetStringAnim();
-            textInstructionTitel.Content = language.GetStringInstruction();
-            textTitel.Content = language.GetStringPleaseFill();
+            gfsPageHelper.SetLabelStepName(textStep);
+            gfsPageHelper.SetLabelContent(textContentTitel);
+            gfsPageHelper.SetLabelAnimation(textAnimTitel);
+            gfsPageHelper.SetLabelInstruction(textInstructionTitel);
+            gfsPageHelper.SetLabelTitel(textTitel);
 
             //Inhalte rechte Spalte
-            textPositiveID.Content = language.GetStringPosID();
-            textNegativeID.Content = language.GetStringNegID();
-            textPositiveResult_SM.Content = language.GetStringPosResult();
-            textPositiveResult_RDBI.Content = language.GetStringPosResult();
-            textRepXML.Content = language.GetStringRepXML();
-            textActuatorTest.Content = language.GetStringActuatorTest();
-            textReadData.Content = language.GetStringReadData();
-            textSmartTool.Content = language.GetStringSmartTool();
-            inputNextStep.Content = language.GetStringNextStep();
-            inputLastStep.Content = language.GetStringLastStep();
-            //textRDBIOptional.Content = language.GetStringOptional();
-            textSmartToolOptional.Content = language.GetStringOptional();
+            gfsPageHelper.SetLabelPositiveID(textPositiveID);
+            gfsPageHelper.SetLabelNegativeID(textNegativeID);
+            gfsPageHelper.SetLabelPositiveResult(textPositiveResult_SM);
+            gfsPageHelper.SetLabelPositiveResult(textPositiveResult_RDBI);
+            gfsPageHelper.SetLabelRepXML(textRepXML);
+            gfsPageHelper.SetLabelActuatorTesst(textActuatorTest);
+            gfsPageHelper.SetLabelRDID(textReadData);
+            gfsPageHelper.SetLabelSmartTool(textSmartTool);
+            gfsPageHelper.SetLabelSmartTool(textSmartTool);
+            //CheckBoxText
+            gfsPageHelper.SetTextNextStep(inputNextStep);
+            gfsPageHelper.SetTextLastStep(inputLastStep);
 
             //Buttons
-            btnNext.Content = language.GetStringNext();
-            btnSave.Content = language.GetStringSave();
-            btnBackDelete.Content = language.GetStringReset();
-            btnBack.Content = language.GetStringBack();
+            gfsPageHelper.SetButtonNext(btnNext);
+            gfsPageHelper.SetButtonDelete(btnBackDelete);
+            gfsPageHelper.SetButtonSave(btnSave);
+            gfsPageHelper.SetButtonBack(btnBack);
         }
         private void InitValueItems() {
             InitLeftSideItems();
             InitFixedRightSideItems();
             InitFlexRightSideItems();
-            ShowItemsAfterToolChoice();
-            if (consol.showStep) System.Diagnostics.Debug.WriteLine(" - - - Index Ende Gfs - - - \n              " + gui.GetIndex() + "\n - - - Index Ende Gfs - - - \n");
+            gfsPageHelper.ShowItemsAfterToolChoice(inputToolChoice, actuatorTest, smartTool, RDID);
         }
         private void InitLeftSideItems() {
-            inputStepName.Text = dataSet.stepName == ""
-               ? "Schritt " + (gui.GetStepCount())
-               : dataSet.stepName;
-            inputText.Text = dataSet.text;
-            inputAnim.Text = dataSet.anim == ""
-                ? "default"
-                : dataSet.anim;
-            inputInstruction.Text = dataSet.instruction;
+            gfsPageHelper.SetStepNameValue(inputStepName);
+            gfsPageHelper.SetTextValue(inputText);
+            gfsPageHelper.SetAnimValue(inputAnim);
+            gfsPageHelper.SetInstructionValue(inputInstruction);
         }
         private void InitFixedRightSideItems() {
-            inputPositiveID.ItemsSource = data.GetStepNames();
-            inputPositiveID.Text = dataSet.positiveID;
-            inputNegativeID.ItemsSource = data.GetStepNames();
-            inputNegativeID.Text = dataSet.negativeID;
-            inputRepXML.Text = dataSet.repXML;
-
+            gfsPageHelper.SetPositiveID(inputPositiveID);
+            gfsPageHelper.SetNegativeID(inputNegativeID);
+            gfsPageHelper.SetRepXMLValue(inputRepXML);
             //Check boxes
-            inputNextStep.IsChecked = dataSet.nextStep;
-            inputLastStep.IsChecked = dataSet.lastStep;
+            gfsPageHelper.SetNextStepValue(inputNextStep);
+            gfsPageHelper.SetLastStepValue(inputLastStep);
+            
         }
         //Inits erste Dropdown Ebene
         private void InitFlexRightSideItems() {
             CheckForWhatToolHasBeenChosen();
-            inputToolChoice.ItemsSource = ddList.GetToolChoice();
+            inputToolChoice.ItemsSource = dropDownList.GetToolChoice();
             xamlHelper.SetDropDownActiveELementFor(inputToolChoice, dataSet.toolChoice);
             InitActuatorTextDropdowns();
             InitSmartToolDropdowns();
@@ -238,82 +231,82 @@ namespace XMLWriter.Pages {
 
         //Inits zweite und dritte Dropdown Eebene
         private void InitActuatorTextDropdowns() {
-            inputECUChoice_AT.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
-            if (inputToolChoice.Text == ddList.GetToolChoice()[1]) {
+            inputECUChoice_AT.ItemsSource = dropDownList.GetECUChoices().Select(x => x.secondPart).ToArray();
+            if (inputToolChoice.Text == dropDownList.GetToolChoice()[1]) {
                 string[] positiveResultDupel = dataSet.actuatorTest.Split('|');
-                inputECUChoice_AT.Text = ddList.GetDisplayPartOf(ddList.GetECUChoices(), positiveResultDupel[1]);
-                inputComponentChoice_AT.ItemsSource = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray();
-                inputComponentChoice_AT.Text = ddList.GetDisplayPartOf(ddList.GetIOChoices(inputECUChoice_AT.Text), positiveResultDupel[0]);
+                inputECUChoice_AT.Text = dropDownList.GetDisplayPartOf(dropDownList.GetECUChoices(), positiveResultDupel[1]);
+                inputComponentChoice_AT.ItemsSource = dropDownList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray();
+                inputComponentChoice_AT.Text = dropDownList.GetDisplayPartOf(dropDownList.GetIOChoices(inputECUChoice_AT.Text), positiveResultDupel[0]);
             }
             else {
-                inputECUChoice_AT.Text = ddList.GetECUChoices().ElementAt(0).secondPart;
-                inputComponentChoice_AT.ItemsSource = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray();
-                inputComponentChoice_AT.Text = ddList.GetIOChoices(inputECUChoice_AT.Text).ElementAt(0).secondPart;
+                inputECUChoice_AT.Text = dropDownList.GetECUChoices().ElementAt(0).secondPart;
+                inputComponentChoice_AT.ItemsSource = dropDownList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray();
+                inputComponentChoice_AT.Text = dropDownList.GetIOChoices(inputECUChoice_AT.Text).ElementAt(0).secondPart;
             }
             FillInputActuatorTestText();
 
         }
         private void UpdateActuatorTestComboBox() {
-            inputECUChoice_AT.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
-            inputComponentChoice_AT.ItemsSource = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray();
-            inputComponentChoice_AT.Text = ddList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray()[0];
+            inputECUChoice_AT.ItemsSource = dropDownList.GetECUChoices().Select(x => x.secondPart).ToArray();
+            inputComponentChoice_AT.ItemsSource = dropDownList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray();
+            inputComponentChoice_AT.Text = dropDownList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray()[0];
         }
         private void InitReadDataDropdowns() {
-            inputECUChoice_RDBI.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
+            inputECUChoice_RDBI.ItemsSource = dropDownList.GetECUChoices().Select(x => x.secondPart).ToArray();
 
-            if (inputToolChoice.Text == ddList.GetToolChoice()[3]) {
+            if (inputToolChoice.Text == dropDownList.GetToolChoice()[3]) {
                 string[] positiveResultDupel = dataSet.RDID.Split('|');
                 if (consol.showMiscGfs) {
                     System.Diagnostics.Debug.WriteLine("PosRes: " + dataSet.RDID + "                                                 ---GfsPage(cs).InitReadDataDropDowns()");
                     System.Diagnostics.Debug.WriteLine("ECU: " + positiveResultDupel[1] + "                                                      ---GfsPage(cs).InitReadDataDropDowns()");
                     System.Diagnostics.Debug.WriteLine("RDID: " + positiveResultDupel[0] + "                                                     ---GfsPage(cs).InitReadDataDropDowns()\n");
                 }
-                inputECUChoice_RDBI.Text = ddList.GetDisplayPartOf(ddList.GetECUChoices(), positiveResultDupel[1]);
-                inputRDBIChoice_RDBI.ItemsSource = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray();
-                inputRDBIChoice_RDBI.Text = ddList.GetDisplayPartOf(ddList.GetRDIDChoices(inputECUChoice_RDBI.Text), positiveResultDupel[0]);
+                inputECUChoice_RDBI.Text = dropDownList.GetDisplayPartOf(dropDownList.GetECUChoices(), positiveResultDupel[1]);
+                inputRDBIChoice_RDBI.ItemsSource = dropDownList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray();
+                inputRDBIChoice_RDBI.Text = dropDownList.GetDisplayPartOf(dropDownList.GetRDIDChoices(inputECUChoice_RDBI.Text), positiveResultDupel[0]);
                 inputPositiveResult_RDBI.Text = dataSet.positiveResult;
                 inputReadData.Text = dataSet.RDID;
             }
             else  //Wenn nicht vorhanden, dann zeig das erste Element an.
             {
-                inputECUChoice_RDBI.Text = ddList.GetECUChoices().ElementAt(0).secondPart;
-                inputRDBIChoice_RDBI.ItemsSource = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray();
-                inputRDBIChoice_RDBI.Text = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).ElementAt(0).secondPart;
+                inputECUChoice_RDBI.Text = dropDownList.GetECUChoices().ElementAt(0).secondPart;
+                inputRDBIChoice_RDBI.ItemsSource = dropDownList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray();
+                inputRDBIChoice_RDBI.Text = dropDownList.GetRDIDChoices(inputECUChoice_RDBI.Text).ElementAt(0).secondPart;
             }
         }
 
         private void UpdateRDBIComboBox() {
-            inputECUChoice_RDBI.ItemsSource = ddList.GetECUChoices().Select(x => x.secondPart).ToArray();
-            inputRDBIChoice_RDBI.ItemsSource = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray();
-            inputRDBIChoice_RDBI.Text = ddList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray()[0];
+            inputECUChoice_RDBI.ItemsSource = dropDownList.GetECUChoices().Select(x => x.secondPart).ToArray();
+            inputRDBIChoice_RDBI.ItemsSource = dropDownList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray();
+            inputRDBIChoice_RDBI.Text = dropDownList.GetRDIDChoices(inputECUChoice_RDBI.Text).Select(x => x.secondPart).ToArray()[0];
         }
         private void InitSmartToolDropdowns() {
-            inputSmartTool_SM.ItemsSource = ddList.GetSmartToolChoices().Select(x => x.secondPart).ToArray();
+            inputSmartTool_SM.ItemsSource = dropDownList.GetSmartToolChoices().Select(x => x.secondPart).ToArray();
 
-            if (inputToolChoice.Text == ddList.GetToolChoice()[2]) {
+            if (inputToolChoice.Text == dropDownList.GetToolChoice()[2]) {
                 inputSmartTool.Text = dataSet.smartTool;
                 if (consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("Init SM: " + dataSet.smartTool + "                              ----GfsPage(cs).InitSmartToolDropdowns()");
                 if (consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("Init SM: " + inputSmartTool.Text);
                 string[] positiveResultDupel = dataSet.smartTool.Split('|');
-                inputSmartTool_SM.Text = ddList.GetDisplayPartOf(ddList.GetSmartToolChoices(), positiveResultDupel[0]);
-                inputMeasure_SM.ItemsSource = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray();
-                inputMeasure_SM.Text = ddList.GetDisplayPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), positiveResultDupel[1]);
+                inputSmartTool_SM.Text = dropDownList.GetDisplayPartOf(dropDownList.GetSmartToolChoices(), positiveResultDupel[0]);
+                inputMeasure_SM.ItemsSource = dropDownList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray();
+                inputMeasure_SM.Text = dropDownList.GetDisplayPartOf(dropDownList.GetMeasurementChoices(inputSmartTool_SM.Text), positiveResultDupel[1]);
             }
             else //Wenn nicht vorhanden, dann zeig das erste Element an.
             {
-                inputSmartTool_SM.Text = ddList.GetSmartToolChoices().ElementAt(0).secondPart;
-                inputMeasure_SM.ItemsSource = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray();
-                inputMeasure_SM.Text = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).ElementAt(0).secondPart;
+                inputSmartTool_SM.Text = dropDownList.GetSmartToolChoices().ElementAt(0).secondPart;
+                inputMeasure_SM.ItemsSource = dropDownList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray();
+                inputMeasure_SM.Text = dropDownList.GetMeasurementChoices(inputSmartTool_SM.Text).ElementAt(0).secondPart;
             }
             FillInputSmartToolText();
-            if (dataSet.toolChoice == ddList.GetToolChoice()[2]) {
+            if (dataSet.toolChoice == dropDownList.GetToolChoice()[2]) {
                 if (consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("SmartTool not Epty or false check: >" + inputSmartTool.Text + "<                                 ---GfsPage(cs).FillInputSmartToolText()");
                 InitSmartToolLimits();
             }
         }
         private void InitSmartToolLimits() {
             if (dataSet.positiveResult == "" || dataSet.positiveResult == "false") {
-                CheckForWhatCaseInSmartToolPositiveResult();
+                gfsPageHelper.CheckForWhatCaseInSmartToolPositiveResult(inputPositiveResult_SM, inputPositiveResult_UpperLimit, inputPositiveResult_LowerLimit);
             }
             else {
                 if (consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("SmT - PosRes: >" + dataSet.positiveResult + "<                          ---InitSmartToolLimits()");
@@ -339,64 +332,29 @@ namespace XMLWriter.Pages {
 
         }
         private void UpdateSmartToolComboboBox() {
-            inputSmartTool_SM.ItemsSource = ddList.GetSmartToolChoices().Select(x => x.secondPart).ToArray();
-            inputMeasure_SM.ItemsSource = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray();
-            inputMeasure_SM.Text = ddList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray()[0];
+            inputSmartTool_SM.ItemsSource = dropDownList.GetSmartToolChoices().Select(x => x.secondPart).ToArray();
+            inputMeasure_SM.ItemsSource = dropDownList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray();
+            inputMeasure_SM.Text = dropDownList.GetMeasurementChoices(inputSmartTool_SM.Text).Select(x => x.secondPart).ToArray()[0];
         }
 
         //Anderes
         private void HideAllItemsWithToggleVisibility() {
-            RDBI.Visibility = Visibility.Hidden;
+            RDID.Visibility = Visibility.Hidden;
             smartTool.Visibility = Visibility.Hidden;
             actuatorTest.Visibility = Visibility.Hidden;
         }
         private void ShowItemsAfterToolChoice() {
-            if (inputToolChoice.Text == ddList.GetToolChoice()[1]) //AT
-            {
-                HideAllItemsWithToggleVisibility();
-                actuatorTest.Visibility = Visibility.Visible;
-            }
-            else if (inputToolChoice.Text == ddList.GetToolChoice()[2])  //SmT
-            {
-                HideAllItemsWithToggleVisibility();
-                smartTool.Visibility = Visibility.Visible;
-            }
-            else if (inputToolChoice.Text == ddList.GetToolChoice()[3]) //RDID
-            {
-                HideAllItemsWithToggleVisibility();
-                RDBI.Visibility = Visibility.Visible;
-            }
-            else {
-                HideAllItemsWithToggleVisibility();
-            }
+
         }
 
-        private void CheckForWhatCaseInSmartToolPositiveResult() {
-            if (!string.IsNullOrWhiteSpace(inputPositiveResult_LowerLimit.Text) && string.IsNullOrWhiteSpace(inputPositiveResult_UpperLimit.Text)) {
-                inputPositiveResult_SM.Text = inputPositiveResult_LowerLimit.Text + ";lower";
-            }
-            else if (string.IsNullOrWhiteSpace(inputPositiveResult_LowerLimit.Text) && !string.IsNullOrWhiteSpace(inputPositiveResult_UpperLimit.Text)) {
-                inputPositiveResult_SM.Text = inputPositiveResult_UpperLimit.Text + ";upper";
-            }
-            else if (string.IsNullOrWhiteSpace(inputPositiveResult_LowerLimit.Text) && string.IsNullOrWhiteSpace(inputPositiveResult_UpperLimit.Text)) {
-                inputPositiveResult_SM.Text = "";
-            }
-            else if (!string.IsNullOrWhiteSpace(inputPositiveResult_LowerLimit.Text) && !string.IsNullOrWhiteSpace(inputPositiveResult_UpperLimit.Text)) {
-                inputPositiveResult_SM.Text = inputPositiveResult_LowerLimit.Text + "|" + inputPositiveResult_UpperLimit.Text;
-            }
-            else {
-                inputPositiveResult_SM.Text = "";
-                System.Diagnostics.Debug.Write("Dieser Pfad in ChechForWhatCaseInSmartToolPositiveResult-Method sollte nie erreicht werden: ");
-            }
-        }
         private void FillInputSmartToolText() {
-            inputSmartTool.Text = ddList.GetKeyPartOf(ddList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + ddList.GetKeyPartOf(ddList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
+            inputSmartTool.Text = dropDownList.GetKeyPartOf(dropDownList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + dropDownList.GetKeyPartOf(dropDownList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
         }
         private void FillInputReadDataText() {
-            inputReadData.Text = ddList.GetKeyPartOf(ddList.GetRDIDChoices(inputECUChoice_RDBI.Text), inputRDBIChoice_RDBI.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_RDBI.Text);
+            inputReadData.Text = dropDownList.GetKeyPartOf(dropDownList.GetRDIDChoices(inputECUChoice_RDBI.Text), inputRDBIChoice_RDBI.Text) + "|" + dropDownList.GetKeyPartOf(dropDownList.GetECUChoices(), inputECUChoice_RDBI.Text);
         }
         private void FillInputActuatorTestText() {
-            inputActuatorTest.Text = ddList.GetKeyPartOf(ddList.GetIOChoices(inputECUChoice_AT.Text), inputComponentChoice_AT.Text) + "|" + ddList.GetKeyPartOf(ddList.GetECUChoices(), inputECUChoice_AT.Text);
+            inputActuatorTest.Text = dropDownList.GetKeyPartOf(dropDownList.GetIOChoices(inputECUChoice_AT.Text), inputComponentChoice_AT.Text) + "|" + dropDownList.GetKeyPartOf(dropDownList.GetECUChoices(), inputECUChoice_AT.Text);
         }
         private void CheckForWhatToolHasBeenChosen() {
             if (consol.showMiscGfs) {
@@ -407,13 +365,13 @@ namespace XMLWriter.Pages {
             }
 
             if (dataSet.actuatorTest != "" && dataSet.actuatorTest != "false") {
-                inputToolChoice.Text = ddList.GetToolChoice()[1];
+                inputToolChoice.Text = dropDownList.GetToolChoice()[1];
             }
             else if (dataSet.smartTool != "" && dataSet.smartTool != "false") {
-                inputToolChoice.Text = ddList.GetToolChoice()[2];
+                inputToolChoice.Text = dropDownList.GetToolChoice()[2];
             }
             else if (dataSet.RDID != "" && dataSet.RDID != "false") {
-                inputToolChoice.Text = ddList.GetToolChoice()[3];
+                inputToolChoice.Text = dropDownList.GetToolChoice()[3];
             }
             else {
                 inputToolChoice.Text = language.GetStringPleaseChoose();

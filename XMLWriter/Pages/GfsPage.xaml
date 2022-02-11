@@ -97,7 +97,7 @@
         </DockPanel>
         
         <!--RDBI-->
-        <DockPanel x:Name="RDBI" Grid.Row="7" Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="3" Visibility="Hidden" Margin="10,0">
+        <DockPanel x:Name="RDID" Grid.Row="7" Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="3" Visibility="Hidden" Margin="10,0">
             <StackPanel VerticalAlignment="Stretch" Grid.ColumnSpan="3">
                 <Label x:Name="textReadData"/>
                 <ComboBox x:Name="inputECUChoice_RDBI" Margin="10,3" DropDownClosed="inputECUChoice_RDBI_DropDownClosed"/>

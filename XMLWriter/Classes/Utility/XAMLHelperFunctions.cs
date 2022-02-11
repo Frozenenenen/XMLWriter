@@ -24,5 +24,11 @@ namespace XMLWriter.Classes {
         public void SetTextFor(TextBox textBox, string text) {
             textBox.Text = text;
         }
+        public void SetTextFor(CheckBox checker, string text) {
+            checker.Content = text;
+        }
+        public void SetStateFor(CheckBox checkBox, bool? value) {
+            checkBox.IsChecked = value;
+        }
     }
 }
