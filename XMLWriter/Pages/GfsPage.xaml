@@ -100,9 +100,9 @@
         <DockPanel x:Name="RDID" Grid.Row="7" Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="3" Visibility="Hidden" Margin="10,0">
             <StackPanel VerticalAlignment="Stretch" Grid.ColumnSpan="3">
                 <Label x:Name="textReadData"/>
-                <ComboBox x:Name="inputECUChoice_RDBI" Margin="10,3" DropDownClosed="inputECUChoice_RDBI_DropDownClosed"/>
-                <ComboBox x:Name="inputRDBIChoice_RDBI" Margin="10,3" DropDownClosed="inputRDBIChoice_RDBI_DropDownClosed"/>
-                <TextBox x:Name="inputReadData" Margin="10,3" IsEnabled="False"/>
+                <ComboBox x:Name="ECUChoice_RDBI_ComboBox" Margin="10,3" DropDownClosed="inputECUChoice_RDBI_DropDownClosed"/>
+                <ComboBox x:Name="RDBIChoice_RDBI_ComboBox" Margin="10,3" DropDownClosed="inputRDBIChoice_RDBI_DropDownClosed"/>
+                <TextBox x:Name="ReadData_TextBox" Margin="10,3" IsEnabled="False"/>
                 <Label x:Name="textPositiveResult_RDBI" Margin="40,0"/>
                 <TextBox x:Name="inputPositiveResult_RDBI" Margin="40,0"/>
             </StackPanel>
@@ -112,11 +112,11 @@
         <DockPanel x:Name="smartTool" Grid.Row="7" Grid.Column="3" Grid.RowSpan="4" Grid.ColumnSpan="3" Visibility="Hidden" Margin="10,0">
             <StackPanel HorizontalAlignment="Stretch" Grid.ColumnSpan="3">
                 <Label x:Name="textSmartTool"/>
-                <ComboBox x:Name="inputSmartTool_SM" Margin="0,3,40,0" DropDownClosed="inputSmartTool_SM_DropDownClosed" Width="400"/>
+                <ComboBox x:Name="SmartTool_SM_ComboBox" Margin="0,3,40,0" DropDownClosed="inputSmartTool_SM_DropDownClosed" Width="400"/>
                 <DockPanel>
-                    <ComboBox x:Name="inputMeasure_SM" Margin="23,3,40,0" DropDownClosed="inputMeasure_SM_DropDownClosed" IsEditable="True" Width="400" KeyUp="inputMeasure_SM_KeyUp"/>
+                    <ComboBox x:Name="Measure_SM_ComboBox" Margin="23,3,40,0" DropDownClosed="inputMeasure_SM_DropDownClosed" IsEditable="True" Width="400" KeyUp="inputMeasure_SM_KeyUp"/>
                 </DockPanel>
-                <TextBox x:Name="inputSmartTool" Margin="23,3" IsEnabled="False"/>
+                <TextBox x:Name="SmartTool_TextBox" Margin="23,3" IsEnabled="False"/>
                 <DockPanel>
                     <StackPanel>
                         <Label Content="Lower Limit"/>

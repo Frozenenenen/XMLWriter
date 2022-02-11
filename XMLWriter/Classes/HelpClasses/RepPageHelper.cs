@@ -72,7 +72,7 @@ namespace XMLWriter.Classes.HelpClasses {
         }
         //Init Labels (Text Items)
         public void SetLabelStepText(Label label) {
-            xamlHelper.SetTextFor(label, language.GetStringStepTitel() + ": " + (gui.GetStepCount())
+            xamlHelper.SetTextFor(label, language.GetStringStepTitel() + ": " + gui.GetStepCount());
         }
         public void SetLabelContentTitelText(Label label) {
             xamlHelper.SetTextFor(label, language.GetStringContent());

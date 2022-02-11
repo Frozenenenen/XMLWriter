@@ -30,5 +30,11 @@ namespace XMLWriter.Classes {
         public void SetStateFor(CheckBox checkBox, bool? value) {
             checkBox.IsChecked = value;
         }
+        public bool IsActiveElementOf(ComboBox comboBox, string text) {
+            if (comboBox.SelectedIndex == comboBox.Items.IndexOf(text)) {
+                return true;
+            }
+            return false;
+        }
     }
 }
