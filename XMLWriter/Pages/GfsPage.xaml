@@ -83,15 +83,15 @@
 
         <!--Auswahl RDBI/SmartTool/Aktortest-->
         <StackPanel Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2">
-            <ComboBox x:Name="inputToolChoice" Margin="45,0" DropDownClosed="inputToolChoice_DropDownClosed"/>
+            <ComboBox x:Name="ToolChoice_ComboBox" Margin="45,0" DropDownClosed="ToolChoice_DropDownClosed"/>
         </StackPanel>
 
         <!--Actuator Test-->
         <DockPanel x:Name="actuatorTest" Grid.Row="7" Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="3" Visibility="Hidden" HorizontalAlignment="Stretch">
             <StackPanel HorizontalAlignment="Stretch" Margin="10,0" Width="400">
                 <Label x:Name="textActuatorTest"/>
-                <ComboBox x:Name="inputECUChoice_AT" Margin="10,3" DropDownClosed="inputECUChoice_AT_DropDownClosed"/>
-                <ComboBox x:Name="inputComponentChoice_AT" Margin="10,3" DropDownClosed="inputComponentChoice_AT_DropDownClosed"/>
+                <ComboBox x:Name="inputECUChoice_AT" Margin="10,3" DropDownClosed="ECUChoice_AT_DropDownClosed"/>
+                <ComboBox x:Name="ComponentChoice_AT_ComboBox" Margin="10,3" DropDownClosed="ComponentChoice_AT_DropDownClosed"/>
                 <TextBox x:Name="inputActuatorTest" Margin="10,3" IsEnabled="False"/>
             </StackPanel>
         </DockPanel>
@@ -100,11 +100,11 @@
         <DockPanel x:Name="RDID" Grid.Row="7" Grid.Column="3" Grid.RowSpan="3" Grid.ColumnSpan="3" Visibility="Hidden" Margin="10,0">
             <StackPanel VerticalAlignment="Stretch" Grid.ColumnSpan="3">
                 <Label x:Name="textReadData"/>
-                <ComboBox x:Name="ECUChoice_RDBI_ComboBox" Margin="10,3" DropDownClosed="inputECUChoice_RDBI_DropDownClosed"/>
-                <ComboBox x:Name="RDBIChoice_RDBI_ComboBox" Margin="10,3" DropDownClosed="inputRDBIChoice_RDBI_DropDownClosed"/>
+                <ComboBox x:Name="ECUChoice_RDID_ComboBox" Margin="10,3" DropDownClosed="ECUChoice_RDID_DropDownClosed"/>
+                <ComboBox x:Name="RDIDChoice_RDID_ComboBox" Margin="10,3" DropDownClosed="RDIDChoice_RDID_DropDownClosed"/>
                 <TextBox x:Name="ReadData_TextBox" Margin="10,3" IsEnabled="False"/>
-                <Label x:Name="textPositiveResult_RDBI" Margin="40,0"/>
-                <TextBox x:Name="inputPositiveResult_RDBI" Margin="40,0"/>
+                <Label x:Name="textPositiveResult_RDID" Margin="40,0"/>
+                <TextBox x:Name="PositiveResult_RDID_TextBox" Margin="40,0"/>
             </StackPanel>
         </DockPanel>
 
@@ -112,24 +112,24 @@
         <DockPanel x:Name="smartTool" Grid.Row="7" Grid.Column="3" Grid.RowSpan="4" Grid.ColumnSpan="3" Visibility="Hidden" Margin="10,0">
             <StackPanel HorizontalAlignment="Stretch" Grid.ColumnSpan="3">
                 <Label x:Name="textSmartTool"/>
-                <ComboBox x:Name="SmartTool_SM_ComboBox" Margin="0,3,40,0" DropDownClosed="inputSmartTool_SM_DropDownClosed" Width="400"/>
+                <ComboBox x:Name="SmartTool_SM_ComboBox" Margin="0,3,40,0" DropDownClosed="SmartTool_SM_DropDownClosed" Width="400"/>
                 <DockPanel>
-                    <ComboBox x:Name="Measure_SM_ComboBox" Margin="23,3,40,0" DropDownClosed="inputMeasure_SM_DropDownClosed" IsEditable="True" Width="400" KeyUp="inputMeasure_SM_KeyUp"/>
+                    <ComboBox x:Name="Measure_SM_ComboBox" Margin="23,3,40,0" DropDownClosed="Measure_SM_DropDownClosed" IsEditable="True" Width="400" KeyUp="Measure_SM_KeyUp"/>
                 </DockPanel>
                 <TextBox x:Name="SmartTool_TextBox" Margin="23,3" IsEnabled="False"/>
                 <DockPanel>
                     <StackPanel>
                         <Label Content="Lower Limit"/>
-                        <TextBox x:Name="inputPositiveResult_LowerLimit" Margin="40,0" Width="140" TextChanged="inputPositiveResult_LowerLimit_TextChanged" />
+                        <TextBox x:Name="inputPositiveResult_LowerLimit" Margin="40,0" Width="140" TextChanged="PositiveResult_LowerLimit_TextChanged" />
                     </StackPanel>
                     <StackPanel>
                         <Label Content="Upper Limit"/>
-                        <TextBox x:Name="inputPositiveResult_UpperLimit" Margin="40,0" Width="140" TextChanged="inputPositiveResult_UpperLimit_TextChanged"/>
+                        <TextBox x:Name="inputPositiveResult_UpperLimit" Margin="40,0" Width="140" TextChanged="PositiveResult_UpperLimit_TextChanged"/>
                     </StackPanel>
                 </DockPanel>
                 <Label x:Name="textSmartToolOptional"/>
                 <Label x:Name="textPositiveResult_SM" Margin="40,0"/>
-                <TextBox x:Name="inputPositiveResult_SM" Margin="40,0"/>
+                <TextBox x:Name="PositiveResult_SM_TextBox" Margin="40,0"/>
             </StackPanel>
         </DockPanel>
 

@@ -7,7 +7,6 @@ namespace XMLWriter.Classes.HelpClasses {
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         GUIMovementHelper gui = new GUIMovementHelper();
         UtilityFunctions utility = new UtilityFunctions();
-        DataSet dataSet;
         Language language = new Language();
         ConsoleControl consol = new ConsoleControl();
 

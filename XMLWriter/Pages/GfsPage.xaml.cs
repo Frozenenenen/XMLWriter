@@ -10,13 +10,8 @@ namespace XMLWriter.Pages {
     /// Interaktionslogik für GfsPage.xaml
     /// </summary>
     public partial class GfsPage : Page {
-        DataSetService dataSetService = new DataSetService();
         GfsPageHelper gfs = new GfsPageHelper();
-        Language language = new Language();
         GUIMovementHelper guiHelper = new GUIMovementHelper();
-        DropDownOptionLists dropDownList = new DropDownOptionLists();
-        XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
-        ConsoleControl consol = new ConsoleControl();
 
         private static string positiveResult;
 
@@ -25,17 +20,17 @@ namespace XMLWriter.Pages {
             InitTextItems();
             InitValueItems();
         }
-
-        //buttons
+        ///-------------------------///
+        ///---guiMovement buttons---///
+        ///-------------------------///
         private void BtnNext_Click(object sender, RoutedEventArgs e) {
-            positiveResult = gfs.handleToolChoiceAndResultingPositiveResult(
-                inputToolChoice, 
-                inputComponentChoice_AT, 
-                RDBIChoice_RDBI_ComboBox, 
+            positiveResult = gfs.HandleToolChoiceAndResultingPositiveResult(
+                ToolChoice_ComboBox, 
+                ComponentChoice_AT_ComboBox, 
+                RDIDChoice_RDID_ComboBox, 
                 SmartTool_SM_ComboBox, 
-                inputPositiveResult_RDBI, 
-                inputPositiveResult_SM, 
-                positiveResult);
+                PositiveResult_RDID_TextBox, 
+                PositiveResult_SM_TextBox);
             gfs.SaveCurrentInput(
                 inputStepName, 
                 inputText, 
@@ -45,24 +40,23 @@ namespace XMLWriter.Pages {
                 inputNegativeID, 
                 positiveResult, 
                 inputRepXML, 
-                inputComponentChoice_AT, 
-                RDBIChoice_RDBI_ComboBox, 
+                ComponentChoice_AT_ComboBox, 
+                RDIDChoice_RDID_ComboBox, 
                 SmartTool_SM_ComboBox, 
                 inputNextStep, 
                 inputLastStep, 
-                inputToolChoice);
+                ToolChoice_ComboBox);
             gfs.PrepareNextPage();
             _ = NavigationService.Navigate(new GfsPage());
         }
         private void BtnBack_Click(object sender, RoutedEventArgs e) {
-            positiveResult = gfs.handleToolChoiceAndResultingPositiveResult(
-                inputToolChoice, 
-                inputComponentChoice_AT, 
-                RDBIChoice_RDBI_ComboBox, 
+            positiveResult = gfs.HandleToolChoiceAndResultingPositiveResult(
+                ToolChoice_ComboBox, 
+                ComponentChoice_AT_ComboBox, 
+                RDIDChoice_RDID_ComboBox, 
                 SmartTool_SM_ComboBox, 
-                inputPositiveResult_RDBI, 
-                inputPositiveResult_SM, 
-                positiveResult);
+                PositiveResult_RDID_TextBox, 
+                PositiveResult_SM_TextBox);
             gfs.SaveCurrentInput(
                 inputStepName,
                 inputText,
@@ -72,12 +66,12 @@ namespace XMLWriter.Pages {
                 inputNegativeID,
                 positiveResult,
                 inputRepXML,
-                inputComponentChoice_AT,
-                RDBIChoice_RDBI_ComboBox,
+                ComponentChoice_AT_ComboBox,
+                RDIDChoice_RDID_ComboBox,
                 SmartTool_SM_ComboBox,
                 inputNextStep,
                 inputLastStep,
-                inputToolChoice);
+                ToolChoice_ComboBox);
             gfs.PreparePreviousPage();
             if (guiHelper.IsFirstPage()) {
                 _ = NavigationService.Navigate(new StartPage());
@@ -97,14 +91,13 @@ namespace XMLWriter.Pages {
             }
         }
         private void BtnSave_Click(object sender, RoutedEventArgs e) {
-            positiveResult = gfs.handleToolChoiceAndResultingPositiveResult(
-                inputToolChoice,
-                inputComponentChoice_AT,
-                RDBIChoice_RDBI_ComboBox,
+            positiveResult = gfs.HandleToolChoiceAndResultingPositiveResult(
+                ToolChoice_ComboBox,
+                ComponentChoice_AT_ComboBox,
+                RDIDChoice_RDID_ComboBox,
                 SmartTool_SM_ComboBox,
-                inputPositiveResult_RDBI,
-                inputPositiveResult_SM,
-                positiveResult);
+                PositiveResult_RDID_TextBox,
+                PositiveResult_SM_TextBox);
             gfs.SaveCurrentInput(
                 inputStepName,
                 inputText,
@@ -114,45 +107,46 @@ namespace XMLWriter.Pages {
                 inputNegativeID,
                 positiveResult,
                 inputRepXML,
-                inputComponentChoice_AT,
-                RDBIChoice_RDBI_ComboBox,
+                ComponentChoice_AT_ComboBox,
+                RDIDChoice_RDID_ComboBox,
                 SmartTool_SM_ComboBox,
                 inputNextStep,
                 inputLastStep,
-                inputToolChoice);
+                ToolChoice_ComboBox);
             _ = NavigationService.Navigate(new SavePage());
         }
-
-        //Comboboxes and Texboxes
-        private void inputToolChoice_DropDownClosed(object sender, System.EventArgs e) {
-            gfs.ShowItemsAfterToolChoice(inputToolChoice, actuatorTest, smartTool, RDID);
+        ///------------------///
+        ///---Page Updates---///
+        ///------------------///
+        private void ToolChoice_DropDownClosed(object sender, System.EventArgs e) {
+            gfs.ShowItemsAfterToolChoice(ToolChoice_ComboBox, actuatorTest, smartTool, RDID);
         }
         //Aktortest
-        private void inputECUChoice_AT_DropDownClosed(object sender, System.EventArgs e) {
-            gfs.FillInputActuatorTestText(inputECUChoice_AT, inputToolChoice, inputComponentChoice_AT, inputActuatorTest);
-            UpdateActuatorTestComboBox();
+        private void ECUChoice_AT_DropDownClosed(object sender, System.EventArgs e) {
+            gfs.FillInputActuatorTestCombinedText(inputECUChoice_AT, ComponentChoice_AT_ComboBox, inputActuatorTest);
+            gfs.UpdateActuatorTestSecondComboBox(inputECUChoice_AT, ComponentChoice_AT_ComboBox);
         }
-        private void inputComponentChoice_AT_DropDownClosed(object sender, System.EventArgs e) {
-            gfs.FillInputActuatorTestText(inputECUChoice_AT, inputToolChoice, inputComponentChoice_AT, inputActuatorTest);
+        private void ComponentChoice_AT_DropDownClosed(object sender, System.EventArgs e) {
+            gfs.FillInputActuatorTestCombinedText(inputECUChoice_AT, ComponentChoice_AT_ComboBox, inputActuatorTest);
         }
-        //RDBI
-        private void inputECUChoice_RDBI_DropDownClosed(object sender, System.EventArgs e) {
-            gfs.FillInputReadDataCombinedText(ReadData_TextBox, ECUChoice_RDBI_ComboBox, RDBIChoice_RDBI_ComboBox);
-            UpdateRDBIComboBox();
+        //RDID
+        private void ECUChoice_RDID_DropDownClosed(object sender, System.EventArgs e) {
+            gfs.FillInputReadDataCombinedText(ReadData_TextBox, ECUChoice_RDID_ComboBox, RDIDChoice_RDID_ComboBox);
+            gfs.UpdateRDIDSecondComboBox(ECUChoice_RDID_ComboBox, RDIDChoice_RDID_ComboBox);
         }
-        private void inputRDBIChoice_RDBI_DropDownClosed(object sender, System.EventArgs e) {
-            gfs.FillInputReadDataCombinedText(ReadData_TextBox, ECUChoice_RDBI_ComboBox, RDBIChoice_RDBI_ComboBox);
+        private void RDIDChoice_RDID_DropDownClosed(object sender, System.EventArgs e) {
+            gfs.FillInputReadDataCombinedText(ReadData_TextBox, ECUChoice_RDID_ComboBox, RDIDChoice_RDID_ComboBox);
         }
         //SmartTool
-        private void inputSmartTool_SM_DropDownClosed(object sender, System.EventArgs e) {
+        private void SmartTool_SM_DropDownClosed(object sender, System.EventArgs e) {
             gfs.FillInputSmartToolCombinedText(SmartTool_TextBox, SmartTool_SM_ComboBox, Measure_SM_ComboBox);
-            gfs.UpdateSmartToolComboboBox(SmartTool_SM_ComboBox, Measure_SM_ComboBox);
+            gfs.UpdateSmartToolSecondComboboBox(SmartTool_SM_ComboBox, Measure_SM_ComboBox);
         }
-        private void inputMeasure_SM_DropDownClosed(object sender, System.EventArgs e) {
+        private void Measure_SM_DropDownClosed(object sender, System.EventArgs e) {
             gfs.FillInputSmartToolCombinedText(SmartTool_TextBox, SmartTool_SM_ComboBox, Measure_SM_ComboBox);
         }
-        private void inputMeasure_SM_KeyUp(object sender, System.Windows.Input.KeyEventArgs e) {
-            if (dropDownList.GetKeyPartOf(dropDownList.GetMeasurementChoices(SmartTool_SM_ComboBox.Text), Measure_SM_ComboBox.Text) == "") //Is empty if FindIndex is 0. To get direct input ... well it has to be direct^^
+        private void Measure_SM_KeyUp(object sender, System.Windows.Input.KeyEventArgs e) {
+            if(gfs.IsEmptyMeasure(SmartTool_SM_ComboBox, Measure_SM_ComboBox))
             {
                 gfs.SetSmartToolCombinedValue(SmartTool_TextBox, SmartTool_SM_ComboBox, Measure_SM_ComboBox);
             }
@@ -160,14 +154,16 @@ namespace XMLWriter.Pages {
                 gfs.FillInputSmartToolCombinedText(SmartTool_TextBox, SmartTool_SM_ComboBox, Measure_SM_ComboBox);
             }
         }
-        private void inputPositiveResult_UpperLimit_TextChanged(object sender, TextChangedEventArgs e) {
-            gfs.CheckForWhatCaseInSmartToolPositiveResult(inputPositiveResult_SM, inputPositiveResult_UpperLimit, inputPositiveResult_LowerLimit);
+        private void PositiveResult_UpperLimit_TextChanged(object sender, TextChangedEventArgs e) {
+            gfs.WritePositiveResultDependingOnLowerAndUpperLimit(PositiveResult_SM_TextBox, inputPositiveResult_UpperLimit, inputPositiveResult_LowerLimit);
         }
-        private void inputPositiveResult_LowerLimit_TextChanged(object sender, TextChangedEventArgs e) {
-            gfs.CheckForWhatCaseInSmartToolPositiveResult(inputPositiveResult_SM, inputPositiveResult_UpperLimit, inputPositiveResult_LowerLimit);
+        private void PositiveResult_LowerLimit_TextChanged(object sender, TextChangedEventArgs e) {
+            gfs.WritePositiveResultDependingOnLowerAndUpperLimit(PositiveResult_SM_TextBox, inputPositiveResult_UpperLimit, inputPositiveResult_LowerLimit);
         }
-
-        //Inits
+        
+        ///-----------///
+        ///---Inits---///
+        ///-----------///
         private void InitTextItems() {
 
             //Inhalte linke Spalte
@@ -181,7 +177,7 @@ namespace XMLWriter.Pages {
             gfs.SetLabelPositiveID(textPositiveID);
             gfs.SetLabelNegativeID(textNegativeID);
             gfs.SetLabelPositiveResult(textPositiveResult_SM);
-            gfs.SetLabelPositiveResult(textPositiveResult_RDBI);
+            gfs.SetLabelPositiveResult(textPositiveResult_RDID);
             gfs.SetLabelRepXML(textRepXML);
             gfs.SetLabelActuatorTesst(textActuatorTest);
             gfs.SetLabelRDID(textReadData);
@@ -201,47 +197,32 @@ namespace XMLWriter.Pages {
             InitLeftSideItems();
             InitFixedRightSideItems();
             InitFlexRightSideItems();
-            gfs.ShowItemsAfterToolChoice(inputToolChoice, actuatorTest, smartTool, RDID);
         }
         private void InitLeftSideItems() {
             gfs.SetStepNameValue(inputStepName);
             gfs.SetTextValue(inputText);
             gfs.SetAnimValue(inputAnim);
             gfs.SetInstructionValue(inputInstruction);
-        } //fertig
+        }
         private void InitFixedRightSideItems() {
             gfs.SetPositiveID(inputPositiveID);
             gfs.SetNegativeID(inputNegativeID);
             gfs.SetRepXMLValue(inputRepXML);
-            //Check boxes
             gfs.SetNextStepValue(inputNextStep);
             gfs.SetLastStepValue(inputLastStep);
             
-        } //fertig
-        //Inits erste Dropdown Ebene
+        } 
         private void InitFlexRightSideItems() {
-            gfs.CheckForWhatToolHasBeenChosen(inputToolChoice);
-            inputToolChoice.ItemsSource = dropDownList.GetToolChoice();
-            xamlHelper.SetDropDownActiveELementFor(inputToolChoice, dataSetService.toolChoice);
-            gfs.InitActuatorTestDropdowns(inputECUChoice_AT, inputToolChoice, inputComponentChoice_AT, inputActuatorTest);
-            gfs.InitSmartToolDropdowns(SmartTool_SM_ComboBox, inputToolChoice, SmartTool_TextBox, Measure_SM_ComboBox, inputPositiveResult_SM, inputPositiveResult_LowerLimit, inputPositiveResult_UpperLimit);
-            gfs.InitReadDataDropdowns(inputToolChoice, ECUChoice_RDBI_ComboBox, RDBIChoice_RDBI_ComboBox, inputPositiveResult_RDBI, ReadData_TextBox);
+            gfs.CheckForWhatToolHasBeenChosen(ToolChoice_ComboBox);
+            gfs.InitToolChoiceDropDown(ToolChoice_ComboBox);
+            gfs.InitActuatorTestDropdowns(inputECUChoice_AT, ToolChoice_ComboBox, ComponentChoice_AT_ComboBox, inputActuatorTest);
+            gfs.InitSmartToolDropdowns(SmartTool_SM_ComboBox, ToolChoice_ComboBox, SmartTool_TextBox, Measure_SM_ComboBox, PositiveResult_SM_TextBox, inputPositiveResult_LowerLimit, inputPositiveResult_UpperLimit);
+            gfs.InitReadDataDropdowns(ToolChoice_ComboBox, ECUChoice_RDID_ComboBox, RDIDChoice_RDID_ComboBox, PositiveResult_RDID_TextBox, ReadData_TextBox);
+            gfs.ShowItemsAfterToolChoice(ToolChoice_ComboBox, actuatorTest, smartTool, RDID);
         }
 
-        //Inits zweite und dritte Dropdown Eebene
-       
-        private void UpdateActuatorTestComboBox() {
-            inputECUChoice_AT.ItemsSource = dropDownList.GetECUChoices().Select(x => x.secondPart).ToArray();
-            inputComponentChoice_AT.ItemsSource = dropDownList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray();
-            inputComponentChoice_AT.Text = dropDownList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray()[0];
-        }
-        private void UpdateRDBIComboBox() {
-            ECUChoice_RDBI_ComboBox.ItemsSource = dropDownList.GetECUChoices().Select(x => x.secondPart).ToArray();
-            RDBIChoice_RDBI_ComboBox.ItemsSource = dropDownList.GetRDIDChoices(ECUChoice_RDBI_ComboBox.Text).Select(x => x.secondPart).ToArray();
-            RDBIChoice_RDBI_ComboBox.Text = dropDownList.GetRDIDChoices(ECUChoice_RDBI_ComboBox.Text).Select(x => x.secondPart).ToArray()[0];
-        }
-        
-        
-        
+
+
+
     }
 }

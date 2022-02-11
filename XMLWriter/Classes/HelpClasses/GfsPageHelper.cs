@@ -31,28 +31,28 @@ namespace XMLWriter.Classes.HelpClasses {
         }
 
         /// ---- WriteToDataSet --- ///
-        public string handleToolChoiceAndResultingPositiveResult(ComboBox toolChoice, ComboBox actuatorTest, ComboBox RDID, ComboBox smartTool, TextBox posRes_RDID, TextBox posRes_SM, string positiveResult) {
+        public string HandleToolChoiceAndResultingPositiveResult(ComboBox toolChoice, ComboBox actuatorTest, ComboBox RDID, ComboBox smartTool, TextBox posResult_RDID, TextBox posResult_SM) {
             if (toolChoice.Text == dropDownList.GetToolChoice()[1]) //AT
             {
                 smartTool.Text = "false";
                 RDID.Text = "false";
-                positiveResult = "";
+                return "";
             }
             else if (toolChoice.Text == dropDownList.GetToolChoice()[2]) //SmT
             {
                 actuatorTest.Text = "false";
                 RDID.Text = "false";
-                posRes_RDID.Text = "false";
-                positiveResult = posRes_SM.Text;
+                posResult_RDID.Text = "false";
+                return posResult_SM.Text;
             }
             else if (toolChoice.Text == dropDownList.GetToolChoice()[3]) //RDID
             {
                 smartTool.Text = "false";
                 actuatorTest.Text = "false";
-                posRes_SM.Text = "false";
-                positiveResult = posRes_RDID.Text;
+                posResult_SM.Text = "false";
+                return posResult_RDID.Text;
             }
-            return positiveResult;
+            return "";
         }
         public void SaveCurrentInput(TextBox stepName, TextBox text, TextBox anim, TextBox instruction, ComboBox positiveID, ComboBox negativeID, string positiveResult, TextBox repXML, ComboBox actuatorTest, ComboBox RDID, ComboBox smartTool, CheckBox nextStep, CheckBox lastStep, ComboBox toolChoice) {
 
@@ -86,7 +86,7 @@ namespace XMLWriter.Classes.HelpClasses {
         /// <stuff>
         /// ---///
         /// </stuff>
-        public void CheckForWhatCaseInSmartToolPositiveResult(TextBox inputPositiveResult_SM, TextBox inputPositiveResult_UpperLimit, TextBox inputPositiveResult_LowerLimit) {
+        public void WritePositiveResultDependingOnLowerAndUpperLimit(TextBox inputPositiveResult_SM, TextBox inputPositiveResult_UpperLimit, TextBox inputPositiveResult_LowerLimit) {
             if (!string.IsNullOrWhiteSpace(inputPositiveResult_LowerLimit.Text) && string.IsNullOrWhiteSpace(inputPositiveResult_UpperLimit.Text)) {
                 inputPositiveResult_SM.Text = inputPositiveResult_LowerLimit.Text + ";lower";
             }
@@ -131,6 +131,8 @@ namespace XMLWriter.Classes.HelpClasses {
         }
 
         ///---Inits und Sets---///
+        ///---Inits und Sets---///
+        ///---Inits und Sets---///
         //Label
         //linke Seite
         public void SetLabelStepName(Label step) {
@@ -170,10 +172,9 @@ namespace XMLWriter.Classes.HelpClasses {
         public void SetLabelSmartTool(Label label) {
             xamlHelper.SetTextFor(label, language.GetStringSmartTool());
         }
-
         public void SetLabelSmartToolOption(Label label) {
             xamlHelper.SetTextFor(label, language.GetStringOptional());
-        }
+        }//eh? Ich glaub das gibts nicht mehr
         //Buttons
         public void SetButtonNext(Button next) {
             xamlHelper.SetTextFor(next, language.GetStringNext());
@@ -215,6 +216,7 @@ namespace XMLWriter.Classes.HelpClasses {
         }
         public void SetSmartToolCombinedValue(TextBox smartTool, ComboBox inputSmartTool_SM, ComboBox inputMeasure_SM) {
             xamlHelper.SetTextFor(smartTool, dropDownList.GetKeyPartOf(dropDownList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + inputMeasure_SM.Text);
+            //xamlHelper.SetTextFor(smartTool, dropDownList.GetKeyPartOf(dropDownList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + dropDownList.GetKeyPartOf(dropDownList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text));
         }
         public void SetSmartToolValue(TextBox SmartTool_TextBox) {
             xamlHelper.SetTextFor(SmartTool_TextBox, dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).smartTool);
@@ -240,6 +242,9 @@ namespace XMLWriter.Classes.HelpClasses {
         public void SetNegativeID(ComboBox inputPositiveID) {
             xamlHelper.SetDropDownContent(inputPositiveID, dataSetService.GetStepNames(), dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).negativeID);
         }
+        public void InitToolChoiceDropDown(ComboBox toolChoice) {
+            xamlHelper.SetDropDownContent(toolChoice, dropDownList.GetToolChoice(), dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).toolChoice);
+        }
         ///ActuatorTest Init
         public void InitActuatorTestDropdowns(ComboBox inputECUChoice_AT, ComboBox inputToolChoice, ComboBox inputComponentChoice_AT, TextBox inputActuatorTest) {
             xamlHelper.SetDropDownListFor(inputECUChoice_AT, dropDownList.GetECUChoices().Select(x => x.secondPart).ToArray());
@@ -256,27 +261,27 @@ namespace XMLWriter.Classes.HelpClasses {
                     dropDownList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray(),
                     dropDownList.GetIOChoices(inputECUChoice_AT.Text).ElementAt(0).secondPart);
             }
-            FillInputActuatorTestText(inputECUChoice_AT, inputToolChoice, inputComponentChoice_AT, inputActuatorTest);
+            FillInputActuatorTestCombinedText(inputECUChoice_AT, inputComponentChoice_AT, inputActuatorTest);
 
         }
         ///RDID Init
-        public void InitReadDataDropdowns(ComboBox inputToolChoice, ComboBox ECUChoice_RDBI_ComboBox, ComboBox RDBIChoice_RDBI_ComboBox, TextBox inputPositiveResult_RDBI, TextBox ReadData_TextBox) {
-        ECUChoice_RDBI_ComboBox.ItemsSource = dropDownList.GetECUChoices().Select(x => x.secondPart).ToArray();
+        public void InitReadDataDropdowns(ComboBox inputToolChoice, ComboBox ECUChoice_RDÍD_ComboBox, ComboBox RDIDChoice_RDID_ComboBox, TextBox inputPositiveResult_RDID, TextBox ReadData_TextBox) {
+            ECUChoice_RDÍD_ComboBox.ItemsSource = dropDownList.GetECUChoices().Select(x => x.secondPart).ToArray();
 
             if (inputToolChoice.Text == dropDownList.GetToolChoice()[3]) {
                 string[] positiveResultDupel = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).RDID.Split('|');
-    ECUChoice_RDBI_ComboBox.Text = dropDownList.GetDisplayPartOf(dropDownList.GetECUChoices(), positiveResultDupel[1]);
-                RDBIChoice_RDBI_ComboBox.ItemsSource = dropDownList.GetRDIDChoices(ECUChoice_RDBI_ComboBox.Text).Select(x => x.secondPart).ToArray();
-    RDBIChoice_RDBI_ComboBox.Text = dropDownList.GetDisplayPartOf(dropDownList.GetRDIDChoices(ECUChoice_RDBI_ComboBox.Text), positiveResultDupel[0]);
-                inputPositiveResult_RDBI.Text = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult;
+                ECUChoice_RDÍD_ComboBox.Text = dropDownList.GetDisplayPartOf(dropDownList.GetECUChoices(), positiveResultDupel[1]);
+                RDIDChoice_RDID_ComboBox.ItemsSource = dropDownList.GetRDIDChoices(ECUChoice_RDÍD_ComboBox.Text).Select(x => x.secondPart).ToArray();
+                RDIDChoice_RDID_ComboBox.Text = dropDownList.GetDisplayPartOf(dropDownList.GetRDIDChoices(ECUChoice_RDÍD_ComboBox.Text), positiveResultDupel[0]);
+                inputPositiveResult_RDID.Text = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult;
                 ReadData_TextBox.Text = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).RDID;
             }
             else  //Wenn nicht vorhanden, dann zeig das erste Element an.
             {
-    ECUChoice_RDBI_ComboBox.Text = dropDownList.GetECUChoices().ElementAt(0).secondPart;
-    RDBIChoice_RDBI_ComboBox.ItemsSource = dropDownList.GetRDIDChoices(ECUChoice_RDBI_ComboBox.Text).Select(x => x.secondPart).ToArray();
-    RDBIChoice_RDBI_ComboBox.Text = dropDownList.GetRDIDChoices(ECUChoice_RDBI_ComboBox.Text).ElementAt(0).secondPart;
-}
+                ECUChoice_RDÍD_ComboBox.Text = dropDownList.GetECUChoices().ElementAt(0).secondPart;
+                RDIDChoice_RDID_ComboBox.ItemsSource = dropDownList.GetRDIDChoices(ECUChoice_RDÍD_ComboBox.Text).Select(x => x.secondPart).ToArray();
+                RDIDChoice_RDID_ComboBox.Text = dropDownList.GetRDIDChoices(ECUChoice_RDÍD_ComboBox.Text).ElementAt(0).secondPart;
+            }
         }
         ///SmartTool Init
         public void InitSmartToolDropdowns(ComboBox SmartTool_ComboBox, ComboBox inputToolChoice, TextBox SmartTool_TextBox, ComboBox Measurement_ComboBox, TextBox PositiveResult_SM_TextBox, TextBox PositiveResult_LowerLimit_TextBox, TextBox PositiveResult_UpperLimit_TextBox) {
@@ -293,8 +298,8 @@ namespace XMLWriter.Classes.HelpClasses {
             else //Wenn nicht vorhanden, dann zeig das erste Element an.
             {
                 SetMeasurementChoices(Measurement_ComboBox,
-                    dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text).Select(x => x.secondPart).ToArray(),
-                    dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text).ElementAt(0).secondPart);
+                    dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text).Select(x => x.secondPart).ToArray(), //List of german Measurement Names
+                    dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text).ElementAt(0).secondPart); //defaukt Measurement
             }
             FillInputSmartToolCombinedText(SmartTool_TextBox, SmartTool_ComboBox, Measurement_ComboBox);
 
@@ -304,35 +309,84 @@ namespace XMLWriter.Classes.HelpClasses {
         }
         private void SetMeasurementChoices(ComboBox comboBox, string[] list, string text) {
             xamlHelper.SetDropDownContent(comboBox, list, text);
-        }
+        }//fertig
         private void InitSmartToolDropDownDefaultValue(ComboBox smartTool_DD) {
             xamlHelper.SetDropDownContent(smartTool_DD,
                 dropDownList.GetSmartToolChoices().Select(x => x.secondPart).ToArray(),
                 dropDownList.GetSmartToolChoices().ElementAt(0).secondPart);
-        }
+        }//fertig
         private void ChangeSmartToolActiveElementTo(ComboBox SmartTool_DD, string text) {
             xamlHelper.SetDropDownActiveELementFor(SmartTool_DD, text);
-        }
+        }//fertig
+        private void InitSmartToolLimits(TextBox posRes_SM, TextBox posRes_Lower, TextBox posRes_Upper) {
+            if (PositiveResultIsEmptyOrFalse()) {
+                WritePositiveResultDependingOnLowerAndUpperLimit(posRes_SM, posRes_Upper, posRes_Lower);
+            }
+            else {
+                xamlHelper.SetTextFor(posRes_SM, dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult);
+                if (PositiveResultContains('|')) {
+                    string[] PosResDupel = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult.Split('|');
+                    xamlHelper.SetTextFor(posRes_Lower, PosResDupel[0]);
+                    xamlHelper.SetTextFor(posRes_Upper, PosResDupel[1]);
+                 
+                }
+                else if (PositiveResultContains(';')) {
+                    string[] PosResDupel = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult.Split(';');
+                    if (PosResDupel[1] == "lower") {
+                        xamlHelper.SetTextFor(posRes_Lower, PosResDupel[0]);
+                    }
+                    else if (PosResDupel[1] == "upper") {
+                        xamlHelper.SetTextFor(posRes_Upper, PosResDupel[0]);
+                    }
+                }
+            }
+        } //fertig
 
 
 
 
 
-        
 
-        /// <summary>
-        /// Others
-        /// </summary>
-        /// 
-        public void FillInputActuatorTestText(ComboBox inputECUChoice_AT, ComboBox inputToolChoice, ComboBox inputComponentChoice_AT, TextBox inputActuatorTest) {
-            inputActuatorTest.Text = dropDownList.GetKeyPartOf(dropDownList.GetIOChoices(inputECUChoice_AT.Text), inputComponentChoice_AT.Text) + "|" + dropDownList.GetKeyPartOf(dropDownList.GetECUChoices(), inputECUChoice_AT.Text);
-        }
-        public void UpdateSmartToolComboboBox(ComboBox SmartTool_SM_ComboBox, ComboBox Measure_SM_ComboBox) {
+
+        ///------------///
+        ///---Others---///
+        ///------------///
+        //Fills - Filling the TextBoxes depending on DropDownChoices
+        public void FillInputReadDataCombinedText(TextBox ReadData_ComboBox, ComboBox ECUChoice_RDID_ComboBox, ComboBox RDIDChoice_RDID_ComboBox) {
+            string shortECUName = dropDownList.GetKeyPartOf(dropDownList.GetRDIDChoices(ECUChoice_RDID_ComboBox.Text), RDIDChoice_RDID_ComboBox.Text);
+            string englishRDIDName = dropDownList.GetKeyPartOf(dropDownList.GetECUChoices(), ECUChoice_RDID_ComboBox.Text);
+            xamlHelper.SetTextFor(ReadData_ComboBox, shortECUName + "|" + englishRDIDName);
+        } //fertig
+        public void FillInputSmartToolCombinedText(TextBox inputSmartTool, ComboBox inputSmartTool_SM, ComboBox inputMeasure_SM) {
+            string englishSmartToolChoice = dropDownList.GetKeyPartOf(dropDownList.GetSmartToolChoices(), inputSmartTool_SM.Text);
+            string englishMeasurementChoice = dropDownList.GetKeyPartOf(dropDownList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text);
+            xamlHelper.SetTextFor(inputSmartTool, englishSmartToolChoice + "|" + englishMeasurementChoice);
+        } //fertig
+        public void FillInputActuatorTestCombinedText(ComboBox inputECUChoice_AT, ComboBox inputComponentChoice_AT, TextBox inputActuatorTest) {
+            string shortECUName = dropDownList.GetKeyPartOf(dropDownList.GetIOChoices(inputECUChoice_AT.Text), inputComponentChoice_AT.Text);
+            string englishComponentName = dropDownList.GetKeyPartOf(dropDownList.GetECUChoices(), inputECUChoice_AT.Text);
+            xamlHelper.SetTextFor(inputActuatorTest, shortECUName + "|" + englishComponentName);
+        } //fertig
+        //Updates 
+        public void UpdateActuatorTestSecondComboBox(ComboBox inputECUChoice_AT, ComboBox inputComponentChoice_AT) {
+            xamlHelper.SetDropDownListFor(inputECUChoice_AT, dropDownList.GetECUChoices().Select(x => x.secondPart).ToArray());
+            xamlHelper.SetDropDownContent(inputComponentChoice_AT,
+                dropDownList.GetIOChoices(inputECUChoice_AT.Text).Select(x => x.secondPart).ToArray(), //IO_List
+                dropDownList.GetIOChoices(inputECUChoice_AT.Text).ElementAt(0).secondPart); //default IO_Element
+        }//fertig
+        public void UpdateRDIDSecondComboBox(ComboBox ECUChoice_RDID_ComboBox, ComboBox RDIDChoice_RDID_ComboBox) {
+            xamlHelper.SetDropDownListFor(ECUChoice_RDID_ComboBox, dropDownList.GetECUChoices().Select(x => x.secondPart).ToArray());
+            xamlHelper.SetDropDownContent(RDIDChoice_RDID_ComboBox,
+                dropDownList.GetRDIDChoices(ECUChoice_RDID_ComboBox.Text).Select(x => x.secondPart).ToArray(), //Identifier_List
+                dropDownList.GetRDIDChoices(ECUChoice_RDID_ComboBox.Text).ElementAt(0).secondPart); //default Identifier
+        }//fertig
+        public void UpdateSmartToolSecondComboboBox(ComboBox SmartTool_SM_ComboBox, ComboBox Measure_SM_ComboBox) {
             xamlHelper.SetDropDownListFor(SmartTool_SM_ComboBox, dropDownList.GetSmartToolChoices().Select(x => x.secondPart).ToArray());
             xamlHelper.SetDropDownContent(Measure_SM_ComboBox,
-                dropDownList.GetMeasurementChoices(SmartTool_SM_ComboBox.Text).Select(x => x.secondPart).ToArray(),
-                dropDownList.GetMeasurementChoices(SmartTool_SM_ComboBox.Text).Select(x => x.secondPart).ToArray()[0]);
-        }
+                dropDownList.GetMeasurementChoices(SmartTool_SM_ComboBox.Text).Select(x => x.secondPart).ToArray(), //SmartTool_List
+                dropDownList.GetMeasurementChoices(SmartTool_SM_ComboBox.Text).ElementAt(0).secondPart);  //default MeasurementTool
+        } //fertig
+        //Checks
         public void CheckForWhatToolHasBeenChosen(ComboBox inputToolChoice) {
             if (consol.showMiscGfs) {
                 System.Diagnostics.Debug.WriteLine("AT: " + dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).actuatorTest + "                                                      GfsPage(cs).CheckForWhatToolHasBeenChosen()");
@@ -342,61 +396,55 @@ namespace XMLWriter.Classes.HelpClasses {
             }
 
             if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).actuatorTest != "" && dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).actuatorTest != "false") {
-                inputToolChoice.Text = dropDownList.GetToolChoice()[1];
+                xamlHelper.SetDropDownActiveELementFor(inputToolChoice, dropDownList.GetToolChoice()[1]);
             }
             else if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).smartTool != "" && dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).smartTool != "false") {
-                inputToolChoice.Text = dropDownList.GetToolChoice()[2];
+                xamlHelper.SetDropDownActiveELementFor(inputToolChoice, dropDownList.GetToolChoice()[2]);
             }
             else if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).RDID != "" && dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).RDID != "false") {
-                inputToolChoice.Text = dropDownList.GetToolChoice()[3];
+                xamlHelper.SetDropDownActiveELementFor(inputToolChoice, dropDownList.GetToolChoice()[3]);
             }
             else {
-                inputToolChoice.Text = language.GetStringPleaseChoose();
+                inputToolChoice.Text = language.GetStringPleaseChoose(); //Not sure if this works whatsoever
             }
-        }
-        public void FillInputSmartToolCombinedText(TextBox inputSmartTool, ComboBox inputSmartTool_SM, ComboBox inputMeasure_SM) {
-            xamlHelper.SetTextFor(inputSmartTool, dropDownList.GetKeyPartOf(dropDownList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + dropDownList.GetKeyPartOf(dropDownList.GetMeasurementChoices(inputSmartTool_SM.Text), inputMeasure_SM.Text));
-        }
-        public void FillInputReadDataCombinedText(TextBox ReadData_ComboBox, ComboBox ECUChoice_RDBI_ComboBox, ComboBox RDBIChoice_RDBI_ComboBox) {
-            xamlHelper.SetTextFor(ReadData_ComboBox, dropDownList.GetKeyPartOf(dropDownList.GetRDIDChoices(ECUChoice_RDBI_ComboBox.Text), RDBIChoice_RDBI_ComboBox.Text) + "|" + dropDownList.GetKeyPartOf(dropDownList.GetECUChoices(), ECUChoice_RDBI_ComboBox.Text));
-        }
-        public void InitSmartToolLimits(TextBox posRes_SM, TextBox posRes_Lower, TextBox posRes_Upper) {
-            if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult == "" || dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult == "false") {
-                CheckForWhatCaseInSmartToolPositiveResult(posRes_SM, posRes_Upper, posRes_Lower);
-            }
-            else {
-                if (consol.showMiscGfs) System.Diagnostics.Debug.WriteLine("SmT - PosRes: >" + dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult + "<                          ---InitSmartToolLimits()");
-                posRes_SM.Text = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult;
-                if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult.Contains('|')) {
-                    string[] PosResDupel = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult.Split('|');
-                    posRes_Upper.Text = PosResDupel[1];
-                    posRes_Lower.Text = PosResDupel[0];
-                }
-                else if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult.Contains(';')) {
-                    string[] PosResDupel = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult.Split(';');
-                    if (PosResDupel[1] == "lower") {
-                        posRes_Lower.Text = PosResDupel[0];
-                    }
-                    else if (PosResDupel[1] == "upper") {
-                        posRes_Upper.Text = PosResDupel[0];
-                    }
-                }
-            }
-        }
-        ///Checker
-        ///
-        public bool IsSmartTool(ComboBox comboBox) {
+        } //fertig
+        private bool IsSmartTool(ComboBox comboBox) {
             if (xamlHelper.IsActiveElementOf(comboBox, dropDownList.GetToolChoice()[2])) {
                 return true;
             }
             return false;
-        }
-        public bool IsSmartTool(string text) {
+        } //fertig
+        private bool IsSmartTool(string text) {
             if (text == dropDownList.GetToolChoice()[2]) {
                 return true;
             }
             return false;
-        }
+        } //fertig
+        private bool PositiveResultIsEmptyOrFalse() {
+            if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult == "" || dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult == "false") {
+                return true;
+            }
+            return false;
+        }//fertig
+        private bool PositiveResultContains(char isolatingLink) {
+            if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult.Contains(isolatingLink)) {
+                return true;
+            }
+            return false;
+        }//fertig
+        public bool IsEmptyMeasure(ComboBox SmartTool_SM_ComboBox, ComboBox Measure_SM_ComboBox) {
+            List<DropDownOptionTupel> measurementChoiceList = dropDownList.GetMeasurementChoices(SmartTool_SM_ComboBox.Text); //The Selected Item of the first DD determines the List of the second 
+            if (dropDownList.GetKeyPartOf(measurementChoiceList, Measure_SM_ComboBox.Text) == "") {
+                return true;
+            }
+            return false;
+        } //fertig
+
+
+
+
+
+
 
     }
 }
