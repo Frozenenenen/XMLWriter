@@ -1,12 +1,8 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
 using System.Collections.Generic;
 using System.Linq;
-using XMLWriter.Classes;
-using System.Collections;
-using System.Windows.Documents;
+
 
 namespace XMLWriter.Classes.HelpClasses {
     internal class GfsPageHelper {
@@ -133,61 +129,7 @@ namespace XMLWriter.Classes.HelpClasses {
         ///---Inits und Sets---///
         ///---Inits und Sets---///
         ///---Inits und Sets---///
-        //Label
-        //linke Seite
-        public void SetLabelStepName(Label step) {
-            xamlHelper.SetTextFor(step, language.GetStringStepTitel() + ": " + guiHelper.GetStepCount());
-        }
-        public void SetLabelContent(Label label) {
-            xamlHelper.SetTextFor(label, language.GetStringContent());
-        }
-        public void SetLabelAnimation(Label label) {
-            xamlHelper.SetTextFor(label, language.GetStringAnim());
-        }
-        public void SetLabelInstruction(Label label) {
-            xamlHelper.SetTextFor(label, language.GetStringInstruction());
-        }
-        public void SetLabelTitel(Label label) {
-            xamlHelper.SetTextFor(label, language.GetStringPleaseFill());
-        }
-        //rechte Seite
-        public void SetLabelPositiveID(Label label) {
-            xamlHelper.SetTextFor(label, language.GetStringPosID());
-        }
-        public void SetLabelNegativeID(Label label) {
-            xamlHelper.SetTextFor(label, language.GetStringNegID());
-        }
-        public void SetLabelPositiveResult(Label label) {
-            xamlHelper.SetTextFor(label, language.GetStringPosResult());
-        }
-        public void SetLabelRepXML(Label label) {
-            xamlHelper.SetTextFor(label, language.GetStringRepXML());
-        }
-        public void SetLabelActuatorTesst(Label label) {
-            xamlHelper.SetTextFor(label, language.GetStringActuatorTest());
-        }
-        public void SetLabelRDID(Label label) {
-            xamlHelper.SetTextFor(label, language.GetStringReadData());
-        }
-        public void SetLabelSmartTool(Label label) {
-            xamlHelper.SetTextFor(label, language.GetStringSmartTool());
-        }
-        public void SetLabelSmartToolOption(Label label) {
-            xamlHelper.SetTextFor(label, language.GetStringOptional());
-        }//eh? Ich glaub das gibts nicht mehr
-        //Buttons
-        public void SetButtonNext(Button next) {
-            xamlHelper.SetTextFor(next, language.GetStringNext());
-        }
-        public void SetButtonSave(Button save) {
-            xamlHelper.SetTextFor(save, language.GetStringSave());
-        }
-        public void SetButtonDelete(Button delete) {
-            xamlHelper.SetTextFor(delete, language.GetStringReset());
-        }
-        public void SetButtonBack(Button back) {
-            xamlHelper.SetTextFor(back, language.GetStringBack());
-        }
+
         //Text Boxes
         public void SetStepNameValue(TextBox stepName) {
             if (string.IsNullOrEmpty(dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).stepName)) {
@@ -292,18 +234,18 @@ namespace XMLWriter.Classes.HelpClasses {
                 string[] positiveResultDupel = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).smartTool.Split('|');
                 ChangeSmartToolActiveElementTo(SmartTool_ComboBox, dropDownList.GetDisplayPartOf(dropDownList.GetSmartToolChoices(), positiveResultDupel[0]));
                 SetMeasurementChoices(Measurement_ComboBox,
-                    dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text).Select(x => x.secondPart).ToArray(),
-                    dropDownList.GetDisplayPartOf(dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text), positiveResultDupel[1]));
+                    dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text).Select(x => x.secondPart).ToArray(),        //Measurement List of chosen SmartTool
+                    dropDownList.GetDisplayPartOf(dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text), positiveResultDupel[1])); //Chosen Measurement
             }
             else //Wenn nicht vorhanden, dann zeig das erste Element an.
             {
                 SetMeasurementChoices(Measurement_ComboBox,
-                    dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text).Select(x => x.secondPart).ToArray(), //List of german Measurement Names
-                    dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text).ElementAt(0).secondPart); //defaukt Measurement
+                    dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text).Select(x => x.secondPart).ToArray(), //Measurement List of chosen SmartTool
+                    dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text).ElementAt(0).secondPart); //default Measurement of that list
             }
             FillInputSmartToolCombinedText(SmartTool_TextBox, SmartTool_ComboBox, Measurement_ComboBox);
 
-            if (IsSmartTool(dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).toolChoice)) {
+            if (IsSmartTool()) {
                 InitSmartToolLimits(PositiveResult_SM_TextBox, PositiveResult_LowerLimit_TextBox, PositiveResult_UpperLimit_TextBox);
             }
         }
@@ -414,8 +356,8 @@ namespace XMLWriter.Classes.HelpClasses {
             }
             return false;
         } //fertig
-        private bool IsSmartTool(string text) {
-            if (text == dropDownList.GetToolChoice()[2]) {
+        private bool IsSmartTool() {
+            if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).toolChoice == dropDownList.GetToolChoice()[2]) {
                 return true;
             }
             return false;
