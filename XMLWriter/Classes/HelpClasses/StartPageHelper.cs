@@ -111,11 +111,11 @@ namespace XMLWriter.Classes.StartPage {
         //Init DropDowns
         public void InitProcessTypeDropDown(ComboBox comboBox) {
             System.Diagnostics.Debug.WriteLine("Prozesstyp: " + dataSetService.GetDataType());
-            xamlHelper.SetDropDownListFor(comboBox, processTypeList);
+            xamlHelper.SetDropDownContent(comboBox, processTypeList);
             xamlHelper.SetDropDownActiveELementFor(comboBox, dataSetService.GetDataType());
         }
         public void InitLanguageSelectionDropDown(ComboBox comboBox) {
-            xamlHelper.SetDropDownListFor(comboBox, languageList);
+            xamlHelper.SetDropDownContent(comboBox, languageList);
             xamlHelper.SetDropDownActiveELementFor(comboBox, selectedLanguage);
         }
         public void ChangeProcessActiveElement(ComboBox comboBox, string selectedElement) {
