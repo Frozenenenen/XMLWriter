@@ -5,15 +5,13 @@ using System.Linq;
 using XMLWriter.Classes;
 using System.Text;
 
-namespace XMLWriter.Classes
-{
-    class DropDownOptionLists
-    {
-        ConsoleControl consol = new ConsoleControl();  
-        private static bool useDataBase = true;           //Hier ist noch ein Fehler
-        private static string[] toolChoice = { "", "ActuatorTest", "SmartTool", "ReadDataByIdentifier" };
+namespace XMLWriter.Classes {
+    class DropDownOptionLists {
+        ConsoleControl consol = new ConsoleControl();
+        private static bool canUseDataBase = true;           //Hier ist noch ein Fehler
+        private static string[] toolChoiceOptions = { "", "ActuatorTest", "SmartTool", "ReadDataByIdentifier" };
         private static string filePath = @"Files/";
-        private static string databasePath = @"Files/";
+        private static string dataBasePath = @"Files/";
         //Die Dateinamen sind MIT SICHERHEIT nicht final
         private static string[] fileNames = { @"ECU_List.txt", @"SmartTool_List.txt", @"IO_BCM.txt", @"IO_LWR.txt", @"IO_MSG.txt", @"Measure_URI.txt", @"Measure_Two.txt", @"Measure_Three.txt", @"RDID_BCM.txt", @"RDID_LWR.txt", @"RDID_MSG.txt" };
         private static string[] databaseQuerys = { @"", @"", @"", @"", @"", @"", @"", @"", @"", @"", @"" };
@@ -40,22 +38,18 @@ namespace XMLWriter.Classes
         private static List<DropDownOptionTupel> RDID_MSG = new List<DropDownOptionTupel>();
 
 
-        public void UseDataBase()
-        {
+        public void SetUseDataBaseTrue() {
             System.Diagnostics.Debug.WriteLine("Loads from database - Init");
-            useDataBase = true;
+            canUseDataBase = true;
         }
-        public void DontUseDataBase()
-        {
+        public void SetUseDataBaseFalse() {
             System.Diagnostics.Debug.WriteLine("Loads from text file - Init");
-            useDataBase = false;
+            canUseDataBase = false;
         }
-        public void LoadAllOptions()
-        {
+        public void LoadAllDropDownOptionsFromTxtOrDataBase() {
             FillAllLists();
         }
-        private void FillAllLists()
-        {
+        private void FillAllLists() {
             FillList(ECU_List, fileNames[0], databaseQuerys[0]);
             FillList(SmartTool_List, fileNames[1], databaseQuerys[1]);
             FillList(IO_BCM, fileNames[2], databaseQuerys[2]);
@@ -69,16 +63,13 @@ namespace XMLWriter.Classes
             FillList(RDID_MSG, fileNames[10], databaseQuerys[10]);
         }
 
-        private void FillList(List<DropDownOptionTupel> list, string fileName, string databaseQuery)
-        {
+        private void FillList(List<DropDownOptionTupel> list, string fileName, string dataBaseQuery) {
             string stream;
-            if (useDataBase)
-            {
+            if (canUseDataBase) {
                 stream = LoadInputFromTxtFile(filePath + fileName);
             }
-            else
-            {
-                stream = LoadInputFromDatabase(databasePath + databaseQuery);
+            else {
+                stream = LoadInputFromDataBase(dataBasePath + dataBaseQuery);
             }
             list.Clear();
             string[] TupelString;
@@ -90,32 +81,26 @@ namespace XMLWriter.Classes
             }
         }
 
-        public string GetDisplayPartOf(List<DropDownOptionTupel> list, string item)
-        {
-            if (list != null && item != "" && item != "false")
-            {
+        public string GetDisplayPartOf(List<DropDownOptionTupel> list, string item) {
+            if (list != null && item != "" && item != "false") {
                 int index = list.FindIndex(x => x.firstPart.Equals(item));
                 if (consol.showGetOtherPart) System.Diagnostics.Debug.WriteLine("Suche nach: >" + item + "< in GetDisplayPartOf(...)                      ---DroDownOptionLists.GetDisplayPartOf()");
-                if (index != -1)
-                {
+                if (index != -1) {
                     if (consol.showGetOtherPart) System.Diagnostics.Debug.WriteLine("Ergebnis: " + list.ElementAt(index).secondPart + "\n");
                     return list.ElementAt(index).secondPart;
                 }
             }
-            if(consol.showGetOtherPart) System.Diagnostics.Debug.WriteLine("Ergebnis: " + -1);
+            if (consol.showGetOtherPart) System.Diagnostics.Debug.WriteLine("Ergebnis: " + -1);
             return "";
         }
-       
-        public string GetKeyPartOf(List<DropDownOptionTupel> list, string item)
-        {
-            
-            
-            if (list != null && item !="" && item != "false")
-            {
+
+        public string GetKeyPartOf(List<DropDownOptionTupel> list, string item) {
+
+
+            if (list != null && item != "" && item != "false") {
                 int index = list.FindIndex(x => x.secondPart.Equals(item));
                 if (consol.showGetOtherPart) System.Diagnostics.Debug.WriteLine("Suche nach: >" + item + "< in GetKeyPartOf()                      ---DroDownOptionLists.GetKeyPartOf()");
-                if (index!=-1)
-                {
+                if (index != -1) {
                     if (consol.showGetOtherPart) System.Diagnostics.Debug.WriteLine("Ergebnis: " + list.ElementAt(index).firstPart + "\n");
                     return list.ElementAt(index).firstPart;
                 }
@@ -123,91 +108,72 @@ namespace XMLWriter.Classes
             if (consol.showGetOtherPart) System.Diagnostics.Debug.WriteLine("Ergebnis: " + -1);
             return "";
         }
-        
 
-        public string[] GetToolChoice()
-        {
-            return toolChoice;
+
+        public string[] GetToolChoice() {
+            return toolChoiceOptions;
         }
-        public List<DropDownOptionTupel> GetECUChoices()
-        {
-            return ECU_List; 
+        public List<DropDownOptionTupel> GetECUChoices() {
+            return ECU_List;
         }
-        public List<DropDownOptionTupel> GetSmartToolChoices()
-        {
+        public List<DropDownOptionTupel> GetSmartToolChoices() {
             return SmartTool_List;
         }
-        public List<DropDownOptionTupel> GetRDIDChoices(string chosenECU)
-        {
-            if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[0])
-            {
+        public List<DropDownOptionTupel> GetRDIDChoices(string chosenECU) {
+            if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[0]) {
                 return RDID_BCM;
             }
-            else if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[1])
-            {
+            else if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[1]) {
                 return RDID_LWR;
             }
-            else if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[2])
-            {
+            else if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[2]) {
                 return RDID_MSG;
             }
-            else
-            {
+            else {
                 return RDID_BCM; //Mangels besserer Ideen die Anzeige für einen fehlerhaften Inhalt
             }
         }
-        public List<DropDownOptionTupel> GetIOChoices(string chosenECU)
-        {
-            if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[0])
-            {
+        public List<DropDownOptionTupel> GetIOChoices(string chosenECU) {
+            if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[0]) {
                 return IO_BCM;
             }
-            else if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[1])
-            {
+            else if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[1]) {
                 return IO_LWR;
             }
-            else if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[2])
-            {
+            else if (chosenECU == ECU_List.Select(x => x.secondPart).ToArray()[2]) {
                 return IO_MSG;
             }
-            else
-            {
+            else {
                 return IO_BCM;
             }
         }
-        public List<DropDownOptionTupel> GetMeasurementChoices(string chosenSmartTool)
-        {
-            if (chosenSmartTool == SmartTool_List.Select(x => x.secondPart).ToArray()[0])
-            {
+        public List<DropDownOptionTupel> GetMeasurementChoices(string chosenSmartTool) {
+            if (chosenSmartTool == SmartTool_List.Select(x => x.secondPart).ToArray()[0]) {
                 return Measure_URI;
             }
-            else if (chosenSmartTool == SmartTool_List.Select(x => x.secondPart).ToArray()[1])
-            {
+            else if (chosenSmartTool == SmartTool_List.Select(x => x.secondPart).ToArray()[1]) {
                 return Measure_Two;
             }
             else if (chosenSmartTool == SmartTool_List.Select(x => x.secondPart).ToArray()[2]) //Wenn es nur 2 Smarttools gibt, wird hier wohl ein Fehler entstehen 
             {
                 return Measure_Three;
             }
-            else
-            {
-                return Measure_URI; 
+            else {
+                return Measure_URI;
             }
         }
 
 
 
 
-        private string LoadInputFromTxtFile(string fileNameAndPath)
-        {
+        private string LoadInputFromTxtFile(string fileNameAndPath) {
             StreamReader sr = new StreamReader(fileNameAndPath);
             return sr.ReadLine();
         }
-        private string LoadInputFromDatabase(string databaseQuery)
-        {
+        private string LoadInputFromDataBase(string dataBaseQuery) {
             throw new NotImplementedException();
         }
-        
+
 
 
     }

@@ -1,21 +1,21 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace XMLWriter
 {
-    class WriteRepToXML: WriteToXML
+    class RepToXMLWriter: DataSetToXMLWriter
     {
-        public void OutputToXML(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> special, string fileName, string dataType) //Output to file
+        public void OutputToXML(int stepCountMax, List<DataSet> data, string fileName) //Output to file
         {
 
             fileName = SetFileName(fileName);//, dataType);
-            string[] output = FillList(stepCountMax, step, text, anim, special);
+            string[] output = FillList(stepCountMax, data);
             //File.WriteAllLines(pathVehicleID + "/" + pathLanguage + "/" + fileName + "_" + pathLanguage + fileExtension, output);
             File.WriteAllLines(fileName + "_" + pathLanguage + fileExtension, output);
         }
-        public string[] FillList(int stepCountMax, List<string> step, List<string> text, List<string> anim, List<string> special)
+        public string[] FillList(int stepCountMax, List<DataSet> data)
         {
 
             List<string> list = new List<string> { };
@@ -26,10 +26,10 @@ namespace XMLWriter
             for (int i = 0; i < stepCountMax; i++)
             {
 
-                list.Add(WriteStep(step[i]));
-                list.Add(WriteText(text[i]));
-                list.Add(WriteAnim(anim[i]));
-                list.Add(WriteSpecialStep(special[i]));
+                list.Add(WriteStep(data.ElementAt(i).stepName));
+                list.Add(WriteText(data.ElementAt(i).text));
+                list.Add(WriteAnim(data.ElementAt(i).anim));
+                list.Add(WriteSpecialStep(data.ElementAt(i).specialText));
 
                 list.Add("\t\t" + "</Repair>");
             }

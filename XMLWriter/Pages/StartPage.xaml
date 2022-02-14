@@ -34,31 +34,30 @@
             <ColumnDefinition Width="70"/>
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="textSaveNotice" Content="X" FontSize="20" ToolTip="Das schließen des Fenster's über das Kreuz löscht das Programm nicht aus dem Speicher. Beim speichern funktioniert dies. Ansonsten hier klicken"  VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="6" Background="Red"  Click="BtnClose" Width="35"/>
-        <Label x:Name="textInstructions" ToolTip="Leere Felder werden automatisch befüllt"  VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Background="Yellow"  Margin="0,19,0,0"/>
-        <Label x:Name="textTitel" Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="3" Content="Datensatz anlegen" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-        <Label x:Name="textStepCount" Grid.Row="5" Grid.Column="1" VerticalAlignment="Top"/>
+        <Label x:Name="labelTitel" Grid.Row="0"  Grid.Column="2" Grid.ColumnSpan="3" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+        <Label x:Name="labelStepCount" Grid.Row="5" Grid.Column="1" VerticalAlignment="Top"/>
 
-        <Button x:Name="btnWeiter"  Grid.Row="9" Grid.Column="5" Grid.RowSpan="1" Height="50" Width="100" Margin="15,5,15,5" Click="BtnNext"/>
+        <Button x:Name="btnWeiter"  Grid.Row="9" Grid.Column="5" Grid.RowSpan="1" Height="50" Width="100" Margin="15,5,15,5" Click="BtnStart"/>
 
-        <StackPanel Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="1" Grid.RowSpan="2">
-            <Label x:Name="textUseDatabaseChecked" Content="Checked: Use Database"/>
-            <Label x:Name="textUseDatabaseUnchecked" Content="Unchecked: Use Txt-file"/>
+        <StackPanel Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <Label x:Name="textUseDatabaseChecked"/>
+            <Label x:Name="textUseDatabaseUnchecked"/>
             <CheckBox x:Name="checkUseTxtOrDatabse" HorizontalAlignment="Center" IsChecked="True"/>
         </StackPanel>
-        <ComboBox x:Name="inputType" Grid.Row="9" Grid.Column="4" Text="gfs" HorizontalAlignment="Left" Width="132"/>
+        
         <!--Reparatur, geführte Fehlersuche etc-->
+        <ComboBox x:Name="dropDownProcesses" Grid.Row="9" Grid.Column="4" Text="gfs" HorizontalAlignment="Left" Width="132" DropDownClosed="DropDownProcesses_OnClosed"/>
+        
 
         <!--Sprachwahl-->
         <Label Content="Choose Language" Grid.Row="7" Grid.Column="1" VerticalAlignment="Bottom" HorizontalContentAlignment="Center"/>
-        <ComboBox x:Name="inputLanguage" Grid.Row="8" Grid.Column="1" Margin="2"/>
-        <Button x:Name="btnSelectLanguage" Content="Select" Grid.Row="9" Grid.Column="1" Margin="2" Click="BtnSelectLanguage_Click"/>
+        <ComboBox x:Name="dropDownLanguage" Grid.Row="8" Grid.Column="1" Margin="2" DropDownClosed="DropDownLanguage_OnClosed"/>
 
         <!--Datei Laden-->
-        <Label x:Name="textLoadFile" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom"/>
-        <TextBox x:Name="inputLoadFile" Grid.Row="3" Grid.Column="1" Margin="2,2,2,2" Grid.ColumnSpan="2" TextWrapping="Wrap"/>
+        <Label x:Name="labelLoadFile" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom"/>
+        <TextBlock x:Name="textBlockLoadFile" Grid.Row="3" Grid.Column="1" Margin="2,2,2,2" Grid.ColumnSpan="2" TextWrapping="Wrap" IsEnabled="False"/>
         <Button x:Name="btnLoadFile" Grid.Row="4" Grid.Column="1" Click="BtnLoadFile" Margin=" 2,2,2,2" Width="85" Height="35" HorizontalAlignment="Left"/>
-        <Button x:Name="btnReset" Grid.Row="4" Grid.Column="4" Click="BtnReset" Margin=" 2,2,2,2" Width="85" Height="35" HorizontalAlignment="Right"/>
+        <Button x:Name="btnReset" Grid.Row="4" Grid.Column="4" Click="BtnReset" Margin=" 2,2,2,2" Height="35" HorizontalAlignment="Right"/>
 
     </Grid>
 </Page>

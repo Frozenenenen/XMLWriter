@@ -1,19 +1,20 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace XMLWriter
 {
-    class WriteGFSToXML:WriteToXML
+    class GFSToXMLWriter:DataSetToXMLWriter
     {
-        public void OutputToXML(int stepCountMax, List<string> toolChoice, List<string> step, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<bool?> checkActuatorTest, List<string> RDBI, List<bool?> checkRDBI, List<string> smartTool, List<bool?> checkSmartTool, List<bool?> nextStep, List<bool?> lastStep, string fileName, string dataType)
+        public void OutputToXML(int stepCountMax, List<DataSet> data, string fileName)
         {
             fileName = SetFileName(fileName);//, dataType);
-            string[] output = FillList(stepCountMax, step, toolChoice, text, anim, instruction, posID, negID, posResult, repXML, actuatorTest, checkActuatorTest, RDBI, checkRDBI, smartTool, checkSmartTool, nextStep, lastStep);
+            string[] output = FillList(stepCountMax, data);
             //File.WriteAllLines(pathVehicleID + "/" + pathLanguage + "/" + fileName + "_" + pathLanguage + fileExtension, output);
             File.WriteAllLines(fileName + "_" + pathLanguage + fileExtension, output);
         }
-        public string[] FillList(int stepCountMax, List<string> step, List<string> toolChoice, List<string> text, List<string> anim, List<string> instruction, List<string> posID, List<string> negID, List<string> posResult, List<string> repXML, List<string> actuatorTest, List<bool?> checkActuatorTest, List<string> RDBI, List<bool?> checkRDBI, List<string> smartTool, List<bool?> checkSmartTool, List<bool?> nextStep, List<bool?> lastStep)
+        public string[] FillList(int stepCountMax, List<DataSet> data)
         {
             List<String> list = new List<string> { };
             list.Add("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -24,19 +25,19 @@ namespace XMLWriter
             {
                 Console.WriteLine(i);
 
-                list.Add(WriteStep(step[i]));
-                list.Add(WriteText(text[i]));
-                list.Add(WriteAnim(anim[i]));
-                list.Add(WriteInstruction(instruction[i]));
-                list.Add(WritePosID(posID[i]));                
-                list.Add(WriteNegID(negID[i]));
-                list.Add(WritePosResult(posResult[i]));
-                list.Add(WriteRepXML(repXML[i]));
-                list.Add(WriteActuatorTest(toolChoice[i], actuatorTest[i]));
-                list.Add(WriteRDBI(toolChoice[i], RDBI[i]));
-                list.Add(WriteSmartTool(toolChoice[i], smartTool[i]));
-                list.Add(WriteNextStep(nextStep[i]));
-                list.Add(WriteLastStep(lastStep[i]));
+                list.Add(WriteStep(data.ElementAt(i).stepName));
+                list.Add(WriteText(data.ElementAt(i).text));
+                list.Add(WriteAnim(data.ElementAt(i).anim));
+                list.Add(WriteInstruction(data.ElementAt(i).instruction));
+                list.Add(WritePosID(data.ElementAt(i).positiveID));                
+                list.Add(WriteNegID(data.ElementAt(i).negativeID));
+                list.Add(WritePosResult(data.ElementAt(i).positiveResult));
+                list.Add(WriteRepXML(data.ElementAt(i).repXML));
+                list.Add(WriteActuatorTest(data.ElementAt(i).toolChoice, data.ElementAt(i).actuatorTest));
+                list.Add(WriteRDBI(data.ElementAt(i).toolChoice, data.ElementAt(i).RDID));
+                list.Add(WriteSmartTool(data.ElementAt(i).toolChoice, data.ElementAt(i).smartTool));
+                list.Add(WriteNextStep(data.ElementAt(i).nextStep));
+                list.Add(WriteLastStep(data.ElementAt(i).lastStep));
 
                 list.Add("\t\t" + "</Gfs>");
             }

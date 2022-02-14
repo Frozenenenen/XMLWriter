@@ -1,12 +1,6 @@
-﻿using XMLWriter.Classes;
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Text;
-
-namespace XMLWriter
+﻿namespace XMLWriter
 {
-    class WriteToXML
+    class DataSetToXMLWriter
     {
         //Todo: Pfadsuche für's Speichern
         //Der Ordner muss bestehen, damit das Speichern funktioniert!
