@@ -13,6 +13,7 @@ namespace XMLWriter.Pages {
         GfsPageHelper gfsPageHelper = new GfsPageHelper();
         GfsPageTextlHelper textHelper = new GfsPageTextlHelper();
         GUIMovementHelper guiHelper = new GUIMovementHelper();
+        GfsPageInputHelper inputHelper = new GfsPageInputHelper();
 
         private static string positiveResult;
 
@@ -183,10 +184,9 @@ namespace XMLWriter.Pages {
             textHelper.SetLabelActuatorTesst(textActuatorTest);
             textHelper.SetLabelRDID(textReadData);
             textHelper.SetLabelSmartTool(textSmartTool);
-            textHelper.SetLabelSmartTool(textSmartTool);
             //CheckBoxText
-            gfsPageHelper.SetTextNextStep(inputNextStep);
-            gfsPageHelper.SetTextLastStep(inputLastStep);
+            textHelper.SetTextNextStep(inputNextStep);
+            textHelper.SetTextLastStep(inputLastStep);
 
             //Buttons
             textHelper.SetButtonNext(btnNext);

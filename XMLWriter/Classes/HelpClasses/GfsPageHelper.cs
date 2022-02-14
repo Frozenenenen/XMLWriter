@@ -8,6 +8,7 @@ namespace XMLWriter.Classes.HelpClasses {
     internal class GfsPageHelper {
         DataSetService dataSetService = new DataSetService();
         UtilityFunctions utility = new UtilityFunctions();
+        GfsPageInputHelper inputHelper = new GfsPageInputHelper();
         Language language = new Language();
         GUIMovementHelper guiHelper = new GUIMovementHelper();
         DropDownOptionLists dropDownList = new DropDownOptionLists();
@@ -170,13 +171,7 @@ namespace XMLWriter.Classes.HelpClasses {
         public void SetLastStepValue(CheckBox inputLastStep) {
             xamlHelper.SetStateFor(inputLastStep, dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).lastStep);
         }
-        //CheckBoxText
-        public void SetTextNextStep(CheckBox checky) {
-            xamlHelper.SetTextFor(checky, language.GetStringNextStep());
-        }
-        public void SetTextLastStep(CheckBox checky) {
-            xamlHelper.SetTextFor(checky, language.GetStringLastStep());
-        }
+        
         //DropDowns
         public void SetPositiveID(ComboBox inputPositiveID) {
             xamlHelper.SetDropDownContent(inputPositiveID, dataSetService.GetStepNames(), dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveID);
@@ -283,10 +278,6 @@ namespace XMLWriter.Classes.HelpClasses {
                 }
             }
         } //fertig
-
-
-
-
 
 
 

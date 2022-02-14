@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Linq;
-
+﻿using System.Windows.Controls;
+/// <summary>
+/// This class controls the textoutput of the Gfs Page.
+/// </summary>
 namespace XMLWriter.Classes.HelpClasses {
     internal class GfsPageTextlHelper {
-        DataSetService dataSetService = new DataSetService();
-        UtilityFunctions utility = new UtilityFunctions();
         Language language = new Language();
         GUIMovementHelper guiHelper = new GUIMovementHelper();
-        DropDownOptionLists dropDownList = new DropDownOptionLists();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
-        ConsoleControl consol = new ConsoleControl();
 
+        ///---Text Inits---////
         //Label
-        //linke Seite
+        //left side
         public void SetLabelStepName(Label step) {
             xamlHelper.SetTextFor(step, language.GetStringStepTitel() + ": " + guiHelper.GetStepCount());
         }
@@ -32,7 +26,7 @@ namespace XMLWriter.Classes.HelpClasses {
         public void SetLabelTitel(Label label) {
             xamlHelper.SetTextFor(label, language.GetStringPleaseFill());
         }
-        //rechte Seite
+        //right side
         public void SetLabelPositiveID(Label label) {
             xamlHelper.SetTextFor(label, language.GetStringPosID());
         }
@@ -69,6 +63,13 @@ namespace XMLWriter.Classes.HelpClasses {
         }
         public void SetButtonBack(Button back) {
             xamlHelper.SetTextFor(back, language.GetStringBack());
+        }
+        //CheckBoxText
+        public void SetTextNextStep(CheckBox checky) {
+            xamlHelper.SetTextFor(checky, language.GetStringNextStep());
+        }
+        public void SetTextLastStep(CheckBox checky) {
+            xamlHelper.SetTextFor(checky, language.GetStringLastStep());
         }
     }
 }
