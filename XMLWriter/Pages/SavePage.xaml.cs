@@ -21,79 +21,52 @@ namespace XMLWriter.Pages {
 
         public SavePage() {
             InitializeComponent();
-            savePageHelper.InitSavePageData();
             InitTextItems();
             InitValueItems();
             InitButtons();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e) {
-
-            data.SetFileName(inputFileName.Text);
-            if (data.GetDataType() == "rep") {
-                System.Diagnostics.Debug.WriteLine("Rep Speichern");
-                data.OutputToXML();
-            }
-            else if (data.GetDataType() == "gfs") {
-                data.OutputToXML();
-            }
-            else {
-                System.Diagnostics.Debug.WriteLine("Error with DataType - Savepage Savebutton");
-            }
+            savePageHelper.StartXMLWriting();
             _ = NavigationService.Navigate(new StartPage());
             //App.Current.Shutdown(0);
-        }
+        } //fertig
 
         private void btnBack_Click(object sender, RoutedEventArgs e) {
             gui.DecrementStepsForGoingBackFromSaving();
-            if (data.GetDataType() == "rep") {
+            if (savePageHelper.IsRep()) {
                 _ = NavigationService.Navigate(new RepPage());
             }
-            else if (data.GetDataType() == "gfs") {
+            else if (savePageHelper.IsGfs()) {
                 _ = NavigationService.Navigate(new GfsPage());
             }
             else {
                 Console.WriteLine("Fehler beim btnBack mit Datatype");
             }
-
-
-        }
+        } //fertig
 
         private void InitTextItems() {
-            DataSetToXMLWriter writer = new DataSetToXMLWriter();
-            inputVehicleID.ItemsSource = writer.GetPathVehicleIDChoises();
-            inputLanguage.ItemsSource = writer.GetPathLanguageChoises();
-            textTitel.Content = language.GetStringSummary();
-            xamlHelper.SetTextFor(labelFileNameTitel, savePageHelper.GetTextFileNameTitel());
+            savePageHelper.InitLabelTitel(textTitel_Label);
+            savePageHelper.InitLabelFileName(fileNameTitel_Label);
             //labelFileNameTitel.Content = language.GetStringFileNameTitel();
-            textStepCount.Content = (gui.GetStepCountMax()) + " " + savePageHelper.GetTextSteps();
-            btnBack.Content = language.GetStringBack();
-            btnSave.Content = language.GetStringSave();
-            inputVehicleID.Text = "eGolf";
-            inputLanguage.Text = "de";
-
+            savePageHelper.InitLabelStepCount(textStepCount);
         }
         private void InitButtons() {
-            btnLoadFile.Content = language.GetStringFilePathDialog();
-            btnSave.Background = Brushes.Gray;
-            btnSave.IsEnabled = false;
+            savePageHelper.InitButtonBack(btnBack);
+            savePageHelper.InitButtonSave(btnSave);
+            savePageHelper.InitButtonOpenFile(btnOpenFile);
         }
         private void InitValueItems() {
-            inputFileName.Text = data.GetFileName();
+            savePageHelper.InitTextFilePath(textFileName);
         }
 
-        private void BtnLoadFile(object sender, RoutedEventArgs e) {
-            btnLoadFile.Content = language.GetStringFilePathDialog();
+        private void BtnOpenFile(object sender, RoutedEventArgs e) {
             loadHelper.OpenFileDialog();
-            inputFileName.Text = loadHelper.GetFileNameAndPath();//Einer von beiden falsch?
-            textFileName.Text = loadHelper.GetFileNameAndPath();
-            if (textFileName.Text == "") {
-                btnSave.Background = Brushes.Gray;
-                btnSave.IsEnabled = false;
+            if (savePageHelper.PathIsSet()) {
+                savePageHelper.SetSaveButtonActive(btnSave);
             }
             else {
-                btnSave.Background = Brushes.Green;
-                btnSave.IsEnabled = true;
+                savePageHelper.SetSaveButtonInactive(btnSave);
             }
         }
     }

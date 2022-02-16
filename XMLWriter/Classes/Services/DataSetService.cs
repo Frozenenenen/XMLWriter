@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using System.Text;
-using XMLWriter.Classes.HelpClasses;
-
 namespace XMLWriter.Classes {
 
 
@@ -13,13 +10,11 @@ namespace XMLWriter.Classes {
         private static List<DataSet> dataSets = new List<DataSet>();
 
         private static string dataType = "rep";
-        private static string fileName = "Dateiname"; //can include the path
 
 
         //Getter
         public List<DataSet> GetDataSets() => dataSets;
         public string GetDataType() => dataType;  // active rep or gfs
-        public string GetFileName() => fileName; //Where it should be written to. Includes the Path
 
         public string[] GetStepNames() {
             string[] stepNames = new string[gui.GetStepCountMax()]; //foreach wäre eleganter
