@@ -82,6 +82,15 @@ namespace XMLWriter.Classes.HelpClasses {
 
         ///---Sets---/// (real time changes)
         //activeElements
+        public void SetToolChoiceActiveElementToActuatorTest(ComboBox ToolChoice_ComboBox) {
+            xamlHelper.SetDropDownActiveELementFor(ToolChoice_ComboBox, dropDownList.GetToolChoice()[1]);
+        }
+        public void SetToolChoiceActiveElementToSmartTool(ComboBox ToolChoice_ComboBox) {
+            xamlHelper.SetDropDownActiveELementFor(ToolChoice_ComboBox, dropDownList.GetToolChoice()[2]);
+        }
+        public void SetToolChoiceActiveElementToRDID(ComboBox ToolChoice_ComboBox) {
+            xamlHelper.SetDropDownActiveELementFor(ToolChoice_ComboBox, dropDownList.GetToolChoice()[3]);
+        }
         public void ChangeSmartToolActiveElementTo(ComboBox SmartTool, string text) {
             xamlHelper.SetDropDownActiveELementFor(SmartTool, text);
         }//fertig
@@ -95,7 +104,7 @@ namespace XMLWriter.Classes.HelpClasses {
         //---
         public void InitSmartToolCombinedValue(TextBox smartTool, ComboBox inputSmartTool_SM, ComboBox inputMeasure_SM) {
             xamlHelper.SetTextFor(smartTool, dropDownList.GetKeyPartOf(dropDownList.GetSmartToolChoices(), inputSmartTool_SM.Text) + "|" + inputMeasure_SM.Text);
-        }
+        } //Vermutlich noch für leere Liste gebraucht zum Abfangen von Fehlern
         public void SetMeasurementChoices(ComboBox comboBox, string[] list, string text) {
             xamlHelper.SetDropDownContent(comboBox, list, text);
         }//fertig
@@ -126,7 +135,7 @@ namespace XMLWriter.Classes.HelpClasses {
 
 
 
-        //Fills - Filling the TextBoxes depending on DropDownChoices
+        //Sets with dependencies - Filling the TextBoxes depending on DropDownChoices
         public void FillInputReadDataCombinedText(TextBox ReadData_ComboBox, ComboBox ECUChoice_RDID_ComboBox, ComboBox RDIDChoice_RDID_ComboBox) {
             string shortECUName = dropDownList.GetKeyPartOf(dropDownList.GetRDIDChoices(ECUChoice_RDID_ComboBox.Text), RDIDChoice_RDID_ComboBox.Text);
             string englishRDIDName = dropDownList.GetKeyPartOf(dropDownList.GetECUChoices(), ECUChoice_RDID_ComboBox.Text);
@@ -142,6 +151,10 @@ namespace XMLWriter.Classes.HelpClasses {
             string englishComponentName = dropDownList.GetKeyPartOf(dropDownList.GetECUChoices(), inputECUChoice_AT.Text);
             xamlHelper.SetTextFor(inputActuatorTest, shortECUName + "|" + englishComponentName);
         } //fertig
+        //upper and lower limit in SmartTool
+        public void SetPositiveResultLimit(TextBox TextBox, string limit) {
+            xamlHelper.SetTextFor(TextBox, limit);
+        }
         //Updates 
         public void UpdateActuatorTestSecondComboBox(ComboBox inputECUChoice_AT, ComboBox inputComponentChoice_AT) {
             xamlHelper.SetDropDownContent(inputECUChoice_AT, dropDownList.GetECUChoices().Select(x => x.secondPart).ToArray());

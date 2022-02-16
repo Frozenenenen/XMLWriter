@@ -3,7 +3,7 @@
 /// This class controls the textoutput of the Gfs Page.
 /// </summary>
 namespace XMLWriter.Classes.HelpClasses {
-    internal class GfsPageTextlHelper {
+    internal class GfsPageTextHelper {
         Language language = new Language();
         GUIMovementHelper guiHelper = new GUIMovementHelper();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();

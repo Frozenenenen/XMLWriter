@@ -8,8 +8,7 @@ namespace XMLWriter.Classes.HelpClasses {
     internal class GfsPageHelper {
         DataSetService dataSetService = new DataSetService();
         UtilityFunctions utility = new UtilityFunctions();
-        GfsPageInputHelper inputHelper = new GfsPageInputHelper();
-        Language language = new Language();
+        GfsPageInputHelper gfsInputHelper = new GfsPageInputHelper();
         GUIMovementHelper guiHelper = new GUIMovementHelper();
         DropDownOptionLists dropDownList = new DropDownOptionLists();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
@@ -29,20 +28,21 @@ namespace XMLWriter.Classes.HelpClasses {
 
         /// ---- WriteToDataSet --- ///
         public string HandleToolChoiceAndResultingPositiveResult(ComboBox toolChoice, ComboBox actuatorTest, ComboBox RDID, ComboBox smartTool, TextBox posResult_RDID, TextBox posResult_SM) {
-            if (toolChoice.Text == dropDownList.GetToolChoice()[1]) //AT
+            //Set all not used elemets false or empty and return the positiveResult value
+            if (IsActuatorTest(toolChoice)) //AT 
             {
                 smartTool.Text = "false";
                 RDID.Text = "false";
                 return "";
             }
-            else if (toolChoice.Text == dropDownList.GetToolChoice()[2]) //SmT
+            else if (IsSmartTool(toolChoice)) //SmT
             {
                 actuatorTest.Text = "false";
                 RDID.Text = "false";
                 posResult_RDID.Text = "false";
                 return posResult_SM.Text;
             }
-            else if (toolChoice.Text == dropDownList.GetToolChoice()[3]) //RDID
+            else if (IsRDID(toolChoice)) //RDID
             {
                 smartTool.Text = "false";
                 actuatorTest.Text = "false";
@@ -82,53 +82,53 @@ namespace XMLWriter.Classes.HelpClasses {
         }
 
         /// Visibility changes>
-        
-        public void ShowItemsAfterToolChoice(ComboBox inputToolChoice, DockPanel actuatorTest, DockPanel smartTool, DockPanel RDID) {
-            if (inputToolChoice.Text == dropDownList.GetToolChoice()[1]) //AT
+
+        public void ShowItemsAfterToolChoice(ComboBox inputToolChoice, DockPanel actuatorTest_Panel, DockPanel smartTool_Panel, DockPanel RDID_Panel) {
+            if (IsActuatorTest(inputToolChoice)) //AT
             {
-                HideAllItemsWithToggleVisibility(actuatorTest, smartTool, RDID);
-                actuatorTest.Visibility = Visibility.Visible;
+                HideAllItemsWithToggleVisibility(actuatorTest_Panel, smartTool_Panel, RDID_Panel);
+                ShowActuatorTestPanel(actuatorTest_Panel);
             }
-            else if (inputToolChoice.Text == dropDownList.GetToolChoice()[2])  //SmT
+            else if (IsSmartTool(inputToolChoice))  //SmT
             {
-                HideAllItemsWithToggleVisibility(actuatorTest, smartTool, RDID);
-                smartTool.Visibility = Visibility.Visible;
+                HideAllItemsWithToggleVisibility(actuatorTest_Panel, smartTool_Panel, RDID_Panel);
+                ShowSmartToolPanel(smartTool_Panel);
             }
-            else if (inputToolChoice.Text == dropDownList.GetToolChoice()[3]) //RDID
+            else if (IsRDID(inputToolChoice)) //RDID
             {
-                HideAllItemsWithToggleVisibility(actuatorTest, smartTool, RDID);
-                RDID.Visibility = Visibility.Visible;
+                HideAllItemsWithToggleVisibility(actuatorTest_Panel, smartTool_Panel, RDID_Panel);
+                ShowRDIDPanel(RDID_Panel);
             }
             else {
-                HideAllItemsWithToggleVisibility(actuatorTest, smartTool, RDID);
+                HideAllItemsWithToggleVisibility(actuatorTest_Panel, smartTool_Panel, RDID_Panel);
             }
         }
-        private void HideAllItemsWithToggleVisibility(DockPanel actuatorTest, DockPanel smartTool, DockPanel RDID) {
-            RDID.Visibility = Visibility.Hidden;
-            smartTool.Visibility = Visibility.Hidden;
-            actuatorTest.Visibility = Visibility.Hidden;
+        private void HideAllItemsWithToggleVisibility(DockPanel actuatorTest_Panel, DockPanel smartTool_Panel, DockPanel RDID_Panel) {
+            RDID_Panel.Visibility = Visibility.Hidden;
+            smartTool_Panel.Visibility = Visibility.Hidden;
+            actuatorTest_Panel.Visibility = Visibility.Hidden;
         }
 
-        
-        
-       
+
+
+
         ///ActuatorTest Init
         public void InitActuatorTestDropdowns(ComboBox inputECUChoice_AT_ComboBox, ComboBox inputToolChoice, ComboBox inputComponentChoice_AT, TextBox inputActuatorTest) {
             //Für Verständnis siehe Beispiel bei RDID Init
-            inputHelper.InitECUChoiceDropDownDefaultValue(inputECUChoice_AT_ComboBox);
+            gfsInputHelper.InitECUChoiceDropDownDefaultValue(inputECUChoice_AT_ComboBox);
             if (IsActuatorTest(inputToolChoice)) {
                 string[] positiveResultDupel = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).actuatorTest.Split('|');
-                xamlHelper.SetDropDownActiveELementFor(inputECUChoice_AT_ComboBox, dropDownList.GetDisplayPartOf(dropDownList.GetECUChoices(), positiveResultDupel[1]));
-                inputHelper.SetIOChoices(inputComponentChoice_AT,
+                gfsInputHelper.ChangeECUActiveElementTo(inputECUChoice_AT_ComboBox, dropDownList.GetDisplayPartOf(dropDownList.GetECUChoices(), positiveResultDupel[1]));
+                gfsInputHelper.SetIOChoices(inputComponentChoice_AT,
                     dropDownList.GetIOChoices(inputECUChoice_AT_ComboBox.Text).Select(x => x.secondPart).ToArray(),
                     positiveResultDupel[0]);
             }
             else {
-                inputHelper.SetIOChoices(inputComponentChoice_AT,
+                gfsInputHelper.SetIOChoices(inputComponentChoice_AT,
                     dropDownList.GetIOChoices(inputECUChoice_AT_ComboBox.Text).Select(x => x.secondPart).ToArray(),
                     dropDownList.GetIOChoices(inputECUChoice_AT_ComboBox.Text).ElementAt(0).secondPart);
             }
-            inputHelper.FillInputActuatorTestCombinedText(inputECUChoice_AT_ComboBox, inputComponentChoice_AT, inputActuatorTest);
+            gfsInputHelper.FillInputActuatorTestCombinedText(inputECUChoice_AT_ComboBox, inputComponentChoice_AT, inputActuatorTest);
 
         }
         ///RDID Init
@@ -142,19 +142,19 @@ namespace XMLWriter.Classes.HelpClasses {
             ///danach wird der Positive Result befüllt. Dies würde nach dem einstellen der dropdowns darüber auch über die allgemeine befüllung gehen, aber hier wird der Wert aus der DatensatzListe genommen
             ///Dann wird der Wert, der oben auch aufgesplittet wird, in das entsprechende Textfeld zur visuellen Kontrolle eingefügt.
             ///Im else{} wird einfach das DropDown bei nicht nutzung mit default befüllt (erster wert)
-            inputHelper.InitECUChoiceDropDownDefaultValue(ECUChoice_RDID_ComboBox);
+            gfsInputHelper.InitECUChoiceDropDownDefaultValue(ECUChoice_RDID_ComboBox);
             if (IsRDID(inputToolChoice)) {
                 string[] positiveResultDupel = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).RDID.Split('|');
-                inputHelper.ChangeECUActiveElementTo(ECUChoice_RDID_ComboBox, dropDownList.GetDisplayPartOf(dropDownList.GetECUChoices(), positiveResultDupel[1]));
-                inputHelper.SetRDIDChoices(RDIDChoice_RDID_ComboBox,
+                gfsInputHelper.ChangeECUActiveElementTo(ECUChoice_RDID_ComboBox, dropDownList.GetDisplayPartOf(dropDownList.GetECUChoices(), positiveResultDupel[1]));
+                gfsInputHelper.SetRDIDChoices(RDIDChoice_RDID_ComboBox,
                     dropDownList.GetRDIDChoices(ECUChoice_RDID_ComboBox.Text).Select(x => x.secondPart).ToArray(),
                     dropDownList.GetDisplayPartOf(dropDownList.GetRDIDChoices(ECUChoice_RDID_ComboBox.Text), positiveResultDupel[0]));
-                inputHelper.InitPositiveResult(inputPositiveResult_RDID);
-                inputHelper.InitReadData(ReadData_TextBox);
+                gfsInputHelper.InitPositiveResult(inputPositiveResult_RDID);
+                gfsInputHelper.InitReadData(ReadData_TextBox);
             }
             else  //Wenn nicht vorhanden, dann zeig das erste Element an. 
             {//Tatsächlich würde vermutlich das initialisieren der Liste ausreichen und das setzen des aktiven Elements ist nicht so wichtig.
-                inputHelper.SetRDIDChoices(RDIDChoice_RDID_ComboBox,
+                gfsInputHelper.SetRDIDChoices(RDIDChoice_RDID_ComboBox,
                     dropDownList.GetRDIDChoices(ECUChoice_RDID_ComboBox.Text).Select(x => x.secondPart).ToArray(),
                     dropDownList.GetRDIDChoices(ECUChoice_RDID_ComboBox.Text).ElementAt(0).secondPart);
             }
@@ -162,49 +162,46 @@ namespace XMLWriter.Classes.HelpClasses {
         ///SmartTool Init
         public void InitSmartToolDropdowns(ComboBox SmartTool_ComboBox, ComboBox inputToolChoice, TextBox SmartTool_TextBox, ComboBox Measurement_ComboBox, TextBox PositiveResult_SM_TextBox, TextBox PositiveResult_LowerLimit_TextBox, TextBox PositiveResult_UpperLimit_TextBox) {
             //Für Verständnis siehe Beispiel bei RDID Init
-            inputHelper.InitSmartToolDropDownDefaultValue(SmartTool_ComboBox);
+            gfsInputHelper.InitSmartToolDropDownDefaultValue(SmartTool_ComboBox);
             if (IsSmartTool(inputToolChoice)) {
-                inputHelper.InitSmartToolValue(SmartTool_TextBox);
+                gfsInputHelper.InitSmartToolValue(SmartTool_TextBox);
                 string[] positiveResultDupel = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).smartTool.Split('|');
-                inputHelper.ChangeSmartToolActiveElementTo(SmartTool_ComboBox, dropDownList.GetDisplayPartOf(dropDownList.GetSmartToolChoices(), positiveResultDupel[0]));
-                inputHelper.SetMeasurementChoices(Measurement_ComboBox,
+                gfsInputHelper.ChangeSmartToolActiveElementTo(SmartTool_ComboBox, dropDownList.GetDisplayPartOf(dropDownList.GetSmartToolChoices(), positiveResultDupel[0]));
+                gfsInputHelper.SetMeasurementChoices(Measurement_ComboBox,
                     dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text).Select(x => x.secondPart).ToArray(),        //Measurement List of chosen SmartTool
                     dropDownList.GetDisplayPartOf(dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text), positiveResultDupel[1])); //Chosen Measurement
             }
             else //Wenn nicht vorhanden, dann zeig das erste Element an.
             {
-                inputHelper.SetMeasurementChoices(Measurement_ComboBox,
+                gfsInputHelper.SetMeasurementChoices(Measurement_ComboBox,
                     dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text).Select(x => x.secondPart).ToArray(), //Measurement List of chosen SmartTool
                     dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text).ElementAt(0).secondPart); //default Measurement of that list
             }
-            inputHelper.FillInputSmartToolCombinedText(SmartTool_TextBox, SmartTool_ComboBox, Measurement_ComboBox);
+            gfsInputHelper.FillInputSmartToolCombinedText(SmartTool_TextBox, SmartTool_ComboBox, Measurement_ComboBox);
 
             if (IsSmartTool()) {
                 InitSmartToolLimits(PositiveResult_SM_TextBox, PositiveResult_LowerLimit_TextBox, PositiveResult_UpperLimit_TextBox);
             }
         }
-        
-        
-        
         private void InitSmartToolLimits(TextBox posRes_SM, TextBox posRes_Lower, TextBox posRes_Upper) {
             if (PositiveResultIsEmptyOrFalse()) {
-                inputHelper.WritePositiveResultDependingOnLowerAndUpperLimit(posRes_SM, posRes_Upper, posRes_Lower);
+                gfsInputHelper.WritePositiveResultDependingOnLowerAndUpperLimit(posRes_SM, posRes_Upper, posRes_Lower);
             }
             else {
-                xamlHelper.SetTextFor(posRes_SM, dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult);
-                if (PositiveResultContains('|')) {
+                gfsInputHelper.InitPositiveResult(posRes_SM);
+                if (PositiveResultContains('|')) { // | divides an upper or lower limit. e.g. 3|9. If this isnt used its either x;lower or x;upper which is checked in else if()
                     string[] PosResDupel = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult.Split('|');
-                    xamlHelper.SetTextFor(posRes_Lower, PosResDupel[0]);
-                    xamlHelper.SetTextFor(posRes_Upper, PosResDupel[1]);
-                 
+                    gfsInputHelper.SetPositiveResultLimit(posRes_Lower, PosResDupel[0]);
+                    gfsInputHelper.SetPositiveResultLimit(posRes_Upper, PosResDupel[1]);
+
                 }
                 else if (PositiveResultContains(';')) {
                     string[] PosResDupel = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult.Split(';');
-                    if (PosResDupel[1] == "lower") {
-                        xamlHelper.SetTextFor(posRes_Lower, PosResDupel[0]);
+                    if (IsLowerLimit(PosResDupel[1])) {
+                        gfsInputHelper.SetPositiveResultLimit(posRes_Lower, PosResDupel[0]);
                     }
-                    else if (PosResDupel[1] == "upper") {
-                        xamlHelper.SetTextFor(posRes_Upper, PosResDupel[0]);
+                    else if (IsUpperLimit(PosResDupel[1])) {
+                        gfsInputHelper.SetPositiveResultLimit(posRes_Upper, PosResDupel[0]);
                     }
                 }
             }
@@ -220,19 +217,50 @@ namespace XMLWriter.Classes.HelpClasses {
                 System.Diagnostics.Debug.WriteLine("PosRes: " + dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult + "\n");
             }
 
-            if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).actuatorTest != "" && dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).actuatorTest != "false") {
-                xamlHelper.SetDropDownActiveELementFor(inputToolChoice, dropDownList.GetToolChoice()[1]);
+            if (ActuatorTestIsNotEmptyNorFalse()) { //There is just one of the 3 tools filled, so as long as its not empty it is the one thats chosen
+                gfsInputHelper.SetToolChoiceActiveElementToActuatorTest(inputToolChoice);
             }
-            else if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).smartTool != "" && dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).smartTool != "false") {
-                xamlHelper.SetDropDownActiveELementFor(inputToolChoice, dropDownList.GetToolChoice()[2]);
+            else if (SmartToolIsNotEmptyNorFalse()) {
+                gfsInputHelper.SetToolChoiceActiveElementToSmartTool(inputToolChoice);
             }
-            else if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).RDID != "" && dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).RDID != "false") {
-                xamlHelper.SetDropDownActiveELementFor(inputToolChoice, dropDownList.GetToolChoice()[3]);
+            else if (RDIDIsNotEmptyNorFalse()) {
+                gfsInputHelper.SetToolChoiceActiveElementToRDID(inputToolChoice);
             }
             else {
-                inputToolChoice.Text = language.GetStringPleaseChoose(); //Not sure if this works whatsoever
+                System.Diagnostics.Debug.WriteLine("Leer oder Fehler bei CheckForWhatToolHasBeenChosen() in GfsPageHelper");
             }
         } //fertig
+        private bool IsLowerLimit(string limit) {
+            if (limit == "lower") {
+                return true;
+            }
+            return false;
+        }
+        private bool IsUpperLimit(string limit) {
+            if (limit == "upper") {
+                return true;
+            }
+            return false;
+        }
+        private bool ActuatorTestIsNotEmptyNorFalse() {
+            if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).actuatorTest != "" && dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).actuatorTest != "false") {
+                return true;
+            }
+            return false;
+        }
+        private bool SmartToolIsNotEmptyNorFalse() {
+            if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).smartTool != "" && dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).smartTool != "false") {
+                return true;
+            }
+            return false;
+        }
+        private bool RDIDIsNotEmptyNorFalse() {
+            if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).RDID != "" && dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).RDID != "false") {
+                return true;
+            }
+            return false;
+        }
+
         private bool IsSmartTool(ComboBox comboBox) {
             if (xamlHelper.IsActiveElementOf(comboBox, dropDownList.GetToolChoice()[2])) {
                 return true;
@@ -250,13 +278,14 @@ namespace XMLWriter.Classes.HelpClasses {
                 return true;
             }
             return false;
-        }
+        } //fertig
         private bool IsActuatorTest(ComboBox inputToolChoice) {
             if (inputToolChoice.Text == dropDownList.GetToolChoice()[1]) {
                 return true;
             }
             return false;
-        }
+        }//fertig
+
         private bool PositiveResultIsEmptyOrFalse() {
             if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult == "" || dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult == "false") {
                 return true;
@@ -276,6 +305,17 @@ namespace XMLWriter.Classes.HelpClasses {
             }
             return false;
         } //fertig
+
+        //Show and Hide Panels
+        private void ShowActuatorTestPanel(DockPanel Panel) {
+            Panel.Visibility = Visibility.Visible;
+
+        }
+        private void ShowSmartToolPanel(DockPanel Panel) {
+            Panel.Visibility = Visibility.Visible;
+        }
+        private void ShowRDIDPanel(DockPanel Panel) {
+            Panel.Visibility = Visibility.Visible;
+        }
     }
 }
-
