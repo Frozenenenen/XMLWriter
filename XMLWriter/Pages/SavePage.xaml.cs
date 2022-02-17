@@ -21,6 +21,7 @@ namespace XMLWriter.Pages {
 
         public SavePage() {
             InitializeComponent();
+            System.Diagnostics.Debug.WriteLine("Start SavePage");
             InitTextItems();
             InitValueItems();
             InitButtons();

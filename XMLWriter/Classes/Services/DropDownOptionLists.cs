@@ -92,15 +92,13 @@ namespace XMLWriter.Classes {
         }
 
         public string GetKeyPartOf(List<DropDownOptionTupel> list, string item) {
-
-
             if (list != null && item != "" && item != "false") {
                 int index = list.FindIndex(x => x.secondPart.Equals(item));
                 if (index != -1) {
                     return list.ElementAt(index).firstPart;
                 }
             }
-            System.Diagnostics.Debug.WriteLine("Ergebnis in GetKeyPartOf(): " + -1 + " - " + item + " of " + list);
+            System.Diagnostics.Debug.WriteLine("Ergebnis in GetKeyPartOf(): " + -1 + " - >" + item + "< of " + list);
             return "";
         }
 

@@ -14,7 +14,6 @@ namespace XMLWriter.Classes.StartPage
         Language language = new Language();
         LoadHelper loadHelper = new LoadHelper();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
-        SavePageHelper savePageHelper = new SavePageHelper();
 
         //Init & Set
         //Labels
