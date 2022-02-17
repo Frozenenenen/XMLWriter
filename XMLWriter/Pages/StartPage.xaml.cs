@@ -51,7 +51,7 @@ namespace XMLWriter.Pages {
                 _ = NavigationService.Navigate(new GfsPage());
             }
             else {
-                Console.WriteLine("Fehler in der gfs/rep-Wahl---                    BtnNext() aus StartPage");
+                System.Diagnostics.Debug.WriteLine("Fehler in der gfs/rep-Wahl---                    BtnNext() aus StartPage");
             }
         }
         private void BtnLoadFile(object sender, RoutedEventArgs e) {

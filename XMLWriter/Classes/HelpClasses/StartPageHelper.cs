@@ -82,9 +82,7 @@ namespace XMLWriter.Classes.StartPage {
                 language.InitLanguage(selectedLanguage);
                 InitDisplayText();
             }
-
         }
-        public string[] GetProcessTypeList() => processTypeList;
         public string GetSelectedProcessType() => selectedProcessType;
 
         ///---Inits bzw Sets von Display-Elementen---///
@@ -120,6 +118,7 @@ namespace XMLWriter.Classes.StartPage {
         }
         public void ChangeProcessActiveElement(ComboBox comboBox, string selectedElement) {
             xamlHelper.SetDropDownActiveELementFor(comboBox, selectedElement);
+            selectedProcessType = xamlHelper.GetActiveElementOf(comboBox);
             dataSetService.SetDataType(selectedElement);
         }
         //Init CheckBoxes
@@ -133,13 +132,13 @@ namespace XMLWriter.Classes.StartPage {
         }
         //Checks
         public bool IsRepSelected() {
-            if (GetSelectedProcessType() == GetProcessTypeList()[1]) {
+            if (selectedProcessType == processTypeList[1]) {
                 return true;
             }
             return false;
         }
         public bool IsGfsSelected() {
-            if (GetSelectedProcessType() == GetProcessTypeList()[0]) {
+            if (selectedProcessType == processTypeList[0]) {
                 return true;
             }
             return false;
