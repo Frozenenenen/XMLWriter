@@ -204,8 +204,8 @@ namespace XMLWriter.Pages {
             gfsInputHelper.InitInstructionValue(inputInstruction);
         }
         private void InitFixedRightSideItems() {
-            gfsInputHelper.InitPositiveID(inputPositiveID);
-            gfsInputHelper.InitNegativeID(inputNegativeID);
+            gfsInputHelper.InitPositiveID_DD(inputPositiveID);
+            gfsInputHelper.InitNegativeID_DD(inputNegativeID);
             gfsInputHelper.InitRepXMLValue(inputRepXML);
             gfsInputHelper.InitNextStepValue(inputNextStep);
             gfsInputHelper.InitLastStepValue(inputLastStep);

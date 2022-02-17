@@ -150,7 +150,7 @@ namespace XMLWriter.Classes.HelpClasses {
                     dropDownList.GetRDIDChoices(ECUChoice_RDID_ComboBox.Text).Select(x => x.secondPart).ToArray(),
                     dropDownList.GetDisplayPartOf(dropDownList.GetRDIDChoices(ECUChoice_RDID_ComboBox.Text), positiveResultDupel[0]));
                 gfsInputHelper.InitPositiveResult(inputPositiveResult_RDID);
-                gfsInputHelper.InitReadData(ReadData_TextBox);
+                gfsInputHelper.InitReadDataValue(ReadData_TextBox);
             }
             else  //Wenn nicht vorhanden, dann zeig das erste Element an. 
             {//Tatsächlich würde vermutlich das initialisieren der Liste ausreichen und das setzen des aktiven Elements ist nicht so wichtig.

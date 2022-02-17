@@ -49,7 +49,7 @@ namespace XMLWriter.Classes.HelpClasses {
         public void InitPositiveResult(TextBox posRes) {
             xamlHelper.SetTextFor(posRes, dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult);
         }
-        public void InitReadData(TextBox readData) {
+        public void InitReadDataValue(TextBox readData) {
             xamlHelper.SetTextFor(readData, dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).RDID);
         }
         //CheckBoxes
@@ -60,10 +60,10 @@ namespace XMLWriter.Classes.HelpClasses {
             xamlHelper.SetStateFor(inputLastStep, dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).lastStep);
         }
         //DropDowns
-        public void InitPositiveID(ComboBox inputPositiveID) {
+        public void InitPositiveID_DD(ComboBox inputPositiveID) {
             xamlHelper.SetDropDownContent(inputPositiveID, dataSetService.GetStepNames(), dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveID);
         }
-        public void InitNegativeID(ComboBox inputPositiveID) {
+        public void InitNegativeID_DD(ComboBox inputPositiveID) {
             xamlHelper.SetDropDownContent(inputPositiveID, dataSetService.GetStepNames(), dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).negativeID);
         }
         public void InitToolChoiceDropDown(ComboBox toolChoice) {

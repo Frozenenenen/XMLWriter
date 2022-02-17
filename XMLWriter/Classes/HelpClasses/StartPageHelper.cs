@@ -131,5 +131,18 @@ namespace XMLWriter.Classes.StartPage {
         public void SetFilePathText(TextBlock text) {
             xamlHelper.SetTextFor(text, loadHelper.GetFileNameAndPath());
         }
+        //Checks
+        public bool IsRepSelected() {
+            if (GetSelectedProcessType() == GetProcessTypeList()[1]) {
+                return true;
+            }
+            return false;
+        }
+        public bool IsGfsSelected() {
+            if (GetSelectedProcessType() == GetProcessTypeList()[0]) {
+                return true;
+            }
+            return false;
+        }
     }
 }

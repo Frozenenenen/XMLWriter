@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using XMLWriter.Classes.HelpClasses;
 
 namespace XMLWriter.Classes {
 
@@ -8,6 +9,7 @@ namespace XMLWriter.Classes {
         GUIMovementHelper gui = new GUIMovementHelper();
         ConsoleControl consol = new ConsoleControl();
         private static List<DataSet> dataSets = new List<DataSet>();
+        LoadHelper loadHelper = new LoadHelper();
 
         private static string dataType = "rep";
 
@@ -59,11 +61,11 @@ namespace XMLWriter.Classes {
             switch (dataType) {
                 case "rep":
                     RepToXMLWriter rep = new RepToXMLWriter();
-                    rep.OutputToXML(gui.GetIndexMax(), dataSets, fileName);
+                    rep.OutputToXML(gui.GetIndexMax(), dataSets, loadHelper.GetFileNameAndPath());
                     break;
                 case "gfs":
                     GFSToXMLWriter gfs = new GFSToXMLWriter();
-                    gfs.OutputToXML(gui.GetIndexMax(), dataSets, fileName);
+                    gfs.OutputToXML(gui.GetIndexMax(), dataSets, loadHelper.GetFileNameAndPath());
                     break;
                 default:
                     if (consol.showErrors) System.Diagnostics.Debug.WriteLine("Error in OutputToXML from DataSet                   ---DataSet.OutputToXML()");
