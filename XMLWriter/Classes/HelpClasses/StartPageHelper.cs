@@ -16,8 +16,8 @@ namespace XMLWriter.Classes.StartPage {
 
         private static readonly string[] processTypeList = { "gfs", "rep" };
         private static readonly string[] languageList = { "Deutsch", "English", "Espanol" };
-        private string selectedLanguage = languageList[0];
-        private string selectedProcessType = "rep";
+        private static string selectedLanguage = languageList[0];
+        private static string selectedProcessType = "rep";
         //Labels
         private static string stringCreateDataSet;
         private static string stringFilePath;
@@ -84,6 +84,7 @@ namespace XMLWriter.Classes.StartPage {
             }
         }
         public string GetSelectedProcessType() => selectedProcessType;
+        public string SetSelectedProcessType(string _selectedProcessType) => selectedProcessType = _selectedProcessType;
 
         ///---Inits bzw Sets von Display-Elementen---///
         //Set or Init Labels
@@ -108,9 +109,8 @@ namespace XMLWriter.Classes.StartPage {
         }
         //Init DropDowns
         public void InitProcessTypeDropDown(ComboBox comboBox) {
-            System.Diagnostics.Debug.WriteLine("Prozesstyp: " + dataSetService.GetDataType());
             xamlHelper.SetDropDownContent(comboBox, processTypeList);
-            xamlHelper.SetDropDownActiveELementFor(comboBox, dataSetService.GetDataType());
+            xamlHelper.SetDropDownActiveELementFor(comboBox, selectedProcessType);
         }
         public void InitLanguageSelectionDropDown(ComboBox comboBox) {
             xamlHelper.SetDropDownContent(comboBox, languageList);
@@ -118,8 +118,7 @@ namespace XMLWriter.Classes.StartPage {
         }
         public void ChangeProcessActiveElement(ComboBox comboBox, string selectedElement) {
             xamlHelper.SetDropDownActiveELementFor(comboBox, selectedElement);
-            selectedProcessType = xamlHelper.GetActiveElementOf(comboBox);
-            dataSetService.SetDataType(selectedElement);
+            SetSelectedProcessType(xamlHelper.GetActiveElementOf(comboBox));
         }
         //Init CheckBoxes
         public void SetTxtOrDataBaseCheckBoxText(Label check, Label uncheck) {

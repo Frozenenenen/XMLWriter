@@ -14,6 +14,7 @@ namespace XMLWriter.Classes.StartPage
         Language language = new Language();
         LoadHelper loadHelper = new LoadHelper();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
+        StartPageHelper startPageHelper = new StartPageHelper();
 
         //Init & Set
         //Labels
@@ -60,26 +61,17 @@ namespace XMLWriter.Classes.StartPage
        
 
         public void StartXMLWriting() {
-            if (IsRep()) {
-                System.Diagnostics.Debug.WriteLine("Rep Speichern");
-                data.OutputToXML();
-            }
-            else if (IsGfs()) {
-                data.OutputToXML();
-            }
-            else {
-                System.Diagnostics.Debug.WriteLine("Error with DataType - Savepage Savebutton");
-            }
+            data.OutputToXML(startPageHelper.GetSelectedProcessType());
         }
         //Checker
         public bool IsGfs() {
-            if (data.GetDataType() == "gfs") {
+            if (startPageHelper.GetSelectedProcessType() == "gfs") {
                 return true;
             }
             return false;
         }
         public bool IsRep() {
-            if (data.GetDataType() == "rep") {
+            if (startPageHelper.GetSelectedProcessType() == "rep") {
                 return true;
             }
             return false;

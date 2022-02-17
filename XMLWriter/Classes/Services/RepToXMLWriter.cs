@@ -23,7 +23,7 @@ namespace XMLWriter
             list.Add("<RepairCollection>");
             list.Add("\t" + "<Repairs>");
 
-            for (int i = 0; i < stepCountMax; i++)
+            for (int i = 0; i <= stepCountMax; i++)
             {
 
                 list.Add(WriteStep(data.ElementAt(i).stepName));

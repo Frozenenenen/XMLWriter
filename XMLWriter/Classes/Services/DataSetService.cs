@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using XMLWriter.Classes.HelpClasses;
+using XMLWriter.Classes.StartPage;
 
 namespace XMLWriter.Classes {
 
@@ -10,13 +11,8 @@ namespace XMLWriter.Classes {
         private static List<DataSet> dataSets = new List<DataSet>();
         LoadHelper loadHelper = new LoadHelper();
 
-        private static string dataType = "rep";
-
-
         //Getter
         public List<DataSet> GetDataSets() => dataSets;
-        public string GetDataType() => dataType;  // active rep or gfs
-
         public string[] GetStepNames() {
             string[] stepNames = new string[gui.GetStepCountMax()]; //foreach wäre eleganter
             for (int i = 0; i < gui.GetStepCountMax(); i++) {
@@ -28,12 +24,6 @@ namespace XMLWriter.Classes {
 
 
         //Setter 
-        public void SetDataSet(DataSet _dataSet) //Zu löschen.
-        {
-            dataSets.Insert(gui.GetIndex(), _dataSet);
-        }
-        public void SetDataType(string _inputDataType) => dataType = _inputDataType;
-
         public void TransmitDataSetListFromLoadToDataSetService(List<DataSet> _dataSets) {
             dataSets  = _dataSets;
         }
@@ -55,9 +45,10 @@ namespace XMLWriter.Classes {
             writer.SetFileName(inputFileName);//, dataType);
 
         }
-        public void OutputToXML() //Output to file
+        public void OutputToXML(string processType) //Output to file
         {
-            switch (dataType) {
+            System.Diagnostics.Debug.WriteLine("Prozesstyp in OutpoutToXML: " + processType);
+            switch (processType) {
                 case "rep":
                     RepToXMLWriter rep = new RepToXMLWriter();
                     rep.OutputToXML(gui.GetIndexMax(), dataSets, loadHelper.GetFileNameAndPath());
