@@ -8,8 +8,9 @@ namespace XMLWriter.Classes {
 
     internal class DataSetService {
         GUIMovementHelper gui = new GUIMovementHelper();
-        private static List<DataSet> dataSets = new List<DataSet>();
         LoadHelper loadHelper = new LoadHelper();
+
+        private static List<DataSet> dataSets = new List<DataSet>();
 
         //Getter
         public List<DataSet> GetDataSets() => dataSets;
@@ -38,7 +39,12 @@ namespace XMLWriter.Classes {
                 dataSets.Add(new DataSet("", "", "", "default", "", "", "", "", "", "", "", "", false, false, ""));
             }
         }
-
+        public void InsertNewDataSet() {
+            dataSets.Insert(gui.GetIndex() ,new DataSet("", "", "", "default", "", "", "", "", "", "", "", "", false, false, ""));
+        }
+        public void DeleteDataSet() {
+            dataSets.RemoveAt(gui.GetIndex());
+        }
         public void SetFileName(string inputFileName) //Damit keine vorherigen Daten überschrieben werden, wird der Dateiname iteriert, bis ein neuer Dateiname gefunden wurde.
         {
             DataSetToXMLWriter writer = new DataSetToXMLWriter();

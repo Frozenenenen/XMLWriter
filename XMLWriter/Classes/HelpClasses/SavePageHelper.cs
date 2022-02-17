@@ -58,7 +58,6 @@ namespace XMLWriter.Classes.StartPage
             btnSave.Background = Brushes.Green;
             btnSave.IsEnabled = true;
         }
-       
 
         public void StartXMLWriting() {
             data.OutputToXML(startPageHelper.GetSelectedProcessType());

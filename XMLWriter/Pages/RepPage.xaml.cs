@@ -34,13 +34,10 @@ namespace XMLWriter.Pages {
             }
         }
         private void BtnBackDelete_Click(object sender, RoutedEventArgs e) {
-            System.Diagnostics.Debug.WriteLine("Rep: Going to SavePage.1");
             repPageHelper.DeleteCurrentSet();
-            System.Diagnostics.Debug.WriteLine("Rep: Going to SavePage.2");
             if (!gui.IsFirstPage()) {
                 repPageHelper.PreparePreviousPage();
             }
-            System.Diagnostics.Debug.WriteLine("Rep: Going to SavePage.3");
             _ = NavigationService.Navigate(new RepPage());
         }
         private void BtnSave_Click(object sender, RoutedEventArgs e) {
@@ -63,6 +60,7 @@ namespace XMLWriter.Pages {
             repPageHelper.SetButtonBackText(btnBack);
             repPageHelper.SetButtonDeleteText(btnBackDelete);
             repPageHelper.SetButtonSaveText(btnSave);
+            repPageHelper.SetButtonInsertText(btnInsert);
         }
         private void InitValueItems() {
             repPageHelper.SetBoxStepNameValue(inputStepName);
@@ -71,5 +69,8 @@ namespace XMLWriter.Pages {
             repPageHelper.SetBoxSpecialText(inputSpecialText);
         }
 
+        private void BtnInsert_Click(object sender, RoutedEventArgs e) {
+            repPageHelper.InsertNewSet();
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace XMLWriter
         private static string useDataBaseUnchecked;
         private static string reset;
         private static string deleteSet;
+        private static string insert;
 
         //StartPage & SavePage
         private static string loadFile;
@@ -49,6 +50,7 @@ namespace XMLWriter
         //Used in 3 or more
         public string GetStringSave() => saveFile;
         public string GetStringBack() => back;
+        public string GetStringInsert() => insert;
         //StartPage & SavePage
         public string GetStringSteps() => steps;
         public string GetStringFilePath() => filePath;
@@ -117,6 +119,7 @@ namespace XMLWriter
             saveFile = "Speichern";
             next = "Weiter";
             back = "Zurück";
+            insert = "Set einfügen";
             pleaseFill = "Bitte ausfüllen";
             createDataSet = "Datensatz anlegen oder laden";
             pleaseChoose = "Bitte wählen";
@@ -151,6 +154,7 @@ namespace XMLWriter
             saveFile = "Save";
             next = "Next";
             back = "Back";
+            insert = "Inser set";
             pleaseFill = "Please Fill";
             createDataSet = "Create Data Set";
             pleaseChoose = "Please choose";
@@ -186,6 +190,7 @@ namespace XMLWriter
             saveFile = "Grabar algo";
             next = "Próximo";
             back = "Atrás";
+            insert = "Inser set";
             pleaseFill = "Llenar algo, por favor";
             createDataSet = "Crear expediente";
             pleaseChoose = "Please choose";

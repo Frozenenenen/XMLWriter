@@ -64,6 +64,9 @@ namespace XMLWriter.Classes.HelpClasses {
         public void SetButtonBack(Button back) {
             xamlHelper.SetTextFor(back, language.GetStringBack());
         }
+        public void SetButtonInsert(Button insert) {
+            xamlHelper.SetTextFor(insert, language.GetStringInsert());
+        }
         //CheckBoxText
         public void SetTextNextStep(CheckBox checky) {
             xamlHelper.SetTextFor(checky, language.GetStringNextStep());

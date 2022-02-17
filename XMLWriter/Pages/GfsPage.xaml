@@ -142,6 +142,7 @@
         
         <!--Bedienelemente und Randinfos-->
         <Button x:Name="btnNext" Grid.Row="11" Grid.Column="6" Margin="0,0,10,10" Click="BtnNext_Click"/>
+        <Button x:Name="btnInsert" Grid.Row="11" Grid.Column="5" Margin="10,0,10,10" Click="BtnInsert_Click"/>
         <Button x:Name="btnSave" Grid.Row="10" Grid.Column="6" Margin="0,0,10,10" Click="BtnSave_Click"/>
         <Button x:Name="btnBack" Grid.Row="11" Grid.Column="0" Margin="10,0,0,10" Click="BtnBack_Click"/>
         <Button x:Name="btnBackDelete" Grid.Row="10" Grid.Column="0" Margin="10,0,0,10" Click="BtnBackDelete_Click" Background="Red"/>

@@ -115,6 +115,9 @@ namespace XMLWriter.Pages {
                 ToolChoice_ComboBox);
             _ = NavigationService.Navigate(new SavePage());
         }
+        private void BtnInsert_Click(object sender, RoutedEventArgs e) {
+            gfsPageHelper.InsertNewSet();
+        }
         ///------------------///
         ///---Page Updates---///
         ///------------------///
@@ -191,6 +194,7 @@ namespace XMLWriter.Pages {
             gfsTextHelper.SetButtonDelete(btnBackDelete);
             gfsTextHelper.SetButtonSave(btnSave);
             gfsTextHelper.SetButtonBack(btnBack);
+            gfsTextHelper.SetButtonInsert(btnInsert);
         }
         private void InitValueItems() {
             InitLeftSideItems();
@@ -220,8 +224,6 @@ namespace XMLWriter.Pages {
             gfsPageHelper.ShowItemsAfterToolChoice(ToolChoice_ComboBox, actuatorTest, smartTool, RDID);
         }
 
-
-
-
+        
     }
 }

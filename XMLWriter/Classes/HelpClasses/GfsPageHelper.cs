@@ -6,12 +6,14 @@ using System.Linq;
 
 namespace XMLWriter.Classes.HelpClasses {
     internal class GfsPageHelper {
-        DataSetService dataSetService = new DataSetService();
+        
         UtilityFunctions utility = new UtilityFunctions();
-        GfsPageInputHelper gfsInputHelper = new GfsPageInputHelper();
         GUIMovementHelper guiHelper = new GUIMovementHelper();
-        DropDownOptionLists dropDownList = new DropDownOptionLists();
+        DataSetService dataSetService = new DataSetService();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
+        DropDownOptionLists dropDownList = new DropDownOptionLists();
+        GfsPageInputHelper gfsInputHelper = new GfsPageInputHelper();
+        
 
         /// --- Navigation --- ///
         public void PrepareNextPage() {
@@ -22,7 +24,11 @@ namespace XMLWriter.Classes.HelpClasses {
             guiHelper.DecrementSteps();
         }
         public void DeleteCurrentSet() {
-            guiHelper.DecrementStepsMax();        //Unfertig
+            dataSetService.DeleteDataSet();
+            guiHelper.DecrementStepsMax();
+        }
+        public void InsertNewSet() {
+            dataSetService.InsertNewDataSet();
         }
 
         /// ---- WriteToDataSet --- ///

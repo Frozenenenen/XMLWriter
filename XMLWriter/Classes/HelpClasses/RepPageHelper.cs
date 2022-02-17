@@ -18,11 +18,16 @@ namespace XMLWriter.Classes.HelpClasses {
             gui.DecrementSteps();
         }
         public void DeleteCurrentSet() {
+            dataSetService.DeleteDataSet();
             gui.DecrementStepsMax();        //Unfertig
+        }
+        public void InsertNewSet() {
+            dataSetService.InsertNewDataSet();
         }
 
         /// ---- WriteToDataSet --- ///
         public void SaveCurrentInput(TextBox stepName, TextBox text, TextBox specialText, TextBox anim) {
+            System.Diagnostics.Debug.WriteLine(stepName.Text + ", " + text + ", " + specialText + ", " + anim);
             WriteInputToDataSet(new string[] { stepName.Text, text.Text, specialText.Text, anim.Text });
         }
         private void WriteInputToDataSet(string[] input) {
@@ -95,6 +100,9 @@ namespace XMLWriter.Classes.HelpClasses {
         }
         public void SetButtonSaveText(Button button) {
             xamlHelper.SetTextFor(button, language.GetStringSave());
+        }
+        public void SetButtonInsertText(Button button) {
+            xamlHelper.SetTextFor(button, language.GetStringInsert());
         }
     }
 }
