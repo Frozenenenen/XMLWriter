@@ -12,7 +12,6 @@ namespace XMLWriter.Classes.HelpClasses {
         GUIMovementHelper guiHelper = new GUIMovementHelper();
         DropDownOptionLists dropDownList = new DropDownOptionLists();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
-        ConsoleControl consol = new ConsoleControl();
 
         /// --- Navigation --- ///
         public void PrepareNextPage() {
@@ -78,7 +77,6 @@ namespace XMLWriter.Classes.HelpClasses {
                 utility.WriteLastStepToCurrentDataSet(dataSetService.GetDataSets(), guiHelper.GetIndex(), false);
             }
             utility.WriteSpecialTextToCurrentDataSet(dataSetService.GetDataSets(), guiHelper.GetIndex(), "");
-            consol.ConsoleShowDataSetOfIndex(dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()), guiHelper.GetIndex(), "Speichern");
         }
 
         /// Visibility changes>
@@ -210,13 +208,6 @@ namespace XMLWriter.Classes.HelpClasses {
 
         //Checks
         public void CheckForWhatToolHasBeenChosen(ComboBox inputToolChoice) {
-            if (consol.showMiscGfs) {
-                System.Diagnostics.Debug.WriteLine("AT: " + dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).actuatorTest + "                                                      GfsPage(cs).CheckForWhatToolHasBeenChosen()");
-                System.Diagnostics.Debug.WriteLine("SmT: " + dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).smartTool);
-                System.Diagnostics.Debug.WriteLine("RDID: " + dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).RDID);
-                System.Diagnostics.Debug.WriteLine("PosRes: " + dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).positiveResult + "\n");
-            }
-
             if (ActuatorTestIsNotEmptyNorFalse()) { //There is just one of the 3 tools filled, so as long as its not empty it is the one thats chosen
                 gfsInputHelper.SetToolChoiceActiveElementToActuatorTest(inputToolChoice);
             }

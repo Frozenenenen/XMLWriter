@@ -8,7 +8,6 @@ namespace XMLWriter.Classes.HelpClasses
 {
     internal class LoadHelper
     {
-        readonly ConsoleControl consol = new ConsoleControl();
         private static string initialDirectory = "";
         private static string initialDirectoryFilePath = @"Files/";
         private static string initialDirectoryFileName = @"InitialDirectory.txt";
@@ -18,7 +17,7 @@ namespace XMLWriter.Classes.HelpClasses
         public void LookForInitialDirectory()
         {
             StreamReader sr = new StreamReader(initialDirectoryFilePath + initialDirectoryFileName);
-            if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine(sr);
+            System.Diagnostics.Debug.WriteLine("InitialDirectory " + sr);
             initialDirectory = sr.ReadLine();
         }
         public string GetFileNameAndPath() => fileNameAndPath;

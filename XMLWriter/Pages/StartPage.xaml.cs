@@ -12,7 +12,6 @@ namespace XMLWriter.Pages {
     /// </summary>
     public partial class StartPage : Page {
         StartPageHelper startPageHelper = new StartPageHelper();
-        ConsoleControl consol = new ConsoleControl();
         public StartPage() {
             InitializeComponent();
             startPageHelper.InitLanguages();

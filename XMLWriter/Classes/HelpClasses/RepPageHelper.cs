@@ -8,7 +8,6 @@ namespace XMLWriter.Classes.HelpClasses {
         GUIMovementHelper gui = new GUIMovementHelper();
         UtilityFunctions utility = new UtilityFunctions();
         Language language = new Language();
-        ConsoleControl consol = new ConsoleControl();
 
         /// --- Navigation --- ///
         public void PrepareNextPage() {
@@ -25,7 +24,6 @@ namespace XMLWriter.Classes.HelpClasses {
         /// ---- WriteToDataSet --- ///
         public void SaveCurrentInput(TextBox stepName, TextBox text, TextBox specialText, TextBox anim) {
             WriteInputToDataSet(new string[] { stepName.Text, text.Text, specialText.Text, anim.Text });
-            consol.ConsoleShowDataSetOfIndex(dataSetService.GetDataSets().ElementAt(gui.GetIndex()), gui.GetIndex(), "Speichern");
         }
         private void WriteInputToDataSet(string[] input) {
             utility.WriteStepNameToCurrentDataSet(dataSetService.GetDataSets(), gui.GetIndex(), input[0]);

@@ -7,7 +7,6 @@ namespace XMLWriter.Classes {
 
     internal class DataSetService {
         GUIMovementHelper gui = new GUIMovementHelper();
-        ConsoleControl consol = new ConsoleControl();
         private static List<DataSet> dataSets = new List<DataSet>();
         LoadHelper loadHelper = new LoadHelper();
 
@@ -68,7 +67,7 @@ namespace XMLWriter.Classes {
                     gfs.OutputToXML(gui.GetIndexMax(), dataSets, loadHelper.GetFileNameAndPath());
                     break;
                 default:
-                    if (consol.showErrors) System.Diagnostics.Debug.WriteLine("Error in OutputToXML from DataSet                   ---DataSet.OutputToXML()");
+                    System.Diagnostics.Debug.WriteLine("Error in OutputToXML from DataSet                   ---DataSet.OutputToXML()");
                     break;
             }
         }

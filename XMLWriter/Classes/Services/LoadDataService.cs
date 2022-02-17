@@ -8,7 +8,6 @@ namespace XMLWriter.Classes.HelpClasses {
         LoadHelper loadHelper = new LoadHelper();   
         GUIMovementHelper GUI = new GUIMovementHelper();
         DropDownOptionLists dropDownList = new DropDownOptionLists();
-        ConsoleControl consol = new ConsoleControl();
         XmlTextReader xtr;
         
 
@@ -31,7 +30,7 @@ namespace XMLWriter.Classes.HelpClasses {
             xtr = new XmlTextReader(loadHelper.GetFileNameAndPath());
             int i = 0;
             dataSetService.InitNewDataSetWhereRequired();
-            if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("\nStarte Laaden!!!\n");
+            System.Diagnostics.Debug.WriteLine("\nStarte Laaden!!!\n");
             while (xtr.Read()) {
                 if (xtr.NodeType == XmlNodeType.Element) {
                     switch (xtr.Name) {
@@ -93,22 +92,19 @@ namespace XMLWriter.Classes.HelpClasses {
                             else if (dataSetService.GetDataSets().ElementAt(i).RDID != "" && dataSetService.GetDataSets().ElementAt(i).RDID != "false") {
                                 dataSetService.GetDataSets().ElementAt(i).toolChoice = dropDownList.GetToolChoice()[3];
                             }
-                            if (consol.showMiscLoadData) System.Diagnostics.Debug.WriteLine("repXML= " + dataSetService.GetDataSets().ElementAt(i).repXML + "                ---LoadData.LoadDataFromFile()");
                             //Speichern dataType = "gfs";
                             dataSetService.InitNewDataSetWhereRequired();
                             GUI.IncrementSteps();
                             i++;
                             break;
                         default:
-                            if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("Fehler: " + xtr.Name);
-                            if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("Fehler: " + xtr.Name);
-
+                            System.Diagnostics.Debug.WriteLine("Fehler: " + xtr.Name);
                             break;
                     }
                 }
             }
             GUI.ResetStepCount();
-            if (consol.showLoadFile) System.Diagnostics.Debug.WriteLine("\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\n");
+            System.Diagnostics.Debug.WriteLine("\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\n");
         }
     }
 }
