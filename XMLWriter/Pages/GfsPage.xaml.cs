@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using XMLWriter.Classes;
 using XMLWriter.Classes.HelpClasses;
 
 namespace XMLWriter.Pages {
@@ -12,6 +14,7 @@ namespace XMLWriter.Pages {
         GfsPageTextHelper gfsTextHelper = new GfsPageTextHelper();
         GUIMovementHelper guiHelper = new GUIMovementHelper();
         GfsPageInputHelper gfsInputHelper = new GfsPageInputHelper();
+        DataSetService dataSets = new DataSetService();
 
         private static string positiveResult;
 
@@ -24,6 +27,7 @@ namespace XMLWriter.Pages {
         ///---guiMovement buttons---///
         ///-------------------------///
         private void BtnNext_Click(object sender, RoutedEventArgs e) {
+            WriteDataSetsToConsole();
             positiveResult = gfsPageHelper.HandleToolChoiceAndResultingPositiveResult(
                 ToolChoice_ComboBox,
                 ComponentChoice_AT_ComboBox,
@@ -50,6 +54,7 @@ namespace XMLWriter.Pages {
             _ = NavigationService.Navigate(new GfsPage());
         }
         private void BtnBack_Click(object sender, RoutedEventArgs e) {
+            WriteDataSetsToConsole();
             positiveResult = gfsPageHelper.HandleToolChoiceAndResultingPositiveResult(
                 ToolChoice_ComboBox,
                 ComponentChoice_AT_ComboBox,
@@ -82,6 +87,7 @@ namespace XMLWriter.Pages {
             }
         }
         private void BtnBackDelete_Click(object sender, RoutedEventArgs e) {
+            WriteDataSetsToConsole();
             gfsPageHelper.DeleteCurrentSet();
             if (guiHelper.IsFirstPage()) {
                 _ = NavigationService.Navigate(new StartPage());
@@ -91,6 +97,7 @@ namespace XMLWriter.Pages {
             }
         }
         private void BtnSave_Click(object sender, RoutedEventArgs e) {
+            WriteDataSetsToConsole();
             positiveResult = gfsPageHelper.HandleToolChoiceAndResultingPositiveResult(
                 ToolChoice_ComboBox,
                 ComponentChoice_AT_ComboBox,
@@ -116,7 +123,9 @@ namespace XMLWriter.Pages {
             _ = NavigationService.Navigate(new SavePage());
         }
         private void BtnInsert_Click(object sender, RoutedEventArgs e) {
+            WriteDataSetsToConsole();
             gfsPageHelper.InsertNewSet();
+            _ = NavigationService.Navigate(new GfsPage());
         }
         ///------------------///
         ///---Page Updates---///
@@ -224,6 +233,26 @@ namespace XMLWriter.Pages {
             gfsPageHelper.ShowItemsAfterToolChoice(ToolChoice_ComboBox, actuatorTest, smartTool, RDID);
         }
 
-        
+        public void WriteDataSetsToConsole() {
+            for (int i = 0; i < dataSets.GetDataSets().Count ; i++) {
+                System.Diagnostics.Debug.WriteLine("Index: " + i);
+                System.Diagnostics.Debug.WriteLine("Step: " + dataSets.GetDataSets().ElementAt(i).stepName);
+                System.Diagnostics.Debug.WriteLine("Text: " + dataSets.GetDataSets().ElementAt(i).text);
+                System.Diagnostics.Debug.WriteLine("Anim: " + dataSets.GetDataSets().ElementAt(i).anim);
+                //System.Diagnostics.Debug.WriteLine("Spec: " + dataSets.GetDataSets().ElementAt(i).specialText);
+                System.Diagnostics.Debug.WriteLine("Instr: " + dataSets.GetDataSets().ElementAt(i).instruction);
+                System.Diagnostics.Debug.WriteLine("posID: " + dataSets.GetDataSets().ElementAt(i).positiveID);
+                System.Diagnostics.Debug.WriteLine("negID: " + dataSets.GetDataSets().ElementAt(i).negativeID);
+                System.Diagnostics.Debug.WriteLine("PosRe: " + dataSets.GetDataSets().ElementAt(i).positiveResult);
+                System.Diagnostics.Debug.WriteLine("rXML " + dataSets.GetDataSets().ElementAt(i).repXML);
+                System.Diagnostics.Debug.WriteLine("AcTe: " + dataSets.GetDataSets().ElementAt(i).actuatorTest);
+                System.Diagnostics.Debug.WriteLine("RDID: " + dataSets.GetDataSets().ElementAt(i).RDID);
+                System.Diagnostics.Debug.WriteLine("SmT: " + dataSets.GetDataSets().ElementAt(i).smartTool);
+                System.Diagnostics.Debug.WriteLine("Next: " + dataSets.GetDataSets().ElementAt(i).nextStep);
+                System.Diagnostics.Debug.WriteLine("Last: " + dataSets.GetDataSets().ElementAt(i).lastStep);
+                System.Diagnostics.Debug.WriteLine("Tool: " + dataSets.GetDataSets().ElementAt(i).toolChoice);
+                System.Diagnostics.Debug.WriteLine("\n\n");
+            }
+        }
     }
 }

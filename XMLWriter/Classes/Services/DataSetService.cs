@@ -68,7 +68,7 @@ namespace XMLWriter.Classes {
                     break;
             }
         }
-
+        
     }
 
 }
