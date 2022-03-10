@@ -45,6 +45,7 @@ namespace XMLWriter
         private static string smartTool;
         private static string nextStep;
         private static string lastStep;
+        private static string insertDescription;
 
 
         //Used in 3 or more
@@ -87,7 +88,9 @@ namespace XMLWriter
         public string GetStringSmartTool() => smartTool;
         public string GetStringNextStep() => nextStep;
         public string GetStringLastStep() => lastStep;
-        
+        public string GetStringInsertDescription() => insertDescription;
+
+
 
         public void InitLanguage(string languageChoice) //Method to fill the variables with the language specific words
         {
@@ -146,6 +149,7 @@ namespace XMLWriter
             filePath = "Dateipfad:";
             useDataBaseChecked = "Checked - Daten aus Datenbank";
             useDataBaseUnchecked = "Unchecked - Daten aus Text-File";
+            insertDescription = "Fügt ein Set an Stelle n ein. Das aktuell sichtbare Set wird in n+1 verschoben.";
         }
         private void InitEnglish()
         {
@@ -181,6 +185,7 @@ namespace XMLWriter
             filePath = "Filepath:";
             useDataBaseChecked = "Checked - Data from data base";
             useDataBaseUnchecked = "Unchecked - Data from Text-File";
+            insertDescription = "Inserts a Set at position n. The currently visible set will be moved to n+1.";
         }
         private void InitEspanol()
         {
@@ -217,6 +222,7 @@ namespace XMLWriter
             filePath = "File Name with or without path";
             useDataBaseChecked = "Checked - Data from data base";
             useDataBaseUnchecked = "Unchecked - Data from Text-File";
+            insertDescription = "Inserts a Set at position n. The currently visible set will be moved to n+1.";
         }
     }
 }

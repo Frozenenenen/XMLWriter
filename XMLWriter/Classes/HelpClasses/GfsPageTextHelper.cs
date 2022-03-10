@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Media;
 /// <summary>
 /// This class controls the textoutput of the Gfs Page.
 /// </summary>
@@ -65,6 +66,13 @@ namespace XMLWriter.Classes.HelpClasses {
             xamlHelper.SetTextFor(back, language.GetStringBack());
         }
         public void SetButtonInsert(Button insert) {
+            if (guiHelper.IsLastPage()) {
+                insert.IsEnabled = false;
+            }
+            else {
+                insert.IsEnabled = true;
+            }
+            xamlHelper.SetTooltipFor(insert, language.GetStringInsertDescription());
             xamlHelper.SetTextFor(insert, language.GetStringInsert());
         }
         //CheckBoxText

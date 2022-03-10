@@ -77,22 +77,23 @@ namespace XMLWriter.Pages {
                 inputNextStep,
                 inputLastStep,
                 ToolChoice_ComboBox);
-            gfsPageHelper.PreparePreviousPage();
+            
             if (guiHelper.IsFirstPage()) {
                 _ = NavigationService.Navigate(new StartPage());
             }
             else {
-                guiHelper.DecrementSteps();
+                gfsPageHelper.PreparePreviousPage();
                 _ = NavigationService.Navigate(new GfsPage());
             }
         }
         private void BtnBackDelete_Click(object sender, RoutedEventArgs e) {
             WriteDataSetsToConsole();
-            gfsPageHelper.DeleteCurrentSet();
             if (guiHelper.IsFirstPage()) {
+                gfsPageHelper.DeleteCurrentSet();
                 _ = NavigationService.Navigate(new StartPage());
             }
             else {
+                gfsPageHelper.DeleteCurrentSet();
                 _ = NavigationService.Navigate(new GfsPage());
             }
         }

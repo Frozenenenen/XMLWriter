@@ -27,6 +27,9 @@ namespace XMLWriter.Classes {
         public void SetTextFor(CheckBox checker, string text) {
             checker.Content = text;
         }
+        public void SetTooltipFor(Button button, string text) { 
+            button.ToolTip = text;
+        }
         public void SetStateFor(CheckBox checkBox, bool? value) {
             checkBox.IsChecked = value;
         }
@@ -40,6 +43,6 @@ namespace XMLWriter.Classes {
             }
             return false;
         }
-        
+
     }
 }
