@@ -29,12 +29,13 @@ namespace XMLWriter.Pages {
 
         private void BtnBack_Click(object sender, RoutedEventArgs e) {
             WriteDataSetsToConsole();
-            repPageHelper.PreparePreviousPage();
             repPageHelper.SaveCurrentInput(inputStepName, inputText, inputSpecialText, inputAnim);
+            
             if (gui.IsFirstPage()) {
                 _ = NavigationService.Navigate(new StartPage());
             }
             else {
+                repPageHelper.PreparePreviousPage();
                 _ = NavigationService.Navigate(new RepPage());
             }
         }

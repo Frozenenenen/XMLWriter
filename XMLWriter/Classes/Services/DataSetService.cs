@@ -35,7 +35,7 @@ namespace XMLWriter.Classes {
             InitNewDataSetWhereRequired();
         }
         public void InitNewDataSetWhereRequired() {
-            if (dataSets.Count==gui.GetIndex()) {
+            if (dataSets.Count==gui.GetIndex()+1 || dataSets.Count==0) {
                 dataSets.Add(new DataSet("", "", "", "default", "", "", "", "", "", "", "", "", false, false, ""));
             }
         }
