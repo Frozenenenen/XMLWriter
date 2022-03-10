@@ -9,9 +9,7 @@ namespace XMLWriter {
         private static int stepIndexMax = 0;
 
         public int GetStepCount() => (stepIndex + 1);
-        public int GetStepCountMax() => (stepIndexMax + 1);
         public int GetIndex() => stepIndex;
-        public int GetIndexMax() => stepIndexMax;
         public void ResetStepCount() {
             stepIndex = 0;
         }

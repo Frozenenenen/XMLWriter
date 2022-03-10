@@ -15,8 +15,8 @@ namespace XMLWriter.Classes {
         //Getter
         public List<DataSet> GetDataSets() => dataSets;
         public string[] GetStepNames() {
-            string[] stepNames = new string[gui.GetStepCountMax()]; //foreach wäre eleganter
-            for (int i = 0; i < gui.GetStepCountMax(); i++) {
+            string[] stepNames = new string[dataSets.Count]; //foreach wäre eleganter
+            for (int i = 0; i < dataSets.Count; i++) {
                 stepNames[i] = dataSets.ElementAt(i).stepName;
             }
             return stepNames;
@@ -35,7 +35,7 @@ namespace XMLWriter.Classes {
             InitNewDataSetWhereRequired();
         }
         public void InitNewDataSetWhereRequired() {
-            if (gui.GetIndex() == gui.GetIndexMax()) {
+            if (dataSets.Count==gui.GetIndex()) {
                 dataSets.Add(new DataSet("", "", "", "default", "", "", "", "", "", "", "", "", false, false, ""));
             }
         }
@@ -57,11 +57,11 @@ namespace XMLWriter.Classes {
             switch (processType) {
                 case "rep":
                     RepToXMLWriter rep = new RepToXMLWriter();
-                    rep.OutputToXML(gui.GetIndexMax(), dataSets, loadHelper.GetFileNameAndPath());
+                    rep.OutputToXML((dataSets.Count), dataSets, loadHelper.GetFileNameAndPath());
                     break;
                 case "gfs":
                     GFSToXMLWriter gfs = new GFSToXMLWriter();
-                    gfs.OutputToXML(gui.GetIndexMax(), dataSets, loadHelper.GetFileNameAndPath());
+                    gfs.OutputToXML((dataSets.Count), dataSets, loadHelper.GetFileNameAndPath());
                     break;
                 default:
                     System.Diagnostics.Debug.WriteLine("Error in OutputToXML from DataSet                   ---DataSet.OutputToXML()");

@@ -95,7 +95,7 @@ namespace XMLWriter.Classes.StartPage {
             xamlHelper.SetTextFor(labelLoadFile, stringFilePath);
         }
         public void SetDisplayStepsText(Label labelStepCount) {
-            xamlHelper.SetTextFor(labelStepCount, stringDisplaySteps + ": " + (gui.GetStepCountMax() + 1));
+            xamlHelper.SetTextFor(labelStepCount, stringDisplaySteps + ": " + (dataSetService.GetDataSets().Count + 1));
         }
         //Init Buttons
         public void SetStartButtonText(Button button) {

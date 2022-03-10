@@ -9,8 +9,7 @@ namespace XMLWriter.Classes.StartPage
 {
     internal class SavePageHelper
     {
-        DataSetService data = new DataSetService();
-        GUIMovementHelper gui = new GUIMovementHelper();
+        DataSetService dataSetService = new DataSetService();
         Language language = new Language();
         LoadHelper loadHelper = new LoadHelper();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
@@ -25,7 +24,7 @@ namespace XMLWriter.Classes.StartPage
             xamlHelper.SetTextFor(fielName, language.GetStringFilePath());
         }
         public void InitLabelStepCount(Label stepCount) {
-            xamlHelper.SetTextFor(stepCount, gui.GetStepCountMax() + " " + language.GetStringSteps());
+            xamlHelper.SetTextFor(stepCount, dataSetService.GetDataSets().Count + " " + language.GetStringSteps());
         }
         //Buttons
         public void InitButtonBack(Button back) {
@@ -60,7 +59,7 @@ namespace XMLWriter.Classes.StartPage
         }
 
         public void StartXMLWriting() {
-            data.OutputToXML(startPageHelper.GetSelectedProcessType());
+            dataSetService.OutputToXML(startPageHelper.GetSelectedProcessType());
         }
         //Checker
         public bool IsGfs() {
