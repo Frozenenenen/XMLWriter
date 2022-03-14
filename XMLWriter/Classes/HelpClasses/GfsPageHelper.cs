@@ -56,7 +56,7 @@ namespace XMLWriter.Classes.HelpClasses {
             }
             return "";
         }
-        public void SaveCurrentInput(TextBox stepName, TextBox text, TextBox anim, TextBox instruction, ComboBox positiveID, ComboBox negativeID, string positiveResult, TextBox repXML, ComboBox actuatorTest, ComboBox RDID, ComboBox smartTool, CheckBox nextStep, CheckBox lastStep, ComboBox toolChoice) {
+        public void SaveCurrentInput(TextBox stepName, TextBox text, TextBox anim, TextBox instruction, ComboBox positiveID, ComboBox negativeID, string positiveResult, TextBox repXML, TextBox actuatorTest, TextBox RDID, TextBox smartTool, CheckBox nextStep, CheckBox lastStep, ComboBox toolChoice) {
 
             utility.WriteStepNameToCurrentDataSet(dataSetService.GetDataSets(), guiHelper.GetIndex(), stepName.Text);
             utility.WriteTextToCurrentDataSet(dataSetService.GetDataSets(), guiHelper.GetIndex(), text.Text);
@@ -117,11 +117,16 @@ namespace XMLWriter.Classes.HelpClasses {
 
 
         ///ActuatorTest Init
-        public void InitActuatorTestDropdowns(ComboBox inputECUChoice_AT_ComboBox, ComboBox inputToolChoice, ComboBox inputComponentChoice_AT, TextBox inputActuatorTest) {
+        public void InitActuatorTestDropdowns(ComboBox inputECUChoice_AT_ComboBox, ComboBox inputToolChoice, ComboBox inputComponentChoice_AT, TextBox inputActuatorTest_TextBox) {
             //Für Verständnis siehe Beispiel bei RDID Init
             gfsInputHelper.InitECUChoiceDropDownDefaultValue(inputECUChoice_AT_ComboBox);
             if (IsActuatorTest(inputToolChoice)) {
-                string[] positiveResultDupel = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).actuatorTest.Split('|');
+                string[] positiveResultDupel = { "", "" };
+                System.Diagnostics.Debug.WriteLine(dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).actuatorTest);
+                if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).actuatorTest!="false") {
+                    positiveResultDupel = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).actuatorTest.Split('|');
+                }
+                System.Diagnostics.Debug.WriteLine(positiveResultDupel[1]);
                 gfsInputHelper.ChangeECUActiveElementTo(inputECUChoice_AT_ComboBox, dropDownList.GetDisplayPartOf(dropDownList.GetECUChoices(), positiveResultDupel[1]));
                 gfsInputHelper.SetIOChoices(inputComponentChoice_AT,
                     dropDownList.GetIOChoices(inputECUChoice_AT_ComboBox.Text).Select(x => x.secondPart).ToArray(),
@@ -132,7 +137,7 @@ namespace XMLWriter.Classes.HelpClasses {
                     dropDownList.GetIOChoices(inputECUChoice_AT_ComboBox.Text).Select(x => x.secondPart).ToArray(),
                     dropDownList.GetIOChoices(inputECUChoice_AT_ComboBox.Text).ElementAt(0).secondPart);
             }
-            gfsInputHelper.FillInputActuatorTestCombinedText(inputECUChoice_AT_ComboBox, inputComponentChoice_AT, inputActuatorTest);
+            gfsInputHelper.FillInputActuatorTestCombinedText(inputActuatorTest_TextBox, inputECUChoice_AT_ComboBox, inputComponentChoice_AT);
 
         }
         ///RDID Init
@@ -164,11 +169,11 @@ namespace XMLWriter.Classes.HelpClasses {
             }
         }
         ///SmartTool Init
-        public void InitSmartToolDropdowns(ComboBox SmartTool_ComboBox, ComboBox inputToolChoice, TextBox SmartTool_TextBox, ComboBox Measurement_ComboBox, TextBox PositiveResult_SM_TextBox, TextBox PositiveResult_LowerLimit_TextBox, TextBox PositiveResult_UpperLimit_TextBox) {
+        public void InitSmartToolDropdowns(ComboBox SmartTool_ComboBox, ComboBox inputToolChoice, TextBox inputSmartTool_TextBox, ComboBox Measurement_ComboBox, TextBox PositiveResult_SM_TextBox, TextBox PositiveResult_LowerLimit_TextBox, TextBox PositiveResult_UpperLimit_TextBox) {
             //Für Verständnis siehe Beispiel bei RDID Init
             gfsInputHelper.InitSmartToolDropDownDefaultValue(SmartTool_ComboBox);
             if (IsSmartTool(inputToolChoice)) {
-                gfsInputHelper.InitSmartToolValue(SmartTool_TextBox);
+                gfsInputHelper.InitSmartToolValue(inputSmartTool_TextBox);
                 string[] positiveResultDupel = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).smartTool.Split('|');
                 gfsInputHelper.ChangeSmartToolActiveElementTo(SmartTool_ComboBox, dropDownList.GetDisplayPartOf(dropDownList.GetSmartToolChoices(), positiveResultDupel[0]));
                 gfsInputHelper.SetMeasurementChoices(Measurement_ComboBox,
@@ -181,7 +186,7 @@ namespace XMLWriter.Classes.HelpClasses {
                     dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text).Select(x => x.secondPart).ToArray(), //Measurement List of chosen SmartTool
                     dropDownList.GetMeasurementChoices(SmartTool_ComboBox.Text).ElementAt(0).secondPart); //default Measurement of that list
             }
-            gfsInputHelper.FillInputSmartToolCombinedText(SmartTool_TextBox, SmartTool_ComboBox, Measurement_ComboBox);
+            gfsInputHelper.FillInputSmartToolCombinedText(inputSmartTool_TextBox, SmartTool_ComboBox, Measurement_ComboBox);
 
             if (IsSmartTool()) {
                 InitSmartToolLimits(PositiveResult_SM_TextBox, PositiveResult_LowerLimit_TextBox, PositiveResult_UpperLimit_TextBox);

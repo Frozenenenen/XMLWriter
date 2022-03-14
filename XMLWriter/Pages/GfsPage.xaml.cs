@@ -44,9 +44,9 @@ namespace XMLWriter.Pages {
                 inputNegativeID,
                 positiveResult,
                 inputRepXML,
-                ComponentChoice_AT_ComboBox,
-                RDIDChoice_RDID_ComboBox,
-                SmartTool_SM_ComboBox,
+                inputActuatorTest_TextBox,
+                inputReadData_TextBox,
+                inputSmartTool_TextBox,
                 inputNextStep,
                 inputLastStep,
                 ToolChoice_ComboBox);
@@ -71,9 +71,9 @@ namespace XMLWriter.Pages {
                 inputNegativeID,
                 positiveResult,
                 inputRepXML,
-                ComponentChoice_AT_ComboBox,
-                RDIDChoice_RDID_ComboBox,
-                SmartTool_SM_ComboBox,
+                inputActuatorTest_TextBox,
+                inputReadData_TextBox,
+                inputSmartTool_TextBox,
                 inputNextStep,
                 inputLastStep,
                 ToolChoice_ComboBox);
@@ -115,9 +115,9 @@ namespace XMLWriter.Pages {
                 inputNegativeID,
                 positiveResult,
                 inputRepXML,
-                ComponentChoice_AT_ComboBox,
-                RDIDChoice_RDID_ComboBox,
-                SmartTool_SM_ComboBox,
+                inputActuatorTest_TextBox,
+                inputReadData_TextBox,
+                inputSmartTool_TextBox,
                 inputNextStep,
                 inputLastStep,
                 ToolChoice_ComboBox);
@@ -136,30 +136,30 @@ namespace XMLWriter.Pages {
         }
         //Aktortest
         private void ECUChoice_AT_DropDownClosed(object sender, System.EventArgs e) {
-            gfsInputHelper.FillInputActuatorTestCombinedText(inputECUChoice_AT, ComponentChoice_AT_ComboBox, inputActuatorTest);
+            gfsInputHelper.FillInputActuatorTestCombinedText(inputActuatorTest_TextBox, inputECUChoice_AT, ComponentChoice_AT_ComboBox);
             gfsInputHelper.UpdateActuatorTestSecondComboBox(inputECUChoice_AT, ComponentChoice_AT_ComboBox);
         }
         private void ComponentChoice_AT_DropDownClosed(object sender, System.EventArgs e) {
-            gfsInputHelper.FillInputActuatorTestCombinedText(inputECUChoice_AT, ComponentChoice_AT_ComboBox, inputActuatorTest);
+            gfsInputHelper.FillInputActuatorTestCombinedText(inputActuatorTest_TextBox, inputECUChoice_AT, ComponentChoice_AT_ComboBox);
         }
         //RDID
         private void ECUChoice_RDID_DropDownClosed(object sender, System.EventArgs e) {
-            gfsInputHelper.FillInputReadDataCombinedText(ReadData_TextBox, ECUChoice_RDID_ComboBox, RDIDChoice_RDID_ComboBox);
+            gfsInputHelper.FillInputReadDataCombinedText(inputReadData_TextBox, ECUChoice_RDID_ComboBox, RDIDChoice_RDID_ComboBox);
             gfsInputHelper.UpdateRDIDSecondComboBox(ECUChoice_RDID_ComboBox, RDIDChoice_RDID_ComboBox);
         }
         private void RDIDChoice_RDID_DropDownClosed(object sender, System.EventArgs e) {
-            gfsInputHelper.FillInputReadDataCombinedText(ReadData_TextBox, ECUChoice_RDID_ComboBox, RDIDChoice_RDID_ComboBox);
+            gfsInputHelper.FillInputReadDataCombinedText(inputReadData_TextBox, ECUChoice_RDID_ComboBox, RDIDChoice_RDID_ComboBox);
         }
         //SmartTool
         private void SmartTool_SM_DropDownClosed(object sender, System.EventArgs e) {
-            gfsInputHelper.FillInputSmartToolCombinedText(SmartTool_TextBox, SmartTool_SM_ComboBox, Measure_SM_ComboBox);
+            gfsInputHelper.FillInputSmartToolCombinedText(inputSmartTool_TextBox, SmartTool_SM_ComboBox, Measure_SM_ComboBox);
             gfsInputHelper.UpdateSmartToolSecondComboboBox(SmartTool_SM_ComboBox, Measure_SM_ComboBox);
         }
         private void Measure_SM_DropDownClosed(object sender, System.EventArgs e) {
-            gfsInputHelper.FillInputSmartToolCombinedText(SmartTool_TextBox, SmartTool_SM_ComboBox, Measure_SM_ComboBox);
+            gfsInputHelper.FillInputSmartToolCombinedText(inputSmartTool_TextBox, SmartTool_SM_ComboBox, Measure_SM_ComboBox);
         }
         private void Measure_SM_KeyUp(object sender, System.Windows.Input.KeyEventArgs e) {
-            gfsInputHelper.FillInputSmartToolCombinedText(SmartTool_TextBox, SmartTool_SM_ComboBox, Measure_SM_ComboBox);
+            gfsInputHelper.FillInputSmartToolCombinedText(inputSmartTool_TextBox, SmartTool_SM_ComboBox, Measure_SM_ComboBox);
             /*if (gfsPageHelper.IsEmptyMeasure(SmartTool_SM_ComboBox, Measure_SM_ComboBox)) {
                 inputHelper.FillInputSmartToolCombinedText(SmartTool_TextBox, SmartTool_SM_ComboBox, Measure_SM_ComboBox); //Wenn OutOfElemets fehler wieder SetSmartToolCombinedValue(); einsetzen
             }
@@ -228,9 +228,9 @@ namespace XMLWriter.Pages {
         }
         private void InitFlexRightSideItems() {
             gfsPageHelper.CheckForWhatToolHasBeenChosen(ToolChoice_ComboBox);
-            gfsPageHelper.InitActuatorTestDropdowns(inputECUChoice_AT, ToolChoice_ComboBox, ComponentChoice_AT_ComboBox, inputActuatorTest);
-            gfsPageHelper.InitSmartToolDropdowns(SmartTool_SM_ComboBox, ToolChoice_ComboBox, SmartTool_TextBox, Measure_SM_ComboBox, PositiveResult_SM_TextBox, inputPositiveResult_LowerLimit, inputPositiveResult_UpperLimit);
-            gfsPageHelper.InitReadDataDropdowns(ToolChoice_ComboBox, ECUChoice_RDID_ComboBox, RDIDChoice_RDID_ComboBox, PositiveResult_RDID_TextBox, ReadData_TextBox);
+            gfsPageHelper.InitActuatorTestDropdowns(inputECUChoice_AT, ToolChoice_ComboBox, ComponentChoice_AT_ComboBox, inputActuatorTest_TextBox);
+            gfsPageHelper.InitSmartToolDropdowns(SmartTool_SM_ComboBox, ToolChoice_ComboBox, inputSmartTool_TextBox, Measure_SM_ComboBox, PositiveResult_SM_TextBox, inputPositiveResult_LowerLimit, inputPositiveResult_UpperLimit);
+            gfsPageHelper.InitReadDataDropdowns(ToolChoice_ComboBox, ECUChoice_RDID_ComboBox, RDIDChoice_RDID_ComboBox, PositiveResult_RDID_TextBox, inputReadData_TextBox);
             gfsPageHelper.ShowItemsAfterToolChoice(ToolChoice_ComboBox, actuatorTest, smartTool, RDID);
         }
 

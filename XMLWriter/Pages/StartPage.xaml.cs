@@ -54,9 +54,9 @@ namespace XMLWriter.Pages {
             }
         }
         private void BtnLoadFile(object sender, RoutedEventArgs e) {
-
+            startPageHelper.Reset(textBlockLoadFile);
             startPageHelper.LoadDataFromFile();
-            startPageHelper.ChangeProcessActiveElement(dropDownProcesses, dropDownProcesses.Text);
+            startPageHelper.ChangeProcessActiveElement(dropDownProcesses, startPageHelper.GetSelectedProcessType());
             startPageHelper.SetFilePathText(textBlockLoadFile);
             startPageHelper.SetDisplayStepsText(labelStepCount);
         }

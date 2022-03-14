@@ -12,7 +12,6 @@ namespace XMLWriter.Classes.StartPage {
         UtilityFunctions utility = new UtilityFunctions();
         Language language = new Language();
         DataSetService dataSetService = new DataSetService();
-        GUIMovementHelper gui = new GUIMovementHelper();
 
         private static readonly string[] processTypeList = { "gfs", "rep" };
         private static readonly string[] languageList = { "Deutsch", "English", "Espanol" };
@@ -44,7 +43,7 @@ namespace XMLWriter.Classes.StartPage {
         }
         public void Reset(TextBlock textBlock) {
             dataSetService.ResetDataSet();
-            textBlock.Text = "";
+            xamlHelper.SetTextFor(textBlock, "");
         }
         public void LoadDataFromFile() {
             LoadDataService loadDataService = new LoadDataService();

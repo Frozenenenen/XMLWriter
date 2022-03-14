@@ -57,11 +57,11 @@ namespace XMLWriter.Classes {
             switch (processType) {
                 case "rep":
                     RepToXMLWriter rep = new RepToXMLWriter();
-                    rep.OutputToXML((dataSets.Count), dataSets, loadHelper.GetFileNameAndPath());
+                    rep.OutputToXML(dataSets.Count, dataSets, loadHelper.GetFileNameAndPath());
                     break;
                 case "gfs":
                     GFSToXMLWriter gfs = new GFSToXMLWriter();
-                    gfs.OutputToXML((dataSets.Count), dataSets, loadHelper.GetFileNameAndPath());
+                    gfs.OutputToXML(dataSets.Count, dataSets, loadHelper.GetFileNameAndPath());
                     break;
                 default:
                     System.Diagnostics.Debug.WriteLine("Error in OutputToXML from DataSet                   ---DataSet.OutputToXML()");

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Xml;
+using XMLWriter.Classes.StartPage;
 
 namespace XMLWriter.Classes.HelpClasses {
     internal class LoadDataService {
@@ -8,6 +9,7 @@ namespace XMLWriter.Classes.HelpClasses {
         LoadHelper loadHelper = new LoadHelper();   
         GUIMovementHelper GUI = new GUIMovementHelper();
         DropDownOptionLists dropDownList = new DropDownOptionLists();
+        StartPageHelper startPageHelper = new StartPageHelper();
         XmlTextReader xtr;
         
 
@@ -50,6 +52,7 @@ namespace XMLWriter.Classes.HelpClasses {
                         case "specialStep":
                             dataSetService.GetDataSets().ElementAt(i).specialText = xtr.ReadElementString();
                             //Speichern dataType = "rep";
+                            startPageHelper.SetSelectedProcessType("rep");
                             dataSetService.InitNewDataSetWhereRequired();
                             GUI.IncrementSteps();
                             i++;
@@ -93,6 +96,7 @@ namespace XMLWriter.Classes.HelpClasses {
                                 dataSetService.GetDataSets().ElementAt(i).toolChoice = dropDownList.GetToolChoice()[3];
                             }
                             //Speichern dataType = "gfs";
+                            startPageHelper.SetSelectedProcessType("gfs");
                             dataSetService.InitNewDataSetWhereRequired();
                             GUI.IncrementSteps();
                             i++;

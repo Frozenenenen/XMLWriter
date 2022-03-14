@@ -30,7 +30,6 @@ namespace XMLWriter.Pages {
         private void BtnBack_Click(object sender, RoutedEventArgs e) {
             WriteDataSetsToConsole();
             repPageHelper.SaveCurrentInput(inputStepName, inputText, inputSpecialText, inputAnim);
-            
             if (gui.IsFirstPage()) {
                 _ = NavigationService.Navigate(new StartPage());
             }

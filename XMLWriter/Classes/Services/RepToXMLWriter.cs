@@ -13,7 +13,7 @@ namespace XMLWriter
             fileName = SetFileName(fileName);//, dataType);
             string[] output = FillList(stepCountMax, data);
             //File.WriteAllLines(pathVehicleID + "/" + pathLanguage + "/" + fileName + "_" + pathLanguage + fileExtension, output);
-            File.WriteAllLines(fileName + "_" + pathLanguage + fileExtension, output);
+            File.WriteAllLines(fileName, output);
         }
         public string[] FillList(int stepCountMax, List<DataSet> data)
         {
@@ -23,7 +23,7 @@ namespace XMLWriter
             list.Add("<RepairCollection>");
             list.Add("\t" + "<Repairs>");
 
-            for (int i = 0; i < stepCountMax; i++)
+            for (int i = 0; i < (stepCountMax); i++)
             {
 
                 list.Add(WriteStep(data.ElementAt(i).stepName));
