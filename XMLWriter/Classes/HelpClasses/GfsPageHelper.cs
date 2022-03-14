@@ -131,7 +131,7 @@ namespace XMLWriter.Classes.HelpClasses {
                 gfsInputHelper.ChangeECUActiveElementTo(inputECUChoice_AT_ComboBox, dropDownList.GetDisplayPartOf(dropDownList.GetECUChoices(), positiveResultDupel[1]));
                 gfsInputHelper.SetIOChoices(inputComponentChoice_AT_ComboBox,
                     dropDownList.GetIOChoices(inputECUChoice_AT_ComboBox.Text).Select(x => x.secondPart).ToArray(),
-                    positiveResultDupel[0]);
+                    dropDownList.GetDisplayPartOf(dropDownList.GetIOChoices(inputECUChoice_AT_ComboBox.Text), positiveResultDupel[0]));
             }
             else {
                 gfsInputHelper.SetIOChoices(inputComponentChoice_AT_ComboBox,
