@@ -29,6 +29,7 @@ namespace XMLWriter.Pages {
 
         private void btnSave_Click(object sender, RoutedEventArgs e) {
             savePageHelper.StartXMLWriting();
+            gui.ResetStepCount();
             _ = NavigationService.Navigate(new StartPage());
             //App.Current.Shutdown(0);
         } //fertig
@@ -69,6 +70,7 @@ namespace XMLWriter.Pages {
             else {
                 savePageHelper.SetSaveButtonInactive(btnSave);
             }
+            savePageHelper.InitTextFilePath(textFileName);
         }
     }
 }

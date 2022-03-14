@@ -44,8 +44,8 @@ namespace XMLWriter.Classes.StartPage
             xamlHelper.SetTextFor(open, language.GetStringFilePathDialog());
         }
         //TextBlock
-        public void InitTextFilePath(TextBlock text) {
-            xamlHelper.SetTextFor(text, loadHelper.GetFileNameAndPath());
+        public void InitTextFilePath(TextBlock textBlock) {
+            xamlHelper.SetTextFor(textBlock, loadHelper.GetFileNameAndPath());
         }
         
         //Save Button Change

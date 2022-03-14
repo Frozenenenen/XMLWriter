@@ -12,7 +12,7 @@ namespace XMLWriter
             fileName = SetFileName(fileName);//, dataType);
             string[] output = FillList(stepCountMax, data);
             //File.WriteAllLines(pathVehicleID + "/" + pathLanguage + "/" + fileName + "_" + pathLanguage + fileExtension, output);
-            File.WriteAllLines(fileName + "_" + pathLanguage + fileExtension, output);
+            File.WriteAllLines(fileName, output);
         }
         public string[] FillList(int stepCountMax, List<DataSet> data)
         {
