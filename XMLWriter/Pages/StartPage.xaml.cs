@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using XMLWriter.Classes;
 using XMLWriter.Classes.StartPage;
 
 namespace XMLWriter.Pages {
@@ -37,6 +35,7 @@ namespace XMLWriter.Pages {
         }
         ///---Buttons---///
         private void BtnStart(object sender, RoutedEventArgs e) {
+            
             startPageHelper.InitNewDataSet();
             startPageHelper.CheckForDataBaseOrTxt(checkUseTxtOrDatabse.IsChecked);
             //Navigation

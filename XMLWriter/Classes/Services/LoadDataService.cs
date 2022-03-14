@@ -107,7 +107,8 @@ namespace XMLWriter.Classes.HelpClasses {
                     }
                 }
             }
-            GUI.ResetStepCount();
+            dataSetService.DeleteDataSet();
+            GUI.ResetStepCount(); //macht den einen zu vielen Datensatz rückgängig
             System.Diagnostics.Debug.WriteLine("\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\nLaden Abgeschlossen!!!\n");
         }
     }

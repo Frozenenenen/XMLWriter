@@ -12,6 +12,7 @@ namespace XMLWriter.Classes.StartPage {
         UtilityFunctions utility = new UtilityFunctions();
         Language language = new Language();
         DataSetService dataSetService = new DataSetService();
+        GUIMovementHelper guiMovementHelper = new GUIMovementHelper();
 
         private static readonly string[] processTypeList = { "gfs", "rep" };
         private static readonly string[] languageList = { "Deutsch", "English", "Espanol" };
@@ -52,8 +53,9 @@ namespace XMLWriter.Classes.StartPage {
 
         ///---Inits von Werten---///
         public void InitNewDataSet() {
+            guiMovementHelper.ResetStepCount(); //redundant
+            
             dataSetService.InitNewDataSetWhereRequired();
-
         }
         public void LoadDropDownOptions() {//This load the objectlist for use in gfs dropdowns from text files or from a database
             dropDownLists.LoadAllDropDownOptionsFromTxtOrDataBase();
@@ -94,7 +96,7 @@ namespace XMLWriter.Classes.StartPage {
             xamlHelper.SetTextFor(labelLoadFile, stringFilePath);
         }
         public void SetDisplayStepsText(Label labelStepCount) {
-            xamlHelper.SetTextFor(labelStepCount, stringDisplaySteps + ": " + (dataSetService.GetDataSets().Count + 1));
+            xamlHelper.SetTextFor(labelStepCount, stringDisplaySteps + ": " + (dataSetService.GetDataSets().Count));
         }
         //Init Buttons
         public void SetStartButtonText(Button button) {

@@ -54,6 +54,11 @@ namespace XMLWriter.Classes.HelpClasses {
                 posResult_SM.Text = "false";
                 return posResult_RDID.Text;
             }
+            actuatorTest.Text = "false";
+            smartTool.Text = "false";
+            actuatorTest.Text = "false";
+            posResult_SM.Text = "false";
+            posResult_RDID.Text = "false";
             return "";
         }
         public void SaveCurrentInput(TextBox stepName, TextBox text, TextBox anim, TextBox instruction, ComboBox positiveID, ComboBox negativeID, string positiveResult, TextBox repXML, TextBox actuatorTest, TextBox RDID, TextBox smartTool, CheckBox nextStep, CheckBox lastStep, ComboBox toolChoice) {
