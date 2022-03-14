@@ -32,7 +32,7 @@ namespace XMLWriter.Classes.HelpClasses {
         }
 
         /// ---- WriteToDataSet --- ///
-        public string HandleToolChoiceAndResultingPositiveResult(ComboBox toolChoice, ComboBox actuatorTest, ComboBox RDID, ComboBox smartTool, TextBox posResult_RDID, TextBox posResult_SM) {
+        public string HandleToolChoiceAndResultingPositiveResult(ComboBox toolChoice, TextBox actuatorTest, TextBox RDID, TextBox smartTool, TextBox posResult_RDID, TextBox posResult_SM) {
             //Set all not used elemets false or empty and return the positiveResult value
             if (IsActuatorTest(toolChoice)) //AT 
             {

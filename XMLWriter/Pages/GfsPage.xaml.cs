@@ -30,9 +30,9 @@ namespace XMLWriter.Pages {
             WriteDataSetsToConsole();
             positiveResult = gfsPageHelper.HandleToolChoiceAndResultingPositiveResult(
                 ToolChoice_ComboBox,
-                inputComponentChoice_AT_ComboBox,
-                RDIDChoice_RDID_ComboBox,
-                SmartTool_SM_ComboBox,
+                inputActuatorTest_TextBox,
+                inputReadData_TextBox,
+                inputSmartTool_TextBox,
                 PositiveResult_RDID_TextBox,
                 PositiveResult_SM_TextBox);
             gfsPageHelper.SaveCurrentInput(
@@ -57,9 +57,9 @@ namespace XMLWriter.Pages {
             WriteDataSetsToConsole();
             positiveResult = gfsPageHelper.HandleToolChoiceAndResultingPositiveResult(
                 ToolChoice_ComboBox,
-                inputComponentChoice_AT_ComboBox,
-                RDIDChoice_RDID_ComboBox,
-                SmartTool_SM_ComboBox,
+                inputActuatorTest_TextBox,
+                inputReadData_TextBox,
+                inputSmartTool_TextBox,
                 PositiveResult_RDID_TextBox,
                 PositiveResult_SM_TextBox);
             gfsPageHelper.SaveCurrentInput(
@@ -101,9 +101,9 @@ namespace XMLWriter.Pages {
             WriteDataSetsToConsole();
             positiveResult = gfsPageHelper.HandleToolChoiceAndResultingPositiveResult(
                 ToolChoice_ComboBox,
-                inputComponentChoice_AT_ComboBox,
-                RDIDChoice_RDID_ComboBox,
-                SmartTool_SM_ComboBox,
+                inputActuatorTest_TextBox,
+                inputReadData_TextBox,
+                inputSmartTool_TextBox,
                 PositiveResult_RDID_TextBox,
                 PositiveResult_SM_TextBox);
             gfsPageHelper.SaveCurrentInput(
