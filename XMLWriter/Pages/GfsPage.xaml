@@ -91,7 +91,7 @@
             <StackPanel HorizontalAlignment="Stretch" Margin="10,0" Width="400">
                 <Label x:Name="textActuatorTest"/>
                 <ComboBox x:Name="inputECUChoice_AT" Margin="10,3" DropDownClosed="ECUChoice_AT_DropDownClosed"/>
-                <ComboBox x:Name="ComponentChoice_AT_ComboBox" Margin="10,3" DropDownClosed="ComponentChoice_AT_DropDownClosed"/>
+                <ComboBox x:Name="inputComponentChoice_AT_ComboBox" Margin="10,3" DropDownClosed="ComponentChoice_AT_DropDownClosed"/>
                 <TextBox x:Name="inputActuatorTest_TextBox" Margin="10,3" IsEnabled="False"/>
             </StackPanel>
         </DockPanel>

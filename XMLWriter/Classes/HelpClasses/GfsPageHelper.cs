@@ -117,7 +117,7 @@ namespace XMLWriter.Classes.HelpClasses {
 
 
         ///ActuatorTest Init
-        public void InitActuatorTestDropdowns(ComboBox inputECUChoice_AT_ComboBox, ComboBox inputToolChoice, ComboBox inputComponentChoice_AT, TextBox inputActuatorTest_TextBox) {
+        public void InitActuatorTestDropdowns(ComboBox inputECUChoice_AT_ComboBox, ComboBox inputToolChoice, ComboBox inputComponentChoice_AT_ComboBox, TextBox inputActuatorTest_TextBox) {
             //Für Verständnis siehe Beispiel bei RDID Init
             gfsInputHelper.InitECUChoiceDropDownDefaultValue(inputECUChoice_AT_ComboBox);
             if (IsActuatorTest(inputToolChoice)) {
@@ -126,18 +126,19 @@ namespace XMLWriter.Classes.HelpClasses {
                 if (dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).actuatorTest!="false") {
                     positiveResultDupel = dataSetService.GetDataSets().ElementAt(guiHelper.GetIndex()).actuatorTest.Split('|');
                 }
+                System.Diagnostics.Debug.WriteLine(positiveResultDupel[0]);
                 System.Diagnostics.Debug.WriteLine(positiveResultDupel[1]);
                 gfsInputHelper.ChangeECUActiveElementTo(inputECUChoice_AT_ComboBox, dropDownList.GetDisplayPartOf(dropDownList.GetECUChoices(), positiveResultDupel[1]));
-                gfsInputHelper.SetIOChoices(inputComponentChoice_AT,
+                gfsInputHelper.SetIOChoices(inputComponentChoice_AT_ComboBox,
                     dropDownList.GetIOChoices(inputECUChoice_AT_ComboBox.Text).Select(x => x.secondPart).ToArray(),
                     positiveResultDupel[0]);
             }
             else {
-                gfsInputHelper.SetIOChoices(inputComponentChoice_AT,
+                gfsInputHelper.SetIOChoices(inputComponentChoice_AT_ComboBox,
                     dropDownList.GetIOChoices(inputECUChoice_AT_ComboBox.Text).Select(x => x.secondPart).ToArray(),
                     dropDownList.GetIOChoices(inputECUChoice_AT_ComboBox.Text).ElementAt(0).secondPart);
             }
-            gfsInputHelper.FillInputActuatorTestCombinedText(inputActuatorTest_TextBox, inputECUChoice_AT_ComboBox, inputComponentChoice_AT);
+            gfsInputHelper.FillInputActuatorTestCombinedText(inputActuatorTest_TextBox, inputECUChoice_AT_ComboBox, inputComponentChoice_AT_ComboBox);
 
         }
         ///RDID Init
@@ -159,7 +160,7 @@ namespace XMLWriter.Classes.HelpClasses {
                     dropDownList.GetRDIDChoices(ECUChoice_RDID_ComboBox.Text).Select(x => x.secondPart).ToArray(),
                     dropDownList.GetDisplayPartOf(dropDownList.GetRDIDChoices(ECUChoice_RDID_ComboBox.Text), positiveResultDupel[0]));
                 gfsInputHelper.InitPositiveResult(inputPositiveResult_RDID);
-                gfsInputHelper.InitReadDataValue(ReadData_TextBox);
+                gfsInputHelper.FillInputReadDataCombinedText(ReadData_TextBox, ECUChoice_RDID_ComboBox, RDIDChoice_RDID_ComboBox);
             }
             else  //Wenn nicht vorhanden, dann zeig das erste Element an. 
             {//Tatsächlich würde vermutlich das initialisieren der Liste ausreichen und das setzen des aktiven Elements ist nicht so wichtig.

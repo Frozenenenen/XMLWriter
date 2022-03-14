@@ -30,7 +30,7 @@ namespace XMLWriter.Pages {
             WriteDataSetsToConsole();
             positiveResult = gfsPageHelper.HandleToolChoiceAndResultingPositiveResult(
                 ToolChoice_ComboBox,
-                ComponentChoice_AT_ComboBox,
+                inputComponentChoice_AT_ComboBox,
                 RDIDChoice_RDID_ComboBox,
                 SmartTool_SM_ComboBox,
                 PositiveResult_RDID_TextBox,
@@ -57,7 +57,7 @@ namespace XMLWriter.Pages {
             WriteDataSetsToConsole();
             positiveResult = gfsPageHelper.HandleToolChoiceAndResultingPositiveResult(
                 ToolChoice_ComboBox,
-                ComponentChoice_AT_ComboBox,
+                inputComponentChoice_AT_ComboBox,
                 RDIDChoice_RDID_ComboBox,
                 SmartTool_SM_ComboBox,
                 PositiveResult_RDID_TextBox,
@@ -101,7 +101,7 @@ namespace XMLWriter.Pages {
             WriteDataSetsToConsole();
             positiveResult = gfsPageHelper.HandleToolChoiceAndResultingPositiveResult(
                 ToolChoice_ComboBox,
-                ComponentChoice_AT_ComboBox,
+                inputComponentChoice_AT_ComboBox,
                 RDIDChoice_RDID_ComboBox,
                 SmartTool_SM_ComboBox,
                 PositiveResult_RDID_TextBox,
@@ -136,11 +136,11 @@ namespace XMLWriter.Pages {
         }
         //Aktortest
         private void ECUChoice_AT_DropDownClosed(object sender, System.EventArgs e) {
-            gfsInputHelper.FillInputActuatorTestCombinedText(inputActuatorTest_TextBox, inputECUChoice_AT, ComponentChoice_AT_ComboBox);
-            gfsInputHelper.UpdateActuatorTestSecondComboBox(inputECUChoice_AT, ComponentChoice_AT_ComboBox);
+            gfsInputHelper.FillInputActuatorTestCombinedText(inputActuatorTest_TextBox, inputECUChoice_AT, inputComponentChoice_AT_ComboBox);
+            gfsInputHelper.UpdateActuatorTestSecondComboBox(inputECUChoice_AT, inputComponentChoice_AT_ComboBox);
         }
         private void ComponentChoice_AT_DropDownClosed(object sender, System.EventArgs e) {
-            gfsInputHelper.FillInputActuatorTestCombinedText(inputActuatorTest_TextBox, inputECUChoice_AT, ComponentChoice_AT_ComboBox);
+            gfsInputHelper.FillInputActuatorTestCombinedText(inputActuatorTest_TextBox, inputECUChoice_AT, inputComponentChoice_AT_ComboBox);
         }
         //RDID
         private void ECUChoice_RDID_DropDownClosed(object sender, System.EventArgs e) {
@@ -228,7 +228,7 @@ namespace XMLWriter.Pages {
         }
         private void InitFlexRightSideItems() {
             gfsPageHelper.CheckForWhatToolHasBeenChosen(ToolChoice_ComboBox);
-            gfsPageHelper.InitActuatorTestDropdowns(inputECUChoice_AT, ToolChoice_ComboBox, ComponentChoice_AT_ComboBox, inputActuatorTest_TextBox);
+            gfsPageHelper.InitActuatorTestDropdowns(inputECUChoice_AT, ToolChoice_ComboBox, inputComponentChoice_AT_ComboBox, inputActuatorTest_TextBox);
             gfsPageHelper.InitSmartToolDropdowns(SmartTool_SM_ComboBox, ToolChoice_ComboBox, inputSmartTool_TextBox, Measure_SM_ComboBox, PositiveResult_SM_TextBox, inputPositiveResult_LowerLimit, inputPositiveResult_UpperLimit);
             gfsPageHelper.InitReadDataDropdowns(ToolChoice_ComboBox, ECUChoice_RDID_ComboBox, RDIDChoice_RDID_ComboBox, PositiveResult_RDID_TextBox, inputReadData_TextBox);
             gfsPageHelper.ShowItemsAfterToolChoice(ToolChoice_ComboBox, actuatorTest, smartTool, RDID);

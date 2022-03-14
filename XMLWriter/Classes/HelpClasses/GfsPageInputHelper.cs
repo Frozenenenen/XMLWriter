@@ -133,6 +133,7 @@ namespace XMLWriter.Classes.HelpClasses {
 
 
         //Sets with dependencies - Filling the TextBoxes depending on DropDownChoices
+        //Sollte es Probleme beim laden von dem deaktivierten zusammengesetzten Textfeld geben, wenn nur eine Seite ausgewählt und abgespeichert wurde, braucht es hier ggf noch ein paar ABfangversuche à la: Wenn leer, dann " " - das wiederrum würde beim laden von files vermutlich wieder zu Problemen führen, die wiederrum abgefangen werden müssten
         public void FillInputReadDataCombinedText(TextBox inputReadData_TextBox, ComboBox ECUChoice_RDID_ComboBox, ComboBox RDIDChoice_RDID_ComboBox) {
             string shortECUName = dropDownList.GetKeyPartOf(dropDownList.GetRDIDChoices(ECUChoice_RDID_ComboBox.Text), RDIDChoice_RDID_ComboBox.Text);
             string englishRDIDName = dropDownList.GetKeyPartOf(dropDownList.GetECUChoices(), ECUChoice_RDID_ComboBox.Text);

@@ -9,8 +9,8 @@ namespace XMLWriter.Classes {
             comboBox.ItemsSource = array;
         }
         public void SetDropDownContent(ComboBox comboBox, string[] array, string selectedElement) {
-            SetDropDownActiveELementFor(comboBox, selectedElement);
             SetDropDownContent(comboBox, array);
+            SetDropDownActiveELementFor(comboBox, selectedElement);
         }
         public void SetTextFor(Label label, string text) {
             label.Content = text;
