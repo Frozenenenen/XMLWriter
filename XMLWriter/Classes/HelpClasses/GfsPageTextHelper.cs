@@ -1,9 +1,10 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Media;
 /// <summary>
 /// This class controls the textoutput of the Gfs Page.
 /// </summary>
 namespace XMLWriter.Classes.HelpClasses {
-    internal class GfsPageTextlHelper {
+    internal class GfsPageTextHelper {
         Language language = new Language();
         GUIMovementHelper guiHelper = new GUIMovementHelper();
         XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
@@ -63,6 +64,10 @@ namespace XMLWriter.Classes.HelpClasses {
         }
         public void SetButtonBack(Button back) {
             xamlHelper.SetTextFor(back, language.GetStringBack());
+        }
+        public void SetButtonInsert(Button insert) {
+            xamlHelper.SetTooltipFor(insert, language.GetStringInsertDescription());
+            xamlHelper.SetTextFor(insert, language.GetStringInsert());
         }
         //CheckBoxText
         public void SetTextNextStep(CheckBox checky) {

@@ -17,16 +17,13 @@ namespace XMLWriter.Classes {
         }
 
         public void WriteStepNameToCurrentDataSet(List<DataSet> dataSets, int index, string input) {
-            if (string.IsNullOrEmpty(input)) {
-                dataSets.ElementAt(index).stepName = language.GetStringStep() + ": " + (index + 1);
-            }
-            else {
-                dataSets.ElementAt(index).stepName = input;
-            }
+            dataSets.ElementAt(index).stepName = input;
+            System.Diagnostics.Debug.WriteLine(input);
+            System.Diagnostics.Debug.WriteLine(dataSets.ElementAt(index).stepName);
         }
         public void WriteTextToCurrentDataSet(List<DataSet> dataSets, int index, string input) {
             if (string.IsNullOrEmpty(input)) {
-                dataSets.ElementAt(index).stepName = "";
+                dataSets.ElementAt(index).text = "";
             }
             else {
                 dataSets.ElementAt(index).text = input;
@@ -34,7 +31,7 @@ namespace XMLWriter.Classes {
         }
         public void WriteAnimToCurrentDataSet(List<DataSet> dataSets, int index, string input) {
             if (string.IsNullOrEmpty(input)) {
-                dataSets.ElementAt(index).stepName = "default";
+                dataSets.ElementAt(index).anim = "default";
             }
             else {
                 dataSets.ElementAt(index).anim = input;
@@ -42,7 +39,7 @@ namespace XMLWriter.Classes {
         }
         public void WriteSpecialTextToCurrentDataSet(List<DataSet> dataSets, int index, string input) {
             if (string.IsNullOrEmpty(input)) {
-                dataSets.ElementAt(index).stepName = "false";
+                dataSets.ElementAt(index).specialText = "false";
             }
             else {
                 dataSets.ElementAt(index).specialText = input;
@@ -50,7 +47,7 @@ namespace XMLWriter.Classes {
         }
         public void WriteInstructionToCurrentDataSet(List<DataSet> dataSets, int index, string input) {
             if (string.IsNullOrEmpty(input)) {
-                dataSets.ElementAt(index).stepName = "false";
+                dataSets.ElementAt(index).instruction = "false";
             }
             else {
                 dataSets.ElementAt(index).instruction = input;
@@ -58,7 +55,7 @@ namespace XMLWriter.Classes {
         }
         public void WritePositiveIDToCurrentDataSet(List<DataSet> dataSets, int index, string input) {
             if (string.IsNullOrEmpty(input)) {
-                dataSets.ElementAt(index).stepName = "false";
+                dataSets.ElementAt(index).positiveID = "false";
             }
             else {
                 dataSets.ElementAt(index).positiveID = input;
@@ -66,7 +63,7 @@ namespace XMLWriter.Classes {
         }
         public void WriteNegativeIDToCurrentDataSet(List<DataSet> dataSets, int index, string input) {
             if (string.IsNullOrEmpty(input)) {
-                dataSets.ElementAt(index).stepName = "false";
+                dataSets.ElementAt(index).negativeID = "false";
             }
             else {
                 dataSets.ElementAt(index).negativeID = input;
@@ -74,7 +71,7 @@ namespace XMLWriter.Classes {
         }
         public void WritePositiveResultToCurrentDataSet(List<DataSet> dataSets, int index, string input) {
             if (string.IsNullOrEmpty(input)) {
-                dataSets.ElementAt(index).stepName = "false";
+                dataSets.ElementAt(index).positiveResult = "false";
             }
             else {
                 dataSets.ElementAt(index).positiveResult = input;
@@ -82,7 +79,7 @@ namespace XMLWriter.Classes {
         }
         public void WriteRepXMLToCurrentDataSet(List<DataSet> dataSets, int index, string input) {
             if (string.IsNullOrEmpty(input)) {
-                dataSets.ElementAt(index).stepName = "false";
+                dataSets.ElementAt(index).repXML = "false";
             }
             else {
                 dataSets.ElementAt(index).repXML = input;
@@ -90,7 +87,7 @@ namespace XMLWriter.Classes {
         }
         public void WriteActuatorTestToCurrentDataSet(List<DataSet> dataSets, int index, string input) {
             if (string.IsNullOrEmpty(input)) {
-                dataSets.ElementAt(index).stepName = "false";
+                dataSets.ElementAt(index).actuatorTest = "false";
             }
             else {
                 dataSets.ElementAt(index).actuatorTest = input;
@@ -98,7 +95,7 @@ namespace XMLWriter.Classes {
         }
         public void WriteRDIDToCurrentDataSet(List<DataSet> dataSets, int index, string input) {
             if (string.IsNullOrEmpty(input)) {
-                dataSets.ElementAt(index).stepName = "false"; 
+                dataSets.ElementAt(index).RDID = "false"; 
             }
             else {
                 dataSets.ElementAt(index).RDID = input;
@@ -106,7 +103,7 @@ namespace XMLWriter.Classes {
         }
         public void WriteSmartToolToCurrentDataSet(List<DataSet> dataSets, int index, string input) {
             if (string.IsNullOrEmpty(input)) {
-                dataSets.ElementAt(index).stepName = "false";
+                dataSets.ElementAt(index).smartTool = "false";
             }
             else {
                 dataSets.ElementAt(index).smartTool = input;
@@ -120,7 +117,7 @@ namespace XMLWriter.Classes {
         }
         public void WriteToolChoiceToCurrentDataSet(List<DataSet> dataSets, int index, string input) {
             if (string.IsNullOrEmpty(input)) {
-                dataSets.ElementAt(index).stepName = "false";
+                dataSets.ElementAt(index).toolChoice = "false";
             }
             else {
                 dataSets.ElementAt(index).toolChoice = input;

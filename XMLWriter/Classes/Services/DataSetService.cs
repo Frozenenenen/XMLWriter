@@ -1,29 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-
-using System.Text;
 using XMLWriter.Classes.HelpClasses;
+using XMLWriter.Classes.StartPage;
 
 namespace XMLWriter.Classes {
 
 
     internal class DataSetService {
         GUIMovementHelper gui = new GUIMovementHelper();
-        ConsoleControl consol = new ConsoleControl();
+        LoadHelper loadHelper = new LoadHelper();
+
         private static List<DataSet> dataSets = new List<DataSet>();
-
-        private static string dataType = "rep";
-        private static string fileName = "Dateiname"; //can include the path
-
 
         //Getter
         public List<DataSet> GetDataSets() => dataSets;
-        public string GetDataType() => dataType;  // active rep or gfs
-        public string GetFileName() => fileName; //Where it should be written to. Includes the Path
-
         public string[] GetStepNames() {
-            string[] stepNames = new string[gui.GetStepCountMax()]; //foreach wäre eleganter
-            for (int i = 0; i < gui.GetStepCountMax(); i++) {
+            string[] stepNames = new string[dataSets.Count]; //foreach wäre eleganter
+            for (int i = 0; i < dataSets.Count; i++) {
                 stepNames[i] = dataSets.ElementAt(i).stepName;
             }
             return stepNames;
@@ -32,12 +25,6 @@ namespace XMLWriter.Classes {
 
 
         //Setter 
-        public void SetDataSet(DataSet _dataSet) //Zu löschen.
-        {
-            dataSets.Insert(gui.GetIndex(), _dataSet);
-        }
-        public void SetDataType(string _inputDataType) => dataType = _inputDataType;
-
         public void TransmitDataSetListFromLoadToDataSetService(List<DataSet> _dataSets) {
             dataSets  = _dataSets;
         }
@@ -48,34 +35,40 @@ namespace XMLWriter.Classes {
             InitNewDataSetWhereRequired();
         }
         public void InitNewDataSetWhereRequired() {
-            if (gui.GetIndex() == gui.GetIndexMax()) {
+            if (dataSets.Count==gui.GetIndex()+1 || dataSets.Count==0) {
                 dataSets.Add(new DataSet("", "", "", "default", "", "", "", "", "", "", "", "", false, false, ""));
             }
         }
-
+        public void InsertNewDataSet() {
+            dataSets.Insert(gui.GetIndex() ,new DataSet("", "", "", "default", "", "", "", "", "", "", "", "", false, false, ""));
+        }
+        public void DeleteDataSet() {
+            dataSets.RemoveAt(gui.GetIndex());
+        }
         public void SetFileName(string inputFileName) //Damit keine vorherigen Daten überschrieben werden, wird der Dateiname iteriert, bis ein neuer Dateiname gefunden wurde.
         {
             DataSetToXMLWriter writer = new DataSetToXMLWriter();
             writer.SetFileName(inputFileName);//, dataType);
 
         }
-        public void OutputToXML() //Output to file
+        public void OutputToXML(string processType) //Output to file
         {
-            switch (dataType) {
+            System.Diagnostics.Debug.WriteLine("Prozesstyp in OutpoutToXML: " + processType);
+            switch (processType) {
                 case "rep":
                     RepToXMLWriter rep = new RepToXMLWriter();
-                    rep.OutputToXML(gui.GetIndexMax(), dataSets, fileName);
+                    rep.OutputToXML(dataSets.Count, dataSets, loadHelper.GetFileNameAndPath());
                     break;
                 case "gfs":
                     GFSToXMLWriter gfs = new GFSToXMLWriter();
-                    gfs.OutputToXML(gui.GetIndexMax(), dataSets, fileName);
+                    gfs.OutputToXML(dataSets.Count, dataSets, loadHelper.GetFileNameAndPath());
                     break;
                 default:
-                    if (consol.showErrors) System.Diagnostics.Debug.WriteLine("Error in OutputToXML from DataSet                   ---DataSet.OutputToXML()");
+                    System.Diagnostics.Debug.WriteLine("Error in OutputToXML from DataSet                   ---DataSet.OutputToXML()");
                     break;
             }
         }
-
+        
     }
 
 }

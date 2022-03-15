@@ -91,8 +91,8 @@
             <StackPanel HorizontalAlignment="Stretch" Margin="10,0" Width="400">
                 <Label x:Name="textActuatorTest"/>
                 <ComboBox x:Name="inputECUChoice_AT" Margin="10,3" DropDownClosed="ECUChoice_AT_DropDownClosed"/>
-                <ComboBox x:Name="ComponentChoice_AT_ComboBox" Margin="10,3" DropDownClosed="ComponentChoice_AT_DropDownClosed"/>
-                <TextBox x:Name="inputActuatorTest" Margin="10,3" IsEnabled="False"/>
+                <ComboBox x:Name="inputComponentChoice_AT_ComboBox" Margin="10,3" DropDownClosed="ComponentChoice_AT_DropDownClosed"/>
+                <TextBox x:Name="inputActuatorTest_TextBox" Margin="10,3" IsEnabled="False"/>
             </StackPanel>
         </DockPanel>
         
@@ -102,7 +102,7 @@
                 <Label x:Name="textReadData"/>
                 <ComboBox x:Name="ECUChoice_RDID_ComboBox" Margin="10,3" DropDownClosed="ECUChoice_RDID_DropDownClosed"/>
                 <ComboBox x:Name="RDIDChoice_RDID_ComboBox" Margin="10,3" DropDownClosed="RDIDChoice_RDID_DropDownClosed"/>
-                <TextBox x:Name="ReadData_TextBox" Margin="10,3" IsEnabled="False"/>
+                <TextBox x:Name="inputReadData_TextBox" Margin="10,3" IsEnabled="False"/>
                 <Label x:Name="textPositiveResult_RDID" Margin="40,0"/>
                 <TextBox x:Name="PositiveResult_RDID_TextBox" Margin="40,0"/>
             </StackPanel>
@@ -114,9 +114,9 @@
                 <Label x:Name="textSmartTool"/>
                 <ComboBox x:Name="SmartTool_SM_ComboBox" Margin="0,3,40,0" DropDownClosed="SmartTool_SM_DropDownClosed" Width="400"/>
                 <DockPanel>
-                    <ComboBox x:Name="Measure_SM_ComboBox" Margin="23,3,40,0" DropDownClosed="Measure_SM_DropDownClosed" IsEditable="True" Width="400" KeyUp="Measure_SM_KeyUp"/>
+                    <ComboBox x:Name="Measure_SM_ComboBox" Margin="23,3,40,0" DropDownClosed="Measure_SM_DropDownClosed" IsEditable="True" Width="400" />
                 </DockPanel>
-                <TextBox x:Name="SmartTool_TextBox" Margin="23,3" IsEnabled="False"/>
+                <TextBox x:Name="inputSmartTool_TextBox" Margin="23,3" IsEnabled="False"/>
                 <DockPanel>
                     <StackPanel>
                         <Label Content="Lower Limit"/>
@@ -142,6 +142,7 @@
         
         <!--Bedienelemente und Randinfos-->
         <Button x:Name="btnNext" Grid.Row="11" Grid.Column="6" Margin="0,0,10,10" Click="BtnNext_Click"/>
+        <Button x:Name="btnInsert" Grid.Row="11" Grid.Column="5" Margin="10,0,10,10" Click="BtnInsert_Click"/>
         <Button x:Name="btnSave" Grid.Row="10" Grid.Column="6" Margin="0,0,10,10" Click="BtnSave_Click"/>
         <Button x:Name="btnBack" Grid.Row="11" Grid.Column="0" Margin="10,0,0,10" Click="BtnBack_Click"/>
         <Button x:Name="btnBackDelete" Grid.Row="10" Grid.Column="0" Margin="10,0,0,10" Click="BtnBackDelete_Click" Background="Red"/>

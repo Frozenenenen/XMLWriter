@@ -8,7 +8,6 @@ namespace XMLWriter.Classes.HelpClasses {
         GUIMovementHelper gui = new GUIMovementHelper();
         UtilityFunctions utility = new UtilityFunctions();
         Language language = new Language();
-        ConsoleControl consol = new ConsoleControl();
 
         /// --- Navigation --- ///
         public void PrepareNextPage() {
@@ -19,19 +18,24 @@ namespace XMLWriter.Classes.HelpClasses {
             gui.DecrementSteps();
         }
         public void DeleteCurrentSet() {
+            dataSetService.DeleteDataSet();
             gui.DecrementStepsMax();        //Unfertig
+        }
+        public void InsertNewSet() {
+            dataSetService.InsertNewDataSet();
         }
 
         /// ---- WriteToDataSet --- ///
         public void SaveCurrentInput(TextBox stepName, TextBox text, TextBox specialText, TextBox anim) {
-            WriteInputToDataSet(new string[] { stepName.Text, text.Text, specialText.Text, anim.Text });
-            consol.ConsoleShowDataSetOfIndex(dataSetService.GetDataSets().ElementAt(gui.GetIndex()), gui.GetIndex(), "Speichern");
+            System.Diagnostics.Debug.WriteLine(stepName.Text + ", " + text + ", " + specialText + ", " + anim);
+            WriteInputToDataSet(stepName.Text, text.Text, specialText.Text, anim.Text);
         }
-        private void WriteInputToDataSet(string[] input) {
-            utility.WriteStepNameToCurrentDataSet(dataSetService.GetDataSets(), gui.GetIndex(), input[0]);
-            utility.WriteTextToCurrentDataSet(dataSetService.GetDataSets(), gui.GetIndex(), input[1]);
-            utility.WriteAnimToCurrentDataSet(dataSetService.GetDataSets(), gui.GetIndex(), input[2]);
-            utility.WriteSpecialTextToCurrentDataSet(dataSetService.GetDataSets(), gui.GetIndex(), input[3]);
+        private void WriteInputToDataSet(string stepName, string text, string specialText, string anim) {
+            System.Diagnostics.Debug.WriteLine("0----------\n----------\n" + stepName + "\n----------\n----------");
+            utility.WriteStepNameToCurrentDataSet(dataSetService.GetDataSets(), gui.GetIndex(), stepName);
+            utility.WriteTextToCurrentDataSet(dataSetService.GetDataSets(), gui.GetIndex(), text);
+            utility.WriteSpecialTextToCurrentDataSet(dataSetService.GetDataSets(), gui.GetIndex(), specialText);
+            utility.WriteAnimToCurrentDataSet(dataSetService.GetDataSets(), gui.GetIndex(), anim);
             utility.WriteInstructionToCurrentDataSet(dataSetService.GetDataSets(), gui.GetIndex(), "");
             utility.WritePositiveIDToCurrentDataSet(dataSetService.GetDataSets(), gui.GetIndex(), "");
             utility.WriteNegativeIDToCurrentDataSet(dataSetService.GetDataSets(), gui.GetIndex(), "");
@@ -48,6 +52,7 @@ namespace XMLWriter.Classes.HelpClasses {
         ///---Inits---///
         //Init TextBoxes (Value Items)
         public void SetBoxStepNameValue(TextBox textBox) {
+            System.Diagnostics.Debug.WriteLine("----------\n----------\n" + dataSetService.GetDataSets().ElementAt(gui.GetIndex()).stepName + "\n----------\n----------");
             if (string.IsNullOrEmpty(dataSetService.GetDataSets().ElementAt(gui.GetIndex()).stepName)) {
                 xamlHelper.SetTextFor(textBox, language.GetStringStep() + ": " + (gui.GetStepCount()));
             }
@@ -97,6 +102,9 @@ namespace XMLWriter.Classes.HelpClasses {
         }
         public void SetButtonSaveText(Button button) {
             xamlHelper.SetTextFor(button, language.GetStringSave());
+        }
+        public void SetButtonInsertText(Button button) {
+            xamlHelper.SetTextFor(button, language.GetStringInsert());
         }
     }
 }

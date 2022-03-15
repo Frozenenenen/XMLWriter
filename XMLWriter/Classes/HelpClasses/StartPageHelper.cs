@@ -12,12 +12,12 @@ namespace XMLWriter.Classes.StartPage {
         UtilityFunctions utility = new UtilityFunctions();
         Language language = new Language();
         DataSetService dataSetService = new DataSetService();
-        GUIMovementHelper gui = new GUIMovementHelper();
+        GUIMovementHelper guiMovementHelper = new GUIMovementHelper();
 
         private static readonly string[] processTypeList = { "gfs", "rep" };
         private static readonly string[] languageList = { "Deutsch", "English", "Espanol" };
-        private string selectedLanguage = languageList[0];
-        private string selectedProcessType = "rep";
+        private static string selectedLanguage = languageList[0];
+        private static string selectedProcessType = "rep";
         //Labels
         private static string stringCreateDataSet;
         private static string stringFilePath;
@@ -44,7 +44,7 @@ namespace XMLWriter.Classes.StartPage {
         }
         public void Reset(TextBlock textBlock) {
             dataSetService.ResetDataSet();
-            textBlock.Text = "";
+            xamlHelper.SetTextFor(textBlock, "");
         }
         public void LoadDataFromFile() {
             LoadDataService loadDataService = new LoadDataService();
@@ -53,8 +53,9 @@ namespace XMLWriter.Classes.StartPage {
 
         ///---Inits von Werten---///
         public void InitNewDataSet() {
+            guiMovementHelper.ResetStepCount(); //redundant
+            
             dataSetService.InitNewDataSetWhereRequired();
-
         }
         public void LoadDropDownOptions() {//This load the objectlist for use in gfs dropdowns from text files or from a database
             dropDownLists.LoadAllDropDownOptionsFromTxtOrDataBase();
@@ -82,10 +83,9 @@ namespace XMLWriter.Classes.StartPage {
                 language.InitLanguage(selectedLanguage);
                 InitDisplayText();
             }
-
         }
-        public string[] GetProcessTypeList() => processTypeList;
         public string GetSelectedProcessType() => selectedProcessType;
+        public string SetSelectedProcessType(string _selectedProcessType) => selectedProcessType = _selectedProcessType;
 
         ///---Inits bzw Sets von Display-Elementen---///
         //Set or Init Labels
@@ -96,7 +96,7 @@ namespace XMLWriter.Classes.StartPage {
             xamlHelper.SetTextFor(labelLoadFile, stringFilePath);
         }
         public void SetDisplayStepsText(Label labelStepCount) {
-            xamlHelper.SetTextFor(labelStepCount, stringDisplaySteps + ": " + (gui.GetStepCountMax() + 1));
+            xamlHelper.SetTextFor(labelStepCount, stringDisplaySteps + ": " + (dataSetService.GetDataSets().Count));
         }
         //Init Buttons
         public void SetStartButtonText(Button button) {
@@ -110,9 +110,8 @@ namespace XMLWriter.Classes.StartPage {
         }
         //Init DropDowns
         public void InitProcessTypeDropDown(ComboBox comboBox) {
-            System.Diagnostics.Debug.WriteLine("Prozesstyp: " + dataSetService.GetDataType());
             xamlHelper.SetDropDownContent(comboBox, processTypeList);
-            xamlHelper.SetDropDownActiveELementFor(comboBox, dataSetService.GetDataType());
+            xamlHelper.SetDropDownActiveELementFor(comboBox, selectedProcessType);
         }
         public void InitLanguageSelectionDropDown(ComboBox comboBox) {
             xamlHelper.SetDropDownContent(comboBox, languageList);
@@ -120,7 +119,7 @@ namespace XMLWriter.Classes.StartPage {
         }
         public void ChangeProcessActiveElement(ComboBox comboBox, string selectedElement) {
             xamlHelper.SetDropDownActiveELementFor(comboBox, selectedElement);
-            dataSetService.SetDataType(selectedElement);
+            SetSelectedProcessType(xamlHelper.GetActiveElementOf(comboBox));
         }
         //Init CheckBoxes
         public void SetTxtOrDataBaseCheckBoxText(Label check, Label uncheck) {
@@ -130,6 +129,19 @@ namespace XMLWriter.Classes.StartPage {
         //Init TextBlock
         public void SetFilePathText(TextBlock text) {
             xamlHelper.SetTextFor(text, loadHelper.GetFileNameAndPath());
+        }
+        //Checks
+        public bool IsRepSelected() {
+            if (selectedProcessType == processTypeList[1]) {
+                return true;
+            }
+            return false;
+        }
+        public bool IsGfsSelected() {
+            if (selectedProcessType == processTypeList[0]) {
+                return true;
+            }
+            return false;
         }
     }
 }

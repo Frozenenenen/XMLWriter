@@ -9,6 +9,7 @@ namespace XMLWriter
         private static string useDataBaseUnchecked;
         private static string reset;
         private static string deleteSet;
+        private static string insert;
 
         //StartPage & SavePage
         private static string loadFile;
@@ -44,11 +45,13 @@ namespace XMLWriter
         private static string smartTool;
         private static string nextStep;
         private static string lastStep;
+        private static string insertDescription;
 
 
         //Used in 3 or more
         public string GetStringSave() => saveFile;
         public string GetStringBack() => back;
+        public string GetStringInsert() => insert;
         //StartPage & SavePage
         public string GetStringSteps() => steps;
         public string GetStringFilePath() => filePath;
@@ -85,7 +88,9 @@ namespace XMLWriter
         public string GetStringSmartTool() => smartTool;
         public string GetStringNextStep() => nextStep;
         public string GetStringLastStep() => lastStep;
-        
+        public string GetStringInsertDescription() => insertDescription;
+
+
 
         public void InitLanguage(string languageChoice) //Method to fill the variables with the language specific words
         {
@@ -117,6 +122,7 @@ namespace XMLWriter
             saveFile = "Speichern";
             next = "Weiter";
             back = "Zurück";
+            insert = "Set einfügen";
             pleaseFill = "Bitte ausfüllen";
             createDataSet = "Datensatz anlegen oder laden";
             pleaseChoose = "Bitte wählen";
@@ -143,6 +149,7 @@ namespace XMLWriter
             filePath = "Dateipfad:";
             useDataBaseChecked = "Checked - Daten aus Datenbank";
             useDataBaseUnchecked = "Unchecked - Daten aus Text-File";
+            insertDescription = "Fügt ein Set an Stelle n ein. Das aktuell sichtbare Set wird in n+1 verschoben.";
         }
         private void InitEnglish()
         {
@@ -151,6 +158,7 @@ namespace XMLWriter
             saveFile = "Save";
             next = "Next";
             back = "Back";
+            insert = "Inser set";
             pleaseFill = "Please Fill";
             createDataSet = "Create Data Set";
             pleaseChoose = "Please choose";
@@ -177,6 +185,7 @@ namespace XMLWriter
             filePath = "Filepath:";
             useDataBaseChecked = "Checked - Data from data base";
             useDataBaseUnchecked = "Unchecked - Data from Text-File";
+            insertDescription = "Inserts a Set at position n. The currently visible set will be moved to n+1.";
         }
         private void InitEspanol()
         {
@@ -186,6 +195,7 @@ namespace XMLWriter
             saveFile = "Grabar algo";
             next = "Próximo";
             back = "Atrás";
+            insert = "Inser set";
             pleaseFill = "Llenar algo, por favor";
             createDataSet = "Crear expediente";
             pleaseChoose = "Please choose";
@@ -212,6 +222,7 @@ namespace XMLWriter
             filePath = "File Name with or without path";
             useDataBaseChecked = "Checked - Data from data base";
             useDataBaseUnchecked = "Unchecked - Data from Text-File";
+            insertDescription = "Inserts a Set at position n. The currently visible set will be moved to n+1.";
         }
     }
 }

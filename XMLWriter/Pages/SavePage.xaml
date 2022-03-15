@@ -34,20 +34,15 @@
             <ColumnDefinition Width="70"/>
         </Grid.ColumnDefinitions>
 
-        <Label x:Name="textTitel" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+        <Label x:Name="textTitel_Label" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold"/>
 
 
         <Label x:Name="textStepCount" Grid.Row="2" Grid.Column="1"/>
 
-        <ComboBox x:Name="inputLanguage" Grid.Row="7" Grid.Column="4" Margin="5,5"/>
-        <ComboBox x:Name="inputVehicleID" Grid.Row="7" Grid.Column="3" Margin="5,5"/>
-
-
         <StackPanel Grid.Column="3" Grid.Row="8" Grid.RowSpan="3" Grid.ColumnSpan="3" Margin="2">
-            <Button x:Name="btnLoadFile" Grid.Column="3" Grid.Row="10" Click="BtnLoadFile" Margin=" 2,2,2,2" Width="85" Height="35" HorizontalAlignment="Left"/>
-            <Label x:Name="labelFileNameTitel" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="AntiqueWhite"/>
+            <Button x:Name="btnOpenFile" Grid.Column="3" Grid.Row="10" Click="BtnOpenFile" Margin=" 2,2,2,2" Width="85" Height="35" HorizontalAlignment="Left"/>
+            <Label x:Name="fileNameTitel_Label" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="AntiqueWhite"/>
             <TextBlock x:Name="textFileName" Text="" TextWrapping="Wrap" Height="55" Background="AntiqueWhite"/>
-            <TextBox x:Name="inputFileName" Text="Dateiname" Height="55" TextWrapping="Wrap" IsReadOnly="false" Background="Gray" Visibility="Hidden"/>
         </StackPanel>
         
 
