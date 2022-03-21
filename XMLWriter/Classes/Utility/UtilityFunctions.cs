@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace XMLWriter.Classes {
     internal class UtilityFunctions {
-        Language language = new Language();
 
         public bool ArrayContainsElement(string[] list, string element) {
             foreach (var listElement in list) {

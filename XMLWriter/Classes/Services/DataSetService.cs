@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using XMLWriter.Classes.HelpClasses;
-using XMLWriter.Classes.StartPage;
 
 namespace XMLWriter.Classes {
 
@@ -31,7 +30,6 @@ namespace XMLWriter.Classes {
         public void ResetDataSet() {
             dataSets.Clear();
             gui.ResetStepCount();
-            gui.ResetStepCountMax();
             InitNewDataSetWhereRequired();
         }
         public void InitNewDataSetWhereRequired() {

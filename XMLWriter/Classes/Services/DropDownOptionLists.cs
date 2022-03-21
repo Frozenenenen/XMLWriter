@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using XMLWriter.Classes;
-using System.Text;
 
 namespace XMLWriter.Classes {
     class DropDownOptionLists {
@@ -65,10 +63,10 @@ namespace XMLWriter.Classes {
         private void FillList(List<DropDownOptionTupel> list, string fileName, string dataBaseQuery) {
             string stream;
             if (canUseDataBase) {
-                stream = LoadInputFromTxtFile(filePath + fileName);
+                stream = LoadInputFromDataBase(dataBasePath + dataBaseQuery);
             }
             else {
-                stream = LoadInputFromDataBase(dataBasePath + dataBaseQuery);
+                stream = LoadInputFromTxtFile(filePath + fileName);
             }
             list.Clear();
             string[] TupelString;

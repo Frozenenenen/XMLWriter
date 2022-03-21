@@ -1,8 +1,6 @@
 ﻿using System;
-using XMLWriter.Classes;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Navigation;
 using XMLWriter.Classes.StartPage;
 using XMLWriter.Classes.HelpClasses;
@@ -12,11 +10,8 @@ namespace XMLWriter.Pages {
     /// Interaktionslogik für SavePage.xaml
     /// </summary>
     public partial class SavePage : Page {
-        DataSetService data = new DataSetService();
         GUIMovementHelper gui = new GUIMovementHelper();
-        Language language = new Language();
         LoadHelper loadHelper = new LoadHelper();   
-        XAMLHelperFunctions xamlHelper = new XAMLHelperFunctions();
         SavePageHelper savePageHelper = new SavePageHelper();
 
         public SavePage() {

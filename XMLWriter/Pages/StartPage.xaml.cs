@@ -61,6 +61,7 @@ namespace XMLWriter.Pages {
         }
         private void BtnReset(object sender, RoutedEventArgs e) {
             startPageHelper.Reset(textBlockLoadFile);
+            startPageHelper.SetDisplayStepsText(labelStepCount);
         }
         private void DropDownLanguage_OnClosed(object sender, EventArgs e) {
             startPageHelper.SetLangauge(dropDownLanguage.Text);

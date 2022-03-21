@@ -1,5 +1,4 @@
-﻿
-namespace XMLWriter
+﻿namespace XMLWriter
 {
     class Language
     {

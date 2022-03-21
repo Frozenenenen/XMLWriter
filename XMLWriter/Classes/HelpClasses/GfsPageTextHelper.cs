@@ -1,5 +1,4 @@
 ﻿using System.Windows.Controls;
-using System.Windows.Media;
 /// <summary>
 /// This class controls the textoutput of the Gfs Page.
 /// </summary>
