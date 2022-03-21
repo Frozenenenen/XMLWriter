@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace XMLWriter.Classes {
     class DropDownOptionLists {
-        private static bool canUseDataBase = true;           //Hier ist noch ein Fehler
+        private static bool canUseDataBase = true;
         private static string[] toolChoiceOptions = { "", "ActuatorTest", "SmartTool", "ReadDataByIdentifier" };
         private static string filePath = @"Files/";
         private static string dataBasePath = @"Files/";
@@ -35,6 +35,7 @@ namespace XMLWriter.Classes {
         private static List<DropDownOptionTupel> RDID_MSG = new List<DropDownOptionTupel>();
 
 
+        public bool GetUseDataBase() => canUseDataBase;
         public void SetUseDataBaseTrue() {
             System.Diagnostics.Debug.WriteLine("Loads from database - Init");
             canUseDataBase = true;

@@ -16,6 +16,7 @@ namespace XMLWriter.Pages {
             InitLabels();
             InitButtons();
             InitDropDowns();
+            InitCheckBoxes();
         }
         ///---Inits---///
         private void InitLabels() {
@@ -33,11 +34,14 @@ namespace XMLWriter.Pages {
             startPageHelper.InitProcessTypeDropDown(dropDownProcesses);
             startPageHelper.InitLanguageSelectionDropDown(dropDownLanguage);
         }
+        private void InitCheckBoxes() {
+            startPageHelper.InitDataBaseCheckBox(checkUseTxtOrDatabse);
+        }
         ///---Buttons---///
         private void BtnStart(object sender, RoutedEventArgs e) {
             
             startPageHelper.InitNewDataSet();
-            startPageHelper.CheckForDataBaseOrTxt(checkUseTxtOrDatabse.IsChecked);
+            //startPageHelper.CheckForDataBaseOrTxt(checkUseTxtOrDatabse.IsChecked);
             //Navigation
             if (startPageHelper.IsRepSelected()) //rep - Reparatur
             {
@@ -70,6 +74,10 @@ namespace XMLWriter.Pages {
         }
         private void DropDownProcesses_OnClosed(object sender, EventArgs e) {
             startPageHelper.ChangeProcessActiveElement(dropDownProcesses, dropDownProcesses.Text);
+        }
+
+        private void CheckBoxChanged(object sender, RoutedEventArgs e) {
+            startPageHelper.CheckForDataBaseOrTxt(checkUseTxtOrDatabse.IsChecked);
         }
     }
 }

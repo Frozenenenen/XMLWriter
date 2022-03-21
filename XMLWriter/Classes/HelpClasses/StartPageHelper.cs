@@ -18,6 +18,7 @@ namespace XMLWriter.Classes.StartPage {
         private static readonly string[] languageList = { "Deutsch", "English", "Espanol" };
         private static string selectedLanguage = languageList[0];
         private static string selectedProcessType = "rep";
+        private static bool dataBaseisCheched = false;
         //Labels
         private static string stringCreateDataSet;
         private static string stringFilePath;
@@ -125,6 +126,15 @@ namespace XMLWriter.Classes.StartPage {
         public void SetTxtOrDataBaseCheckBoxText(Label check, Label uncheck) {
             xamlHelper.SetTextFor(check, stringChecked);
             xamlHelper.SetTextFor(uncheck, stringUnchecked);
+        }
+        public void InitDataBaseCheckBox(CheckBox checkBox) {
+            if (dropDownLists.GetUseDataBase()) {
+                checkBox.IsChecked = true;
+            }
+            else {
+                checkBox.IsChecked = false;
+            }
+            
         }
         //Init TextBlock
         public void SetFilePathText(TextBlock text) {

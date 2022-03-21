@@ -42,7 +42,7 @@
         <StackPanel Grid.Row="7" Grid.Column="4" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <Label x:Name="textUseDatabaseChecked"/>
             <Label x:Name="textUseDatabaseUnchecked"/>
-            <CheckBox x:Name="checkUseTxtOrDatabse" HorizontalAlignment="Center" IsChecked="True"/>
+            <CheckBox x:Name="checkUseTxtOrDatabse" HorizontalAlignment="Center" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged"/>
         </StackPanel>
         
         <!--Reparatur, geführte Fehlersuche etc-->
